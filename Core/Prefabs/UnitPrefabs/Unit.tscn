@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://2h1a1e1r8hc2"]
+
+[ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ohquw"]
+lightmap_size_hint = Vector2i(17, 14)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0qgfu"]
+size = Vector3(0.725, 0.2, 0.325)
+
+[node name="Unit" type="Node3D"]
+
+[node name="Rig" type="Node3D" parent="."]
+transform = Transform3D(0.852131, 0, 0, 0, 0.852131, 0, 0, 0, 0.852131, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Rig"]
+transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 0.988805, 0)
+rotation_edit_mode = 1
+mesh = SubResource("CapsuleMesh_ohquw")
+surface_material_override/0 = ExtResource("1_cc6tg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Rig/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.423313, 0.411077)
+mesh = SubResource("BoxMesh_0qgfu")
+surface_material_override/0 = ExtResource("1_cc6tg")

@@ -1,0 +1,42 @@
+[gd_resource type="ShaderMaterial" load_steps=9 format=3 uid="uid://co5oaijuf6av2"]
+
+[ext_resource type="Material" path="res://Deepmage/Core/Art/Materials/VFXMats/OutlineMaterial.tres" id="1_guskw"]
+[ext_resource type="Shader" uid="uid://bfthsd8j86kte" path="res://Deepmage/Core/Art/Shaders/ShaderMats/Gobotcelshading.gdshader" id="2_k53bb"]
+
+[sub_resource type="Gradient" id="Gradient_uwheh"]
+offsets = PackedFloat32Array(0.494, 0.498, 0.97, 0.975)
+colors = PackedColorArray(0.0745098, 0.0745098, 0.0745098, 1, 0.741176, 0.741176, 0.741176, 1, 0.741176, 0.741176, 0.741176, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_s4rri"]
+gradient = SubResource("Gradient_uwheh")
+
+[sub_resource type="Gradient" id="Gradient_x4yeo"]
+offsets = PackedFloat32Array(0.854, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.0901961, 0.0901961, 0.0901961, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_07gpl"]
+gradient = SubResource("Gradient_x4yeo")
+
+[sub_resource type="Gradient" id="Gradient_6ofss"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xdpru"]
+gradient = SubResource("Gradient_6ofss")
+
+[resource]
+resource_name = "GobotMat"
+render_priority = 0
+next_pass = ExtResource("1_guskw")
+shader = ExtResource("2_k53bb")
+shader_parameter/texture_albedo = SubResource("GradientTexture1D_xdpru")
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/normal_scale = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/color_gradient = SubResource("GradientTexture1D_s4rri")
+shader_parameter/color_ramp3 = SubResource("GradientTexture1D_07gpl")

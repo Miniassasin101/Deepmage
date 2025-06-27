@@ -1,0 +1,34 @@
+[gd_resource type="Environment" load_steps=5 format=3 uid="uid://c7cx2thxig2w6"]
+
+[sub_resource type="Gradient" id="Gradient_3xus0"]
+offsets = PackedFloat32Array(0, 0.117647, 0.819005, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.0645, 0.091575, 0.15, 1, 0.86, 0.786613, 0.7224, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_40odu"]
+gradient = SubResource("Gradient_3xus0")
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2xono"]
+sky_top_color = Color(0.307572, 0.472605, 0.669074, 1)
+sky_horizon_color = Color(0.440581, 0.62455, 0.66912, 1)
+energy_multiplier = 4.69
+
+[sub_resource type="Sky" id="Sky_wsc4c"]
+sky_material = SubResource("ProceduralSkyMaterial_2xono")
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_wsc4c")
+ambient_light_sky_contribution = 0.26
+ambient_light_energy = 0.0
+reflected_light_source = 1
+tonemap_mode = 2
+ssao_enabled = true
+ssil_enabled = true
+ssil_radius = 1.88
+sdfgi_enabled = true
+sdfgi_energy = 0.385
+glow_enabled = true
+glow_normalized = true
+glow_bloom = 0.05
+adjustment_enabled = true
+adjustment_color_correction = SubResource("GradientTexture1D_40odu")

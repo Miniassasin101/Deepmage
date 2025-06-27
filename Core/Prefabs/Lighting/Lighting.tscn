@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://bi5shtbca2114"]
+
+[ext_resource type="Environment" uid="uid://c7cx2thxig2w6" path="res://Deepmage/Core/Resources/Environment/Lighting/TestEnvironment1.tres" id="1_axqsr"]
+
+[node name="Lighting" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("1_axqsr")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.624316, -0.517834, 0.584874, -0.358336, 0.475453, 0.803455, -0.694136, -0.711191, 0.111274, -5.04075, 2.35, -0.618277)
+light_energy = 0.634
+shadow_enabled = true
+shadow_bias = 0.4
+directional_shadow_mode = 1
+directional_shadow_split_1 = 0.505
+directional_shadow_max_distance = 27.1

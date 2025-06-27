@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://deg3xriliawnr"]
+
+[ext_resource type="Shader" uid="uid://b0q6o8fp1q2it" path="res://Deepmage/Core/Art/Shaders/ShaderMats/Grid.gdshader" id="1_lwpm6"]
+[ext_resource type="Texture2D" uid="uid://duu0wfs3dasnn" path="res://Deepmage/Core/Art/Textures/EnvironmentTextures/GroundTextures/PolygonPrototype_Texture_Grid_08.png" id="2_3n1rl"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_lwpm6")
+shader_parameter/grid_texture = ExtResource("2_3n1rl")
+shader_parameter/base_color = Color(0.45, 0.45, 0.45, 1)
+shader_parameter/grid_scale = 2.0
+shader_parameter/grid_opacity = 1.0
+shader_parameter/metallic = 0.0
+shader_parameter/specular = 0.2
+shader_parameter/roughness = 0.8
+shader_parameter/emissive_strength = 0.0
+shader_parameter/world_offset = Vector2(1, 1)

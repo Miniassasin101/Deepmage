@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bauq6rq7jnnvw"]
+
+[ext_resource type="Script" uid="uid://dvu832ex44kkl" path="res://Deepmage/Core/Scripts/Interaction/Mouse/MouseController.gd" id="1_qtlpg"]
+[ext_resource type="PackedScene" uid="uid://i32kitwib4ny" path="res://Deepmage/Core/Prefabs/InteractionPrefabs/ColoredMarker.tscn" id="2_jkas6"]
+
+[node name="MouseController" type="Node3D" node_paths=PackedStringArray("raycast", "mouse_visual")]
+script = ExtResource("1_qtlpg")
+mouse_debug_sphere = true
+raycast = NodePath("UnitActionRay")
+mouse_visual = NodePath("MouseVisual")
+
+[node name="MouseVisual" parent="." instance=ExtResource("2_jkas6")]
+
+[node name="UnitActionRay" type="RayCast3D" parent="."]
+collision_mask = 0
+hit_from_inside = true
+collide_with_areas = true
+debug_shape_thickness = 3
