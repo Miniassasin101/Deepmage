@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://8oord2o1icck"]
+
+[ext_resource type="Script" uid="uid://5ms86tg6b2qm" path="res://Deepmage/Core/Scripts/UI/CharacterLogQueue.gd" id="1_cydvn"]
+
+[node name="CharacterLogQueue" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_cydvn")

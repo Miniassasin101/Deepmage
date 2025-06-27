@@ -1,9 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=14 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
+[ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
 [ext_resource type="PackedScene" uid="uid://bi5shtbca2114" path="res://Deepmage/Core/Prefabs/Lighting/Lighting.tscn" id="2_rcno3"]
+[ext_resource type="Script" uid="uid://d00flrde4n8v4" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugConsoleController.gd" id="2_swo3b"]
 [ext_resource type="PackedScene" uid="uid://du3efvmcdx31a" path="res://Deepmage/Core/Prefabs/Cameras/Camera.tscn" id="3_wbgr3"]
 [ext_resource type="PackedScene" uid="uid://bauq6rq7jnnvw" path="res://Deepmage/Core/Prefabs/InteractionPrefabs/MouseController.tscn" id="4_avqdt"]
+[ext_resource type="Script" uid="uid://dsmekjbchblby" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UILayer.gd" id="5_jtghi"]
+[ext_resource type="PackedScene" uid="uid://bf575s2vrxvov" path="res://Deepmage/Core/Prefabs/UI/TextController.tscn" id="9_ccwc0"]
+[ext_resource type="PackedScene" uid="uid://8oord2o1icck" path="res://Deepmage/Core/Prefabs/UI/CharacterLogQueue.tscn" id="10_lf0eb"]
+[ext_resource type="Script" uid="uid://1miy676tt71s" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UnitManager.gd" id="11_lf0eb"]
+[ext_resource type="PackedScene" uid="uid://2h1a1e1r8hc2" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.tscn" id="12_k2c3k"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_rcno3"]
 
@@ -11,6 +18,12 @@
 data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
 
 [node name="Level" type="Node3D"]
+
+[node name="DebugSettings" type="Node" parent="."]
+script = ExtResource("1_uoqcs")
+
+[node name="DebugConsoleController" type="Node" parent="."]
+script = ExtResource("2_swo3b")
 
 [node name="Environment" type="Node3D" parent="."]
 
@@ -34,15 +47,23 @@ shape = SubResource("ConcavePolygonShape3D_avqdt")
 [node name="Camera" parent="." instance=ExtResource("3_wbgr3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.735, 1.03, 0.84)
 
-[node name="SpringArm3D" parent="Camera/CamOrigin" index="0"]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
-
 [node name="MouseController" parent="." instance=ExtResource("4_avqdt")]
 
 [node name="Label3D" type="Label3D" parent="MouseController/MouseVisual" index="0"]
 
 [node name="UnitActionRay" parent="MouseController" index="1"]
 collision_mask = 2
+
+[node name="UnitManager" type="Node" parent="."]
+script = ExtResource("11_lf0eb")
+
+[node name="Unit" parent="UnitManager" instance=ExtResource("12_k2c3k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+script = ExtResource("5_jtghi")
+text_controller_scene = ExtResource("9_ccwc0")
+character_log_queue_scene = ExtResource("10_lf0eb")
 
 [editable path="Camera"]
 [editable path="MouseController"]

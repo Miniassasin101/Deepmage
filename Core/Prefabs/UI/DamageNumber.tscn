@@ -1,0 +1,159 @@
+[gd_scene load_steps=5 format=3 uid="uid://bs8kc22xgwd2d"]
+
+[ext_resource type="Script" uid="uid://bcxwon5roacq3" path="res://Deepmage/Core/Scripts/UI/TextController.gd" id="1_rb4kv"]
+
+[sub_resource type="Animation" id="Animation_2hhp2"]
+resource_name = "DamageNumberAnim"
+length = 3.33334
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667, 1.5, 2.43333),
+"transitions": PackedFloat32Array(1, 0.353553, 0.353553, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(2, 2), Vector2(2, 2), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.566667, 0.833333, 1, 2.43333),
+"transitions": PackedFloat32Array(1, 0.435275, 1, 0.965936, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(35, -45), Vector2(65.5101, -64.0688), Vector2(67, -65), Vector2(67.6888, -64.3112), Vector2(73, -59)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(3.33333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Node2D/CenterContainer/TextLabel:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.333333, 1.66667, 2.43333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.81, 0.0648, 0.0648, 0), Color(0.890196, 0.192157, 0.141176, 1), Color(0.890196, 0.192157, 0.141176, 1), Color(0.81, 0.0648, 0.0648, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Node2D:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_eswh3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.3, 0.3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Node2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Node2D/CenterContainer/TextLabel:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.81, 0.0648, 0.0648, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0w07m"]
+_data = {
+&"DamageNumberAnim": SubResource("Animation_2hhp2"),
+&"RESET": SubResource("Animation_eswh3")
+}
+
+[node name="Damage_Number_Root" type="Control" node_paths=PackedStringArray("animator", "text_label")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_rb4kv")
+animator = NodePath("AnimationPlayer2")
+text_label = NodePath("Node2D/CenterContainer/TextLabel")
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_0w07m")
+}
+
+[node name="Node2D" type="Node2D" parent="."]
+scale = Vector2(0.3, 0.3)
+
+[node name="CenterContainer" type="CenterContainer" parent="Node2D"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+use_top_left = true
+
+[node name="TextLabel" type="Label" parent="Node2D/CenterContainer"]
+self_modulate = Color(0.81, 0.0648, 0.0648, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 30
+text = "text
+"
+horizontal_alignment = 3

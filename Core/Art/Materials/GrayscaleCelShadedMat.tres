@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=9 format=3 uid="uid://co5oaijuf6av2"]
 
-[ext_resource type="Material" path="res://Deepmage/Core/Art/Materials/VFXMats/OutlineMaterial.tres" id="1_guskw"]
+[ext_resource type="Material" uid="uid://cmuw56hfjjlwd" path="res://Deepmage/Core/Art/Materials/VFXMats/OutlineMaterial.tres" id="1_guskw"]
 [ext_resource type="Shader" uid="uid://bfthsd8j86kte" path="res://Deepmage/Core/Art/Shaders/ShaderMats/Gobotcelshading.gdshader" id="2_k53bb"]
 
 [sub_resource type="Gradient" id="Gradient_uwheh"]
