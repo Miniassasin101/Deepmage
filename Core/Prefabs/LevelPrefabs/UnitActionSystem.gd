@@ -2,7 +2,7 @@ class_name UnitActionSystem
 extends Node
 
 
-@export var unit: Unit
+@export var test_unit: Unit
 
 
 @export var label: Label
@@ -66,9 +66,19 @@ func try_handle_unit_selection() -> bool:
 	var collider : Node = MouseController.instance.get_mouse_raycast_result("collider")
 	if !collider:
 		return false
-	else:
-		var unit: Unit = collider.get_parent() as Unit
-		Utilities.spawn_text_line(unit, "WORKINGGGG", Color.RED)
+	
+	var unit: Unit = collider.get_parent() as Unit
+	
+	if !unit:
+		return false
+	
+	if unit.turn_state != Unit.TurnState.TURN_STARTED:
+		return false
+	
+	if unit == TurnSystem.instance.selected_unit:
+		return false
+	
+	set_selected_unit(unit)
 	
 	return true
 
@@ -76,6 +86,8 @@ func try_handle_unit_selection() -> bool:
 
 
 func set_selected_unit(in_selected_unit: Unit) -> void:
+	TurnSystem.instance.set_selected_unit(in_selected_unit)
+	
 	pass
 
 
@@ -103,10 +115,10 @@ func move_to_click() -> void:
 		if target_position and target_position is Vector3:
 			#target_position.y = 0
 			
-			unit.set_movement_target(target_position)
+			test_unit.set_movement_target(target_position)
 		
-			var final_pos: Vector3 = unit.nav_agent.get_final_position()
-			var nav_data := unit.nav_agent.get_current_navigation_path()
+			var final_pos: Vector3 = test_unit.nav_agent.get_final_position()
+			var nav_data := test_unit.nav_agent.get_current_navigation_path()
 			print_debug(nav_data)
 
 
@@ -117,24 +129,24 @@ func _physics_process(delta: float) -> void:
 		var pos = MouseController.instance.current_hovered_position
 		if pos and pos is Vector3:
 			#pos.y = 0
-			unit.set_movement_target(pos)
+			test_unit.set_movement_target(pos)
 
 	# 2) If the agent has an active path, pull the next point and move the unit
-	var agent = unit.nav_agent
+	var agent = test_unit.nav_agent
 	if not agent.is_navigation_finished():
 		# This call also advances the agent’s internal path index :contentReference[oaicite:0]{index=0}
 		var next_point: Vector3 = agent.get_next_path_position()
-		var current: Vector3 = unit.global_transform.origin
+		var current: Vector3 = test_unit.global_transform.origin
 		
 		var to_next: Vector3 = next_point - current
 
 		if to_next.length() > 0.21:
 			var dir: Vector3 = to_next.normalized()
 			# translate the unit toward that point
-			unit.global_translate(dir * unit.movement_speed * delta)
+			test_unit.global_translate(dir * test_unit.movement_speed * delta)
 
 			# --- Rotation (yaw only) ---
 			var target_yaw = atan2(dir.x, dir.z)
-			var current_yaw = unit.rotation.y
-			var new_yaw = lerp_angle(current_yaw, target_yaw, unit.rotation_speed * delta)
-			unit.rotation.y = new_yaw
+			var current_yaw = test_unit.rotation.y
+			var new_yaw = lerp_angle(current_yaw, target_yaw, test_unit.rotation_speed * delta)
+			test_unit.rotation.y = new_yaw

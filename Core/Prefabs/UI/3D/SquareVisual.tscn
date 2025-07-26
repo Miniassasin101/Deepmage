@@ -28,6 +28,7 @@ blue_square_mat = SubResource("StandardMaterial3D_nqwm5")
 red_square_mat = SubResource("StandardMaterial3D_3fp6l")
 green_square_mat = SubResource("StandardMaterial3D_iiv2h")
 selection_square_meshinstance = NodePath("MeshInstance3D")
+pulse_scale = 1.2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.01, 0)

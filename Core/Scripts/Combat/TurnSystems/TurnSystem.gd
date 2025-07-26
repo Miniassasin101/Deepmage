@@ -164,7 +164,7 @@ func begin_group_turn():
 		_on_group_exhausted()
 		return
 
-	selected_unit = current_group[next]
+	set_selected_unit(current_group[next])
 	selected_unit.turn_state = Unit.TurnState.TURN_STARTED
 
 	is_player_turn = not selected_unit.is_enemy
@@ -197,4 +197,26 @@ func can_select_unit(to_unit: Unit) -> bool:
 	return is_unit_in_group(to_unit) and to_unit != selected_unit
 
 func is_unit_in_group(in_unit: Unit) -> bool:
-	return current_group.has(in_unit)
+	for u in current_group:
+		if u == in_unit:
+			return true
+	return false
+
+
+
+
+
+func set_selected_unit(in_unit: Unit) -> void:
+	if !can_select_unit(in_unit):
+		return
+		
+	# Make the previous selected unit's square white again
+	if selected_unit:
+		selected_unit.selection_visual.clear_material()
+	
+	selected_unit = in_unit
+	
+	selected_unit.selection_visual.set_blue()
+	selected_unit.selection_visual.pulse_square()
+	
+	

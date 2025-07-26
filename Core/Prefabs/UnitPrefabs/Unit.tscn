@@ -13,12 +13,13 @@ size = Vector3(0.725, 0.2, 0.325)
 [sub_resource type="BoxShape3D" id="BoxShape3D_0qgfu"]
 size = Vector3(1, 1.69678, 1)
 
-[node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor")]
+[node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual")]
 script = ExtResource("1_ohquw")
 above_head_marker = NodePath("AboveHeadMarker")
 nav_agent = NodePath("NavigationAgent3D")
 capsule_body = NodePath("Rig/MeshInstance3D")
 capsule_visor = NodePath("Rig/MeshInstance3D/MeshInstance3D")
+selection_visual = NodePath("SelectionSquareRoot/GridSystemVisual")
 
 [node name="Rig" type="Node3D" parent="."]
 transform = Transform3D(0.852131, 0, 0, 0, 0.852131, 0, 0, 0, 0.852131, 0, 0, 0)

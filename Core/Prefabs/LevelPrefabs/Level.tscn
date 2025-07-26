@@ -175,9 +175,9 @@ is_enemy = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.68029)
 ui_name = "Marigold"
 
-[node name="UnitActionSystem" type="Node" parent="." node_paths=PackedStringArray("unit", "label")]
+[node name="UnitActionSystem" type="Node" parent="." node_paths=PackedStringArray("test_unit", "label")]
 script = ExtResource("9_lf0eb")
-unit = NodePath("../UnitManager/Unit")
+test_unit = NodePath("../UnitManager/Unit")
 label = NodePath("Label")
 
 [node name="Label" type="Label" parent="UnitActionSystem"]

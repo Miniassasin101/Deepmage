@@ -16,6 +16,7 @@ enum TurnState {
 @export var death_vfx_scene: PackedScene
 @export var capsule_body: MeshInstance3D
 @export var capsule_visor: MeshInstance3D
+@export var selection_visual: SelectionSquareVisual
 
 
 @export_category("Temp Stats")

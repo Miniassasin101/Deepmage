@@ -6,12 +6,16 @@ class_name SelectionSquareVisual
 @export var green_square_mat: StandardMaterial3D
 @export var selection_square_meshinstance: MeshInstance3D
 
+@export var pulse_scale: float = 1.1
+
+var pulse_tween: Tween = null
+
 # Sets the override material of the mesh instance to the given material (or clears if null)
 func set_material(mat: StandardMaterial3D) -> void:
 	if not selection_square_meshinstance:
 		push_error("SelectionSquareVisual: MeshInstance3D is not assigned.")
 		return
-	selection_square_meshinstance.override_material = mat
+	selection_square_meshinstance.set_surface_override_material(0, mat)
 
 # Convenience methods for each color
 func set_blue() -> void:
@@ -55,3 +59,15 @@ func toggle_visibility() -> void:
 		push_error("SelectionSquareVisual: MeshInstance3D is not assigned.")
 		return
 	selection_square_meshinstance.visible = not selection_square_meshinstance.visible
+
+
+func pulse_square() -> void:
+	
+	if pulse_tween and pulse_tween.is_running():
+		pulse_tween.kill()
+	
+	pulse_tween = create_tween()
+	pulse_tween.tween_property(selection_square_meshinstance, "scale", Vector3(pulse_scale, pulse_scale, pulse_scale), 0.2)
+	pulse_tween.tween_property(selection_square_meshinstance, "scale", Vector3(1.0, 1.0, 1.0), 0.2)
+	
+	
