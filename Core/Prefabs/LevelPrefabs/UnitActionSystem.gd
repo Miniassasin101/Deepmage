@@ -52,8 +52,27 @@ func action_input_process() -> void:
 
 
 func on_left_mouse_clicked() -> void:
-	move_to_click()
+	#move_to_click()
 	#call_diego_the_n_word()
+	
+	if try_handle_unit_selection():
+		return
+	
+	
+
+
+func try_handle_unit_selection() -> bool:
+	
+	var collider : Node = MouseController.instance.get_mouse_raycast_result("collider")
+	if !collider:
+		return false
+	else:
+		var unit: Unit = collider.get_parent() as Unit
+		Utilities.spawn_text_line(unit, "WORKINGGGG", Color.RED)
+	
+	return true
+
+# Selection Mechanics
 
 
 func set_selected_unit(in_selected_unit: Unit) -> void:

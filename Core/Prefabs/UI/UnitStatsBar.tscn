@@ -1,11 +1,11 @@
 [gd_scene load_steps=13 format=3 uid="uid://3p3xt0lymqsd"]
 
 [ext_resource type="Script" uid="uid://d31u148mfqqic" path="res://Deepmage/Core/Scripts/UI/UnitStatsBar.gd" id="1_73dlo"]
-[ext_resource type="StyleBox" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarShadowedStyleBox.tres" id="1_cydlx"]
-[ext_resource type="StyleBox" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarBlueFlatStyleBox.tres" id="3_cydlx"]
-[ext_resource type="StyleBox" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarRedShadowedStyleBox.tres" id="3_ee32f"]
-[ext_resource type="StyleBox" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarBlueShadowedStyleBox.tres" id="4_mx6qg"]
-[ext_resource type="StyleBox" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarRedFlatStyleBox.tres" id="5_afvsy"]
+[ext_resource type="StyleBox" uid="uid://dxf8kqkw1goiw" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarShadowedStyleBox.tres" id="1_cydlx"]
+[ext_resource type="StyleBox" uid="uid://cea8p7q7fcxjn" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarBlueFlatStyleBox.tres" id="3_cydlx"]
+[ext_resource type="StyleBox" uid="uid://ctfdrvgj0jmvy" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarRedShadowedStyleBox.tres" id="3_ee32f"]
+[ext_resource type="StyleBox" uid="uid://dchax7jq33003" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarBlueShadowedStyleBox.tres" id="4_mx6qg"]
+[ext_resource type="StyleBox" uid="uid://cb4hx8gm801ov" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarRedFlatStyleBox.tres" id="5_afvsy"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_bwm3i"]
 font_size = 21
@@ -30,7 +30,7 @@ colors = PackedColorArray(0.774322, 0.559134, 0.910283, 1, 1, 1, 1, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_hmxcl"]
 gradient = SubResource("Gradient_2merk")
 
-[node name="UnitStatsBar" type="MarginContainer" node_paths=PackedStringArray("unit_stats_bar_content", "unit_name_label", "initiative_score_label", "movement_points_label", "health_text_label", "health_bar")]
+[node name="UnitStatsBar" type="MarginContainer" node_paths=PackedStringArray("unit_stats_bar_content", "unit_name_label", "initiative_score_label", "health_text_label", "health_bar")]
 offset_left = 2.0
 offset_top = 2.0
 offset_right = 157.0
@@ -39,7 +39,6 @@ script = ExtResource("1_73dlo")
 unit_stats_bar_content = NodePath("UnitStatsBarContent")
 unit_name_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/UnitNameLabel")
 initiative_score_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/InitiativeScoreLabel")
-movement_points_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/MovementPointsLabel")
 health_text_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/HealthTextLabel")
 health_bar = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HealthBar")
 shadowed_stylebox = ExtResource("1_cydlx")
@@ -73,11 +72,9 @@ layout_mode = 2
 text = "Initiative Score"
 horizontal_alignment = 1
 
-[node name="MovementPointsLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer"]
-visible = false
+[node name="MultipleActionPenalty" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Move points
-Remaining"
+text = "Multiple Action Penalty"
 horizontal_alignment = 1
 
 [node name="HealthTextLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer"]

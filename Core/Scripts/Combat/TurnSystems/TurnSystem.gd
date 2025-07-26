@@ -7,7 +7,7 @@ extends Node
 
 
 ## How many rounds have passed since combat began.
-var round_number: int = 0
+var round_number: int = 1
 
 ## How many turns have passed since combat began.
 var turn_number: int = 1
@@ -118,6 +118,8 @@ func advance_round() -> void:
 		u.turn_state = Unit.TurnState.IN_QUEUE
 	
 	advance_group()
+	
+	SignalBus.on_ui_update.emit()
 	
 
 

@@ -5,7 +5,7 @@ extends MarginContainer
 
 @export var unit_name_label: Label
 @export var initiative_score_label: Label
-@export var movement_points_label: Label
+@export var multiple_action_penalty_label: Label
 @export var health_text_label: Label
 @export var health_bar: TextureProgressBar
 

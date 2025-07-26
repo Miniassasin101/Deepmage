@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://2h1a1e1r8hc2"]
+[gd_scene load_steps=7 format=3 uid="uid://2h1a1e1r8hc2"]
 
 [ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
 [ext_resource type="Script" uid="uid://byevnkq30m4mb" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.gd" id="1_ohquw"]
@@ -9,6 +9,9 @@ lightmap_size_hint = Vector2i(17, 14)
 
 [sub_resource type="BoxMesh" id="BoxMesh_0qgfu"]
 size = Vector3(0.725, 0.2, 0.325)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0qgfu"]
+size = Vector3(1, 1.69678, 1)
 
 [node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor")]
 script = ExtResource("1_ohquw")
@@ -30,6 +33,15 @@ surface_material_override/0 = ExtResource("1_cc6tg")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.423313, 0.411077)
 mesh = SubResource("BoxMesh_0qgfu")
 surface_material_override/0 = ExtResource("1_cc6tg")
+
+[node name="UnitArea3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.854524, 0)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UnitArea3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0065918, 0)
+shape = SubResource("BoxShape3D_0qgfu")
 
 [node name="AboveHeadMarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79278, 0)

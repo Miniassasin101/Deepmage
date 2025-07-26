@@ -24,7 +24,7 @@ func _ready() -> void:
 	#SignalBus.on_turn_changed.connect(on_turn_changed)
 	#SignalBus.on_cycle_changed.connect(on_cycle_changed)
 	#SignalBus.on_phase_changed.connect(on_phase_changed)
-	#SignalBus.on_ui_update.connect(on_ui_update)
+	SignalBus.on_ui_update.connect(on_ui_update)
 	#UIBus.on_ui_update.connect(on_ui_update)
 	
 
@@ -33,7 +33,7 @@ func _ready() -> void:
 
 func on_ui_update() -> void:
 
-	update_turn_label()
+	update_round_label()
 	#update_phase_label()
 	#update_cycle_label()
 	#update_gait_label()
@@ -41,9 +41,9 @@ func on_ui_update() -> void:
 func _on_end_turn_button_pressed() -> void:
 	SignalBus.end_turn.emit()
 
-func on_turn_changed() -> void:
+func on_round_changed() -> void:
 
-	update_turn_label()
+	update_round_label()
 
 func on_phase_changed() -> void:
 	update_phase_label()
@@ -51,8 +51,8 @@ func on_phase_changed() -> void:
 func on_cycle_changed() -> void:
 	update_cycle_label()
 
-func update_turn_label() -> void:
-	#round_counter_label.text = "Round " + str(turn_system.round_number)
+func update_round_label() -> void:
+	round_counter_label.text = "Round " + str(turn_system.round_number)
 	pass
 
 func update_cycle_label() -> void:
