@@ -31,3 +31,7 @@ func get_first_unit() -> Unit:
 		return null
 	
 	return units.front()
+
+
+func get_all_units() -> Array[Unit]:
+	return units

@@ -1,0 +1,36 @@
+[gd_scene load_steps=8 format=3 uid="uid://cwusixosbj5vk"]
+
+[ext_resource type="Script" uid="uid://boxx0wpfhk8kw" path="res://Deepmage/Core/Prefabs/UI/3D/SelectionSquareVisual.gd" id="1_0r24g"]
+[ext_resource type="Material" uid="uid://bqpcedxypvvxt" path="res://Deepmage/Core/Art/Materials/GridCellVisual.tres" id="1_kejc2"]
+[ext_resource type="Texture2D" uid="uid://6fbq1nl6oefe" path="res://Deepmage/Core/Art/Textures/UI/white_square_outline.png" id="2_2xluo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nqwm5"]
+transparency = 1
+albedo_color = Color(0.0980392, 0.345098, 1, 1)
+albedo_texture = ExtResource("2_2xluo")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3fp6l"]
+transparency = 1
+albedo_color = Color(0.781217, 0.0603331, 0.406942, 1)
+albedo_texture = ExtResource("2_2xluo")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iiv2h"]
+transparency = 1
+albedo_color = Color(0.00438385, 0.512838, 0.388282, 1)
+albedo_texture = ExtResource("2_2xluo")
+
+[sub_resource type="QuadMesh" id="QuadMesh_3f0ys"]
+material = ExtResource("1_kejc2")
+
+[node name="SelectionSquareVisual" type="Node3D" node_paths=PackedStringArray("selection_square_meshinstance")]
+script = ExtResource("1_0r24g")
+blue_square_mat = SubResource("StandardMaterial3D_nqwm5")
+red_square_mat = SubResource("StandardMaterial3D_3fp6l")
+green_square_mat = SubResource("StandardMaterial3D_iiv2h")
+selection_square_meshinstance = NodePath("MeshInstance3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.01, 0)
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("QuadMesh_3f0ys")

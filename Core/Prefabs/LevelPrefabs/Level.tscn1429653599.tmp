@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=21 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
@@ -15,8 +15,6 @@
 [ext_resource type="Script" uid="uid://1miy676tt71s" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UnitManager.gd" id="11_lf0eb"]
 [ext_resource type="PackedScene" uid="uid://2h1a1e1r8hc2" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.tscn" id="12_k2c3k"]
 [ext_resource type="Script" uid="uid://hbm8nks1et3p" path="res://Deepmage/Core/Scripts/UI/TurnSystemUI.gd" id="15_ex7fh"]
-[ext_resource type="Script" uid="uid://dyngi1ipggvgb" path="res://Deepmage/Core/Scripts/UI/InitiativeQueueUI.gd" id="16_2uyvs"]
-[ext_resource type="PackedScene" uid="uid://3p3xt0lymqsd" path="res://Deepmage/Core/Prefabs/UI/UnitStatsBar.tscn" id="16_ecsph"]
 [ext_resource type="Script" uid="uid://cjhhvf5ub04kj" path="res://Deepmage/Core/Prefabs/UI/FPSLabel.gd" id="16_ex7fh"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_lf0eb"]
@@ -28,9 +26,6 @@ geometry_source_geometry_mode = 2
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_avqdt"]
 data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_ex7fh"]
-font_size = 100
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5ega"]
 bg_color = Color(0.15, 0.15, 0.15, 1)
@@ -136,29 +131,13 @@ script = ExtResource("11_lf0eb")
 
 [node name="Unit" parent="UnitManager" instance=ExtResource("12_k2c3k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
-ui_name = "Ruby"
+ui_name = "Hazel"
 movement_speed = 20.0
 rotation_speed = 10.0
 
-[node name="Unit2" parent="UnitManager" instance=ExtResource("12_k2c3k")]
-ui_name = "Azure"
-is_enemy = true
-
-[node name="Unit3" parent="UnitManager" instance=ExtResource("12_k2c3k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.68029)
-ui_name = "Marigold"
-
-[node name="UnitActionSystem" type="Node" parent="." node_paths=PackedStringArray("unit", "label")]
+[node name="UnitActionSystem" type="Node" parent="." node_paths=PackedStringArray("unit")]
 script = ExtResource("9_lf0eb")
 unit = NodePath("../UnitManager/Unit")
-label = NodePath("Label")
-
-[node name="Label" type="Label" parent="UnitActionSystem"]
-offset_left = 447.0
-offset_top = 261.0
-offset_right = 487.0
-offset_bottom = 330.0
-label_settings = SubResource("LabelSettings_ex7fh")
 
 [node name="TurnSystem" type="Node" parent="." node_paths=PackedStringArray("unit_manager")]
 script = ExtResource("10_k2c3k")
@@ -172,17 +151,12 @@ script = ExtResource("5_jtghi")
 text_controller_scene = ExtResource("9_ccwc0")
 character_log_queue_scene = ExtResource("10_lf0eb")
 
-[node name="TurnSystemUI" type="Control" parent="UILayer" node_paths=PackedStringArray("turn_system", "combat_system", "end_turn_container", "end_turn_button")]
+[node name="TurnSystemUI" type="Control" parent="UILayer"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-mouse_filter = 2
 script = ExtResource("15_ex7fh")
-turn_system = NodePath("../../TurnSystem")
-combat_system = NodePath("../../CombatSystem")
-end_turn_container = NodePath("EndTurnContainer")
-end_turn_button = NodePath("EndTurnContainer/MarginContainer/EndTurnButton")
 
 [node name="EndTurnContainer" type="PanelContainer" parent="UILayer/TurnSystemUI"]
 layout_mode = 1
@@ -209,18 +183,13 @@ theme_override_constants/margin_bottom = 2
 layout_mode = 2
 text = "END TURN"
 
-[node name="InitiativeQueueUI" type="Control" parent="UILayer" node_paths=PackedStringArray("unit_manager", "unit_stats_container")]
+[node name="InitiativeQueueUI" type="Control" parent="UILayer"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("16_2uyvs")
-unit_manager = NodePath("../../UnitManager")
-unit_stats_bar_scene = ExtResource("16_ecsph")
-unit_stats_container = NodePath("PanelContainer/MarginContainer/UnitStatsContainer")
 
 [node name="PanelContainer" type="PanelContainer" parent="UILayer/InitiativeQueueUI"]
 layout_mode = 1
@@ -243,15 +212,10 @@ theme_override_constants/margin_bottom = 2
 [node name="UnitStatsContainer" type="VBoxContainer" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="UnitStatsBar" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer/UnitStatsContainer" instance=ExtResource("16_ecsph")]
-layout_mode = 2
-
 [node name="Label" type="Label" parent="UILayer"]
 offset_right = 40.0
 offset_bottom = 23.0
 script = ExtResource("16_ex7fh")
-
-[connection signal="pressed" from="UILayer/TurnSystemUI/EndTurnContainer/MarginContainer/EndTurnButton" to="UILayer/TurnSystemUI" method="_on_end_turn_button_pressed"]
 
 [editable path="Camera"]
 [editable path="MouseController"]
