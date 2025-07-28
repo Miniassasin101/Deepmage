@@ -8,6 +8,7 @@ extends Button
 @export var button_up_style_box: StyleBoxFlat
 @export var button_down_style_box: StyleBoxFlat
 
+var action_system_ui: ActionSystemUI = null
 var action: Action
 var is_gait: bool = false
 var gait: int = 0
@@ -29,6 +30,8 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 
+func set_action_system_ui(asui: ActionSystemUI) -> void:
+	action_system_ui = asui
 
 
 func set_base_action(_action: Action) -> void:
@@ -62,6 +65,7 @@ func handle_special_case() -> void:
 		SpecialCase.NONE:
 			#SignalBus.selected_move_changed.emit(move)
 			#EventBus.selected_action_changed.emit(action)
+			action_system_ui.on_action_button_pressed(action)
 			pass
 		
 		SpecialCase.GAIT:

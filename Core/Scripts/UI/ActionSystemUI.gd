@@ -11,6 +11,7 @@ extends Control
 @export var action_button_hbox: HBoxContainer
 @export var action_button_prefab: PackedScene = null
 
+var active_buttons: Array[ActionButtonUI] = []
 
 func _ready() -> void:
 	SignalBus.on_unit_selected.connect(on_unit_selected)
@@ -25,10 +26,21 @@ func make_action_buttons(unit: Unit) -> void:
 	for child in action_button_hbox.get_children():
 		child.queue_free()
 	
+	active_buttons.clear()
+	
 	for action in unit.character_sheet.action_container.actions:
 		var new_button: ActionButtonUI = action_button_prefab.instantiate() as ActionButtonUI
 		
 		new_button.set_base_action(action)
+		new_button.set_action_system_ui(self)
 		
 		action_button_hbox.add_child(new_button)
-		
+		active_buttons.append(new_button)
+	
+	
+	on_action_button_pressed(active_buttons[0].action)
+
+
+func on_action_button_pressed(action: Action) -> void:
+	SignalBus.on_selected_action_changed.emit(action)
+	pass

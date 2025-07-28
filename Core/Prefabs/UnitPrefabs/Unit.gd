@@ -97,3 +97,6 @@ func set_movement_target(movement_target: Vector3):
 
 func get_world_position_above_marker() -> Vector3:
 	return above_head_marker.global_position if above_head_marker else Vector3.ZERO
+
+func get_action_container() -> ActionContainer:
+	return character_sheet.action_container

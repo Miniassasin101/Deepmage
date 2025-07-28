@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://ceujy1qm0i6o6" path="res://Deepmage/Core/Scripts/Units/CharacterSheet.gd" id="4_1lanh"]
 [ext_resource type="Script" uid="uid://cusgogua72ojh" path="res://Deepmage/Core/Scripts/ActionSystem/ActionContainer.gd" id="5_t2svf"]
 [ext_resource type="Script" uid="uid://cvislitkwpg12" path="res://Deepmage/Core/Scripts/ActionSystem/Action.gd" id="6_mhrm2"]
+[ext_resource type="Script" uid="uid://dyiusi38rqf6w" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextAction.gd" id="7_k5ckj"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ohquw"]
 lightmap_size_hint = Vector2i(17, 14)
@@ -16,23 +17,23 @@ size = Vector3(0.725, 0.2, 0.325)
 [sub_resource type="BoxShape3D" id="BoxShape3D_0qgfu"]
 size = Vector3(1, 1.69678, 1)
 
-[sub_resource type="Resource" id="Resource_k5ckj"]
-script = ExtResource("6_mhrm2")
-action_name = "Taco"
-tags = Array[String]([])
-metadata/_custom_type_script = "uid://cvislitkwpg12"
-
-[sub_resource type="Resource" id="Resource_mhrm2"]
-script = ExtResource("6_mhrm2")
-action_name = "Tueday"
-tags = Array[String]([])
-metadata/_custom_type_script = "uid://cvislitkwpg12"
-
 [sub_resource type="Resource" id="Resource_3ct77"]
-script = ExtResource("6_mhrm2")
-action_name = "Nigger"
+script = ExtResource("7_k5ckj")
+spawn_text = "Nigger"
+text_color = Color(0, 0, 0, 1)
+scale = 1.0
+action_name = "Spawn Text"
 tags = Array[String]([])
-metadata/_custom_type_script = "uid://cvislitkwpg12"
+metadata/_custom_type_script = "uid://dyiusi38rqf6w"
+
+[sub_resource type="Resource" id="Resource_k5ckj"]
+script = ExtResource("7_k5ckj")
+spawn_text = "Testing"
+text_color = Color(0.941176, 0.972549, 1, 1)
+scale = 1.0
+action_name = "Test Text"
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://dyiusi38rqf6w"
 
 [node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual", "character_sheet")]
 script = ExtResource("1_ohquw")
@@ -88,10 +89,12 @@ remote_path = NodePath("../GridSystemVisual")
 update_rotation = false
 update_scale = false
 
-[node name="CharacterSheet" type="Node" parent="." node_paths=PackedStringArray("action_container")]
+[node name="CharacterSheet" type="Node" parent="." node_paths=PackedStringArray("unit", "action_container")]
 script = ExtResource("4_1lanh")
+unit = NodePath("..")
 action_container = NodePath("ActionContainer")
 
-[node name="ActionContainer" type="Node" parent="CharacterSheet"]
+[node name="ActionContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
 script = ExtResource("5_t2svf")
-actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_k5ckj"), SubResource("Resource_mhrm2"), SubResource("Resource_3ct77")])
+unit = NodePath("../..")
+actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_3ct77"), SubResource("Resource_k5ckj")])

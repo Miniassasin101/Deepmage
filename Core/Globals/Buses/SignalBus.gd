@@ -9,6 +9,10 @@ signal on_unit_unselected(unit: Unit)
 
 signal instantiate_initiative_queue
 
+signal on_action_started(in_action: Action)
+
+signal on_action_ended(in_action: Action)
+
 
 
 
@@ -21,3 +25,5 @@ signal update_stat_bars
 signal end_turn
 
 signal on_ui_update
+
+signal on_selected_action_changed(action: Action)
