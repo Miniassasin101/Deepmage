@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=30 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
@@ -15,9 +15,11 @@
 [ext_resource type="Script" uid="uid://1miy676tt71s" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UnitManager.gd" id="11_lf0eb"]
 [ext_resource type="PackedScene" uid="uid://2h1a1e1r8hc2" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.tscn" id="12_k2c3k"]
 [ext_resource type="Script" uid="uid://hbm8nks1et3p" path="res://Deepmage/Core/Scripts/UI/TurnSystemUI.gd" id="15_ex7fh"]
+[ext_resource type="Script" uid="uid://cby42fxiu4cv5" path="res://Deepmage/Core/Scripts/UI/ActionSystemUI.gd" id="15_j7436"]
 [ext_resource type="Script" uid="uid://dyngi1ipggvgb" path="res://Deepmage/Core/Scripts/UI/InitiativeQueueUI.gd" id="16_2uyvs"]
 [ext_resource type="PackedScene" uid="uid://3p3xt0lymqsd" path="res://Deepmage/Core/Prefabs/UI/UnitStatsBar.tscn" id="16_ecsph"]
 [ext_resource type="Script" uid="uid://cjhhvf5ub04kj" path="res://Deepmage/Core/Prefabs/UI/FPSLabel.gd" id="16_ex7fh"]
+[ext_resource type="PackedScene" uid="uid://psdfsrnutgxe" path="res://Deepmage/Core/Prefabs/UI/ActionButtonUI.tscn" id="16_tko1n"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_lf0eb"]
 vertices = PackedVector3Array(0.609299, 1.06628, 25.5893, 0.859299, 1.06628, 22.8393, -0.640701, 1.06628, 22.8393, -4.8907, 1.06628, 25.5893, -0.890701, 1.06628, 21.5893, 9.3593, 1.06628, 21.3393, 18.6093, 1.06628, -18.6607, -18.6407, 1.06628, -18.6607, -18.6407, 1.06628, 26.3393, 9.6093, 1.06628, 22.0893, 18.6093, 1.06628, 22.0893, -5.1407, 1.06628, 26.3393, 5.3593, 1.06628, 25.8393, 9.3593, 1.06628, 22.8393, 5.1093, 1.06628, 27.0893, 3.6093, 1.06628, 27.0893, 3.8593, 1.06628, 44.8393, 18.6093, 1.06628, 44.8393, -4.8907, 1.06628, 27.0893, -18.6407, 1.06628, 44.8393, -3.6407, 1.06628, 44.8393, -3.3907, 1.06628, 27.0893)
@@ -199,6 +201,37 @@ script = ExtResource("5_jtghi")
 text_controller_scene = ExtResource("9_ccwc0")
 character_log_queue_scene = ExtResource("10_lf0eb")
 
+[node name="ActionSystemUI" type="Control" parent="UILayer" node_paths=PackedStringArray("turn_system_ui", "initiative_queue_ui", "action_button_hbox")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("15_j7436")
+turn_system_ui = NodePath("../TurnSystemUI")
+initiative_queue_ui = NodePath("../InitiativeQueueUI")
+action_button_hbox = NodePath("ActionButtonHbox")
+action_button_prefab = ExtResource("16_tko1n")
+
+[node name="ActionButtonHbox" type="HBoxContainer" parent="UILayer/ActionSystemUI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.898
+anchor_right = 0.5
+anchor_bottom = 0.898
+offset_top = -2.90405
+offset_bottom = -2.90405
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ActionButtonUI" parent="UILayer/ActionSystemUI/ActionButtonHbox" instance=ExtResource("16_tko1n")]
+layout_mode = 2
+
 [node name="TurnSystemUI" type="Control" parent="UILayer" node_paths=PackedStringArray("turn_system", "combat_system", "end_turn_container", "end_turn_button", "turn_phase_label", "round_counter_label", "cycle_counter_label", "movement_gait_label")]
 layout_mode = 3
 anchors_preset = 15
@@ -342,10 +375,12 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -20.0
-offset_right = 40.0
-offset_bottom = 20.0
+offset_left = 5.0
+offset_top = -64.0
+offset_right = 201.0
+offset_bottom = 63.0
 grow_vertical = 2
+scale = Vector2(0.725, 0.725)
 theme_override_styles/panel = SubResource("StyleBoxFlat_o5ega")
 
 [node name="MarginContainer" type="MarginContainer" parent="UILayer/InitiativeQueueUI/PanelContainer"]

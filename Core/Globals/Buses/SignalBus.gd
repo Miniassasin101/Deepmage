@@ -3,9 +3,12 @@
 extends Node
 
 
-signal selected_unit_changed(unit: Unit)
+signal on_unit_selected(unit: Unit)
+
+signal on_unit_unselected(unit: Unit)
 
 signal instantiate_initiative_queue
+
 
 
 

@@ -1,4 +1,4 @@
-class_name UnitStatsUI
+class_name InitiativeQueueUI
 extends Control
 
 @export var unit_manager: UnitManager
@@ -22,15 +22,23 @@ func _ready() -> void:
 	
 	SignalBus.instantiate_initiative_queue.connect(instantiate_initiative_queue)
 	SignalBus.update_stat_bars.connect(_on_update_stats_bars)
+	
+	SignalBus.on_unit_selected.connect(on_unit_selected)
+	SignalBus.on_unit_unselected.connect(on_unit_unselected)
+	
 	#UIBus.update_stat_bars.connect(_on_update_stats_bars)
 
-
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("right_mouse"):
+		var stats_bar: UnitStatsBar = unit_stats_bars[UnitManager.instance.get_first_unit()]
+		stats_bar.start_pulse()
 
 func instantiate_initiative_queue(_unit: Unit = null) -> void:
 	if unit_manager:
 		# Remove all current children from the container.
 		for child: UnitStatsBar in unit_stats_container.get_children():
 			child.abort_tween()
+			child.abort_pulse()
 			child.queue_free()
 		unit_stats_bars.clear()
 
@@ -51,8 +59,8 @@ func instantiate_initiative_queue(_unit: Unit = null) -> void:
 		# Create a stats bar for each unit in the ordered array.
 		for unit in units_to_create_for:
 			var stats_bar = unit_stats_bar_scene.instantiate() as UnitStatsBar
-			stats_bar.update_stats(unit)  # Initialize with current values.
 			unit_stats_container.add_child(stats_bar)
+			stats_bar.update_stats(unit)  # Initialize with current values.
 			unit_stats_bars[unit] = stats_bar
 		
 
@@ -68,3 +76,15 @@ func _on_update_stats_bars() -> void:
 				stats_bar.stop_drift()
 		else:
 			unit_stats_bars.erase(unit)
+
+
+func on_unit_selected(unit: Unit) -> void:
+	await get_tree().process_frame
+	var stats_bar: UnitStatsBar = unit_stats_bars[unit]
+	stats_bar.start_pulse()
+
+
+func on_unit_unselected(unit: Unit) -> void:
+	await get_tree().process_frame
+	var stats_bar: UnitStatsBar = unit_stats_bars[unit]
+	stats_bar.stop_pulse()

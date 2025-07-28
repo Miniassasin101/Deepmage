@@ -209,14 +209,13 @@ func is_unit_in_group(in_unit: Unit) -> bool:
 func set_selected_unit(in_unit: Unit) -> void:
 	if !can_select_unit(in_unit):
 		return
-		
+	
 	# Make the previous selected unit's square white again
 	if selected_unit:
 		selected_unit.selection_visual.clear_material()
+		SignalBus.on_unit_unselected.emit(selected_unit)
 	
 	selected_unit = in_unit
-	
+	SignalBus.on_unit_selected.emit(selected_unit)
 	selected_unit.selection_visual.set_blue()
 	selected_unit.selection_visual.pulse_square()
-	
-	

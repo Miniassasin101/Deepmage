@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://psdfsrnutgxe"]
+
+[ext_resource type="Script" uid="uid://dvpjdgtyi23ow" path="res://Deepmage/Core/Scripts/UI/ActionButtonUI.gd" id="1_wdnnx"]
+[ext_resource type="StyleBox" uid="uid://dxf8kqkw1goiw" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarShadowedStyleBox.tres" id="2_nmqxa"]
+[ext_resource type="StyleBox" uid="uid://n31yek6n5pbc" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarFlatStyleBox.tres" id="3_sklea"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nmqxa"]
+bg_color = Color(0.132, 0.147, 0.15, 0.945098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.92, 0.92, 0.92, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_size = 5
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_llcqf"]
+font_size = 18
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="ActionButtonUI" type="Button" node_paths=PackedStringArray("button_text", "button", "panel")]
+custom_minimum_size = Vector2(35, 35)
+offset_left = -18.0
+offset_top = -17.0
+offset_right = 17.0
+offset_bottom = 18.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+action_mode = 0
+script = ExtResource("1_wdnnx")
+button_text = NodePath("Text2")
+button = NodePath(".")
+panel = NodePath("Panel")
+button_up_style_box = ExtResource("2_nmqxa")
+button_down_style_box = ExtResource("3_sklea")
+
+[node name="Panel" type="Panel" parent="."]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.93932, 0.948154)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nmqxa")
+
+[node name="Text2" type="Label" parent="."]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+offset_left = 10.0
+offset_top = 4.0
+offset_right = 45.0
+offset_bottom = 59.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.43, 0.43)
+text = "Strike"
+label_settings = SubResource("LabelSettings_llcqf")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

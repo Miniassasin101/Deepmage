@@ -20,11 +20,25 @@ extends MarginContainer
 @export var drift_amount: float = 20.0   # Pixels to drift right.
 @export var drift_duration: float = 2.0    # Duration (in seconds) for one half of the drift.
 
+# Pulse tweakable properties:
+@export var pulse_amount: float = 0.8
+@export var pulse_duration: float = 0.5
+@export var pulse_border_width: int = 3
+
+
+
 # Reference to the drift tween.
 var drift_tween: Tween = null
 
+
+
+
+var pulse_tween: Tween = null
+
 # Store the original position.
 var base_position: Vector2 = Vector2.ZERO
+
+var stats_bar_unit: Unit = null
 
 func _ready() -> void:
 	# Set initial stylebox override.
@@ -32,13 +46,28 @@ func _ready() -> void:
 
 	# Store the initial position so we can reset later.
 	base_position = unit_stats_bar_content.get_position()
+	
+	make_styleboxes_unique()
+	
+
+
+func make_styleboxes_unique() -> void:
+
+	red_shadowed_stylebox = red_shadowed_stylebox.duplicate()
+	blue_shadowed_stylebox = blue_shadowed_stylebox.duplicate()
+	red_flat_stylebox = red_flat_stylebox.duplicate()
+	blue_flat_stylebox = blue_flat_stylebox.duplicate()
+
 
 # Update the stats bar with the given unit's stats.
 func update_stats(unit: Unit) -> void:
 	if !TurnSystem.instance.is_combat_started:
 		#return
 		pass
-
+	
+	
+	stats_bar_unit = unit
+	
 	unit_name_label.text = unit.ui_name
 
 	var lowest_score: int = TurnSystem.instance.lowest_initiative_score
@@ -71,6 +100,14 @@ func update_stats(unit: Unit) -> void:
 			
 		else:
 			unit_stats_bar_content.add_theme_stylebox_override("panel", blue_shadowed_stylebox)
+	
+	if TurnSystem.instance.selected_unit == unit:
+		start_pulse()
+	else:
+		stop_pulse()
+	
+
+
 
 # Call this function to start the drift animation.
 func start_drift() -> void:
@@ -97,3 +134,43 @@ func abort_tween() -> bool:
 		drift_tween = null
 		return true
 	return false
+
+## Pulses the color of the stylebox to indicate selected unit.
+func start_pulse() -> void:
+	if pulse_tween or !get_tree():
+		return  # Already pulsing
+
+	var current_stylebox := unit_stats_bar_content.get_theme_stylebox("panel") as StyleBoxFlat
+	if current_stylebox == null:
+		return
+
+	# Duplicate to avoid modifying shared resource
+	var pulsing_stylebox: StyleBoxFlat = current_stylebox.duplicate()
+	unit_stats_bar_content.add_theme_stylebox_override("panel", pulsing_stylebox)
+
+	var original_color: Color = pulsing_stylebox.border_color
+	var lighter_color: Color = original_color.lightened(pulse_amount)
+	
+	pulsing_stylebox.set_border_width_all(pulse_border_width)
+
+	pulse_tween = get_tree().create_tween()
+	pulse_tween.set_loops()  # Infinite loop
+	pulse_tween.tween_property(pulsing_stylebox, "border_color", lighter_color, pulse_duration) \
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	pulse_tween.tween_property(pulsing_stylebox, "border_color", original_color, pulse_duration) \
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+func stop_pulse() -> void:
+	if pulse_tween:
+		pulse_tween.kill()
+		pulse_tween = null
+
+		# Restore original stylebox
+		var current_unit := TurnSystem.instance.selected_unit
+		if current_unit:
+			update_stats(stats_bar_unit)  # Reapply correct stylebox based on current unit state
+
+func abort_pulse() -> void:
+	if pulse_tween:
+		pulse_tween.kill()
+		pulse_tween = null
