@@ -1,12 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://2h1a1e1r8hc2"]
+[gd_scene load_steps=16 format=3 uid="uid://2h1a1e1r8hc2"]
 
 [ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
 [ext_resource type="Script" uid="uid://byevnkq30m4mb" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.gd" id="1_ohquw"]
 [ext_resource type="PackedScene" uid="uid://cwusixosbj5vk" path="res://Deepmage/Core/Prefabs/UI/3D/SquareVisual.tscn" id="3_0qgfu"]
+[ext_resource type="Script" uid="uid://dcltq1auxqj26" path="res://Deepmage/Core/Scripts/Units/MovementController.gd" id="3_1oy7d"]
 [ext_resource type="Script" uid="uid://ceujy1qm0i6o6" path="res://Deepmage/Core/Scripts/Units/CharacterSheet.gd" id="4_1lanh"]
 [ext_resource type="Script" uid="uid://cusgogua72ojh" path="res://Deepmage/Core/Scripts/ActionSystem/ActionContainer.gd" id="5_t2svf"]
 [ext_resource type="Script" uid="uid://cvislitkwpg12" path="res://Deepmage/Core/Scripts/ActionSystem/Action.gd" id="6_mhrm2"]
 [ext_resource type="Script" uid="uid://dyiusi38rqf6w" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextAction.gd" id="7_k5ckj"]
+[ext_resource type="Script" uid="uid://bl34p0y06cyys" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/MoveAction.gd" id="8_3ct77"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ohquw"]
 lightmap_size_hint = Vector2i(17, 14)
@@ -35,7 +37,18 @@ action_name = "Test Text"
 tags = Array[String]([])
 metadata/_custom_type_script = "uid://dyiusi38rqf6w"
 
-[node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual", "character_sheet")]
+[sub_resource type="Resource" id="Resource_1oy7d"]
+script = ExtResource("8_3ct77")
+move_speed = 10.0
+rotate_speed = 8.0
+acceleration_time = 0.3
+rotation_acceleration_time = 0.3
+stopping_distance = 0.1
+action_name = "Move Test"
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://bl34p0y06cyys"
+
+[node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual", "character_sheet", "movement_controller")]
 script = ExtResource("1_ohquw")
 above_head_marker = NodePath("AboveHeadMarker")
 nav_agent = NodePath("NavigationAgent3D")
@@ -43,6 +56,7 @@ capsule_body = NodePath("Rig/MeshInstance3D")
 capsule_visor = NodePath("Rig/MeshInstance3D/MeshInstance3D")
 selection_visual = NodePath("SelectionSquareRoot/GridSystemVisual")
 character_sheet = NodePath("CharacterSheet")
+movement_controller = NodePath("MovementController")
 speed = 15
 
 [node name="Rig" type="Node3D" parent="."]
@@ -73,7 +87,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79278, 0)
 
 [node name="AnimationController" type="Node" parent="."]
 
-[node name="MovementController" type="Node" parent="."]
+[node name="MovementController" type="Node" parent="." node_paths=PackedStringArray("unit")]
+script = ExtResource("3_1oy7d")
+unit = NodePath("..")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 debug_enabled = true
@@ -97,4 +113,4 @@ action_container = NodePath("ActionContainer")
 [node name="ActionContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
 script = ExtResource("5_t2svf")
 unit = NodePath("../..")
-actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_3ct77"), SubResource("Resource_k5ckj")])
+actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_3ct77"), SubResource("Resource_k5ckj"), SubResource("Resource_1oy7d")])

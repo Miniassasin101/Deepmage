@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=31 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
@@ -15,9 +15,6 @@
 [ext_resource type="Script" uid="uid://1miy676tt71s" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UnitManager.gd" id="11_lf0eb"]
 [ext_resource type="Script" uid="uid://xwiyhnl8erp1" path="res://Deepmage/Core/Scripts/Pathfinding/PathfindingSystem.gd" id="12_fnj5h"]
 [ext_resource type="PackedScene" uid="uid://2h1a1e1r8hc2" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.tscn" id="12_k2c3k"]
-[ext_resource type="Script" uid="uid://ian5eam30p0l" path="res://addons/curvemesh3d/curvemesh3d.gd" id="13_wbm0i"]
-[ext_resource type="Curve" uid="uid://b1kq6l63y7lb6" path="res://Deepmage/Core/MathPrefabs/Curves/Level.tres" id="14_calw8"]
-[ext_resource type="Texture2D" uid="uid://duu0wfs3dasnn" path="res://Deepmage/Core/Art/Textures/EnvironmentTextures/GroundTextures/PolygonPrototype_Texture_Grid_08.png" id="14_tflrs"]
 [ext_resource type="Script" uid="uid://hbm8nks1et3p" path="res://Deepmage/Core/Scripts/UI/TurnSystemUI.gd" id="15_ex7fh"]
 [ext_resource type="Script" uid="uid://cby42fxiu4cv5" path="res://Deepmage/Core/Scripts/UI/ActionSystemUI.gd" id="15_j7436"]
 [ext_resource type="Script" uid="uid://dyngi1ipggvgb" path="res://Deepmage/Core/Scripts/UI/InitiativeQueueUI.gd" id="16_2uyvs"]
@@ -26,7 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://psdfsrnutgxe" path="res://Deepmage/Core/Prefabs/UI/ActionButtonUI.tscn" id="16_tko1n"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_lf0eb"]
-vertices = PackedVector3Array(0.594299, 0.45328, 25.5943, 0.844299, 0.45328, 22.8443, -0.655701, 0.45328, 22.8443, -4.9057, 0.45328, 25.5943, -0.905701, 0.45328, 21.5943, 9.3443, 0.45328, 21.3443, 18.5943, 0.45328, -18.6557, -18.6557, 0.45328, -18.6557, -18.6557, 0.45328, 26.3443, 9.5943, 0.45328, 22.0943, 18.5943, 0.45328, 22.0943, -5.1557, 0.45328, 26.3443, 5.3443, 0.45328, 25.8443, 9.3443, 0.45328, 22.8443, 5.0943, 0.45328, 27.0943, 3.5943, 0.45328, 27.0943, 3.8443, 0.45328, 44.8443, 18.5943, 0.45328, 44.8443, -4.9057, 0.45328, 27.0943, -18.6557, 0.45328, 44.8443, -3.6557, 0.45328, 44.8443, -3.4057, 0.45328, 27.0943)
+vertices = PackedVector3Array(0.609299, 1.06628, 25.5893, 0.859299, 1.06628, 22.8393, -0.640701, 1.06628, 22.8393, -4.8907, 1.06628, 25.5893, -0.890701, 1.06628, 21.5893, 9.3593, 1.06628, 21.3393, 18.6093, 1.06628, -18.6607, -18.6407, 1.06628, -18.6607, -18.6407, 1.06628, 26.3393, 9.6093, 1.06628, 22.0893, 18.6093, 1.06628, 22.0893, -5.1407, 1.06628, 26.3393, 5.3593, 1.06628, 25.8393, 9.3593, 1.06628, 22.8393, 5.1093, 1.06628, 27.0893, 3.6093, 1.06628, 27.0893, 3.8593, 1.06628, 44.8393, 18.6093, 1.06628, 44.8393, -4.8907, 1.06628, 27.0893, -18.6407, 1.06628, 44.8393, -3.6407, 1.06628, 44.8393, -3.3907, 1.06628, 27.0893)
 polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 7), PackedInt32Array(2, 3, 4), PackedInt32Array(4, 3, 8), PackedInt32Array(4, 8, 7), PackedInt32Array(9, 5, 10), PackedInt32Array(10, 5, 6), PackedInt32Array(3, 11, 8), PackedInt32Array(0, 1, 12), PackedInt32Array(12, 1, 13), PackedInt32Array(16, 15, 14), PackedInt32Array(12, 13, 14), PackedInt32Array(14, 13, 10), PackedInt32Array(14, 10, 16), PackedInt32Array(16, 10, 17), PackedInt32Array(13, 9, 10), PackedInt32Array(11, 18, 8), PackedInt32Array(8, 18, 19), PackedInt32Array(19, 18, 20), PackedInt32Array(18, 21, 20), PackedInt32Array(21, 15, 20), PackedInt32Array(20, 15, 16)]
 geometry_source_geometry_mode = 2
 
@@ -37,23 +34,6 @@ data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_ex7fh"]
 font_size = 150
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xyav6"]
-albedo_color = Color(1, 0, 0.183333, 1)
-albedo_texture = ExtResource("14_tflrs")
-roughness = 0.8
-
-[sub_resource type="Curve3D" id="Curve3D_calw8"]
-bake_interval = 0.1
-_data = {
-"points": PackedVector3Array(0.6, 0.46, 0, 0.6, 0.46, 0, 0, 0, 0, -0.6, -0.46, 0, -0.6, -0.46, 0, 0, 1, 0),
-"tilts": PackedFloat32Array(0, 0)
-}
-point_count = 2
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gh8or"]
-albedo_color = Color(0, 0.615686, 0.882353, 1)
-roughness = 0.5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5ega"]
 bg_color = Color(0.15, 0.15, 0.15, 1)
@@ -98,7 +78,7 @@ grow_end = 0.0
 [node name="Level" type="Node3D"]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.345, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.015, -0.613, 0.005)
 navigation_mesh = SubResource("NavigationMesh_lf0eb")
 
 [node name="DebugSettings" type="Node" parent="."]
@@ -220,16 +200,6 @@ script = ExtResource("11_g7q3m")
 [node name="PathfindingSystem" type="Node" parent="." node_paths=PackedStringArray("nav_region_3d")]
 script = ExtResource("12_fnj5h")
 nav_region_3d = NodePath("../NavigationRegion3D")
-radius_curve = ExtResource("14_calw8")
-debug_curve_material = SubResource("StandardMaterial3D_xyav6")
-
-[node name="CurveMesh3D" type="Path3D" parent="PathfindingSystem"]
-visible = false
-curve = SubResource("Curve3D_calw8")
-script = ExtResource("13_wbm0i")
-radius_profile = ExtResource("14_calw8")
-material = SubResource("StandardMaterial3D_gh8or")
-metadata/_custom_type_script = "uid://ian5eam30p0l"
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 script = ExtResource("5_jtghi")

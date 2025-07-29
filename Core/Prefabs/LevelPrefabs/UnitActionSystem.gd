@@ -70,6 +70,7 @@ func on_left_mouse_clicked() -> void:
 	if try_handle_unit_selection():
 		return
 	
+	use_action(TurnSystem.instance.selected_unit, selected_action)
 	
 	
 
@@ -122,6 +123,8 @@ func on_selected_action_changed(in_action: Action) -> void:
 
 
 func use_action(unit: Unit, action: Action) -> void:
+	if !unit:
+		return
 	unit.get_action_container().use_action(action)
 	
 
@@ -184,6 +187,7 @@ func move_to_click() -> void:
 			var final_pos: Vector3 = test_unit.nav_agent.get_final_position()
 			var nav_data := test_unit.nav_agent.get_current_navigation_path()
 			print_debug(nav_data)
+			
 
 
 """ Physics process move to click

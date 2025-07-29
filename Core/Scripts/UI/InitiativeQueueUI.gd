@@ -28,10 +28,7 @@ func _ready() -> void:
 	
 	#UIBus.update_stat_bars.connect(_on_update_stats_bars)
 
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("right_mouse"):
-		var stats_bar: UnitStatsBar = unit_stats_bars[UnitManager.instance.get_first_unit()]
-		stats_bar.start_pulse()
+
 
 func instantiate_initiative_queue(_unit: Unit = null) -> void:
 	if unit_manager:

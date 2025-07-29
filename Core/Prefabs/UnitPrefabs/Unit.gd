@@ -18,6 +18,7 @@ enum TurnState {
 @export var capsule_visor: MeshInstance3D
 @export var selection_visual: SelectionSquareVisual
 @export var character_sheet: CharacterSheet
+@export var movement_controller: MovementController
 
 
 @export_category("Temp Stats")
