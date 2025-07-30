@@ -49,6 +49,12 @@ selection_types = Array[ExtResource("9_t3ejk")]([SubResource("Resource_jswbx")])
 tags = Array[String]([])
 metadata/_custom_type_script = "uid://dyiusi38rqf6w"
 
+[sub_resource type="Resource" id="Resource_lsp3f"]
+script = ExtResource("9_t3ejk")
+name = &"ground"
+is_true = true
+metadata/_custom_type_script = "uid://cihsn5lxnlupk"
+
 [sub_resource type="Resource" id="Resource_1oy7d"]
 script = ExtResource("8_3ct77")
 move_speed = 10.0
@@ -56,8 +62,9 @@ rotate_speed = 8.0
 acceleration_time = 0.3
 rotation_acceleration_time = 0.3
 stopping_distance = 0.1
+unit_avoid_radius = 1.0
 action_name = "Move Test"
-selection_types = Array[ExtResource("9_t3ejk")]([])
+selection_types = Array[ExtResource("9_t3ejk")]([SubResource("Resource_lsp3f")])
 tags = Array[String]([])
 metadata/_custom_type_script = "uid://bl34p0y06cyys"
 
@@ -70,12 +77,6 @@ action_name = "Unit Text Test"
 selection_types = Array[ExtResource("9_t3ejk")]([ExtResource("12_aemtr")])
 tags = Array[String]([])
 metadata/_custom_type_script = "uid://doahtvq8r205k"
-
-[sub_resource type="Resource" id="Resource_lsp3f"]
-script = ExtResource("9_t3ejk")
-name = &"ground"
-is_true = true
-metadata/_custom_type_script = "uid://cihsn5lxnlupk"
 
 [sub_resource type="Resource" id="Resource_b3sv1"]
 script = ExtResource("13_lsp3f")

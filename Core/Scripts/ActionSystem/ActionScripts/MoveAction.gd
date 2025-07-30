@@ -10,6 +10,9 @@ extends Action
 @export var rotation_acceleration_time:  float = 0.3
 @export var stopping_distance:           float = 0.1
 
+## Minimum distance from any unit that the final position can be to avoid overlap.
+@export var unit_avoid_radius: float = 0.0
+
 # Internal state:
 var movement_curve:      Curve3D
 var curve_length:        float
@@ -24,17 +27,18 @@ var is_moving:           bool = false
 
 func start_action(targ_pack: TargetPackage = null) -> void:
 	super.start_action(targ_pack)
-	await _begin_movement()
+	var to_pos: Vector3 = targ_pack.position
+	await _begin_movement(to_pos)
 	end_action()
 
 
 
 
-func _begin_movement() -> void:
+func _begin_movement(to_pos: Vector3) -> void:
 	# 1) grab your target & curve
-	var to_pos = MouseController.instance.get_mouse_raycast_result("position")
-	if to_pos is not Vector3:
-		return
+	#var to_pos = MouseController.instance.get_mouse_raycast_result("position")
+	#if to_pos is not Vector3:
+	#	return
 	var path_pack: PathPackage = PathfindingSystem.instance.get_path_package(to_pos as Vector3, action_container.unit, true)
 	movement_curve = path_pack.get_curve_3d_from_path()
 	curve_length    = movement_curve.get_baked_length()
@@ -73,9 +77,27 @@ func end_action() -> void:
 
 
 
-func can_activate() -> bool:
+func can_activate_on_target(target_pack: TargetPackage) -> bool:
+
+	if !target_pack or !target_pack.has_tag("position"):
+		return false
+
+	var target_pos: Vector3 = target_pack.position
+
+	if _is_too_close_to_any_unit(target_pos):
+		return false
+	
 	return true
 
-
+func _is_too_close_to_any_unit(target_pos: Vector3) -> bool:
+	# Grab every unit in the world
+	for other in UnitManager.instance.get_all_units():
+		# skip ourselves
+		if other == action_container.unit:
+			continue
+		# compare distance
+		if other.global_transform.origin.distance_to(target_pos) < unit_avoid_radius:
+			return true
+	return false
 
 #
