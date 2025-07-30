@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://2h1a1e1r8hc2"]
+[gd_scene load_steps=27 format=3 uid="uid://2h1a1e1r8hc2"]
 
 [ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
 [ext_resource type="Script" uid="uid://byevnkq30m4mb" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.gd" id="1_ohquw"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://doahtvq8r205k" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextOnUnitAction.gd" id="11_1um36"]
 [ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="12_aemtr"]
 [ext_resource type="Script" uid="uid://4mdy4qyk2p8b" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextOnGroundAction.gd" id="13_lsp3f"]
+[ext_resource type="Script" uid="uid://bjhah2xmsklrq" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/TeleportAction.gd" id="14_b3sv1"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ohquw"]
 lightmap_size_hint = Vector2i(17, 14)
@@ -89,6 +90,20 @@ selection_types = Array[ExtResource("9_t3ejk")]([SubResource("Resource_lsp3f")])
 tags = Array[String]([])
 metadata/_custom_type_script = "uid://4mdy4qyk2p8b"
 
+[sub_resource type="Resource" id="Resource_2qo7v"]
+script = ExtResource("9_t3ejk")
+name = &"ground"
+is_true = true
+metadata/_custom_type_script = "uid://cihsn5lxnlupk"
+
+[sub_resource type="Resource" id="Resource_mt7xe"]
+script = ExtResource("14_b3sv1")
+unit_avoid_radius = 0.7
+action_name = "Teleport"
+selection_types = Array[ExtResource("9_t3ejk")]([SubResource("Resource_2qo7v")])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://bjhah2xmsklrq"
+
 [node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual", "character_sheet", "movement_controller")]
 script = ExtResource("1_ohquw")
 above_head_marker = NodePath("AboveHeadMarker")
@@ -154,4 +169,4 @@ action_container = NodePath("ActionContainer")
 [node name="ActionContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
 script = ExtResource("5_t2svf")
 unit = NodePath("../..")
-actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_3ct77"), SubResource("Resource_k5ckj"), SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1")])
+actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_3ct77"), SubResource("Resource_k5ckj"), SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe")])

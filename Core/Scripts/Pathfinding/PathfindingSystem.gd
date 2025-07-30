@@ -117,3 +117,7 @@ func make_visible_path(path_package: PathPackage) -> void:
 	
 	
 	pass
+
+
+func get_closest_nav_point_to(pos: Vector3) -> Vector3:
+	return NavigationServer3D.map_get_closest_point(navmap, pos)
