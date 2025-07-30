@@ -3,7 +3,7 @@ extends Action
 
 
 
-@export_category("Action Variables")
+@export_category("Action Specific Variables")
 @export var move_speed:                  float = 5.0
 @export var rotate_speed:                float = 8.0
 @export var acceleration_time:           float = 0.3
@@ -22,26 +22,20 @@ var is_moving:           bool = false
 
 
 
-func start_action() -> void:
-	super.start_action()
-	#main()
-	_begin_movement()
+func start_action(targ_pack: TargetPackage = null) -> void:
+	super.start_action(targ_pack)
+	await _begin_movement()
 	end_action()
 
 
-func main() -> void:
-	var to_position: Vector3 = MouseController.instance.get_mouse_raycast_result("position")
-	
-	
-	var path_pack: PathPackage = PathfindingSystem.instance.get_path_package(to_position, action_container.unit, true)
-	print_debug(path_pack.path)
-	var curve: Curve3D = path_pack.get_curve_3d_from_path()
-	end_action()
+
 
 func _begin_movement() -> void:
 	# 1) grab your target & curve
-	var to_pos: Vector3 = MouseController.instance.get_mouse_raycast_result("position")
-	var path_pack: PathPackage = PathfindingSystem.instance.get_path_package(to_pos, action_container.unit, true)
+	var to_pos = MouseController.instance.get_mouse_raycast_result("position")
+	if to_pos is not Vector3:
+		return
+	var path_pack: PathPackage = PathfindingSystem.instance.get_path_package(to_pos as Vector3, action_container.unit, true)
 	movement_curve = path_pack.get_curve_3d_from_path()
 	curve_length    = movement_curve.get_baked_length()
 	
@@ -65,7 +59,7 @@ func _end_movement() -> void:
 	
 	
 	
-	end_action()
+	#end_action()
 
 
 

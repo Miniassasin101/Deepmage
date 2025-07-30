@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="SpawnTextAction" load_steps=5 format=3 uid="uid://bx6gwu1suvqij"]
+
+[ext_resource type="Script" uid="uid://dyiusi38rqf6w" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextAction.gd" id="1_8rvop"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_wigkr"]
+
+[sub_resource type="Resource" id="Resource_bbcsa"]
+script = ExtResource("2_wigkr")
+name = &"ground"
+is_true = false
+metadata/_custom_type_script = "uid://cihsn5lxnlupk"
+
+[sub_resource type="Resource" id="Resource_ukhm1"]
+script = ExtResource("2_wigkr")
+name = &"unit"
+is_true = false
+metadata/_custom_type_script = "uid://cihsn5lxnlupk"
+
+[resource]
+script = ExtResource("1_8rvop")
+spawn_text = "Testing"
+text_color = Color(0.941176, 0.972549, 1, 1)
+scale = 1.0
+action_name = "none"
+selection_types = Array[ExtResource("2_wigkr")]([SubResource("Resource_bbcsa"), SubResource("Resource_ukhm1")])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://dyiusi38rqf6w"

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="NamedBool" load_steps=2 format=3 uid="uid://q2jms5gufitg"]
+
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="1_npjb5"]
+
+[resource]
+script = ExtResource("1_npjb5")
+name = &"unit"
+is_true = true
+metadata/_custom_type_script = "uid://cihsn5lxnlupk"

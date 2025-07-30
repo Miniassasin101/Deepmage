@@ -9,6 +9,13 @@ extends Node
 
 
 
+func make_target_package(in_target: Variant) -> TargetPackage:
+	var new_pack: TargetPackage = TargetPackage.new()
+	if new_pack.try_set_target(in_target):
+		return new_pack
+	
+	return null
+
 
 func set_color_on_cel_shaded_mesh(mesh: MeshInstance3D ,color: Color = Color.DEEP_SKY_BLUE, remove_overlay: bool = false) -> void:
 	if remove_overlay:

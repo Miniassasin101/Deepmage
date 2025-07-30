@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://2h1a1e1r8hc2"]
+[gd_scene load_steps=24 format=3 uid="uid://2h1a1e1r8hc2"]
 
 [ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
 [ext_resource type="Script" uid="uid://byevnkq30m4mb" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.gd" id="1_ohquw"]
@@ -9,6 +9,10 @@
 [ext_resource type="Script" uid="uid://cvislitkwpg12" path="res://Deepmage/Core/Scripts/ActionSystem/Action.gd" id="6_mhrm2"]
 [ext_resource type="Script" uid="uid://dyiusi38rqf6w" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextAction.gd" id="7_k5ckj"]
 [ext_resource type="Script" uid="uid://bl34p0y06cyys" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/MoveAction.gd" id="8_3ct77"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="9_t3ejk"]
+[ext_resource type="Script" uid="uid://doahtvq8r205k" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextOnUnitAction.gd" id="11_1um36"]
+[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="12_aemtr"]
+[ext_resource type="Script" uid="uid://4mdy4qyk2p8b" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextOnGroundAction.gd" id="13_lsp3f"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ohquw"]
 lightmap_size_hint = Vector2i(17, 14)
@@ -19,12 +23,19 @@ size = Vector3(0.725, 0.2, 0.325)
 [sub_resource type="BoxShape3D" id="BoxShape3D_0qgfu"]
 size = Vector3(1, 1.69678, 1)
 
+[sub_resource type="Resource" id="Resource_jswbx"]
+script = ExtResource("9_t3ejk")
+name = &"button"
+is_true = true
+metadata/_custom_type_script = "uid://cihsn5lxnlupk"
+
 [sub_resource type="Resource" id="Resource_3ct77"]
 script = ExtResource("7_k5ckj")
 spawn_text = "Nigger"
 text_color = Color(0, 0, 0, 1)
 scale = 1.0
 action_name = "Spawn Text"
+selection_types = Array[ExtResource("9_t3ejk")]([SubResource("Resource_jswbx")])
 tags = Array[String]([])
 metadata/_custom_type_script = "uid://dyiusi38rqf6w"
 
@@ -34,6 +45,7 @@ spawn_text = "Testing"
 text_color = Color(0.941176, 0.972549, 1, 1)
 scale = 1.0
 action_name = "Test Text"
+selection_types = Array[ExtResource("9_t3ejk")]([SubResource("Resource_jswbx")])
 tags = Array[String]([])
 metadata/_custom_type_script = "uid://dyiusi38rqf6w"
 
@@ -45,8 +57,36 @@ acceleration_time = 0.3
 rotation_acceleration_time = 0.3
 stopping_distance = 0.1
 action_name = "Move Test"
+selection_types = Array[ExtResource("9_t3ejk")]([])
 tags = Array[String]([])
 metadata/_custom_type_script = "uid://bl34p0y06cyys"
+
+[sub_resource type="Resource" id="Resource_aemtr"]
+script = ExtResource("11_1um36")
+spawn_text = "Testing"
+text_color = Color(9.62615e-08, 0.519219, 0.80859, 1)
+scale = 1.0
+action_name = "Unit Text Test"
+selection_types = Array[ExtResource("9_t3ejk")]([ExtResource("12_aemtr")])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://doahtvq8r205k"
+
+[sub_resource type="Resource" id="Resource_lsp3f"]
+script = ExtResource("9_t3ejk")
+name = &"ground"
+is_true = true
+metadata/_custom_type_script = "uid://cihsn5lxnlupk"
+
+[sub_resource type="Resource" id="Resource_b3sv1"]
+script = ExtResource("13_lsp3f")
+spawn_text = "Testing"
+text_color = Color(0.941176, 0.972549, 1, 1)
+scale = 1.0
+spawn_text_at_pos = true
+action_name = "Ground Text"
+selection_types = Array[ExtResource("9_t3ejk")]([SubResource("Resource_lsp3f")])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://4mdy4qyk2p8b"
 
 [node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual", "character_sheet", "movement_controller")]
 script = ExtResource("1_ohquw")
@@ -113,4 +153,4 @@ action_container = NodePath("ActionContainer")
 [node name="ActionContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
 script = ExtResource("5_t2svf")
 unit = NodePath("../..")
-actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_3ct77"), SubResource("Resource_k5ckj"), SubResource("Resource_1oy7d")])
+actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_3ct77"), SubResource("Resource_k5ckj"), SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1")])

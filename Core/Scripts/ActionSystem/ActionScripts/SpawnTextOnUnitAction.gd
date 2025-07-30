@@ -1,4 +1,4 @@
-class_name SpawnTextAction
+class_name SpawnTextOnUnitAction
 extends Action
 
 
@@ -9,11 +9,11 @@ extends Action
 @export var scale: float = 1.0
 
 
-
+ 
 func start_action(targ_pack: TargetPackage = null) -> void:
 	super.start_action(targ_pack)
-	var unit: Unit = action_container.unit
-	Utilities.spawn_text_line(unit, spawn_text, text_color, scale)
+	var unit: Unit = targ_pack.unit
+	Utilities.spawn_text_line(unit, spawn_text + " " + unit.ui_name, text_color, scale)
 	end_action()
 
 
@@ -22,5 +22,11 @@ func end_action() -> void:
 
 
 
-func can_activate() -> bool:
+func can_activate_on_target(target_pack: TargetPackage) -> bool:
+	if !target_pack or !target_pack.has_tag("unit"):
+		return false
+	
+	var unit: Unit = target_pack.unit
+	
+	
 	return true

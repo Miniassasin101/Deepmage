@@ -86,6 +86,10 @@ func try_handle_unit_selection() -> bool:
 	if !unit:
 		return false
 	
+	if selected_action.has_selection_type("unit"):
+		if check_can_activate_action_on_unit(unit):
+			return true
+	
 	if unit.turn_state != Unit.TurnState.TURN_STARTED:
 		return false
 	
@@ -96,7 +100,17 @@ func try_handle_unit_selection() -> bool:
 	
 	return true
 
+
 # Selection Mechanics
+
+func check_can_activate_action_on_unit(in_unit: Unit) -> bool:
+	var a_container: ActionContainer = TurnSystem.instance.selected_unit.get_action_container()
+	if a_container.can_use_action_at_target(selected_action, in_unit):
+		use_action(a_container.unit, selected_action, in_unit)
+		return true
+	return false
+
+
 
 
 func on_selected_action_changed(in_action: Action) -> void:
@@ -117,15 +131,23 @@ func on_selected_action_changed(in_action: Action) -> void:
 	if is_busy:
 		return
 	
-	use_action(unit, selected_action)
+	if selected_action.has_selection_type("button"):
+		use_action(unit, selected_action)
 
 
 
 
-func use_action(unit: Unit, action: Action) -> void:
+func use_action(unit: Unit, action: Action, target: Variant = null) -> void:
 	if !unit:
 		return
-	unit.get_action_container().use_action(action)
+	
+	if target == null and selected_action.has_selection_type("ground"):
+		var worldpos = MouseController.instance.get_mouse_raycast_result("position")
+		if worldpos is Vector3:
+			worldpos = worldpos.snappedf(0.01)
+			target = worldpos
+	
+	unit.get_action_container().use_action(action, target)
 	
 
 

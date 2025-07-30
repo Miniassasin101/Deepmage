@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SpawnTextOnUnitAction" load_steps=3 format=3 uid="uid://ddqim6sn7cqll"]
+
+[ext_resource type="Script" uid="uid://doahtvq8r205k" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextOnUnitAction.gd" id="1_pvici"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_d7wka"]
+
+[resource]
+script = ExtResource("1_pvici")
+spawn_text = "Testing"
+text_color = Color(0.941176, 0.972549, 1, 1)
+scale = 1.0
+action_name = "none"
+selection_types = Array[ExtResource("2_d7wka")]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://doahtvq8r205k"
