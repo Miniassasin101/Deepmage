@@ -27,6 +27,7 @@ var mouse_position: Vector2
 
 var current_hovered_position: Vector3
 
+var current_hovered_unit: Unit
 
 static var instance: MouseController = null
 
@@ -57,6 +58,9 @@ func _physics_process(_delta: float) -> void:
 	adjust_mouse_position()
 	
 	adjust_hovered_position()
+	
+	adjust_hovered_unit()
+	
 	# Perform the raycast and move the node if a hit is detected
 	if mouse_debug_sphere:
 		_adjust_mouse_debug_position()
@@ -113,6 +117,26 @@ func adjust_hovered_position() -> void:
 		current_hovered_position = pos_result
 
 
+func adjust_hovered_unit() -> void:
+	var unit_result = get_mouse_raycast_result("collider")
+	if unit_result and unit_result.get_parent() is Unit:
+		var unit: Unit = unit_result.get_parent()
+		if unit == current_hovered_unit:
+			return
+		current_hovered_unit = unit
+		print_debug(unit.ui_name)
+	else:
+		current_hovered_unit = null
+
+
+func get_current_hovered_unit() -> Unit:
+	return current_hovered_unit
+
+func get_current_hovered_position() -> Vector3:
+	return current_hovered_position
+
+
+
 # Updates the mouse position variable
 func adjust_mouse_position() -> void:
 	mouse_position = get_viewport().get_mouse_position()
@@ -135,12 +159,7 @@ func _change_layer_mask_to_obstacle() -> void:
 	raycast.set_collision_mask_value(4, false)
 	raycast.set_collision_mask_value(5, true)
 
+
 func _adjust_mouse_debug_position() -> void:
-	if camera != null and raycast != null:
-		var hit_position = get_mouse_raycast_result("position")
-		if hit_position != null:
-			if mouse_visual.visible == false:
-				mouse_visual.visible = true
-			# Update the node's position to the raycast hit position
-			mouse_visual.global_transform.origin = hit_position
-			
+	
+	mouse_visual.global_transform.origin = current_hovered_position

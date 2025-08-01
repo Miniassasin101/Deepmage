@@ -1,0 +1,48 @@
+class_name Attribute
+extends Resource
+
+## Represents an attribute or skill or stat as a class
+
+@export var attribute_name: String = ""
+
+@export_enum("Attribute", "Skill", "Stat", "Track") var attribute_type: int
+
+
+# Values
+
+
+@export var current_value: int = 0
+
+@export var base_value: int = 0
+
+@export var maximum_value: int = 1
+
+@export var minimum_value: int = 0
+
+@export var modifiers: Array[int]
+
+@export var tags: Array[String] = []
+
+
+var is_initiated: bool = false
+
+
+
+func get_current_modified_value() -> int:
+	return  current_value + get_current_modifier()
+
+
+func get_current_modifier() -> int:
+	return 0
+
+
+# Functions for tag management
+func add_tag(tag: String) -> void:
+	if !tags.has(tag):
+		tags.append(tag)
+
+
+func has_tag(in_tag: String) -> bool:
+	if tags.has(in_tag):
+		return true
+	return false

@@ -12,7 +12,7 @@ var camera: Camera3D = null  # Reference to the camera
 var offset: float = 0.0
 
 func _ready() -> void:
-	camera = get_viewport().get_camera_3d()  # Assume MouseWorld is the autoload managing the camera
+	camera = get_viewport().get_camera_3d()  # Assume MouseController is the autoload managing the camera
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

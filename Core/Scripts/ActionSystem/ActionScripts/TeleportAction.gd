@@ -21,10 +21,7 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 
 
 func _begin_movement(to_pos: Vector3) -> void:
-	# 1) grab your target & curve
-	#var to_pos = MouseController.instance.get_mouse_raycast_result("position")
-	#if to_pos is not Vector3:
-	#	return
+
 	var new_pos: Vector3 = PathfindingSystem.instance.get_closest_nav_point_to(to_pos)
 	
 	action_container.unit.set_global_position(new_pos)

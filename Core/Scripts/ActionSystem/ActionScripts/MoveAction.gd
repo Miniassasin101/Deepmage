@@ -35,9 +35,7 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 
 
 func _begin_movement(to_pos: Vector3) -> void:
-	# 1) grab your target & curve
-	#var to_pos = MouseController.instance.get_mouse_raycast_result("position")
-	#if to_pos is not Vector3:
+
 	#	return
 	var path_pack: PathPackage = PathfindingSystem.instance.get_path_package(to_pos as Vector3, action_container.unit, true)
 	movement_curve = path_pack.get_curve_3d_from_path()

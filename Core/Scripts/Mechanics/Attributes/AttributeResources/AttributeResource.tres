@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Attribute" load_steps=2 format=3 uid="uid://clc0tkv1supr4"]
+
+[ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="1_sa0ww"]
+
+[resource]
+script = ExtResource("1_sa0ww")
+attribute_name = "Attribute"
+attribute_type = 0
+current_value = 0
+base_value = 0
+maximum_value = 0
+minimum_value = 0
+modifiers = Array[int]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
