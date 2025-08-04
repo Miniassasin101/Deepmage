@@ -101,3 +101,7 @@ func get_world_position_above_marker() -> Vector3:
 
 func get_action_container() -> ActionContainer:
 	return character_sheet.action_container
+
+
+func get_attributes_container() -> AttributesContainer:
+	return character_sheet.get_attributes_container()

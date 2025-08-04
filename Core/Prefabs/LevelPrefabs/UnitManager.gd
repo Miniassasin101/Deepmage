@@ -33,5 +33,14 @@ func get_first_unit() -> Unit:
 	return units.front()
 
 
+func get_unit_by_name(in_name: String) -> Unit:
+	for unit in units:
+		if unit.ui_name.to_pascal_case() == in_name.to_pascal_case():
+			return unit
+	
+	return null
+
+
+
 func get_all_units() -> Array[Unit]:
 	return units

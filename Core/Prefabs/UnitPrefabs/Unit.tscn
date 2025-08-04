@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://2h1a1e1r8hc2"]
+[gd_scene load_steps=30 format=3 uid="uid://2h1a1e1r8hc2"]
 
 [ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
 [ext_resource type="Script" uid="uid://byevnkq30m4mb" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.gd" id="1_ohquw"]
@@ -14,6 +14,9 @@
 [ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="12_aemtr"]
 [ext_resource type="Script" uid="uid://4mdy4qyk2p8b" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextOnGroundAction.gd" id="13_lsp3f"]
 [ext_resource type="Script" uid="uid://bjhah2xmsklrq" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/TeleportAction.gd" id="14_b3sv1"]
+[ext_resource type="Script" uid="uid://p4bb1ulowyag" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributesContainer.gd" id="15_jswbx"]
+[ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="16_mt7xe"]
+[ext_resource type="Resource" uid="uid://ckn1cj427edt8" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/HealthAttributeResource.tres" id="17_kflht"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ohquw"]
 lightmap_size_hint = Vector2i(17, 14)
@@ -161,12 +164,18 @@ remote_path = NodePath("../GridSystemVisual")
 update_rotation = false
 update_scale = false
 
-[node name="CharacterSheet" type="Node" parent="." node_paths=PackedStringArray("unit", "action_container")]
+[node name="CharacterSheet" type="Node" parent="." node_paths=PackedStringArray("unit", "action_container", "attributes_container")]
 script = ExtResource("4_1lanh")
 unit = NodePath("..")
 action_container = NodePath("ActionContainer")
+attributes_container = NodePath("AttributesContainer")
 
 [node name="ActionContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
 script = ExtResource("5_t2svf")
 unit = NodePath("../..")
 actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_3ct77"), SubResource("Resource_k5ckj"), SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe")])
+
+[node name="AttributesContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
+script = ExtResource("15_jswbx")
+unit = NodePath("../..")
+starting_attributes = Array[ExtResource("16_mt7xe")]([ExtResource("17_kflht")])
