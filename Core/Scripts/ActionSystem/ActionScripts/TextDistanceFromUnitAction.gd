@@ -15,6 +15,7 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	var unit: Unit = targ_pack.unit
 	
 	var distance: float = action_container.unit.global_position.distance_to(unit.global_position)
+	distance = snappedf(distance, 0.01)
 	
 	Utilities.spawn_text_line(action_container.unit, spawn_text + str(distance) + " to " + unit.ui_name, text_color, scale)
 	end_action()

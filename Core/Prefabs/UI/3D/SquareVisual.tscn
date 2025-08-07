@@ -37,5 +37,6 @@ gi_mode = 0
 mesh = SubResource("QuadMesh_3f0ys")
 
 [node name="Decal" type="Decal" parent="."]
+visible = false
 size = Vector3(1.5, 1.5, 1.5)
 texture_albedo = ExtResource("2_2xluo")

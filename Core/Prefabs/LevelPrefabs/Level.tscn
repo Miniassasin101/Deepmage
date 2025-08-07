@@ -218,16 +218,19 @@ script = ExtResource("11_lf0eb")
 [node name="Unit" parent="UnitManager" instance=ExtResource("12_k2c3k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
 ui_name = "Ruby"
+visor_color = Color(0.73, 0.2993, 0.306478, 1)
 movement_speed = 20.0
 rotation_speed = 10.0
 
 [node name="Unit2" parent="UnitManager" instance=ExtResource("12_k2c3k")]
 ui_name = "Azure"
 is_enemy = true
+visor_color = Color(0.3818, 0.62831, 0.83, 1)
 
 [node name="Unit3" parent="UnitManager" instance=ExtResource("12_k2c3k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.68029)
 ui_name = "Marigold"
+visor_color = Color(0.8832, 0.9, 0.396, 1)
 
 [node name="UnitActionSystem" type="Node" parent="." node_paths=PackedStringArray("test_unit", "label")]
 script = ExtResource("9_lf0eb")

@@ -32,14 +32,14 @@ enum TurnState {
 @export var visor_color: Color = Color.ALICE_BLUE
 
 
-@export_group("Movement Parameters")
-@export var movement_speed: float = 2.0
-@export var rotation_speed: float = 5.0    # radians per second
-var movement_target_position: Vector3 = Vector3(-3.0,0.0,2.0)
-
-
-@export var path_desired_distance: float = 0.5
-@export var target_desired_distance: float = 0.5
+#@export_group("Movement Parameters")
+#@export var movement_speed: float = 2.0
+#@export var rotation_speed: float = 5.0    # radians per second
+#var movement_target_position: Vector3 = Vector3(-3.0,0.0,2.0)
+#
+#
+#@export var path_desired_distance: float = 0.5
+#@export var target_desired_distance: float = 0.5
 
 
 var turn_state: TurnState = TurnState.OUTSIDE_COMBAT
@@ -72,19 +72,13 @@ func setup_mesh_colors() -> void:
 func setup_navigation() -> void:
 	if !nav_agent:
 		nav_agent = find_child("NavigationAgent3D")
-	nav_agent.path_desired_distance = path_desired_distance
-	nav_agent.target_desired_distance = target_desired_distance
-	
-	actor_setup.call_deferred()
 
 
 
-func actor_setup():
-	# Wait for the first physics frame so the NavigationServer can sync.
-	await get_tree().physics_frame
 
-	# Now that the navigation map is no longer empty, set the movement target.
-	set_movement_target(movement_target_position)
+
+
+
 
 
 
