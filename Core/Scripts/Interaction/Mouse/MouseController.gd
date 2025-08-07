@@ -2,6 +2,8 @@ class_name MouseController
 extends Node3D
 
 
+signal on_unit_hovered(unit: Unit)
+
 
 # Layer mask for detecting objects on layer 2 (1 << 1)
 const GRID_MASK: int = 2
@@ -125,8 +127,10 @@ func adjust_hovered_unit() -> void:
 			return
 		current_hovered_unit = unit
 		print_debug(unit.ui_name)
+		on_unit_hovered.emit(unit)
 	else:
 		current_hovered_unit = null
+		on_unit_hovered.emit(null)
 
 
 func get_current_hovered_unit() -> Unit:

@@ -53,11 +53,15 @@ func _ready() -> void:
 	SignalBus.end_turn.connect(_on_end_turn)
 
 
-func _physics_process(_delta: float) -> void:
+#func _physics_process(_delta: float) -> void:
+	#if !is_combat_started:
+		#if Input.is_action_just_pressed("testkey_n"):
+			#start_combat()
+
+func _unhandled_input(event: InputEvent) -> void:
 	if !is_combat_started:
 		if Input.is_action_just_pressed("testkey_n"):
 			start_combat()
-
 
 ## This is the first function that is called when combat begins. Will return with an error if initiative hasnt been rolled
 ## Likely it should also probably trigger initiative at the same time.

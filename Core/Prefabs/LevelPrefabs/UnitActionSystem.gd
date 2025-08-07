@@ -12,6 +12,7 @@ var d_count: int = 0
 
 var selected_action: Action = null
 
+var prev_hovered_unit: Unit = null
 
 
 ## Boolean to enable and disable to prevent the action system from registering input, possibly during animations and such.
@@ -19,8 +20,11 @@ var is_disabled: bool = false
 
 var is_busy: bool = false
 
+const action_hover_pulse_scale: float = 1.14
+
 
 static var instance: UnitActionSystem = null
+
 
 
 
@@ -38,6 +42,8 @@ func signalbus_connection() -> void:
 	SignalBus.on_selected_action_changed.connect(on_selected_action_changed)
 	SignalBus.on_action_started.connect(on_action_started)
 	SignalBus.on_action_ended.connect(on_action_ended)
+	
+	MouseController.instance.on_unit_hovered.connect(on_hovered_unit_changed)
 
 
 
@@ -83,7 +89,7 @@ func try_handle_unit_selection() -> bool:
 	if !unit:
 		return false
 	
-	if selected_action.has_selection_type("unit"):
+	if selected_action and selected_action.has_selection_type("unit"):
 		if check_can_activate_action_on_unit(unit):
 			return true
 	
@@ -148,6 +154,8 @@ func use_action(unit: Unit, action: Action, target: Variant = null) -> void:
 	
 
 
+
+
 func on_action_started(in_action: Action) -> void:
 	set_busy()
 	pass
@@ -175,9 +183,32 @@ func set_selected_unit(in_selected_unit: Unit) -> void:
 	pass
 
 
+func on_hovered_unit_changed(in_unit: Unit) -> void:
+	
+	if !in_unit  or in_unit != prev_hovered_unit:
+		if prev_hovered_unit and prev_hovered_unit != get_selected_unit():
+			prev_hovered_unit.selection_visual.clear_material()
+	
+	var selected_unit: Unit = get_selected_unit()
+	
+	if selected_unit and selected_unit.get_action_container().can_use_action_at_target(selected_action, in_unit):
+		if in_unit.is_enemy != get_selected_unit().is_enemy:
+			in_unit.selection_visual.set_red()
+			in_unit.selection_visual.pulse_square(action_hover_pulse_scale)
+		else:
+			in_unit.selection_visual.set_green()
+			in_unit.selection_visual.pulse_square(action_hover_pulse_scale)
+	
+	if in_unit != prev_hovered_unit:
+		prev_hovered_unit = in_unit
 
 
 
+
+
+
+func get_selected_unit() -> Unit:
+	return TurnSystem.instance.selected_unit
 
 """ Call Diego the N word
 func call_diego_the_n_word() -> void:

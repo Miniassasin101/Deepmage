@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="TextDistanceFromUnitAction" load_steps=4 format=3 uid="uid://dkgox1ly7bfii"]
+
+[ext_resource type="Script" uid="uid://de4nfr4h7elag" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/TextDistanceFromUnitAction.gd" id="1_cp11g"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_7hkb3"]
+[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="3_7hkb3"]
+
+[resource]
+script = ExtResource("1_cp11g")
+spawn_text = "Distance: "
+text_color = Color(0.941176, 0.972549, 1, 1)
+scale = 1.0
+action_name = "Print Distance"
+selection_types = Array[ExtResource("2_7hkb3")]([ExtResource("3_7hkb3")])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://de4nfr4h7elag"

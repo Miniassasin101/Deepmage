@@ -61,13 +61,13 @@ func toggle_visibility() -> void:
 	selection_square_meshinstance.visible = not selection_square_meshinstance.visible
 
 
-func pulse_square() -> void:
+func pulse_square(in_pulse_scale: float = pulse_scale) -> void:
 	
 	if pulse_tween and pulse_tween.is_running():
 		pulse_tween.kill()
 	
 	pulse_tween = create_tween()
-	pulse_tween.tween_property(selection_square_meshinstance, "scale", Vector3(pulse_scale, pulse_scale, pulse_scale), 0.2)
+	pulse_tween.tween_property(selection_square_meshinstance, "scale", Vector3(in_pulse_scale, in_pulse_scale, in_pulse_scale), 0.2)
 	pulse_tween.tween_property(selection_square_meshinstance, "scale", Vector3(1.0, 1.0, 1.0), 0.2)
 	
 	

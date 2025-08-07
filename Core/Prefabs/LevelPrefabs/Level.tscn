@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=38 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
@@ -24,6 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://3p3xt0lymqsd" path="res://Deepmage/Core/Prefabs/UI/UnitStatsBar.tscn" id="16_ecsph"]
 [ext_resource type="Script" uid="uid://cjhhvf5ub04kj" path="res://Deepmage/Core/Prefabs/UI/FPSLabel.gd" id="16_ex7fh"]
 [ext_resource type="PackedScene" uid="uid://psdfsrnutgxe" path="res://Deepmage/Core/Prefabs/UI/ActionButtonUI.tscn" id="16_tko1n"]
+[ext_resource type="PackedScene" uid="uid://cqqsm2gpif3dw" path="res://Deepmage/Core/Prefabs/UI/UnitCharacterSheet.tscn" id="22_gh8or"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_lf0eb"]
 vertices = PackedVector3Array(18.0943, 6.89648, -29.4356, 18.3443, 6.64648, -40.6856, 7.0943, 6.64648, -40.6856, 7.0943, 6.89648, -29.4356, 19.5943, 6.89648, -29.4356, 19.8443, 6.89648, -27.6856, 44.5943, 6.89648, -27.4356, 44.5943, 6.64648, -40.6856, 0.594299, 0.396482, 25.5644, 0.844299, 0.396482, 22.8144, -0.655701, 0.396482, 22.8144, -4.9057, 0.396482, 25.5644, -0.905701, 0.396482, 21.5644, 9.3443, 0.396482, 21.3144, 6.3443, 5.39648, -23.1856, 4.94107, 0.396482, -14.5243, 6.9443, 0.396482, -14.2856, 6.8443, 0.896482, -15.769, 6.0943, 6.64648, -25.4356, 6.5943, 6.89648, -25.4356, 6.5943, 12.1465, -34.6856, -18.6557, 12.1465, -34.6856, -7.14053, 10.3965, -32.2068, 9.5943, 0.396482, 22.0644, 18.8443, 0.396482, 22.0644, 18.8443, 5.39648, -23.1856, 18.8443, 0.396482, -14.4276, 18.8443, 0.896482, -15.8872, 16.8548, 0.396482, -14.2102, 16.8646, 1.64648, -17.164, -18.6557, 0.396482, 26.3144, -5.1557, 0.396482, 26.3144, -18.6557, 9.89648, -30.7502, -18.6557, 0.396482, -15.0082, -14.6806, 8.64648, -29.2008, 3.3259, 1.64648, -17.1994, 7.0943, 6.89648, -25.1856, 19.0943, 7.14648, -26.1856, 18.8443, 12.1465, -34.6856, 7.84472, 6.89648, -26.1761, 19.5943, 6.89648, -26.1856, 19.5943, 7.64648, -3.18563, 44.5943, 7.64648, -3.18563, 7.0943, 7.64648, -3.18563, -18.6557, -1.35352, -11.6856, -18.6557, -6.85352, -2.43563, 18.8443, -6.85352, -2.43563, 18.8443, -1.35352, -11.6856, 9.36067, -6.35352, -3.70811, 5.3443, 0.396482, 25.8144, 9.3443, 0.396482, 22.8144, 5.0943, 0.396482, 27.0644, 3.5943, 0.396482, 27.0644, 3.8443, 0.396482, 44.8144, 18.8443, 0.396482, 44.8144, -4.9057, 0.396482, 27.0644, -18.6557, 0.396482, 44.8144, -3.6557, 0.396482, 44.8144, -3.4057, 0.396482, 27.0644)
@@ -465,6 +466,14 @@ layout_mode = 2
 offset_right = 40.0
 offset_bottom = 23.0
 script = ExtResource("16_ex7fh")
+
+[node name="UnitCharacterSheetUI" parent="UILayer" node_paths=PackedStringArray("mouse_controller", "pathfinding") instance=ExtResource("22_gh8or")]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 684.0
+offset_bottom = 433.0
+mouse_controller = NodePath("../../MouseController")
+pathfinding = NodePath("../../PathfindingSystem")
 
 [connection signal="pressed" from="UILayer/TurnSystemUI/EndTurnContainer/MarginContainer/EndTurnButton" to="UILayer/TurnSystemUI" method="_on_end_turn_button_pressed"]
 

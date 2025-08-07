@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_pexpy")
 attribute_name = "health"
-attribute_type = 0
+attribute_type = 2
 current_value = 1
 base_value = 0
 maximum_value = 1

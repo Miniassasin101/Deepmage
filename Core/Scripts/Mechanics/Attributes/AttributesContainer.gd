@@ -28,48 +28,48 @@ func _setup_starting_attributes() -> void:
 		attributes_dict[copy.attribute_name] = copy
 
 # Retrieve attribute by name, return null if not found
-func get_attribute(name: String) -> Attribute:
-	if attributes_dict.has(name):
-		return attributes_dict[name]
+func get_attribute(in_name: String) -> Attribute:
+	if attributes_dict.has(in_name):
+		return attributes_dict[in_name]
 	return null
 
 # Get current modified value of an attribute by name
-func get_attribute_current_value(name: String) -> int:
-	var att = get_attribute(name)
+func get_attribute_current_value(in_name: String) -> int:
+	var att = get_attribute(in_name)
 	if att:
 		return att.get_current_modified_value()
 	return 0
 
 # Set current_value of an attribute by name
-func set_attribute_current_value(name: String, value: int) -> bool:
-	var att = get_attribute(name)
+func set_attribute_current_value(in_name: String, value: int) -> bool:
+	var att = get_attribute(in_name)
 	if att:
 		att.current_value = value
-		emit_signal("attribute_changed", name, att.current_value)
+		emit_signal("attribute_changed", in_name, att.current_value)
 		return true
 	return false
 
 # Add modifier to attribute by name
-func add_attribute_modifier(name: String, modifier_value: int) -> bool:
-	var att = get_attribute(name)
+func add_attribute_modifier(in_name: String, modifier_value: int) -> bool:
+	var att = get_attribute(in_name)
 	if att:
 		att.add_modifier(modifier_value)
-		emit_signal("attribute_changed", name, att.get_current_modified_value())
+		emit_signal("attribute_changed", in_name, att.get_current_modified_value())
 		return true
 	return false
 
 # Remove modifier from attribute by name
-func remove_attribute_modifier(name: String, modifier_value: int) -> bool:
-	var att = get_attribute(name)
+func remove_attribute_modifier(in_name: String, modifier_value: int) -> bool:
+	var att = get_attribute(in_name)
 	if att:
 		att.remove_modifier(modifier_value)
-		emit_signal("attribute_changed", name, att.get_current_modified_value())
+		emit_signal("attribute_changed", in_name, att.get_current_modified_value())
 		return true
 	return false
 
 # Check if an attribute exists by name
-func has_attribute(name: String) -> bool:
-	return attributes_dict.has(name)
+func has_attribute(in_name: String) -> bool:
+	return attributes_dict.has(in_name)
 
 # Add new attribute to container
 func add_attribute(attribute: Attribute) -> bool:
@@ -82,12 +82,12 @@ func add_attribute(attribute: Attribute) -> bool:
 	return true
 
 # Remove attribute by name
-func remove_attribute(name: String) -> bool:
-	if has_attribute(name):
-		var att = attributes_dict[name]
+func remove_attribute(in_name: String) -> bool:
+	if has_attribute(in_name):
+		var att = attributes_dict[in_name]
 		attributes.erase(att)
-		attributes_dict.erase(name)
-		emit_signal("attribute_changed", name, 0)
+		attributes_dict.erase(in_name)
+		emit_signal("attribute_changed", in_name, 0)
 		return true
 	return false
 

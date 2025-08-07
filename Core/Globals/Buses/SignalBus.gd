@@ -27,3 +27,6 @@ signal end_turn
 signal on_ui_update
 
 signal on_selected_action_changed(action: Action)
+
+
+signal open_character_sheet
