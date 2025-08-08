@@ -1,0 +1,82 @@
+[gd_scene load_steps=13 format=3 uid="uid://d12kdgl0o7r1"]
+
+[ext_resource type="Shader" uid="uid://cidqowq247x00" path="res://Deepmage/Core/Art/Shaders/VFXShaders/fireball_shader.tres" id="1_hyrle"]
+[ext_resource type="ArrayMesh" uid="uid://38xqp6b7fk7s" path="res://Deepmage/Core/Art/Meshes/VFXMeshes/fireball_mesh.obj" id="2_lxed6"]
+[ext_resource type="Shader" uid="uid://0gmlbemwv012" path="res://Deepmage/Core/Art/Shaders/VFXShaders/fire_header_shader.tres" id="4_wxpx6"]
+[ext_resource type="Texture2D" uid="uid://cao6lyme1ykbx" path="res://Deepmage/Core/Art/Textures/VFXTextures/T_VFX_basic1.PNG" id="5_sjlxo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_msr3w"]
+render_priority = 1
+shader = ExtResource("1_hyrle")
+shader_parameter/fire_color = Color(2, 1.6, 0.6, 1)
+shader_parameter/Speed = Vector2(0.1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f7p4w"]
+render_priority = 0
+shader = ExtResource("4_wxpx6")
+shader_parameter/Ball_Color = Color(1, 0.411765, 0.129412, 1)
+shader_parameter/Fresnel_Power = 3.842
+
+[sub_resource type="SphereMesh" id="SphereMesh_7f8qs"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x7rnv"]
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("5_sjlxo")
+
+[sub_resource type="Curve" id="Curve_r7cr1"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.00923789), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_2awme"]
+curve = SubResource("Curve_r7cr1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ef1mv"]
+particle_flag_align_y = true
+emission_shape = 2
+emission_sphere_radius = 0.5
+direction = Vector3(-1, 0, 0)
+spread = 0.0
+initial_velocity_min = 3.0
+initial_velocity_max = 8.0
+radial_velocity_min = 0.999978
+radial_velocity_max = 1.99998
+gravity = Vector3(0, 0, 0)
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_2awme")
+color = Color(2, 1.3, 0.5, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_lmjej"]
+size = Vector2(0.1, 0.5)
+
+[node name="VFX_FireBall" type="Node3D"]
+
+[node name="rotator" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="FireballMesh" type="MeshInstance3D" parent="rotator"]
+transform = Transform3D(-2.18557e-08, 0, 0.5, 0, 0.5, 0, -0.5, 0, -2.18557e-08, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_msr3w")
+cast_shadow = 0
+mesh = ExtResource("2_lxed6")
+skeleton = NodePath("../..")
+
+[node name="FlameHead" type="MeshInstance3D" parent="rotator"]
+transform = Transform3D(0.602465, 0, 0, 0, 0.602465, 0, 0, 0, 0.602465, 0.0830178, 0.00474656, -0.00209093)
+material_override = SubResource("ShaderMaterial_f7p4w")
+mesh = SubResource("SphereMesh_7f8qs")
+skeleton = NodePath("../..")
+
+[node name="SmallSparks" type="GPUParticles3D" parent="rotator"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.241388, 0, 0)
+material_override = SubResource("StandardMaterial3D_x7rnv")
+amount = 10
+lifetime = 0.3
+explosiveness = 0.4
+process_material = SubResource("ParticleProcessMaterial_ef1mv")
+draw_pass_1 = SubResource("QuadMesh_lmjej")

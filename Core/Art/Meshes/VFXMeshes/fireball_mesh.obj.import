@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://38xqp6b7fk7s"
+path="res://.godot/imported/fireball_mesh.obj-4e8a5617600966ac42a77b40fd559517.mesh"
+
+[deps]
+
+files=["res://.godot/imported/fireball_mesh.obj-4e8a5617600966ac42a77b40fd559517.mesh"]
+
+source_file="res://Deepmage/Core/Art/Meshes/VFXMeshes/fireball_mesh.obj"
+dest_files=["res://.godot/imported/fireball_mesh.obj-4e8a5617600966ac42a77b40fd559517.mesh", "res://.godot/imported/fireball_mesh.obj-4e8a5617600966ac42a77b40fd559517.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

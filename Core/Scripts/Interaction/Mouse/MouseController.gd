@@ -22,7 +22,7 @@ const OBSTACLE_LAYER_MASK: int = 1 << 4
 @export var debug_visual: PackedScene
 
 # Reference to the active Camera3D
-var camera: Camera3D
+@export var camera: Camera3D
 
 # Mouse position in screen coordinates
 var mouse_position: Vector2
@@ -42,7 +42,8 @@ func _ready() -> void:
 		queue_free()
 		return
 	instance = self
-	camera = get_viewport().get_camera_3d()
+	if !camera:
+		camera = get_viewport().get_camera_3d()
 	# Create and add the RayCast3D node dynamically if it's not in the scene
 	if raycast == null:
 		raycast = RayCast3D.new()
@@ -126,7 +127,7 @@ func adjust_hovered_unit() -> void:
 		if unit == current_hovered_unit:
 			return
 		current_hovered_unit = unit
-		print_debug(unit.ui_name)
+#		print_debug(unit.ui_name)
 		on_unit_hovered.emit(unit)
 	else:
 		current_hovered_unit = null

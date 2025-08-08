@@ -4,6 +4,8 @@ extends Node
 
 var last_pool: DicePool = DicePool.new()
 
+var last_test: Test = Test.new()
+
 func _ready() -> void:
 	Console.add_command("hello", console_hello, 0, 0, "Prints Hello")
 	Console.add_command("print_text", print_text_on_first_unit, 1, 1, "Prints Inputted Text on first Unit in manager")
@@ -23,7 +25,8 @@ func _ready() -> void:
 	Console.add_command("attr_tags", attr_tags, ["unit_name","attr_name"], 2, "List tags for attribute on unit")
 	Console.add_command("attr_add_tag", attr_add_tag, ["unit_name","attr_name","tag"], 3, "Add tag to attribute on unit")
 	Console.add_command("attr_has_tag", attr_has_tag, ["unit_name","attr_name","tag"], 3, "Check if attribute has tag on unit")
-
+	Console.add_command("test_run",test_run,["skill_rank","attribute_rank","limit_rank","threshold"],0,"Run a Test: skill+attr dice, limit, threshold. Omit args to reuse last settings.")
+	Console.add_command("test_show",test_show,[],0,"Show summary of the last Test run.")
 
 
 func console_hello() -> void:
@@ -202,4 +205,47 @@ func attr_has_tag(unit_name: String, attr_name: String, tag: String) -> void:
 		return
 	var has = att.has_tag(tag)
 	Console.print_line("Attribute '%s' on unit '%s' %s tag '%s'." % [attr_name, unit_name, ("has" if has else "does not have"), tag], true)
+
+func test_run(skill_s: String = "", attr_s: String = "", limit_s: String = "", threshold_s: String = "") -> void:
+	# parse or fallback to last settings
+	var skill = last_test.skill_rank
+	if skill_s != "":
+		skill = skill_s.to_int()
+
+	var attr = last_test.attribute_rank
+	if attr_s != "":
+		attr = attr_s.to_int()
+
+	var limit = last_test.limit_rank
+	if limit_s != "":
+		limit = limit_s.to_int()
+
+	var th = last_test.threshold
+	if threshold_s != "":
+		th = threshold_s.to_int()
+
+	# new Test(_skill, _attr, _limit, _threshold)
+	last_test = Test.new(skill, attr, limit, th)
+	var passed = last_test.run_test()
+
+	Console.print_line(
+		"→ test_run: Skill %d + Attr %d → %d dice, Limit %d, Threshold %d"
+		% [skill, attr, skill + attr, limit, th],
+		true
+	)
+	Console.print_line(last_test.to_str(), true)
+
+func test_show() -> void:
+	if last_test == null or last_test.pool == null:
+		Console.print_line("No Test has been run yet.", true)
+	else:
+		Console.print_line("Last Test summary:", true)
+		Console.print_line(last_test.to_str(), true)
+		# if you also want the raw dice:
+		Console.print_line("Raw pool: " + last_test.pool.to_str(), true)
+
+
+
+
+
 #endregion

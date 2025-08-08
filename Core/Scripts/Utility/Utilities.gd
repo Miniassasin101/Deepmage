@@ -8,7 +8,6 @@ extends Node
 
 
 
-
 func make_target_package(in_target: Variant) -> TargetPackage:
 	var new_pack: TargetPackage = TargetPackage.new()
 	if new_pack.try_set_target(in_target):
