@@ -7,11 +7,17 @@ extends Resource
 
 var action_container: ActionContainer = null
 
+var owner: Unit = null
+
 
 
 func try_activate(in_action_container: ActionContainer, targ_pack: TargetPackage = null) -> void:
 	if !action_container:
 		action_container = in_action_container
+	
+	if !owner and action_container:
+		owner = action_container.unit
+	
 	if can_activate_on_target(targ_pack):
 		start_action(targ_pack)
 		

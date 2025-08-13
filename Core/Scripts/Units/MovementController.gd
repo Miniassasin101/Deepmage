@@ -4,6 +4,8 @@ extends Node
 
 signal movement_complete
 
+signal rotation_complete
+
 @export_category("References")
 @export var unit: Unit
 
@@ -22,14 +24,21 @@ var move_rotate_speed:   float
 var acceleration_timer:  float
 var rotation_acceleration_timer: float
 var curve_travel_offset: float
-var is_moving:           bool = false
+var is_moving: bool = false
+
+var is_rotating: bool = false
+var facing_direction: Vector3
+var turn_towards_speed: float = 4.0
 
 
 
 func _physics_process(delta: float) -> void:
 	if is_moving:
 		move_along_curve_process(delta)
+	if is_rotating:
+		rotate_unit_towards_target_position_process(delta)
 
+#region Movement Logic
  #Animate Movement Along Curve
 # Handles setting up movement parameters and starting movement
 func animate_movement_along_curve(move_speed_in: float, movement_curve_in: Curve3D, 
@@ -99,3 +108,24 @@ func on_stop_moving() -> void:
 	
 	await get_tree().physics_frame
 	movement_complete.emit()
+#endregion
+
+# Rotation Functions
+# Handles the start and process of rotating towards a target position
+func rotate_unit_towards_target_position(target_position: Vector3, rot_spd: float = 4.0) -> void:
+	is_rotating = true
+	facing_direction = (target_position - unit.get_global_position()).normalized()
+	turn_towards_speed = rot_spd
+	await rotation_complete
+	return
+
+func rotate_unit_towards_target_position_process(delta: float):
+	var tar_rot = Basis.looking_at(facing_direction, Vector3.UP, true)
+	var unit_slerp_basis: Basis = unit.global_transform.basis.slerp(tar_rot, delta * rotate_speed)
+	unit.global_transform.basis = unit_slerp_basis.orthonormalized()
+
+	# Check if the rotation is close enough to stop rotating
+	var current_direction = unit.global_transform.basis.z.normalized()
+	if current_direction.dot(facing_direction) > 0.9999:
+		is_rotating = false  # Stop rotating if we're almost facing the target
+		rotation_complete.emit()

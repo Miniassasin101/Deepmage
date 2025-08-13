@@ -27,6 +27,7 @@ func _ready() -> void:
 	Console.add_command("attr_has_tag", attr_has_tag, ["unit_name","attr_name","tag"], 3, "Check if attribute has tag on unit")
 	Console.add_command("test_run",test_run,["skill_rank","attribute_rank","limit_rank","threshold"],0,"Run a Test: skill+attr dice, limit, threshold. Omit args to reuse last settings.")
 	Console.add_command("test_show",test_show,[],0,"Show summary of the last Test run.")
+	Console.add_command("has_anim",has_anim,["unit_name", "animation_name"],2,"Return whether the unit has that animation.")
 
 
 func console_hello() -> void:
@@ -245,6 +246,16 @@ func test_show() -> void:
 		Console.print_line("Raw pool: " + last_test.pool.to_str(), true)
 
 
+func has_anim(unit_name: String = "", anim_name: String = "") -> void:
+	var unit = UnitManager.instance.get_unit_by_name(unit_name)
+	if unit == null:
+		Console.print_line("Unit '%s' not found." % unit_name, true)
+		return
+	
+	if unit.animation_controller.has_animation(anim_name):
+		Console.print_line("Animation Found: " + anim_name, true)
+	else:
+		Console.print_line("Animation Not Found", true)
 
 
 

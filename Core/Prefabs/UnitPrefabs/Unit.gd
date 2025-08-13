@@ -19,6 +19,8 @@ enum TurnState {
 @export var selection_visual: SelectionSquareVisual
 @export var character_sheet: CharacterSheet
 @export var movement_controller: MovementController
+@export var animation_controller: AnimationController
+
 
 
 @export_category("Temp Stats")

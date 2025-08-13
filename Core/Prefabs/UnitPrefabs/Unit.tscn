@@ -1,10 +1,12 @@
-[gd_scene load_steps=39 format=3 uid="uid://2h1a1e1r8hc2"]
+[gd_scene load_steps=44 format=3 uid="uid://2h1a1e1r8hc2"]
 
 [ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
 [ext_resource type="Script" uid="uid://byevnkq30m4mb" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.gd" id="1_ohquw"]
 [ext_resource type="PackedScene" uid="uid://cwusixosbj5vk" path="res://Deepmage/Core/Prefabs/UI/3D/SquareVisual.tscn" id="3_0qgfu"]
 [ext_resource type="Script" uid="uid://dcltq1auxqj26" path="res://Deepmage/Core/Scripts/Units/MovementController.gd" id="3_1oy7d"]
+[ext_resource type="Script" uid="uid://h4o2321q5l0u" path="res://Deepmage/Core/Scripts/Animation/AnimationController.gd" id="3_sxvrp"]
 [ext_resource type="Script" uid="uid://ceujy1qm0i6o6" path="res://Deepmage/Core/Scripts/Units/CharacterSheet.gd" id="4_1lanh"]
+[ext_resource type="AnimationLibrary" uid="uid://oosve5txyoqs" path="res://Deepmage/Core/Resources/AnimationResources/AnimationLibraries/TestAnimationLibraries/CapsuleAnims.res" id="4_7ehp6"]
 [ext_resource type="Script" uid="uid://cusgogua72ojh" path="res://Deepmage/Core/Scripts/ActionSystem/ActionContainer.gd" id="5_t2svf"]
 [ext_resource type="Script" uid="uid://cvislitkwpg12" path="res://Deepmage/Core/Scripts/ActionSystem/Action.gd" id="6_mhrm2"]
 [ext_resource type="Script" uid="uid://dyiusi38rqf6w" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextAction.gd" id="7_k5ckj"]
@@ -21,6 +23,7 @@
 [ext_resource type="Resource" uid="uid://cmmt2i8h8nyry" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/BaseAttributes/MightAttributeResource.tres" id="17_bxfyr"]
 [ext_resource type="Resource" uid="uid://ckn1cj427edt8" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/HealthAttributeResource.tres" id="17_kflht"]
 [ext_resource type="Resource" uid="uid://43whq50jhvrm" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/BaseAttributes/EnduranceAttributeResource.tres" id="18_lq7j2"]
+[ext_resource type="Resource" uid="uid://bencsgyaid7gy" path="res://Deepmage/Core/Resources/ActionResources/BashActionResource.tres" id="19_1343x"]
 [ext_resource type="Resource" uid="uid://c7ce7gpokhoir" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/BaseAttributes/AgilityAttributeResource.tres" id="19_hq0j0"]
 [ext_resource type="Resource" uid="uid://blhslcjt07b8o" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/BaseAttributes/SenseAttributeResource.tres" id="20_sne6a"]
 [ext_resource type="Resource" uid="uid://dfmpwmr3pmh4d" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/BaseAttributes/PresenceAttributeResource.tres" id="21_pksos"]
@@ -35,6 +38,38 @@ size = Vector3(0.725, 0.2, 0.325)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0qgfu"]
 size = Vector3(1, 1.69678, 1)
+
+[sub_resource type="Animation" id="Animation_sxvrp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Rig:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Rig:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7ehp6"]
+_data = {
+&"RESET": SubResource("Animation_sxvrp")
+}
 
 [sub_resource type="Resource" id="Resource_jswbx"]
 script = ExtResource("9_t3ejk")
@@ -116,7 +151,7 @@ selection_types = Array[ExtResource("9_t3ejk")]([SubResource("Resource_2qo7v")])
 tags = Array[String]([])
 metadata/_custom_type_script = "uid://bjhah2xmsklrq"
 
-[node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual", "character_sheet", "movement_controller")]
+[node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual", "character_sheet", "movement_controller", "animation_controller")]
 script = ExtResource("1_ohquw")
 above_head_marker = NodePath("AboveHeadMarker")
 nav_agent = NodePath("NavigationAgent3D")
@@ -125,6 +160,7 @@ capsule_visor = NodePath("Rig/MeshInstance3D/MeshInstance3D")
 selection_visual = NodePath("SelectionSquareRoot/GridSystemVisual")
 character_sheet = NodePath("CharacterSheet")
 movement_controller = NodePath("MovementController")
+animation_controller = NodePath("AnimationController")
 speed = 15
 
 [node name="Rig" type="Node3D" parent="."]
@@ -153,7 +189,17 @@ shape = SubResource("BoxShape3D_0qgfu")
 [node name="AboveHeadMarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79278, 0)
 
-[node name="AnimationController" type="Node" parent="."]
+[node name="AnimationController" type="Node" parent="." node_paths=PackedStringArray("unit", "animator")]
+script = ExtResource("3_sxvrp")
+unit = NodePath("..")
+animator = NodePath("../AnimationPlayer")
+current_library = "CapsuleAnims"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_7ehp6"),
+&"CapsuleAnims": ExtResource("4_7ehp6")
+}
 
 [node name="MovementController" type="Node" parent="." node_paths=PackedStringArray("unit")]
 script = ExtResource("3_1oy7d")
@@ -182,7 +228,7 @@ attributes_container = NodePath("AttributesContainer")
 [node name="ActionContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
 script = ExtResource("5_t2svf")
 unit = NodePath("../..")
-actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_3ct77"), SubResource("Resource_k5ckj"), SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("15_sne6a"), ExtResource("16_pksos")])
+actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_3ct77"), SubResource("Resource_k5ckj"), SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("15_sne6a"), ExtResource("16_pksos"), ExtResource("19_1343x")])
 
 [node name="AttributesContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
 script = ExtResource("15_jswbx")
