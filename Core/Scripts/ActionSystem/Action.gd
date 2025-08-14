@@ -11,17 +11,20 @@ var owner: Unit = null
 
 
 
-func try_activate(in_action_container: ActionContainer, targ_pack: TargetPackage = null) -> void:
-	if !action_container:
-		action_container = in_action_container
-	
-	if !owner and action_container:
-		owner = action_container.unit
+func try_activate(targ_pack: TargetPackage = null) -> void:
 	
 	if can_activate_on_target(targ_pack):
 		start_action(targ_pack)
 		
 	pass
+
+func setup_action(in_action_container: ActionContainer) -> void:
+	if !action_container:
+		action_container = in_action_container
+	
+	if !owner and action_container:
+		owner = action_container.unit
+
 
 func start_action(targ_pack: TargetPackage = null) -> void:
 	action_container.on_action_started(self)

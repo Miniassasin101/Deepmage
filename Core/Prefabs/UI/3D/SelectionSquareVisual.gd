@@ -6,9 +6,17 @@ class_name SelectionSquareVisual
 @export var green_square_mat: StandardMaterial3D
 @export var selection_square_meshinstance: MeshInstance3D
 
-@export var pulse_scale: float = 1.1
+@export var pulse_scale: float = 0.2
+
+var starting_scale: float = 1.0
+
 
 var pulse_tween: Tween = null
+
+func _ready() -> void:
+	if selection_square_meshinstance:
+		starting_scale = selection_square_meshinstance.scale.x
+
 
 # Sets the override material of the mesh instance to the given material (or clears if null)
 func set_material(mat: StandardMaterial3D) -> void:
@@ -47,11 +55,11 @@ func hide_square() -> void:
 	selection_square_meshinstance.visible = false
 
 # Sets visibility to the given state
-func set_visibility(visible: bool) -> void:
+func set_visibility(is_vis: bool) -> void:
 	if not selection_square_meshinstance:
 		push_error("SelectionSquareVisual: MeshInstance3D is not assigned.")
 		return
-	selection_square_meshinstance.visible = visible
+	selection_square_meshinstance.visible = is_vis
 
 # Toggles the current visibility state
 func toggle_visibility() -> void:
@@ -67,7 +75,7 @@ func pulse_square(in_pulse_scale: float = pulse_scale) -> void:
 		pulse_tween.kill()
 	
 	pulse_tween = create_tween()
-	pulse_tween.tween_property(selection_square_meshinstance, "scale", Vector3(in_pulse_scale, in_pulse_scale, in_pulse_scale), 0.2)
-	pulse_tween.tween_property(selection_square_meshinstance, "scale", Vector3(1.0, 1.0, 1.0), 0.2)
+	pulse_tween.tween_property(selection_square_meshinstance, "scale", Vector3(starting_scale + in_pulse_scale, starting_scale + in_pulse_scale, starting_scale + in_pulse_scale), 0.2)
+	pulse_tween.tween_property(selection_square_meshinstance, "scale", Vector3(starting_scale, starting_scale, starting_scale), 0.2)
 	
 	

@@ -51,7 +51,7 @@ var turn_state: TurnState = TurnState.OUTSIDE_COMBAT
 
 
 func _ready() -> void:
-	setup_navigation()
+#	setup_navigation()
 	call_deferred("setup_mesh_colors")
 	
 
@@ -71,9 +71,9 @@ func setup_mesh_colors() -> void:
 
 
 
-func setup_navigation() -> void:
-	if !nav_agent:
-		nav_agent = find_child("NavigationAgent3D")
+#func setup_navigation() -> void:
+#	if !nav_agent:
+#		nav_agent = find_child("NavigationAgent3D")
 
 
 

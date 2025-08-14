@@ -20,7 +20,7 @@ var is_disabled: bool = false
 
 var is_busy: bool = false
 
-const action_hover_pulse_scale: float = 1.14
+const action_hover_pulse_scale: float = 0.14
 
 
 static var instance: UnitActionSystem = null
@@ -91,7 +91,7 @@ func try_handle_unit_selection() -> bool:
 	
 	if selected_action and selected_action.has_selection_type("unit"):
 		if check_can_activate_action_on_unit(unit):
-			return true
+			return false
 	
 	if unit.turn_state != Unit.TurnState.TURN_STARTED:
 		return false
@@ -183,7 +183,7 @@ func set_selected_unit(in_selected_unit: Unit) -> void:
 	pass
 
 
-func on_hovered_unit_changed(in_unit: Unit) -> void:
+func on_hovered_unit_changed_dep(in_unit: Unit) -> void:
 	
 	if !in_unit  or in_unit != prev_hovered_unit:
 		if prev_hovered_unit and prev_hovered_unit != get_selected_unit():
@@ -203,6 +203,44 @@ func on_hovered_unit_changed(in_unit: Unit) -> void:
 		prev_hovered_unit = in_unit
 
 
+func on_hovered_unit_changed(in_unit: Unit) -> void:
+	var selected_unit: Unit = get_selected_unit()
+
+	# If the hovered unit changed, clear the previous one (unless it’s the selected unit)
+	if in_unit != prev_hovered_unit:
+		if prev_hovered_unit and prev_hovered_unit != selected_unit and prev_hovered_unit.selection_visual:
+			prev_hovered_unit.selection_visual.clear_material()
+
+	# If nothing is hovered, update state and bail early
+	if in_unit == null:
+		prev_hovered_unit = null
+		return
+
+	# Don’t override the selected unit’s own visuals
+	if selected_unit and in_unit == selected_unit:
+		prev_hovered_unit = in_unit
+		return
+
+	# Check action usability safely
+	var can_use := false
+	if selected_unit and selected_unit.get_action_container():
+		can_use = selected_unit.get_action_container().can_use_action_at_target(selected_action, in_unit)
+
+	# Apply visuals
+	if in_unit.selection_visual:
+		if can_use:
+			# Enemy vs ally color
+			if in_unit.is_enemy != selected_unit.is_enemy:
+				in_unit.selection_visual.set_red()
+			else:
+				in_unit.selection_visual.set_green()
+			in_unit.selection_visual.pulse_square(action_hover_pulse_scale)
+		else:
+			# Optional: neutral or clear to avoid stale highlights
+			in_unit.selection_visual.clear_material()
+
+	# Track current hover
+	prev_hovered_unit = in_unit
 
 
 

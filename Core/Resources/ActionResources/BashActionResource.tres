@@ -16,6 +16,8 @@ metadata/_custom_type_script = "uid://brutb7o0hj6td"
 [resource]
 script = ExtResource("1_rjyrs")
 attack_success_animation = SubResource("Resource_46qav")
+attack_range = 2.0
+pre_rotation_margin_override = 0.12
 action_name = "Bash"
 selection_types = Array[ExtResource("2_enivt")]([ExtResource("3_enivt")])
 tags = Array[String]([])

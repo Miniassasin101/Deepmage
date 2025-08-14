@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=37 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
@@ -35,9 +35,6 @@ geometry_source_geometry_mode = 2
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_avqdt"]
 data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_ex7fh"]
-font_size = 150
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xyav6"]
 albedo_color = Color(1, 0, 0.183333, 1)
@@ -243,17 +240,9 @@ camera = NodePath("../Camera/CamOrigin/SpringArm3D/fCamera")
 [node name="UnitActionRay" parent="MouseController" index="1"]
 collision_mask = 2
 
-[node name="UnitActionSystem" type="Node" parent="." node_paths=PackedStringArray("test_unit", "label")]
+[node name="UnitActionSystem" type="Node" parent="." node_paths=PackedStringArray("test_unit")]
 script = ExtResource("9_lf0eb")
 test_unit = NodePath("../UnitManager/Unit")
-label = NodePath("Label")
-
-[node name="Label" type="Label" parent="UnitActionSystem"]
-offset_left = 496.0
-offset_top = 207.0
-offset_right = 536.0
-offset_bottom = 412.0
-label_settings = SubResource("LabelSettings_ex7fh")
 
 [node name="TurnSystem" type="Node" parent="." node_paths=PackedStringArray("unit_manager")]
 script = ExtResource("10_k2c3k")

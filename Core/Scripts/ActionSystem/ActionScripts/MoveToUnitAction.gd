@@ -87,7 +87,7 @@ func can_activate_on_target(target_pack: TargetPackage) -> bool:
 	if !action_container:
 		return false
 	
-	if unit == action_container.unit:
+	if unit == owner:
 		return false
 	
 	return true

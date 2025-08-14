@@ -12,16 +12,22 @@ func _ready() -> void:
 ## Called once at start to make sure actions are all unique so changing one on this unit wont affect another.
 func make_actions_unique() -> void:
 	var new_actions: Array[Action] = []
+
 	for action in actions:
 		new_actions.append(action.duplicate(true))
+
 	actions = new_actions
+
+	for action in actions:
+		action.setup_action(self)
+
 	actions.reverse()
 
 
 func use_action(in_action: Action, target: Variant) -> void:
 	if actions.has(in_action):
 		var targ_pack: TargetPackage = Utilities.make_target_package(target)
-		in_action.try_activate(self, targ_pack)
+		in_action.try_activate(targ_pack)
 
 
 func on_action_started(in_action: Action) -> void:

@@ -5,7 +5,9 @@ extends Node
 
 
 
+static var nav_y_offset: float = -0.156482
 
+static var nav_vector_offset: Vector3 = Vector3(0.0, -0.156482, 0.0)
 
 
 func make_target_package(in_target: Variant) -> TargetPackage:

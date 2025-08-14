@@ -145,7 +145,7 @@ metadata/_custom_type_script = "uid://cihsn5lxnlupk"
 
 [sub_resource type="Resource" id="Resource_mt7xe"]
 script = ExtResource("14_b3sv1")
-unit_avoid_radius = 0.7
+unit_avoid_radius = 1.6
 action_name = "Teleport"
 selection_types = Array[ExtResource("9_t3ejk")]([SubResource("Resource_2qo7v")])
 tags = Array[String]([])
