@@ -51,7 +51,7 @@ func _ready() -> void:
 	close_button.pressed.connect(_on_close_button_pressed)
 
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("testkey_c"):
 		open_character_sheet()
 

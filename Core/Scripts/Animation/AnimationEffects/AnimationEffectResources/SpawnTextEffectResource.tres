@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SpawnTextAnimationEffect" load_steps=2 format=3 uid="uid://b7xq7cy4gftao"]
+
+[ext_resource type="Script" uid="uid://dwim6ikbrpe87" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/SpawnTextAnimationEffect.gd" id="1_vxguy"]
+
+[resource]
+script = ExtResource("1_vxguy")
+text_line = "Hit!"
+color = Color(0.941176, 0.972549, 1, 1)
+timing = 0.5
+metadata/_custom_type_script = "uid://dwim6ikbrpe87"

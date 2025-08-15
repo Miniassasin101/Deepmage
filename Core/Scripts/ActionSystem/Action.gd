@@ -26,6 +26,7 @@ func setup_action(in_action_container: ActionContainer) -> void:
 		owner = action_container.unit
 
 
+@warning_ignore("unused_parameter")
 func start_action(targ_pack: TargetPackage = null) -> void:
 	action_container.on_action_started(self)
 	pass
@@ -35,6 +36,7 @@ func end_action() -> void:
 	action_container.on_action_ended(self)
 
 
+@warning_ignore("unused_parameter")
 func can_activate_on_target(target_pack: TargetPackage) -> bool:
 	return true
 

@@ -50,7 +50,7 @@ var frequency: int = 0:
 	get:
 		return frequency
 	set(value):
-		frequency = clampf(value, min_frequency, max_frequency)
+		frequency = clampi(value, min_frequency, max_frequency)
 ## Previous used [Tween]. Is [code]null[/code] if the [member CameraShake.camera] never shook or the previous [Tween] finished it's own job.
 var previous_tween: Tween
 ## Current applied strength
@@ -191,10 +191,10 @@ func _reset_from_shake_3d() -> void:
 ## [br][code]strength[/code] defaults to [code]1.0[/code]
 ## [br][code]duration[/code] defaults to [code]1.0[/code]
 ## [br][code]frequency[/code] defaults to [code]5[/code]
-func shake(strength: float = 1.0, duration: float = 1.0, frequency: int = 5) -> void:
-	self.strength = strength
-	self.duration = duration
-	self.frequency = frequency
+func shake(in_strength: float = 1.0, in_duration: float = 1.0, in_frequency: int = 5) -> void:
+	self.strength = in_strength
+	self.duration = in_duration
+	self.frequency = in_frequency
 
 	_apply_shake()
 

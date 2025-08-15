@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("1_40l2l")
-move_speed = 7.0
+move_speed = 10.0
 rotate_speed = 8.0
 acceleration_time = 0.3
 rotation_acceleration_time = 0.3

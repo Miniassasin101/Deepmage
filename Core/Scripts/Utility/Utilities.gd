@@ -23,7 +23,6 @@ func set_color_on_cel_shaded_mesh(mesh: MeshInstance3D ,color: Color = Color.DEE
 		mesh.set_material_overlay(null)
 		return
 	var mesh_mat: ShaderMaterial = preload("res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres").duplicate(true)
-	var colarray: PackedColorArray = PackedColorArray([Color(000000), color])
 	var new_grad: Gradient = mesh_mat.get("shader_parameter/texture_albedo").gradient
 	new_grad.set_color(1, color)
 	#mesh_mat.set_shader_parameter("texture_albedo/gradient/colors", colarray)

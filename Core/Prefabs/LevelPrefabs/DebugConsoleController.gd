@@ -227,7 +227,7 @@ func test_run(skill_s: String = "", attr_s: String = "", limit_s: String = "", t
 
 	# new Test(_skill, _attr, _limit, _threshold)
 	last_test = Test.new(skill, attr, limit, th)
-	var passed = last_test.run_test()
+	var _passed = last_test.run_test()
 
 	Console.print_line(
 		"→ test_run: Skill %d + Attr %d → %d dice, Limit %d, Threshold %d"

@@ -23,7 +23,7 @@ func get_path_cost() -> float:
 	return path_cost
 
 # New: pass a y_offset to raise/lower the whole curve
-func get_curve_3d_from_path(y_offset: float = 0.0) -> Curve3D:
+func get_curve_3d_from_path() -> Curve3D:
 	if path.is_empty():
 		return null
 	

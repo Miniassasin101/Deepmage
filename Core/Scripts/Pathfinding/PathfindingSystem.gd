@@ -27,13 +27,13 @@ func _ready() -> void:
 
 
 
-func get_path_package(world_position: Vector3, unit: Unit, get_path: bool = true, get_cost: bool = false) -> PathPackage:
+func get_path_package(world_position: Vector3, unit: Unit, should_get_path: bool = true, should_get_cost: bool = false) -> PathPackage:
 	var path_pack: PathPackage = PathPackage.new()
 	unit.nav_agent.set_target_position(world_position)
 	
 
 	
-	if get_path:
+	if should_get_path:
 		var optimize_path: bool = true
 		
 		#var nav_path: Array = unit.nav_agent.get_current_navigation_path()
@@ -46,7 +46,7 @@ func get_path_package(world_position: Vector3, unit: Unit, get_path: bool = true
 	)
 		path_pack.set_path_array(path_arr)
 	
-	if get_cost:
+	if should_get_cost:
 		pass
 		
 	make_visible_path(path_pack)
@@ -77,13 +77,13 @@ func navigation_setup() -> void:
 	await get_tree().physics_frame
 	
 	
-	# Query the path from the navigation server.
+	"""
+	#Query the path from the navigation server.
 	var start_position: Vector3 = Vector3(0.1, 0.0, 0.1)
 	var target_position: Vector3 = Vector3(9.0, 0.0, 1.0)
 	var optimize_path: bool = true
 
 
-	"""
 	var path: PackedVector3Array = NavigationServer3D.map_get_path(
 		map,
 		start_position,

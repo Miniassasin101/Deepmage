@@ -87,7 +87,7 @@ func setup_mesh_colors() -> void:
 func set_movement_target(movement_target: Vector3):
 	nav_agent.set_target_position(movement_target)
 	
-	var nav_res := nav_agent.get_current_navigation_result()
+
 	pass
 
 

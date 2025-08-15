@@ -30,7 +30,7 @@ func can_activate_on_target(target_pack: TargetPackage) -> bool:
 	if !target_pack or !target_pack.has_tag("position"):
 		return false
 	
-	var pos: Vector3 = target_pack.position
+	#var pos: Vector3 = target_pack.position
 	
 	
 	return true

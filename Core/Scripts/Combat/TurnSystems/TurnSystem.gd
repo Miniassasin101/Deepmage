@@ -58,7 +58,7 @@ func _ready() -> void:
 		#if Input.is_action_just_pressed("testkey_n"):
 			#start_combat()
 
-func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input(_event: InputEvent) -> void:
 	if !is_combat_started:
 		if Input.is_action_just_pressed("testkey_n"):
 			start_combat()

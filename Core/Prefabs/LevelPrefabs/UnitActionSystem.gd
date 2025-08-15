@@ -47,12 +47,11 @@ func signalbus_connection() -> void:
 
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	#move_to_click()
 	action_input_process()
 
-
-func action_input_process() -> void:
+func _unhandled_input(_event: InputEvent) -> void:
 	if is_disabled:
 		return
 	
@@ -66,7 +65,10 @@ func action_input_process() -> void:
 	
 	if Input.is_action_just_pressed("left_mouse"):
 		on_left_mouse_clicked()
-	
+
+func action_input_process() -> void:
+
+	pass
 
 
 func on_left_mouse_clicked() -> void:
@@ -156,12 +158,12 @@ func use_action(unit: Unit, action: Action, target: Variant = null) -> void:
 
 
 
-func on_action_started(in_action: Action) -> void:
+func on_action_started(_in_action: Action) -> void:
 	set_busy()
 	pass
 
 
-func on_action_ended(in_action: Action) -> void:
+func on_action_ended(_in_action: Action) -> void:
 	set_busy(false)
 	pass
 

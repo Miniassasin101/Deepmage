@@ -26,7 +26,7 @@ func can_activate_on_target(target_pack: TargetPackage) -> bool:
 	if !target_pack or !target_pack.has_tag("unit"):
 		return false
 	
-	var unit: Unit = target_pack.unit
+	#var unit: Unit = target_pack.unit
 	
 	
 	return true

@@ -21,7 +21,8 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	print_debug("Rotate Completed")
 
 	# Start attack slightly before perfect alignment.
-	owner.animation_controller.play_animation_by_name(attack_success_animation.get_anim_name())
+	#owner.animation_controller.play_animation_by_name(attack_success_animation.get_anim_name())
+	owner.animation_controller.play_package(attack_success_animation)
 
 	# You can optionally still wait for full completion in parallel if needed:
 	# await owner.movement_controller.rotation_complete

@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://2h1a1e1r8hc2"]
+[gd_scene load_steps=45 format=3 uid="uid://2h1a1e1r8hc2"]
 
 [ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
 [ext_resource type="Script" uid="uid://byevnkq30m4mb" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.gd" id="1_ohquw"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://h4o2321q5l0u" path="res://Deepmage/Core/Scripts/Animation/AnimationController.gd" id="3_sxvrp"]
 [ext_resource type="Script" uid="uid://ceujy1qm0i6o6" path="res://Deepmage/Core/Scripts/Units/CharacterSheet.gd" id="4_1lanh"]
 [ext_resource type="AnimationLibrary" uid="uid://oosve5txyoqs" path="res://Deepmage/Core/Resources/AnimationResources/AnimationLibraries/TestAnimationLibraries/CapsuleAnims.res" id="4_7ehp6"]
+[ext_resource type="Script" uid="uid://c2aqj40trpjeq" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/EffectsController.gd" id="4_s3v1t"]
 [ext_resource type="Script" uid="uid://cusgogua72ojh" path="res://Deepmage/Core/Scripts/ActionSystem/ActionContainer.gd" id="5_t2svf"]
 [ext_resource type="Script" uid="uid://cvislitkwpg12" path="res://Deepmage/Core/Scripts/ActionSystem/Action.gd" id="6_mhrm2"]
 [ext_resource type="Script" uid="uid://dyiusi38rqf6w" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextAction.gd" id="7_k5ckj"]
@@ -110,7 +111,7 @@ rotate_speed = 8.0
 acceleration_time = 0.3
 rotation_acceleration_time = 0.3
 stopping_distance = 0.1
-unit_avoid_radius = 1.0
+unit_avoid_radius = 1.6
 action_name = "Move Test"
 selection_types = Array[ExtResource("9_t3ejk")]([SubResource("Resource_lsp3f")])
 tags = Array[String]([])
@@ -189,11 +190,17 @@ shape = SubResource("BoxShape3D_0qgfu")
 [node name="AboveHeadMarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79278, 0)
 
-[node name="AnimationController" type="Node" parent="." node_paths=PackedStringArray("unit", "animator")]
+[node name="AnimationController" type="Node" parent="." node_paths=PackedStringArray("unit", "animator", "effects_controller")]
 script = ExtResource("3_sxvrp")
 unit = NodePath("..")
 animator = NodePath("../AnimationPlayer")
+effects_controller = NodePath("EffectsController")
 current_library = "CapsuleAnims"
+
+[node name="EffectsController" type="Node" parent="AnimationController" node_paths=PackedStringArray("unit", "animation_controller")]
+script = ExtResource("4_s3v1t")
+unit = NodePath("../..")
+animation_controller = NodePath("..")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
