@@ -1,18 +1,23 @@
 class_name HitstopAnimationEffect
 extends AnimationEffect
 
-@export_range(0, 500) var duration_ms: int = 90
-@export var also_flash_target: bool = false
+@export_range(0, 2) var duration: float = 0.2
+
 
 func play_effect(owner: Unit = null) -> void:
 	if owner == null:
 		return
+	
+	if duration <= 0.0:
+		return
+	
+	var ctrl: AnimationController = owner.animation_controller
+	
+	
+	# Stops animation speed then resumes it after the timer is up
+	ctrl.set_timescales(0.01)
+	await ctrl.get_tree().create_timer(duration).timeout
+	ctrl.set_timescales(1.0)
 
-	var ctrl := owner.animation_controller
-	if ctrl != null:
-		await ctrl.apply_hitstop_ms(duration_ms)
 
-	if also_flash_target:
-		if owner.has_method("flash_white"):
-			owner.flash_white(0.06)
  

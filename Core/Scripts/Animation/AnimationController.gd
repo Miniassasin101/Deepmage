@@ -81,6 +81,26 @@ func play_package(pack: AnimationPackage) -> void:
 	_last_pos = 0.0
 	set_process(true)
 
+"""
+func toggle_slowdown(speed_scale: float = 0.0) -> void:
+
+	if !is_slowed:
+			set_timescales(speed_scale)
+			# FIXME: Multiplier might be inverted, increases rather than decreases
+			#timescale_multiplier = speed_scale
+			is_slowed = true
+
+	else:
+		set_timescales(1.0)
+		#timescale_multiplier = 1.0
+		is_slowed = false
+"""
+
+func set_timescales(val: float) -> void:
+	#animator_tree.set("parameters/Main/TimeScale/scale", val)
+	animator.set_speed_scale(val)
+
+
 
 func _process(_delta: float) -> void:
 	if _current_package == null:

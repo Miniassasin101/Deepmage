@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://2h1a1e1r8hc2"]
+[gd_scene load_steps=44 format=3 uid="uid://2h1a1e1r8hc2"]
 
 [ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
 [ext_resource type="Script" uid="uid://byevnkq30m4mb" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.gd" id="1_ohquw"]
@@ -77,16 +77,6 @@ script = ExtResource("9_t3ejk")
 name = &"button"
 is_true = true
 metadata/_custom_type_script = "uid://cihsn5lxnlupk"
-
-[sub_resource type="Resource" id="Resource_3ct77"]
-script = ExtResource("7_k5ckj")
-spawn_text = "Nigger"
-text_color = Color(0, 0, 0, 1)
-scale = 1.0
-action_name = "Spawn Text"
-selection_types = Array[ExtResource("9_t3ejk")]([SubResource("Resource_jswbx")])
-tags = Array[String]([])
-metadata/_custom_type_script = "uid://dyiusi38rqf6w"
 
 [sub_resource type="Resource" id="Resource_k5ckj"]
 script = ExtResource("7_k5ckj")
@@ -235,7 +225,7 @@ attributes_container = NodePath("AttributesContainer")
 [node name="ActionContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
 script = ExtResource("5_t2svf")
 unit = NodePath("../..")
-actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_3ct77"), SubResource("Resource_k5ckj"), SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("15_sne6a"), ExtResource("16_pksos"), ExtResource("19_1343x")])
+actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_k5ckj"), SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("15_sne6a"), ExtResource("16_pksos"), ExtResource("19_1343x")])
 
 [node name="AttributesContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
 script = ExtResource("15_jswbx")
