@@ -14,5 +14,6 @@ stopping_distance = 0.1
 unit_avoid_radius = 1.6
 action_name = "Move to Unit"
 selection_types = Array[ExtResource("2_nt77i")]([ExtResource("3_nt77i")])
+reaction_check_timing = 0.3
 tags = Array[String]([])
 metadata/_custom_type_script = "uid://cpa7repyr1v6o"

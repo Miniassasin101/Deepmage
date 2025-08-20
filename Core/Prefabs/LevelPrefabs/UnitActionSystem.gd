@@ -2,6 +2,9 @@ class_name UnitActionSystem
 extends Node
 
 
+signal reaction_confirmed(reaction: Action)
+
+
 @export var test_unit: Unit
 
 
@@ -19,6 +22,8 @@ var prev_hovered_unit: Unit = null
 var is_disabled: bool = false
 
 var is_busy: bool = false
+
+
 
 const action_hover_pulse_scale: float = 0.14
 
@@ -133,10 +138,15 @@ func on_selected_action_changed(in_action: Action) -> void:
 	if !unit:
 		return
 	
-	if is_busy:
+	var is_reaction: bool = selected_action.is_action_type("reaction")
+	
+	if is_busy and !is_reaction:
 		return
 	
 	if selected_action.has_selection_type("button"):
+		if is_reaction:
+			on_reaction_confirmed(selected_action)
+			return
 		use_action(unit, selected_action)
 
 
@@ -155,6 +165,17 @@ func use_action(unit: Unit, action: Action, target: Variant = null) -> void:
 	unit.get_action_container().use_action(action, target)
 	
 
+
+
+func prompt_reaction(reacting_unit: Unit) -> void:
+	Utilities.spawn_text_line(reacting_unit, "Defending")
+	
+	ActionSystemUI.instance.make_action_buttons(reacting_unit, true)
+	
+	pass
+
+func on_reaction_confirmed(reaction: Action) -> void:
+	reaction_confirmed.emit(reaction)
 
 
 

@@ -3,6 +3,7 @@ extends Resource
 
 @export var action_name: String = "none"
 @export var selection_types: Array[NamedBool]
+@export var reaction_check_timing: float = 0.3
 @export var tags: Array[String] = []
 
 var action_container: ActionContainer = null
@@ -36,12 +37,27 @@ func end_action() -> void:
 	action_container.on_action_ended(self)
 
 
+func start_reaction() -> void:
+	pass
+
+func end_reaction() -> void:
+	pass
+
+
 @warning_ignore("unused_parameter")
 func can_activate_on_target(target_pack: TargetPackage) -> bool:
 	return true
 
 func can_activate() -> bool:
 	return true
+
+
+func is_action_type(in_type: String) -> bool:
+	if tags.has(in_type):
+		return true
+	
+	return false
+
 
 
 func has_selection_type(in_type: String) -> bool:

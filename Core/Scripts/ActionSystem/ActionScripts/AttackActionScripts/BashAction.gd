@@ -18,7 +18,9 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	
 	await rotate_towards_target(target_unit)
 	
+	
 	print_debug("Rotate Completed")
+	await declare_attack(target_unit)
 
 	# Start attack slightly before perfect alignment.
 	#owner.animation_controller.play_animation_by_name(attack_success_animation.get_anim_name())
@@ -32,6 +34,12 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	print_debug("Animation Played")
 
 	end_action()
+
+
+func declare_attack(target_unit: Unit) -> void:
+	await CombatSystem.instance.declare_attack(self, owner, target_unit)
+
+
 
 func end_action() -> void:
 	super.end_action()

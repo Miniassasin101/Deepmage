@@ -13,7 +13,18 @@ extends Control
 
 var active_buttons: Array[ActionButtonUI] = []
 
+static var instance: ActionSystemUI = null
+
+
+
+
 func _ready() -> void:
+	if instance != null:
+		push_error("There's more than one ActionSystemUI! - " + str(instance))
+		queue_free()
+		return
+	instance = self
+	
 	SignalBus.on_unit_selected.connect(on_unit_selected)
 
 
@@ -22,13 +33,18 @@ func on_unit_selected(unit: Unit) -> void:
 	make_action_buttons(unit)
 
 
-func make_action_buttons(unit: Unit) -> void:
+func make_action_buttons(unit: Unit, make_reactions: bool = false) -> void:
 	for child in action_button_hbox.get_children():
 		child.queue_free()
 	
 	active_buttons.clear()
 	
 	for action in unit.character_sheet.action_container.actions:
+		if action.is_action_type("reaction"):
+			if !make_reactions:
+				continue
+		elif make_reactions:
+			continue
 		var new_button: ActionButtonUI = action_button_prefab.instantiate() as ActionButtonUI
 		
 		new_button.set_base_action(action)

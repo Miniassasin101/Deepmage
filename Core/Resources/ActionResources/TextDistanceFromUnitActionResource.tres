@@ -11,5 +11,6 @@ text_color = Color(0.941176, 0.972549, 1, 1)
 scale = 1.0
 action_name = "Print Distance"
 selection_types = Array[ExtResource("2_7hkb3")]([ExtResource("3_7hkb3")])
+reaction_check_timing = 0.3
 tags = Array[String]([])
 metadata/_custom_type_script = "uid://de4nfr4h7elag"

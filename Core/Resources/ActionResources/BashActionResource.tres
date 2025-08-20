@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BashAction" load_steps=5 format=3 uid="uid://bencsgyaid7gy"]
 
-[ext_resource type="Script" uid="uid://cte0mmqdwrhoe" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/BashAction.gd" id="1_rjyrs"]
+[ext_resource type="Script" uid="uid://cte0mmqdwrhoe" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/BashAction.gd" id="1_rjyrs"]
 [ext_resource type="Resource" uid="uid://8mq08eqitt0g" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/CapsuleBashPackage.tres" id="1_uomc7"]
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_enivt"]
 [ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="3_enivt"]

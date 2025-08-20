@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://2h1a1e1r8hc2"]
+[gd_scene load_steps=45 format=3 uid="uid://2h1a1e1r8hc2"]
 
 [ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
 [ext_resource type="Script" uid="uid://byevnkq30m4mb" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.gd" id="1_ohquw"]
@@ -28,6 +28,7 @@
 [ext_resource type="Resource" uid="uid://c7ce7gpokhoir" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/BaseAttributes/AgilityAttributeResource.tres" id="19_hq0j0"]
 [ext_resource type="Resource" uid="uid://blhslcjt07b8o" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/BaseAttributes/SenseAttributeResource.tres" id="20_sne6a"]
 [ext_resource type="Resource" uid="uid://dfmpwmr3pmh4d" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/BaseAttributes/PresenceAttributeResource.tres" id="21_pksos"]
+[ext_resource type="Resource" uid="uid://by016ujd3kbnh" path="res://Deepmage/Core/Resources/ActionResources/EvadeReactionResource.tres" id="21_t7uvv"]
 [ext_resource type="Resource" uid="uid://oapobdj11anu" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/StrainAttributeResource.tres" id="23_hq0j0"]
 [ext_resource type="Resource" uid="uid://bpylci06i7fs" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/PostureAttributeResource.tres" id="24_sne6a"]
 
@@ -85,6 +86,7 @@ text_color = Color(0.941176, 0.972549, 1, 1)
 scale = 1.0
 action_name = "Test Text"
 selection_types = Array[ExtResource("9_t3ejk")]([SubResource("Resource_jswbx")])
+reaction_check_timing = 0.3
 tags = Array[String]([])
 metadata/_custom_type_script = "uid://dyiusi38rqf6w"
 
@@ -104,6 +106,7 @@ stopping_distance = 0.1
 unit_avoid_radius = 1.6
 action_name = "Move Test"
 selection_types = Array[ExtResource("9_t3ejk")]([SubResource("Resource_lsp3f")])
+reaction_check_timing = 0.3
 tags = Array[String]([])
 metadata/_custom_type_script = "uid://bl34p0y06cyys"
 
@@ -114,6 +117,7 @@ text_color = Color(9.62615e-08, 0.519219, 0.80859, 1)
 scale = 1.0
 action_name = "Unit Text Test"
 selection_types = Array[ExtResource("9_t3ejk")]([ExtResource("12_aemtr")])
+reaction_check_timing = 0.3
 tags = Array[String]([])
 metadata/_custom_type_script = "uid://doahtvq8r205k"
 
@@ -125,6 +129,7 @@ scale = 1.0
 spawn_text_at_pos = true
 action_name = "Ground Text"
 selection_types = Array[ExtResource("9_t3ejk")]([SubResource("Resource_lsp3f")])
+reaction_check_timing = 0.3
 tags = Array[String]([])
 metadata/_custom_type_script = "uid://4mdy4qyk2p8b"
 
@@ -139,6 +144,7 @@ script = ExtResource("14_b3sv1")
 unit_avoid_radius = 1.6
 action_name = "Teleport"
 selection_types = Array[ExtResource("9_t3ejk")]([SubResource("Resource_2qo7v")])
+reaction_check_timing = 0.3
 tags = Array[String]([])
 metadata/_custom_type_script = "uid://bjhah2xmsklrq"
 
@@ -225,7 +231,7 @@ attributes_container = NodePath("AttributesContainer")
 [node name="ActionContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
 script = ExtResource("5_t2svf")
 unit = NodePath("../..")
-actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_k5ckj"), SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("15_sne6a"), ExtResource("16_pksos"), ExtResource("19_1343x")])
+actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_k5ckj"), SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("15_sne6a"), ExtResource("16_pksos"), ExtResource("19_1343x"), ExtResource("21_t7uvv")])
 
 [node name="AttributesContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
 script = ExtResource("15_jswbx")

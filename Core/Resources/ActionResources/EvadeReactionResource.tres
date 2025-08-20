@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="EvadeAction" load_steps=4 format=3 uid="uid://by016ujd3kbnh"]
+
+[ext_resource type="Script" uid="uid://vrn8he3aydtf" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/ReactionScripts/EvadeAction.gd" id="1_02pk8"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_bplws"]
+
+[sub_resource type="Resource" id="Resource_02pk8"]
+script = ExtResource("2_bplws")
+name = &"button"
+is_true = true
+metadata/_custom_type_script = "uid://cihsn5lxnlupk"
+
+[resource]
+script = ExtResource("1_02pk8")
+spawn_text = "Testing"
+text_color = Color(0.941176, 0.972549, 1, 1)
+scale = 1.0
+action_name = "Evade"
+selection_types = Array[ExtResource("2_bplws")]([SubResource("Resource_02pk8")])
+reaction_check_timing = 0.3
+tags = Array[String](["reaction"])
+metadata/_custom_type_script = "uid://vrn8he3aydtf"
