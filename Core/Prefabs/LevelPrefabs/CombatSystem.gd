@@ -38,3 +38,5 @@ func prompt_player_reaction(defender: Unit) -> void:
 	
 	if selected_reaction:
 		Utilities.spawn_text_line(defender, "Reacting with: " + selected_reaction.action_name)
+	
+	

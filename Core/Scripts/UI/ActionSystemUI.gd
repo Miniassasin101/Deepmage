@@ -60,3 +60,12 @@ func make_action_buttons(unit: Unit, make_reactions: bool = false) -> void:
 func on_action_button_pressed(action: Action) -> void:
 	SignalBus.on_selected_action_changed.emit(action)
 	pass
+
+func try_press_button_by_number(num: int) -> void:
+	
+	if active_buttons.get(num - 1):
+		var btn := active_buttons[num - 1]
+		on_action_button_pressed(btn.action)
+		
+		btn.grab_focus()
+		

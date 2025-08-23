@@ -64,7 +64,7 @@ func spawn_text_line(in_unit: Unit, text: String, color: Color = Color.SNOW, sca
 
 
 func spawn_damage_label(in_unit: Unit, damage_val: float, color: Color = Color.CRIMSON, scale: float = 0.6) -> void:
-	var chest_pos: Vector3 = in_unit.get_world_position_chest()
+	var chest_pos: Vector3 = in_unit.get_world_position_above_marker()/2
 	var camera: Camera3D = MouseController.instance.camera
 	# Assume 'camera' is a reference to your Camera3D node
 	var screen_pos: Vector2 = camera.unproject_position(chest_pos)

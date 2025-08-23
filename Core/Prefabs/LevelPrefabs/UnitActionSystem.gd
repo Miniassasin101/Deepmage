@@ -56,7 +56,7 @@ func _process(_delta: float) -> void:
 	#move_to_click()
 	action_input_process()
 
-func _unhandled_input(_event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if is_disabled:
 		return
 	
@@ -65,11 +65,30 @@ func _unhandled_input(_event: InputEvent) -> void:
 	if hovered_control != null:
 		return
 	
-	if is_busy:
-		return
+	
+
 	
 	if Input.is_action_just_pressed("left_mouse"):
-		on_left_mouse_clicked()
+		if !is_busy:
+			on_left_mouse_clicked()
+	
+	var num_pressed: int = get_pressed_num_shortcut(event)
+	if num_pressed != -1:
+		ActionSystemUI.instance.try_press_button_by_number(num_pressed)
+
+func get_pressed_num_shortcut(event: InputEvent) -> int:
+	if event.is_action("1_key"):
+		return 1
+	elif event.is_action("2_key"):
+		return 2
+	elif event.is_action("3_key"):
+		return 3
+	elif event.is_action("4_key"):
+		return 4
+	else:
+		return -1
+
+
 
 func action_input_process() -> void:
 
@@ -176,6 +195,8 @@ func prompt_reaction(reacting_unit: Unit) -> void:
 
 func on_reaction_confirmed(reaction: Action) -> void:
 	reaction_confirmed.emit(reaction)
+	
+	ActionSystemUI.instance.make_action_buttons(TurnSystem.instance.selected_unit)
 
 
 

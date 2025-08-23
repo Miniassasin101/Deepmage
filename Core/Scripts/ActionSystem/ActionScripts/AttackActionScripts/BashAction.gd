@@ -26,11 +26,11 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	#owner.animation_controller.play_animation_by_name(attack_success_animation.get_anim_name())
 	owner.animation_controller.play_package(attack_success_animation)
 
-	# You can optionally still wait for full completion in parallel if needed:
-	# await owner.movement_controller.rotation_complete
+
 
 	# Temp timer—replace with your real combo/timing window logic
-	await owner.get_tree().create_timer(1.5).timeout
+	await owner.get_tree().create_timer(0.6).timeout
+	Utilities.spawn_damage_label(target_unit, 2)
 	print_debug("Animation Played")
 
 	end_action()
