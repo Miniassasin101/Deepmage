@@ -11,6 +11,8 @@ extends Resource
 var hits: int = -1                     # applied (capped) successes
 var pool: DicePool = null              # last DicePool instance for inspection
 
+var success: bool = false
+
 func _init(_skill_rank: int = 1,
 		   _attribute_rank: int = 1,
 		   _limit_rank: int = 1,
@@ -47,6 +49,7 @@ func run_test() -> bool:
 
 	# 5) Return whether we met or exceeded the required successes
 	if hits >= req_successes:
+		success = true
 		return true
 	else:
 		return false

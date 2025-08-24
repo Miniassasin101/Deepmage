@@ -10,6 +10,10 @@ extends Action
 
 @export var min_turn_delta_rad: float = 4.5 # only rotate if > ~6°
 
+@export var attack_attribute: String = "might"
+
+@export var base_damage: int = 3
+
 func start_action(targ_pack: TargetPackage = null) -> void:
 	super.start_action(targ_pack)
 	print_debug("Bash Started")
@@ -21,6 +25,10 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	
 	print_debug("Rotate Completed")
 	await declare_attack(target_unit)
+	
+
+	var effective_damage: int = maxi(base_damage - CombatSystem.instance.current_combat_event_data.armor_test_hits, 0)
+	
 
 	# Start attack slightly before perfect alignment.
 	#owner.animation_controller.play_animation_by_name(attack_success_animation.get_anim_name())
@@ -30,8 +38,15 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 
 	# Temp timer—replace with your real combo/timing window logic
 	await owner.get_tree().create_timer(0.6).timeout
-	Utilities.spawn_damage_label(target_unit, 2)
-	print_debug("Animation Played")
+	var curr_val: int = owner.get_attributes_container().get_attribute_current_value("structure")
+	owner.get_attributes_container().set_attribute_current_value("structure", curr_val - effective_damage)
+	
+	var color: Color = Color.FIREBRICK
+	if effective_damage == 0:
+		color = Color.ALICE_BLUE
+	
+	Utilities.spawn_damage_label(target_unit, effective_damage, color, 0.55)
+
 
 	end_action()
 
@@ -40,9 +55,23 @@ func declare_attack(target_unit: Unit) -> void:
 	await CombatSystem.instance.declare_attack(self, owner, target_unit)
 
 
+func rotate_towards_target(target: Unit) -> void:
+
+	var target_pos := target.get_global_position()
+
+	owner.movement_controller.rotate_unit_towards_target_position(
+		target_pos,
+		4.0,                         # rotation speed
+		pre_rotation_margin_override # your early-start margin
+	)
+	await owner.movement_controller.rotation_precomplete
+
 
 func end_action() -> void:
 	super.end_action()
+
+func get_stat_name() -> String:
+	return attack_attribute
 
 func can_activate_on_target(target_pack: TargetPackage) -> bool:
 	if !target_pack or !target_pack.has_tag("unit"):
@@ -58,50 +87,3 @@ func can_activate_on_target(target_pack: TargetPackage) -> bool:
 
 func get_distance_to_owner(unit: Unit) -> float:
 	return unit.get_global_position().distance_to(owner.get_global_position())
-
-
-func rotate_towards_target_dep(target: Unit) -> void:
-	# Begin turning. We do NOT await here; we await the early signal below.
-	owner.movement_controller.rotate_unit_towards_target_position(
-		target.get_global_position(),
-		4.0, # rotation speed
-		pre_rotation_margin_override
-	)
-
-	# Wait until we're "nearly there" for snappy feel.
-	await owner.movement_controller.rotation_precomplete
-
-func rotate_towards_target(target: Unit) -> void:
-	var target_pos := target.get_global_position()
-	var yaw_delta := absf(_xz_yaw_angle_to(target_pos))
-
-	# Deadzone: skip rotation if already facing close enough
-	if yaw_delta <= min_turn_delta_rad:
-		#return  # caller's `await rotate_towards_target(...)` completes immediately
-		pass
-
-	owner.movement_controller.rotate_unit_towards_target_position(
-		target_pos,
-		4.0,                         # rotation speed
-		pre_rotation_margin_override # your early-start margin
-	)
-	await owner.movement_controller.rotation_precomplete
-
-
-func _xz_yaw_angle_to(target_pos: Vector3) -> float:
-	# Direction to target on XZ
-	var to_target := target_pos - owner.global_transform.origin
-	to_target.y = 0.0
-	if to_target.is_zero_approx():
-		return 0.0
-	to_target = to_target.normalized()
-
-	# Current forward on XZ (Godot faces -Z)
-	var fwd := -owner.global_transform.basis.z
-	fwd.y = 0.0
-	if fwd.is_zero_approx():
-		return 0.0
-	fwd = fwd.normalized()
-
-	# Signed angle around Y (radians). Use abs() if you only need magnitude.
-	return fwd.signed_angle_to(to_target, Vector3.UP)

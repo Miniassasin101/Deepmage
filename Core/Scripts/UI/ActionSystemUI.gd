@@ -62,10 +62,18 @@ func on_action_button_pressed(action: Action) -> void:
 	pass
 
 func try_press_button_by_number(num: int) -> void:
+	if active_buttons.is_empty():
+		return
 	
-	if active_buttons.get(num - 1):
-		var btn := active_buttons[num - 1]
-		on_action_button_pressed(btn.action)
-		
-		btn.grab_focus()
-		
+	var btn: ActionButtonUI = null
+	if active_buttons.size() >= num:
+		btn = active_buttons[num - 1]
+	else:
+		btn = active_buttons.back()
+	
+	if !btn:
+		return
+	
+	on_action_button_pressed(btn.action)
+	
+	btn.grab_focus()

@@ -85,8 +85,19 @@ func get_pressed_num_shortcut(event: InputEvent) -> int:
 		return 3
 	elif event.is_action("4_key"):
 		return 4
+	elif event.is_action("5_key"):
+		return 5
+	elif event.is_action("6_key"):
+		return 6
+	elif event.is_action("7_key"):
+		return 7
+	elif event.is_action("8_key"):
+		return 8
+	elif event.is_action("9_key"):
+		return 9
 	else:
 		return -1
+
 
 
 

@@ -112,10 +112,12 @@ func _populate_from_unit(unit: Unit) -> void:
 		return
 	unit_name_label.text = unit.ui_name
 
-	health_points_label.text = str(unit.get_attributes_container().get_attribute("health").get_current_modified_value())\
-	 + "/" + str(unit.get_attributes_container().get_attribute("health").maximum_value)
-	posture_points_label.text = _get_attribute_or_na(unit, "posture")
-	strain_points_label.text = _get_attribute_or_na(unit, "strain")
+	health_points_label.text = str(unit.get_attributes_container().get_attribute("armor").get_current_modified_value())\
+	 + "/" + str(unit.get_attributes_container().get_attribute("armor").maximum_value)
+	posture_points_label.text = _get_attribute_or_na(unit, "posture")\
+	 + "/" + str(unit.get_attributes_container().get_attribute("posture").maximum_value)
+	strain_points_label.text = _get_attribute_or_na(unit, "strain")\
+	 + "/" + str(unit.get_attributes_container().get_attribute("strain").maximum_value)
 	experience_rolls_label.text = "EXP: " + _get_attribute_or_na(unit, "experience_rolls") 
 	movement_rate_label.text = "MOV: " + _get_attribute_or_na(unit, "movement_rate")
 	unused_label_1.text = ""
@@ -125,7 +127,7 @@ func _populate_from_unit(unit: Unit) -> void:
 	endurance_label.text = _get_attribute_or_na(unit, "endurance")
 	agility_label.text = _get_attribute_or_na(unit, "agility")
 	sense_label.text = _get_attribute_or_na(unit, "sense")
-	mind_label.text = _get_attribute_or_na(unit, "sense")
+	mind_label.text = _get_attribute_or_na(unit, "mind")
 	presence_label.text = _get_attribute_or_na(unit, "presence")
 	
 

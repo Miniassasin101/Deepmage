@@ -6,9 +6,9 @@
 script = ExtResource("1_fwm0k")
 attribute_name = "posture"
 attribute_type = 2
-current_value = 1
+current_value = 10
 base_value = 0
-maximum_value = 1
+maximum_value = 10
 minimum_value = 0
 modifiers = Array[int]([])
 tags = Array[String]([])
