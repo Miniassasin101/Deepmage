@@ -21,7 +21,6 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	var attacking_unit: Unit = CombatSystem.instance.current_combat_event_data.attacker
 	
 	if attacking_unit:
-	
 		await rotate_towards_target(attacking_unit)
 	
 	end_action()

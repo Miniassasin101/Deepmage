@@ -10,6 +10,8 @@ extends Action
 
 @export var min_turn_delta_rad: float = 4.5 # only rotate if > ~6°
 
+@export var accuracy_attribute: String = "agility"
+
 @export var attack_attribute: String = "might"
 
 @export var base_damage: int = 3
@@ -38,8 +40,14 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 
 	# Temp timer—replace with your real combo/timing window logic
 	await owner.get_tree().create_timer(0.6).timeout
-	var curr_val: int = owner.get_attributes_container().get_attribute_current_value("structure")
-	owner.get_attributes_container().set_attribute_current_value("structure", curr_val - effective_damage)
+	
+	if !CombatSystem.instance.current_combat_event_data.is_hit:
+		Utilities.spawn_text_line(target_unit, "MISS", Color.AQUA)
+		end_action()
+		return
+	
+	var curr_val: int = owner.get_attributes_container().get_attribute_current_value("health")
+	owner.get_attributes_container().add_attribute_modifier("health", -effective_damage)#set_attribute_current_value("structure", curr_val - effective_damage)
 	
 	var color: Color = Color.FIREBRICK
 	if effective_damage == 0:
@@ -70,8 +78,10 @@ func rotate_towards_target(target: Unit) -> void:
 func end_action() -> void:
 	super.end_action()
 
+
 func get_stat_name() -> String:
 	return attack_attribute
+
 
 func can_activate_on_target(target_pack: TargetPackage) -> bool:
 	if !target_pack or !target_pack.has_tag("unit"):
@@ -84,6 +94,7 @@ func can_activate_on_target(target_pack: TargetPackage) -> bool:
 	if get_distance_to_owner(unit) > attack_range:
 		return false
 	return true
+
 
 func get_distance_to_owner(unit: Unit) -> float:
 	return unit.get_global_position().distance_to(owner.get_global_position())

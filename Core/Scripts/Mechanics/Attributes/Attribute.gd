@@ -33,7 +33,17 @@ func get_current_modified_value() -> int:
 
 
 func get_current_modifier() -> int:
-	return 0
+	var current_modifier: int = 0
+	for mod in modifiers:
+		current_modifier += mod
+	return current_modifier
+
+func add_modifier(in_modifier: int) -> void:
+	modifiers.append(in_modifier)
+
+func remove_modifier(in_modifier: int) -> void:
+	if modifiers.has(in_modifier):
+		modifiers.erase(in_modifier)
 
 
 # Functions for tag management

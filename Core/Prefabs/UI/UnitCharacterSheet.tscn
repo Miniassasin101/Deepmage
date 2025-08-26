@@ -30,7 +30,7 @@ grow_end = -3.0
 
 [sub_resource type="Theme" id="Theme_32rw0"]
 
-[node name="UnitCharacterSheetUI" type="Control" node_paths=PackedStringArray("unit_name_label", "posture_points_label", "health_points_label", "strain_points_label", "experience_rolls_label", "movement_rate_label", "unused_label_1", "might_label", "endurance_label", "agility_label", "sense_label", "mind_label", "presence_label", "martial_label", "channel_label", "clash_label", "evade_label", "conditions_container", "close_button")]
+[node name="UnitCharacterSheetUI" type="Control" node_paths=PackedStringArray("unit_name_label", "armor_points_label", "health_points_label", "strain_points_label", "experience_rolls_label", "movement_rate_label", "unused_label_1", "might_label", "endurance_label", "agility_label", "sense_label", "mind_label", "presence_label", "martial_label", "channel_label", "clash_label", "evade_label", "will_label", "conditions_container", "close_button")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 2.0
@@ -40,8 +40,8 @@ offset_bottom = 435.0
 scale = Vector2(0.584722, 0.581201)
 script = ExtResource("1_s4tfa")
 unit_name_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer/VBoxContainer/MarginContainer/PanelContainer/UnitNameLabel")
-posture_points_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/PanelContainer/VBoxContainer/PosturePointsLabel")
-health_points_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer2/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer/HealthPointsLabel")
+armor_points_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer2/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer/ArmorPointsLabel")
+health_points_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/PanelContainer/VBoxContainer/HealthPointsLabel")
 strain_points_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer2/VBoxContainer/MarginContainer2/PanelContainer/VBoxContainer/StrainLabel")
 experience_rolls_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer4/VBoxContainer/PanelContainer/ExperienceLabel")
 movement_rate_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer4/VBoxContainer/PanelContainer2/MovementRateLabel")
@@ -56,6 +56,7 @@ martial_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/L
 channel_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/FightSkillsMarginContainer2/PanelContainer/VBoxContainer/GridContainer/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/ChannelLabel")
 clash_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/FightSkillsMarginContainer2/PanelContainer/VBoxContainer/GridContainer/MarginContainer3/PanelContainer/MarginContainer/VBoxContainer/ClashLabel")
 evade_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/FightSkillsMarginContainer2/PanelContainer/VBoxContainer/GridContainer/MarginContainer4/PanelContainer/MarginContainer/VBoxContainer/EvadeLabel")
+will_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/FightSkillsMarginContainer2/PanelContainer/VBoxContainer/GridContainer/MarginContainer6/PanelContainer/MarginContainer/VBoxContainer/WillLabel")
 conditions_container = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer3/PanelContainer/VboxContainer")
 close_button = NodePath("MarginContainer/CloseButton")
 
@@ -139,7 +140,7 @@ theme_override_constants/separation = 0
 
 [node name="Label" type="Label" parent="MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/PanelContainer/VBoxContainer"]
 layout_mode = 2
-text = "POSTURE"
+text = "HEALTH"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -148,10 +149,10 @@ layout_mode = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_5lmja")
 
-[node name="PosturePointsLabel" type="Label" parent="MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/PanelContainer/VBoxContainer"]
+[node name="HealthPointsLabel" type="Label" parent="MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
-text = "POS"
+text = "HP"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -190,7 +191,7 @@ layout_mode = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_5lmja")
 
-[node name="HealthPointsLabel" type="Label" parent="MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer2/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer"]
+[node name="ArmorPointsLabel" type="Label" parent="MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer2/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
 text = "AR"
@@ -678,6 +679,37 @@ text = "EVADE: "
 horizontal_alignment = 1
 
 [node name="EvadeLabel" type="Label" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/FightSkillsMarginContainer2/PanelContainer/VBoxContainer/GridContainer/MarginContainer4/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 2
+
+[node name="MarginContainer6" type="MarginContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/FightSkillsMarginContainer2/PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/FightSkillsMarginContainer2/PanelContainer/VBoxContainer/GridContainer/MarginContainer6"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/FightSkillsMarginContainer2/PanelContainer/VBoxContainer/GridContainer/MarginContainer6/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_right = 8
+
+[node name="VBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/FightSkillsMarginContainer2/PanelContainer/VBoxContainer/GridContainer/MarginContainer6/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/FightSkillsMarginContainer2/PanelContainer/VBoxContainer/GridContainer/MarginContainer6/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "WILL: "
+horizontal_alignment = 1
+
+[node name="WillLabel" type="Label" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/FightSkillsMarginContainer2/PanelContainer/VBoxContainer/GridContainer/MarginContainer6/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "0"
 horizontal_alignment = 2

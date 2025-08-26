@@ -12,7 +12,7 @@ extends Control
 
 @export_category("Labels")
 @export var unit_name_label: Label
-@export var posture_points_label: Label
+@export var armor_points_label: Label
 @export var health_points_label: Label
 @export var strain_points_label: Label
 
@@ -33,6 +33,7 @@ extends Control
 @export var channel_label: Label
 @export var clash_label: Label
 @export var evade_label: Label
+@export var will_label: Label
 
 @export_category("Containers")
 @export var conditions_container: VBoxContainer
@@ -112,10 +113,10 @@ func _populate_from_unit(unit: Unit) -> void:
 		return
 	unit_name_label.text = unit.ui_name
 
-	health_points_label.text = str(unit.get_attributes_container().get_attribute("armor").get_current_modified_value())\
+	armor_points_label.text = str(unit.get_attributes_container().get_attribute("armor").get_current_modified_value())\
 	 + "/" + str(unit.get_attributes_container().get_attribute("armor").maximum_value)
-	posture_points_label.text = _get_attribute_or_na(unit, "posture")\
-	 + "/" + str(unit.get_attributes_container().get_attribute("posture").maximum_value)
+	health_points_label.text = _get_attribute_or_na(unit, "health")\
+	 + "/" + str(unit.get_attributes_container().get_attribute("health").maximum_value)
 	strain_points_label.text = _get_attribute_or_na(unit, "strain")\
 	 + "/" + str(unit.get_attributes_container().get_attribute("strain").maximum_value)
 	experience_rolls_label.text = "EXP: " + _get_attribute_or_na(unit, "experience_rolls") 
@@ -135,6 +136,7 @@ func _populate_from_unit(unit: Unit) -> void:
 	channel_label.text = _get_attribute_or_na(unit, "channel")
 	clash_label.text = _get_attribute_or_na(unit, "clash")
 	evade_label.text = _get_attribute_or_na(unit, "evasion")
+	will_label.text = _get_attribute_or_na(unit, "will")
 
 
 
