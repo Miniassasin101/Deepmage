@@ -3,9 +3,10 @@ extends AnimationEffect
 
 @export_range(0, 2) var duration: float = 0.2
 
+var is_disabled: bool = false
 
 func play_effect(owner: Unit = null) -> void:
-	if owner == null:
+	if owner == null or is_disabled:
 		return
 	
 	if duration <= 0.0:

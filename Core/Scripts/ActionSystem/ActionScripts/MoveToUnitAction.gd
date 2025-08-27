@@ -37,9 +37,7 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 func _begin_movement(unit: Unit) -> void:
 
 	# Target position is target unit
-	var to_pos: Vector3 = unit.get_global_position()
-	
-	var path_pack: PathPackage = PathfindingSystem.instance.get_path_package(to_pos, action_container.unit, true)
+	var path_pack: PathPackage = get_path_pack_to_unit(unit)
 	movement_curve = path_pack.get_curve_3d_from_path()
 	curve_length    = movement_curve.get_baked_length()
 	
@@ -65,7 +63,12 @@ func _end_movement() -> void:
 	
 	#end_action()
 
-
+func get_path_pack_to_unit(unit: Unit) -> PathPackage:
+	var to_pos: Vector3 = unit.get_global_position()
+	
+	var path_pack: PathPackage = PathfindingSystem.instance.get_path_package(to_pos, action_container.unit, true)
+	
+	return path_pack
 
 
 

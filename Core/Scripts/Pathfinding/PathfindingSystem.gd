@@ -53,6 +53,14 @@ func get_path_package(world_position: Vector3, unit: Unit, should_get_path: bool
 	return path_pack
 
 
+func get_path_pack_to_unit(from_unit: Unit, to_unit: Unit) -> PathPackage:
+	var to_pos: Vector3 = to_unit.get_global_position()
+	
+	var path_pack: PathPackage = get_path_package(to_pos, from_unit, true)
+	
+	return path_pack
+
+
 
 func navigation_setup() -> void:
 

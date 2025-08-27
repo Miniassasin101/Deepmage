@@ -39,8 +39,20 @@ func declare_attack(action: Action, attacker: Unit, defender: Unit) -> void:
 	
 	current_combat_event_data.reaction.resolve_reaction()
 	
-	print_debug("Attacker hits: " + str(current_combat_event_data.attacker_hits) + "\nDefender hits: "\
-	+ str(current_combat_event_data.attacker_hits))
+	var attacker_hits: int = current_combat_event_data.attacker_hits
+	var defender_hits: int = current_combat_event_data.defender_hits
+	
+	var l1: String = "Attacker scored " + str(attacker_hits) + "\nDefender scored " + str(defender_hits)
+	var l2: String = ""
+	if current_combat_event_data.is_hit:
+		l2 = "Result: Successful Hit"
+	elif current_combat_event_data.is_graze:
+		l2 = "Result: Grazed"
+	else:
+		l2 = "Result: Evaded"
+	
+	var l3: String = l1 + "\n" + l2
+	print_debug(l3)
 
 	print_debug("Armor hits: " + str(current_combat_event_data.armor_test_hits))
 
@@ -109,6 +121,8 @@ func setup_defender_test() -> void:
 	
 	current_combat_event_data.defender_test = test
 	current_combat_event_data.defender_hits = test.hits
+	
+
 
 
 
@@ -139,4 +153,5 @@ func setup_armor() -> void:
 	current_combat_event_data.armor_test = test
 	
 	current_combat_event_data.armor_test_hits = test.hits
+	
 	

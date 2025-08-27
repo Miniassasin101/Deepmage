@@ -18,7 +18,7 @@ extends Reaction
 func start_action(targ_pack: TargetPackage = null) -> void:
 	super.start_action(targ_pack)
 	var unit: Unit = action_container.unit
-	Utilities.spawn_text_line(unit, spawn_text, text_color, scale)
+	#Utilities.spawn_text_line(unit, spawn_text, text_color, scale)
 	
 	var attacking_unit: Unit = CombatSystem.instance.current_combat_event_data.attacker
 	

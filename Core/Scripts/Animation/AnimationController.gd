@@ -1,69 +1,50 @@
 class_name AnimationController
 extends Node
 
-
 signal animation_started(anim: StringName)
 signal animation_finished(anim: StringName)
 signal effect_fired(effect: AnimationEffect)
 
-
 @export var unit: Unit
-@export var animator: AnimationPlayer
+@export var animator: AnimationPlayer                  # main motion
+@export var event_animator: AnimationPlayer            # NEW: events-only
 @export var effects_controller: EffectsController
+@export var current_library: String = ""               # main player's library key ("" = default)
 
-@export var current_library: String = ""
+var is_resolving: bool = false
 
 var current_animation: String = ""
-
-
 var _current_package: AnimationPackage
-var _pending_effects: Array[AnimationEffect] = []
-var _last_pos := 0.0
-const EPS := 0.0001
 
+var _restore_speed_on_finish := 1.0
+var _override_speed := 1.0
 
+# cache: events animation name -> Animation (so we build once)
+var _event_anim_cache: Dictionary = {}
 
 func _ready() -> void:
 	if animator:
 		animator.animation_finished.connect(_on_anim_finished)
 
+	# Configure event_animator so method keys are safe & precise
+	if event_animator:
+		event_animator.callback_mode_method = AnimationMixer.ANIMATION_CALLBACK_MODE_METHOD_DEFERRED
+		event_animator.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_IDLE
+		# root_node defaults to ".." (parent), so method track path "." will call this controller.
+
+# ---------------- Public API ----------------
+
+func has_animation(animation_name: String) -> bool:
+	var anim_path := _libpath(animation_name)
+	return animator.has_animation(anim_path)
 
 
 func play_animation_by_name(animation_name: String) -> void:
-	
 	if !has_animation(animation_name):
 		return
-	
-	Utilities.spawn_text_line(unit, "Has Animation: " + animation_name)
-	
-	var anim_path: String = current_library + "/" + animation_name
-	
+	var anim_path := _libpath(animation_name)
 	animator.play(anim_path)
-	
 	await animator.animation_finished
-	
-	Utilities.spawn_text_line(unit, "Animation Finished: " + animation_name)
-	pass
-
-
-
-func has_animation(animation_name: String) -> bool:
-	var anim_path: String = current_library + "/" + animation_name
-	
-	if !animator.has_animation(anim_path):
-		return false
-	
-	return true
-
-
-func _anim_path_for(package: AnimationPackage) -> String:
-	var t_name := package.get_anim_name()
-	var path := ""
-	if current_library == "":
-		path = t_name
-	else:
-		path = current_library + "/" + t_name
-	return path
 
 
 func play_package(pack: AnimationPackage) -> void:
@@ -72,83 +53,152 @@ func play_package(pack: AnimationPackage) -> void:
 		return
 
 	_current_package = pack
-	_arm_effects_from_package(pack)
 	current_animation = pack.get_anim_name()
-	emit_signal("animation_started", current_animation)
+	animation_started.emit(current_animation)
 
-	var path := _anim_path_for(pack)
-	animator.play(path)
-	_last_pos = 0.0
-	set_process(true)
+	# 1) Play main clip
+	var main_path := _anim_path_for(pack)
+	is_resolving = true
+	animator.play(main_path)
 
-"""
-func toggle_slowdown(speed_scale: float = 0.0) -> void:
+	# 2) Bake/play events clip
+	_play_events_for_package(pack)
 
-	if !is_slowed:
-			set_timescales(speed_scale)
-			# FIXME: Multiplier might be inverted, increases rather than decreases
-			#timescale_multiplier = speed_scale
-			is_slowed = true
+func play_package_timed(pack: AnimationPackage, delay: float = 0.0, speed_scale: float = 1.0) -> void:
+	if pack == null:
+		return
+	_override_speed = speed_scale
+	_restore_speed_on_finish = 1.0
+	_start_after_delay(pack, delay)
 
-	else:
-		set_timescales(1.0)
-		#timescale_multiplier = 1.0
-		is_slowed = false
-"""
+@rpc("call_local")
+func _start_after_delay(pack: AnimationPackage, delay: float) -> void:
+	await get_tree().create_timer(max(0.0, delay)).timeout
+	set_timescales(_override_speed)
+	play_package(pack)
 
 func set_timescales(val: float) -> void:
-	#animator_tree.set("parameters/Main/TimeScale/scale", val)
-	animator.set_speed_scale(val)
-
-
-
-func _process(_delta: float) -> void:
-	if _current_package == null:
-		return
-	if !animator.is_playing():
-		return
-
-	var pos := animator.current_animation_position
-
-	while _pending_effects.size() > 0 and _pending_effects[0].timing <= pos + EPS:
-		var fx: AnimationEffect = _pending_effects.pop_front()
-		_fire_effect(fx)
-
-	_last_pos = pos
-
-	if _pending_effects.is_empty():
-		set_process(false)
-
-func _fire_effect(fx: AnimationEffect) -> void:
-	if effects_controller != null:
-		effects_controller.play_effect(fx)
-	emit_signal("effect_fired", fx)
-
-
-
-func _arm_effects_from_package(pack: AnimationPackage) -> void:
-	_pending_effects = pack.get_anim_effects().duplicate()
-	_pending_effects.sort_custom(func(a: AnimationEffect, b: AnimationEffect) -> bool:
-		return a.timing < b.timing
-	)
-
-func _on_anim_finished(anim_name: StringName) -> void:
-	var matches := false
-	if anim_name.ends_with("/" + str(current_animation)):
-		matches = true
-	elif anim_name == current_animation:
-		matches = true
-
-	if matches:
-		_pending_effects.clear()
-		set_process(false)
-		emit_signal("animation_finished", current_animation)
-
+	if animator:
+		animator.speed_scale = val
+	if event_animator:
+		event_animator.speed_scale = val
 
 func apply_hitstop_ms(ms: int) -> void:
 	if ms <= 0:
 		return
 	var old := animator.speed_scale
-	animator.speed_scale = 0.0
+	set_timescales(0.0)
 	await get_tree().create_timer(ms / 1000.0).timeout
-	animator.speed_scale = old
+	set_timescales(old)
+
+# ---------------- Internals ----------------
+
+func _anim_path_for(package: AnimationPackage) -> String:
+	var t_name := package.get_anim_name()
+	return _libpath(t_name)
+
+
+func _on_anim_finished(anim_name: StringName) -> void:
+	var matches := false
+	if anim_name.ends_with("/" + str(current_animation)): matches = true
+	elif anim_name == current_animation: matches = true
+
+	if matches:
+		# stop events player too
+		if event_animator and event_animator.is_playing():
+			var pos: float = animator.current_animation_position
+			event_animator.stop()
+		animator.speed_scale = _restore_speed_on_finish
+		animation_finished.emit(current_animation)
+	is_resolving = false
+
+# Called by method keys on the events animation
+func _on_event_key(effect: AnimationEffect) -> void:
+	if effects_controller:
+		effects_controller.play_effect(effect)
+	effect_fired.emit(effect)
+
+# ---------------- Event animation builder & playback ----------------
+
+func _play_events_for_package(pack: AnimationPackage) -> void:
+	if event_animator == null:
+		return
+
+	var ev_name := _ensure_events_animation(pack) # builds and registers in library if missing
+
+	# keep players in lock-step
+	event_animator.speed_scale = animator.speed_scale
+	var lib: AnimationLibrary = event_animator.get_animation_library("")
+	if event_animator.has_animation(ev_name):
+		pass
+	event_animator.play(ev_name)
+	# update immediately so first key at t=0 fires if present
+	event_animator.advance(0)
+
+func _ensure_events_animation(pack: AnimationPackage) -> StringName:
+	var ename := StringName(pack.get_anim_name() + "__events")
+
+	# already present in player?
+	if event_animator.has_animation(ename):
+		return ename
+	# built and cached but not yet registered?
+	if _event_anim_cache.has(ename):
+		_register_events_anim(ename, _event_anim_cache[ename])
+		return ename
+
+	# Build fresh
+	var anim := Animation.new()
+	anim.loop_mode = Animation.LOOP_NONE
+
+	# Length: at least main length or last effect + small pad
+	var main_len := pack.animation.length
+	var last_fx := _last_effect_time(pack)
+	anim.length = max(main_len, last_fx + 0.01)
+
+	# 1) Method track that calls back into this controller
+	var track := anim.add_track(Animation.TYPE_METHOD)
+	anim.track_set_path(track, NodePath("."))  # "." resolves to AnimationController (event_animator's root_node parent)
+	for fx in pack.get_anim_effects():
+		var method_details: Dictionary = {
+			"method": "_on_event_key",
+			"args": [fx]
+			}
+
+		anim.track_insert_key(track, fx.timing, method_details)
+		var key_count: int = anim.track_get_key_count(track)
+		pass
+
+	# 2) Optional: add named markers for sync/debug (HIT/INVULN/PEAK)
+	if pack.has_method("marker_time"):
+		var labels := [&"HIT_START", &"HIT_END", &"INVULN_ON", &"INVULN_OFF", &"PEAK"]
+		for label in labels:
+			var t := float(pack.marker_time(label))
+			if t >= 0.0:
+				anim.add_marker(StringName(label), t)
+
+	# Cache & register into the default library of the event_animator
+	_event_anim_cache[ename] = anim
+	_register_events_anim(ename, anim)
+	return ename
+
+func _register_events_anim(in_name: StringName, anim: Animation) -> void:
+	# Ensure default library exists and add the animation there
+	event_animator.remove_animation_library("")
+	var lib: AnimationLibrary = null#event_animator.get_animation_library("default")
+	lib = AnimationLibrary.new()
+	event_animator.add_animation_library("", lib)
+	var plist_size: int = lib.get_animation_list_size()
+	lib.add_animation(in_name, anim)
+	var list_size: int = lib.get_animation_list_size()
+	return
+
+func _last_effect_time(pack: AnimationPackage) -> float:
+	var t := 0.0
+	for fx in pack.get_anim_effects():
+		if fx.timing > t:
+			t = fx.timing
+	return t
+
+# Optional helper to build "library/anim" or just "anim" when library == ""
+func _libpath(anim_name: String) -> String:
+	return anim_name if current_library == "" else current_library + "/" + anim_name

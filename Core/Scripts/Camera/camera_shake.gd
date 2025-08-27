@@ -18,6 +18,7 @@ enum CameraContext {
 @export_category("Camera shake")
 ## The path to the camera to shake
 @export_node_path("Camera2D", "Camera3D") var camera_path: NodePath = NodePath()
+@export var use_debug_prints: bool = false
 
 @export_group("Minimum values", "min_")
 ## The minimum strength appliable to the shake
@@ -95,10 +96,11 @@ func _apply_shake_2d() -> void:
 	previous_tween = create_tween()
 	previous_tween.tween_property(_camera, "offset", Vector2(0.0, 0.0), time_remaining)
 	
-	print("duration: ", duration)
-	print("time_remaining: ", time_remaining)
-	print("duration * frequency: ", duration * frequency)
-	print("tweens_range: ", tweens_range)
+	if use_debug_prints:
+		print("duration: ", duration)
+		print("time_remaining: ", time_remaining)
+		print("duration * frequency: ", duration * frequency)
+		print("tweens_range: ", tweens_range)
 
 	for _n in tweens_range:
 		previous_tween.tween_property(_camera, "offset", Vector2(_get_shake_value(), _get_shake_value()), time_remaining)
@@ -123,11 +125,12 @@ func _apply_shake_3d() -> void:
 	previous_tween = create_tween()
 	previous_tween.tween_property(_camera, "h_offset", 0.0, time_remaining)
 	previous_tween.tween_property(_camera, "v_offset", 0.0, time_remaining)
-
-	print("tweens_range: ", tweens_range)
-	print("time_remaining: ", time_remaining)
-	print("duration: ", duration)
-	print("frequency: ", frequency)
+	
+	if use_debug_prints:
+		print("tweens_range: ", tweens_range)
+		print("time_remaining: ", time_remaining)
+		print("duration: ", duration)
+		print("frequency: ", frequency)
 
 	for _n in tweens_range:
 		previous_tween.tween_property(_camera, "h_offset", _get_shake_value(), time_remaining)

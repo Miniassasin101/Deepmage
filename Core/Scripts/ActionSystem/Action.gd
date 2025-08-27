@@ -1,6 +1,8 @@
 class_name Action
 extends Resource
 
+signal on_action_ended
+
 @export var action_name: String = "none"
 @export var selection_types: Array[NamedBool]
 @export var reaction_check_timing: float = 0.3
@@ -34,6 +36,7 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 
 
 func end_action() -> void:
+	on_action_ended.emit()
 	action_container.on_action_ended(self)
 
 

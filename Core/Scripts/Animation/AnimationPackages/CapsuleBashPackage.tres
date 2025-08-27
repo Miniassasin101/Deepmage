@@ -1,19 +1,13 @@
-[gd_resource type="Resource" script_class="AnimationPackage" load_steps=11 format=3 uid="uid://8mq08eqitt0g"]
+[gd_resource type="Resource" script_class="AnimationPackage" load_steps=14 format=3 uid="uid://8mq08eqitt0g"]
 
 [ext_resource type="Animation" uid="uid://dpc4cwx57nqm4" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/CapsuleBash.res" id="1_7m2ij"]
 [ext_resource type="Script" uid="uid://brutb7o0hj6td" path="res://Deepmage/Core/Scripts/Animation/AnimationPackage.gd" id="1_j1534"]
 [ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="2_vsak5"]
-[ext_resource type="Resource" uid="uid://b7xq7cy4gftao" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectResources/SpawnTextEffectResource.tres" id="3_vsak5"]
 [ext_resource type="Script" uid="uid://dfqq4lgq8fr27" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="4_3rr1d"]
 [ext_resource type="Script" uid="uid://dwim6ikbrpe87" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/SpawnTextAnimationEffect.gd" id="4_b375h"]
 [ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="5_b375h"]
-
-[sub_resource type="Resource" id="Resource_u41mm"]
-script = ExtResource("4_b375h")
-text_line = "Hit2!"
-color = Color(0.941176, 0.972549, 1, 1)
-timing = 0.6
-metadata/_custom_type_script = "uid://dwim6ikbrpe87"
+[ext_resource type="Script" uid="uid://beaqcf4hetaxo" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitMomentAnimationEffect.gd" id="5_u41mm"]
+[ext_resource type="Script" uid="uid://bf2hv6d83v6fv" path="res://Deepmage/Core/Resources/DataStructures/AnimationSyncProfile.gd" id="7_u41mm"]
 
 [sub_resource type="Resource" id="Resource_7dtjx"]
 script = ExtResource("5_b375h")
@@ -29,9 +23,34 @@ duration = 0.308
 timing = 0.6
 metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 
+[sub_resource type="Resource" id="Resource_lv0cn"]
+script = ExtResource("5_u41mm")
+timing = 0.6
+metadata/_custom_type_script = "uid://beaqcf4hetaxo"
+
+[sub_resource type="Resource" id="Resource_i8jx0"]
+script = ExtResource("4_b375h")
+text_line = "Hit"
+color = Color(0.941176, 0.972549, 1, 1)
+timing = 0.61
+metadata/_custom_type_script = "uid://dwim6ikbrpe87"
+
+[sub_resource type="Resource" id="Resource_u32or"]
+script = ExtResource("7_u41mm")
+markers = Dictionary[String, float]({
+"HIT_END": 0.65,
+"HIT_START": 0.55
+})
+min_time_scale = 0.85
+max_time_scale = 1.15
+metadata/_custom_type_script = "uid://bf2hv6d83v6fv"
+
 [resource]
 script = ExtResource("1_j1534")
 name = "CapsuleBash"
 animation = ExtResource("1_7m2ij")
-animation_effects = Array[ExtResource("2_vsak5")]([ExtResource("3_vsak5"), SubResource("Resource_u41mm"), SubResource("Resource_7dtjx"), SubResource("Resource_4cqq6")])
+animation_effects = Array[ExtResource("2_vsak5")]([SubResource("Resource_7dtjx"), SubResource("Resource_4cqq6"), SubResource("Resource_lv0cn"), SubResource("Resource_i8jx0")])
+sync_profile = SubResource("Resource_u32or")
+tags = Array[String]([])
+uses_root_motion = false
 metadata/_custom_type_script = "uid://brutb7o0hj6td"

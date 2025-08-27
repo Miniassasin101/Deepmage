@@ -9,6 +9,8 @@ signal reaction_confirmed(reaction: Action)
 
 
 @export var label: Label
+
+@export_category("Action References")
 var d_count: int = 0
 
 #@export var diego_n_array: Array[String] = []
@@ -155,11 +157,13 @@ func check_can_activate_action_on_unit(in_unit: Unit) -> bool:
 
 func on_selected_action_changed(in_action: Action) -> void:
 
-	if !selected_action:
+	var is_reaction: bool = in_action.is_action_type("reaction")
+	
+	if !selected_action and !is_reaction:
 		set_selected_action(in_action)
 		return
 	
-	if selected_action != in_action:
+	if selected_action != in_action and !is_reaction:
 		set_selected_action(in_action)
 		return
 	
@@ -168,16 +172,15 @@ func on_selected_action_changed(in_action: Action) -> void:
 	if !unit:
 		return
 	
-	var is_reaction: bool = selected_action.is_action_type("reaction")
 	
 	if is_busy and !is_reaction:
 		return
 	
-	if selected_action.has_selection_type("button"):
+	if in_action.has_selection_type("button"):
 		if is_reaction:
-			on_reaction_confirmed(selected_action)
+			on_reaction_confirmed(in_action)
 			return
-		use_action(unit, selected_action)
+		use_action(unit, in_action)
 
 
 
@@ -212,11 +215,15 @@ func on_reaction_confirmed(reaction: Action) -> void:
 
 
 func on_action_started(_in_action: Action) -> void:
+	if !(_in_action == selected_action):
+		return 
 	set_busy()
 	pass
 
 
 func on_action_ended(_in_action: Action) -> void:
+	if !(_in_action == selected_action):
+		return 
 	set_busy(false)
 	pass
 
@@ -275,11 +282,28 @@ func on_hovered_unit_changed(in_unit: Unit) -> void:
 	if selected_unit and in_unit == selected_unit:
 		prev_hovered_unit = in_unit
 		return
+	
 
+	
 	# Check action usability safely
-	var can_use := false
+	var can_use: bool = false
+	
+	
+	
 	if selected_unit and selected_unit.get_action_container():
 		can_use = selected_unit.get_action_container().can_use_action_at_target(selected_action, in_unit)
+	
+#	if !can_use and selected_action.is_action_type("melee"):
+#		# If the move to unit action is viable, get a path from the move to unit action, make the line,
+#		# then move the ghost along that line to where the unit will end up.
+#		var move_to_action: MoveToUnitAction = get_move_to_unit_action(selected_unit)
+#		if move_to_action and selected_unit.get_action_container().can_use_action_at_target(move_to_action, in_unit):
+#			can_use = true
+			
+			
+			
+			
+	
 
 	# Apply visuals
 	if in_unit.selection_visual:
@@ -297,7 +321,17 @@ func on_hovered_unit_changed(in_unit: Unit) -> void:
 	# Track current hover
 	prev_hovered_unit = in_unit
 
+func get_move_to_unit_action(in_unit: Unit) -> MoveToUnitAction:
+	var actions: Array[Action] = in_unit.get_action_container().get_all_actions()
+	
+	for action in actions:
+		if action is MoveToUnitAction:
+			return action
+	
+	return null
 
+func check_if_movement_preview() -> bool:
+	return false
 
 
 func get_selected_unit() -> Unit:

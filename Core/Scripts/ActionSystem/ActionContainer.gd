@@ -1,6 +1,8 @@
 class_name ActionContainer
 extends Node
 
+
+
 @export var unit: Unit
 
 @export var actions: Array[Action] = []
@@ -47,7 +49,11 @@ func can_use_action_at_target(in_action: Action, target: Variant) -> bool:
 	
 	if !in_action.can_activate_on_target(targ_pack):
 		return false
+		
 	
 	return true
 	
-	
+
+
+func get_all_actions() -> Array[Action]:
+	return actions

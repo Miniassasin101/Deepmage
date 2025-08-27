@@ -7,6 +7,8 @@ extends Reaction
 @export var spawn_text: String = "Testing"
 @export var text_color: Color = Color.ALICE_BLUE
 
+@export var dodge_package: AnimationPackage
+@export var reaction_latency: float = 0.06  # seconds; tune per game
 
 @export var pre_rotation_margin_override: float = 0.12   # ~7 degrees feels nice
 
@@ -16,7 +18,7 @@ extends Reaction
 func start_action(targ_pack: TargetPackage = null) -> void:
 	super.start_action(targ_pack)
 	var unit: Unit = action_container.unit
-	Utilities.spawn_text_line(unit, spawn_text, text_color)
+	#Utilities.spawn_text_line(unit, spawn_text, text_color)
 	
 	var attacking_unit: Unit = CombatSystem.instance.current_combat_event_data.attacker
 	
@@ -32,6 +34,13 @@ func end_action() -> void:
 	super.end_action()
 
 
+func get_reaction_package() -> AnimationPackage:
+	return dodge_package
+
+func get_reaction_latency() -> float:
+	return reaction_latency
+
+
 func resolve_reaction() -> void:
 	var cbevent: CombatEventData = CombatSystem.instance.current_combat_event_data
 	
@@ -40,6 +49,12 @@ func resolve_reaction() -> void:
 	
 	if !cbevent.is_success:
 		cbevent.is_hit = false
+		print_debug("Evasion SUCCESS")
+	else:
+		print_debug("Evasion FAIL")
+	
+
+	#cbevent.is_hit = true
 
 
 
