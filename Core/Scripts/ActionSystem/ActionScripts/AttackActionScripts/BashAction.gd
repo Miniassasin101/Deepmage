@@ -71,7 +71,7 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 
 	var core_is_hit := ev.is_hit
 	var core_is_graze := ev.is_graze
-	var core_is_pure_miss := !core_is_hit and !core_is_graze
+
 
 	# --- FX intent (what CameraShake/HitStop should look like) ---
 	# By request: if it’s a pure miss, still play FX like a normal hit.
@@ -131,6 +131,7 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 
 	# 8) Resolve exactly at the hit moment (keeps the actual rules result)
 	await _resolve_at_hit_moment_or_timer(attack_success_animation, attack_delay_val, atk_hit, defender, effective_damage)
+	#Note: Make sure event timings dont overlap: Causes animation event override for earlier ones.
 
 
 	# 9) End once the attack animation completes
@@ -221,7 +222,9 @@ func do_resolve(resolved: bool, defender: Unit, effective_damage: int):
 		color = Color.ALICE_BLUE
 	else:
 		color = Color.FIREBRICK
-	Utilities.spawn_damage_label(defender, effective_damage, color, 0.55)
+		defender.animation_controller.play_hit_reaction()
+	Utilities.spawn_damage_label(defender, effective_damage, color, 0.5)
+	
 
 
 # ----------------------------

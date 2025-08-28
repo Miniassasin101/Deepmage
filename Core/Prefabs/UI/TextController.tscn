@@ -21,13 +21,13 @@ tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/path = NodePath("Node2D:position")
-tracks/1/interp = 1
+tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.566667, 0.833333, 1, 2.43333),
-"transitions": PackedFloat32Array(1, 0.435275, 1, 0.965936, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 1.23333, 2.43333),
+"transitions": PackedFloat32Array(1, 0.435275, 1.51572, 0.707107),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(35, -45), Vector2(65.5101, -64.0688), Vector2(67, -65), Vector2(67.6888, -64.3112), Vector2(73, -59)]
+"values": [Vector2(0, 0), Vector2(26.065, -18.335), Vector2(67.689, -54.081), Vector2(73, -59)]
 }
 tracks/2/type = "method"
 tracks/2/imported = false
@@ -50,7 +50,7 @@ tracks/3/path = NodePath("Node2D/CenterContainer/TextLabel:self_modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.333333, 1.66667, 2.43333),
+"times": PackedFloat32Array(0, 0.266667, 1.66667, 2.43333),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]

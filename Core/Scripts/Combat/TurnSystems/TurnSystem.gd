@@ -68,7 +68,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 func start_combat() -> void:
 	if is_combat_started == true:
 		return
-	
+	UnitActionSystem.instance.is_enabled = true
 	# 1) Reset every unit’s initiative and put them into the queue
 	_initialize_initiative()
 	
@@ -154,6 +154,7 @@ func advance_group() -> void:
 		current_group.append(u)
 	
 	#lowest_initiative_score = lead
+	
 	begin_group_turn()
 	
 
@@ -192,6 +193,7 @@ func _on_end_turn():
 	if not selected_unit:
 		return
 	selected_unit.turn_state = Unit.TurnState.TURN_ENDED
+	UnitActionSystem.instance.set_busy(false)
 	begin_group_turn()
 	SignalBus.update_stat_bars.emit()
 

@@ -11,10 +11,14 @@ signal effect_fired(effect: AnimationEffect)
 @export var effects_controller: EffectsController
 @export var current_library: String = ""               # main player's library key ("" = default)
 
+@export var hit_reaction_anim: Animation
+
 var is_resolving: bool = false
 
 var current_animation: String = ""
 var _current_package: AnimationPackage
+
+var event_library: AnimationLibrary = null
 
 var _restore_speed_on_finish := 1.0
 var _override_speed := 1.0
@@ -110,6 +114,11 @@ func _on_anim_finished(anim_name: StringName) -> void:
 			event_animator.stop()
 		animator.speed_scale = _restore_speed_on_finish
 		animation_finished.emit(current_animation)
+	
+	if event_library:
+		for anim in event_library.get_animation_list():
+			event_library.remove_animation(anim)
+	
 	is_resolving = false
 
 # Called by method keys on the events animation
@@ -128,7 +137,7 @@ func _play_events_for_package(pack: AnimationPackage) -> void:
 
 	# keep players in lock-step
 	event_animator.speed_scale = animator.speed_scale
-	var lib: AnimationLibrary = event_animator.get_animation_library("")
+	var lib: AnimationLibrary = event_library if event_library else event_animator.get_animation_library("")
 	if event_animator.has_animation(ev_name):
 		pass
 	event_animator.play(ev_name)
@@ -183,11 +192,14 @@ func _ensure_events_animation(pack: AnimationPackage) -> StringName:
 
 func _register_events_anim(in_name: StringName, anim: Animation) -> void:
 	# Ensure default library exists and add the animation there
-	event_animator.remove_animation_library("")
 	var lib: AnimationLibrary = null#event_animator.get_animation_library("default")
-	lib = AnimationLibrary.new()
-	event_animator.add_animation_library("", lib)
-	var plist_size: int = lib.get_animation_list_size()
+	if !event_animator.has_animation_library(""):
+		lib = AnimationLibrary.new()
+		event_animator.add_animation_library("", lib)
+		event_library = lib
+	else:
+		lib = event_library
+	var plist_size: int = event_library.get_animation_list_size()
 	lib.add_animation(in_name, anim)
 	var list_size: int = lib.get_animation_list_size()
 	return
@@ -202,3 +214,13 @@ func _last_effect_time(pack: AnimationPackage) -> float:
 # Optional helper to build "library/anim" or just "anim" when library == ""
 func _libpath(anim_name: String) -> String:
 	return anim_name if current_library == "" else current_library + "/" + anim_name
+
+
+func play_hit_reaction() -> void:
+	if !hit_reaction_anim:
+		return
+	var h_r_name: StringName = hit_reaction_anim.resource_name
+	
+	var path: String = _libpath(h_r_name)
+	
+	await play_animation_by_name(h_r_name)

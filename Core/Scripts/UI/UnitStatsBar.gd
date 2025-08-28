@@ -74,17 +74,20 @@ func update_stats(unit: Unit) -> void:
 
 	# Shows the initiative score of the unit. Resets at the start of the next round so the lowest unit has a 0 to keep numbers more readable.
 	initiative_score_label.text = "Initiative Score: " + str(TurnSystem.instance.initiative_scores[unit] - lowest_score)
-	#health_text_label.text = "Health: %d / %d" % [
-	#	unit.attribute_map.get_attribute_by_name("health").current_value, 
-	#	unit.attribute_map.get_attribute_by_name("health").maximum_value
-	#]
+	var health_attribute: Attribute = unit.get_attributes_container().get_attribute("health")
+	var current_modified_value: int = health_attribute.get_current_modified_value()
+	health_text_label.text = "Health: %d / %d" % [
+		health_attribute.get_current_modified_value(), 
+		health_attribute.maximum_value
+	]
 	
 	# Animate the health bar value.
-	#var target_health_percentage := (float(unit.attribute_map.get_attribute_by_name("health").current_value) /
-	#	unit.attribute_map.get_attribute_by_name("health").maximum_value * 100)
-	#var tween := create_tween()
-	#tween.tween_property(health_bar, "value", target_health_percentage, 0.4) \
-	#	 .set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
+	var target_health_percentage: float = (float(health_attribute.get_current_modified_value()) / float(health_attribute.maximum_value) * 100)
+	print_debug("Current Value: " + str(current_modified_value))
+	print_debug("Target Percent: " + str(target_health_percentage))
+	var tween := create_tween()
+	tween.tween_property(health_bar, "value", target_health_percentage, 0.35) \
+		 .set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
 
 	
 	# Change the stylebox based on whether this unit has already acted.

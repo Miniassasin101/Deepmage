@@ -30,7 +30,7 @@ colors = PackedColorArray(0.774322, 0.559134, 0.910283, 1, 1, 1, 1, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_hmxcl"]
 gradient = SubResource("Gradient_2merk")
 
-[node name="UnitStatsBar" type="MarginContainer" node_paths=PackedStringArray("unit_stats_bar_content", "unit_name_label", "initiative_score_label", "health_text_label", "health_bar")]
+[node name="UnitStatsBar" type="MarginContainer" node_paths=PackedStringArray("unit_stats_bar_content", "unit_name_label", "initiative_score_label", "multiple_action_penalty_label", "health_text_label", "health_bar")]
 offset_left = 2.0
 offset_top = 2.0
 offset_right = 157.0
@@ -39,6 +39,7 @@ script = ExtResource("1_73dlo")
 unit_stats_bar_content = NodePath("UnitStatsBarContent")
 unit_name_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/UnitNameLabel")
 initiative_score_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/InitiativeScoreLabel")
+multiple_action_penalty_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/MultipleActionPenalty")
 health_text_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/HealthTextLabel")
 health_bar = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HealthBar")
 shadowed_stylebox = ExtResource("1_cydlx")
@@ -84,7 +85,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="UnitStatsBarContent/MarginContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_xrvcs")
 

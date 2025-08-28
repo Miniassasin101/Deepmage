@@ -40,6 +40,8 @@ func get_attribute_current_value(in_name: String) -> int:
 		return att.get_current_modified_value()
 	return 0
 
+
+
 # Set current_value of an attribute by name
 func set_attribute_current_value(in_name: String, value: int) -> bool:
 	var att = get_attribute(in_name)
@@ -55,6 +57,7 @@ func add_attribute_modifier(in_name: String, modifier_value: int) -> bool:
 	if att:
 		att.add_modifier(modifier_value)
 		emit_signal("attribute_changed", in_name, att.get_current_modified_value())
+		SignalBus.update_stat_bars.emit()
 		return true
 	return false
 
@@ -64,6 +67,7 @@ func remove_attribute_modifier(in_name: String, modifier_value: int) -> bool:
 	if att:
 		att.remove_modifier(modifier_value)
 		emit_signal("attribute_changed", in_name, att.get_current_modified_value())
+		SignalBus.update_stat_bars.emit()
 		return true
 	return false
 

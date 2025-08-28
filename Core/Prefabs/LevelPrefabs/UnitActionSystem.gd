@@ -21,10 +21,11 @@ var prev_hovered_unit: Unit = null
 
 
 ## Boolean to enable and disable to prevent the action system from registering input, possibly during animations and such.
-var is_disabled: bool = false
+var is_enabled: bool = false
 
 var is_busy: bool = false
 
+var is_prompting_reaction: bool = false
 
 
 const action_hover_pulse_scale: float = 0.14
@@ -59,7 +60,7 @@ func _process(_delta: float) -> void:
 	action_input_process()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if is_disabled:
+	if !is_enabled:
 		return
 	
 	# If user is on ui, ignore.
@@ -73,6 +74,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("left_mouse"):
 		if !is_busy:
 			on_left_mouse_clicked()
+	if Input.is_action_just_pressed("right_mouse"):
+		on_right_mouse_clicked()
 	
 	var num_pressed: int = get_pressed_num_shortcut(event)
 	if num_pressed != -1:
@@ -115,11 +118,13 @@ func on_left_mouse_clicked() -> void:
 		return
 	
 	use_action(TurnSystem.instance.selected_unit, selected_action)
-	
-	
+
+func on_right_mouse_clicked() -> void:
+	if try_handle_unit_selection(true):
+		return
 
 
-func try_handle_unit_selection() -> bool:
+func try_handle_unit_selection(do_action_check: bool = false) -> bool:
 	
 
 	
@@ -128,7 +133,7 @@ func try_handle_unit_selection() -> bool:
 	if !unit:
 		return false
 	
-	if selected_action and selected_action.has_selection_type("unit"):
+	if selected_action and selected_action.has_selection_type("unit") and !do_action_check:
 		if check_can_activate_action_on_unit(unit):
 			return false
 	
@@ -155,7 +160,7 @@ func check_can_activate_action_on_unit(in_unit: Unit) -> bool:
 
 
 
-func on_selected_action_changed(in_action: Action) -> void:
+func on_selected_action_changed_dep(in_action: Action) -> void:
 
 	var is_reaction: bool = in_action.is_action_type("reaction")
 	
@@ -182,36 +187,77 @@ func on_selected_action_changed(in_action: Action) -> void:
 			return
 		use_action(unit, in_action)
 
+func on_selected_action_changed(in_action: Action) -> void:
+	if in_action == null:
+		return
+
+	var is_reaction: bool = in_action.is_action_type("reaction")
+	var unit := TurnSystem.instance.selected_unit
+	if unit == null:
+		return
+
+	# 🔒 While reaction menu is up, ignore non-reaction selections entirely.
+	if is_prompting_reaction and !is_reaction:
+		return
+
+	# --- Reaction branch ---
+	if is_reaction:
+		# If reaction uses "button" selection, pressing it confirms the reaction.
+		if in_action.has_selection_type("button"):
+			on_reaction_confirmed(in_action)
+			return
+		# Otherwise it's a targeted/ground reaction: just select it.
+		selected_action = in_action
+		return
+
+	# --- Normal action branch ---
+	# Change selection if new action was pressed.
+	if selected_action == null or selected_action != in_action:
+		
+		selected_action = in_action
+		return
+
+	# Pressing the SAME normal action again with "button" selection uses it.
+	if !is_busy and in_action.has_selection_type("button"):
+		use_action(unit, in_action)
 
 
 
 func use_action(unit: Unit, action: Action, target: Variant = null) -> void:
-	if !unit:
+	if unit == null or action == null:
 		return
 	
-	if target == null and selected_action.has_selection_type("ground"):
-		var worldpos = MouseController.instance.get_mouse_raycast_result("position")
+	if target == null and selected_action != null and selected_action.has_selection_type("ground"):
+		var worldpos = MouseController.instance.get_current_hovered_position()
 		if worldpos is Vector3:
 			worldpos = worldpos.snappedf(0.01)
 			target = worldpos
 	
 	unit.get_action_container().use_action(action, target)
 	
+	
+	if !action.is_action_type("reaction"):
+		unit.get_action_container().last_used_action = action
+	
+
+
 
 
 
 func prompt_reaction(reacting_unit: Unit) -> void:
+	is_prompting_reaction = true
 	Utilities.spawn_text_line(reacting_unit, "Defending")
-	
-	ActionSystemUI.instance.make_action_buttons(reacting_unit, true)
-	
-	pass
+	# Defer one frame so any “end of attack” UI refresh doesn’t race this
+	await get_tree().process_frame
+	ActionSystemUI.instance.make_action_buttons(reacting_unit, true, false)
+
+
 
 func on_reaction_confirmed(reaction: Action) -> void:
+	is_prompting_reaction = false
 	reaction_confirmed.emit(reaction)
-	
-	ActionSystemUI.instance.make_action_buttons(TurnSystem.instance.selected_unit)
-
+	# Restore attacker’s normal action bar without auto-selecting anything
+	ActionSystemUI.instance.make_action_buttons(TurnSystem.instance.selected_unit, false, false)
 
 
 func on_action_started(_in_action: Action) -> void:
@@ -266,6 +312,9 @@ func on_hovered_unit_changed_dep(in_unit: Unit) -> void:
 
 
 func on_hovered_unit_changed(in_unit: Unit) -> void:
+	if !is_enabled:
+		return
+	
 	var selected_unit: Unit = get_selected_unit()
 
 	# If the hovered unit changed, clear the previous one (unless it’s the selected unit)
@@ -290,19 +339,8 @@ func on_hovered_unit_changed(in_unit: Unit) -> void:
 	
 	
 	
-	if selected_unit and selected_unit.get_action_container():
+	if selected_unit and selected_unit.get_action_container() and selected_action:
 		can_use = selected_unit.get_action_container().can_use_action_at_target(selected_action, in_unit)
-	
-#	if !can_use and selected_action.is_action_type("melee"):
-#		# If the move to unit action is viable, get a path from the move to unit action, make the line,
-#		# then move the ghost along that line to where the unit will end up.
-#		var move_to_action: MoveToUnitAction = get_move_to_unit_action(selected_unit)
-#		if move_to_action and selected_unit.get_action_container().can_use_action_at_target(move_to_action, in_unit):
-#			can_use = true
-			
-			
-			
-			
 	
 
 	# Apply visuals

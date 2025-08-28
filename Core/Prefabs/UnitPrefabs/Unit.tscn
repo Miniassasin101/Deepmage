@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://2h1a1e1r8hc2"]
+[gd_scene load_steps=55 format=3 uid="uid://2h1a1e1r8hc2"]
 
 [ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
 [ext_resource type="Script" uid="uid://byevnkq30m4mb" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.gd" id="1_ohquw"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://h4o2321q5l0u" path="res://Deepmage/Core/Scripts/Animation/AnimationController.gd" id="3_sxvrp"]
 [ext_resource type="Script" uid="uid://ceujy1qm0i6o6" path="res://Deepmage/Core/Scripts/Units/CharacterSheet.gd" id="4_1lanh"]
 [ext_resource type="AnimationLibrary" uid="uid://oosve5txyoqs" path="res://Deepmage/Core/Resources/AnimationResources/AnimationLibraries/TestAnimationLibraries/CapsuleAnims.res" id="4_7ehp6"]
+[ext_resource type="Animation" uid="uid://dl5c4nb4fybhk" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/BackHitReaction.res" id="4_dg5hf"]
 [ext_resource type="Script" uid="uid://c2aqj40trpjeq" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/EffectsController.gd" id="4_s3v1t"]
 [ext_resource type="Script" uid="uid://cusgogua72ojh" path="res://Deepmage/Core/Scripts/ActionSystem/ActionContainer.gd" id="5_t2svf"]
 [ext_resource type="Script" uid="uid://cvislitkwpg12" path="res://Deepmage/Core/Scripts/ActionSystem/Action.gd" id="6_mhrm2"]
@@ -180,7 +181,7 @@ speed = 15
 transform = Transform3D(0.852131, 0, 0, 0, 0.852131, 0, 0, 0, 0.852131, 0, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Rig"]
-transform = Transform3D(0.999999, 0, 0, 0, 0.997209, 0.074648, 0, -0.074648, 0.997209, 0, 1.01407, -0.0952234)
+transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 1.014, 0)
 rotation_edit_mode = 1
 mesh = SubResource("CapsuleMesh_ohquw")
 surface_material_override/0 = ExtResource("1_cc6tg")
@@ -209,6 +210,7 @@ animator = NodePath("../AnimationPlayer")
 event_animator = NodePath("EventAnimator")
 effects_controller = NodePath("EffectsController")
 current_library = "CapsuleAnims"
+hit_reaction_anim = ExtResource("4_dg5hf")
 
 [node name="EffectsController" type="Node" parent="AnimationController" node_paths=PackedStringArray("unit", "animation_controller")]
 script = ExtResource("4_s3v1t")

@@ -7,6 +7,7 @@ extends Node
 
 @export var actions: Array[Action] = []
 
+var last_used_action: Action = null
 
 func _ready() -> void:
 	make_actions_unique()
