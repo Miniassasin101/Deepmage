@@ -79,7 +79,7 @@ func handle_special_case() -> void:
 			pass
 
 
-func _on_gui_input(event: InputEvent) -> void:
+func _on_gui_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("right_mouse"):
 		on_right_mouse_clicked()
 

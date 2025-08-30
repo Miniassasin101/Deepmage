@@ -37,7 +37,8 @@ func set_position_target(pos: Vector3) -> void:
 	position = pos
 	add_tag("position")
 
-
+func get_unit() -> Unit:
+	return unit
 
 # Functions for tag management
 func add_tag(tag: String) -> void:

@@ -1,16 +1,13 @@
-class_name BashAction
+class_name AttackAction
 extends Action
 
 #NOTE: Animation Timing Instructions:
-# adjust Sync profile in action/reaction (hit start/end), (invuln start/end)
-
-
-
+# adjust Sync profile in action/reaction (hit start/end), (react start/end)
 
 
 
 @export_category("Action Variables")
-@export var attack_success_animation: AnimationPackage
+@export var animation_package: AnimationPackage
 
 @export_group("Camera Shake Effects")
 @export var hit_anim_effect: CameraShakeAnimationEffect
@@ -22,24 +19,27 @@ extends Action
 @export var graze_stop_effect: HitstopAnimationEffect
 @export var block_stop_effect: HitstopAnimationEffect
 
-@export_group("")
+@export_group("Selection Data")
 @export var attack_range: float = 2.0
 
-## Optional: how close (in radians) we want to be before starting the attack.
-## If < 0, MovementController default is used.
-@export var pre_rotation_margin_override: float = 0.12   # ~7 degrees feels nice
-@export var min_turn_delta_rad: float = 4.5              # only rotate if > ~6°
 
-@export var accuracy_attribute: String = "agility"
-@export var attack_attribute: String = "might"
+@export_group("Attack Data")
+@export var accuracy_attribute1: String = "agility"
+@export var accuracy_attribute2: String = "martial"
+@export var damage_attribute: String = "might"
 
 @export var base_damage: int = 3
 
 # === Sync tuning ===
-@export var desired_invuln_lead: float = 0.05      # invuln center happens slightly before hit center
+@export_group("Animation Sync Tuning")
+@export var desired_react_lead: float = 0.05      # reaction center happens slightly before hit center
 @export var default_reaction_latency: float = 0.06 # reaction input → start
 
 var move_to_action: MoveToUnitAction = null
+
+## Optional: how close (in radians) we want to be before starting the attack.
+## If < 0, MovementController default is used.
+const pre_rotation_margin_override: float = 0.12   # ~7 degrees feels nice
 
 
 # ----------------------------
@@ -47,96 +47,54 @@ var move_to_action: MoveToUnitAction = null
 # ----------------------------
 func start_action(targ_pack: TargetPackage = null) -> void:
 	super.start_action(targ_pack)
-	print_debug("Bash Started")
-	if targ_pack == null or targ_pack.unit == null:
+
+	if targ_pack == null or targ_pack.get_unit() == null:
 		end_action()
 		return
 
-	var target_unit: Unit = targ_pack.unit
+	var target_unit: Unit = targ_pack.get_unit()
 
 	# 1) Move into range if needed
 	await move_to_target_unit(target_unit)
-	Utilities.spawn_text_line(owner, "Bash", Color.AQUA)
+
+
+	spawn_action_name_text()
 
 	# 2) Face target
 	await rotate_towards_target(target_unit)
-	print_debug("Rotate Completed")
+
 
 	# 3) Declare attack (triggers reaction prompt + tests)
 	await declare_attack(target_unit)
 
-	# 4) Prep effect strengths (read what the test decided)
-	var ev := CombatSystem.instance.current_combat_event_data
-	var effective_damage: int = ev.effective_damage
-
-	var core_is_hit := ev.is_hit
-	var core_is_graze := ev.is_graze
-
-
-	# --- FX intent (what CameraShake/HitStop should look like) ---
-	# By request: if it’s a pure miss, still play FX like a normal hit.
-	var fx_is_hit := core_is_hit
-	var fx_is_graze := core_is_graze
-	#if core_is_pure_miss:
-	#	fx_is_hit = true
-	#	fx_is_graze = false
 
 	# 5) Build sync with chosen reaction (if any)
-	var defender := ev.defender
-	var reaction: Action = ev.reaction
+	var reaction_anim_pack: AnimationPackage = get_reaction_anim_pack()
 
-	var dodge_pack: AnimationPackage = null
-	var reaction_latency := default_reaction_latency
+	var sync: Dictionary = get_animation_sync(reaction_anim_pack)
 
-	if reaction != null and reaction.has_method("get_reaction_package"):
-		dodge_pack = reaction.call("get_reaction_package")
-	if reaction != null and reaction.has_method("get_reaction_latency"):
-		reaction_latency = float(reaction.call("get_reaction_latency"))
-
-	var atk_hit := _safe_marker_window(attack_success_animation, &"HIT_START", &"HIT_END")
-	var dd_inv := _safe_marker_window(dodge_pack, &"INVULN_ON", &"INVULN_OFF")
-	var dd_peak := _safe_marker_time(dodge_pack, &"PEAK")
-	var scale_range := _safe_scale_range(dodge_pack)
-	var can_sync: bool = atk_hit.x >= 0.0 and dd_inv.x >= 0.0
-
-	# Only try to play/sync a dodge if it WASN'T a pure miss.
-	var should_play_dodge := !fx_is_hit and (dodge_pack != null) and (defender != null)
-
-	var sync: Dictionary = _compute_sync(
-		atk_hit, dd_inv, dd_peak,
-		desired_invuln_lead, reaction_latency, scale_range
-	)
-
-	# If we will actually play a dodge and it lines up to be invuln at strike,
-	# change the FX intent to look like a clean dodge (no hit FX).
-	if should_play_dodge and can_sync:
-		var will_be_invuln_at_hit := (reaction is EvadeAction) or (reaction != null and reaction.has_method("get_reaction_package"))
-		if will_be_invuln_at_hit:
-			#fx_is_hit = false
-			#fx_is_graze = false
-			pass
 
 	# 6) Configure effects based on FX intent (NOT the rules result)
-	_modify_camera_shake_effect(fx_is_hit, fx_is_graze, effective_damage)
-	_modify_hit_stop(fx_is_hit, fx_is_graze, effective_damage)
+	modify_shake_and_hitstop()
 
 	# 7) Schedule plays with offsets/time-scale (attack always plays)
-	var attack_delay_val := float(sync.get("attack_delay", 0.0))
-	_play_attack_with_delay(attack_success_animation, attack_delay_val)
 
-	if should_play_dodge:
-		var dodge_delay_val := float(sync.get("dodge_delay", 0.0))
-		var dodge_scale_val := float(sync.get("dodge_scale", 1.0))
-		_play_dodge_with_delay(defender, dodge_pack, dodge_delay_val, dodge_scale_val)
+	_play_attack_with_delay(animation_package, sync)
+
+
+	_play_reaction_with_delay(reaction_anim_pack, sync)
+
+
 
 	# 8) Resolve exactly at the hit moment (keeps the actual rules result)
-	await _resolve_at_hit_moment_or_timer(attack_success_animation, attack_delay_val, atk_hit, defender, effective_damage)
-	#Note: Make sure event timings dont overlap: Causes animation event override for earlier ones.
+	await _resolve_at_hit_moment_or_timer(sync)
+	#NOTE: Make sure event timings dont perfectly overlap: Causes animation event override for earlier ones.
 
 
 	# 9) End once the attack animation completes
 	if owner.animation_controller.is_resolving:
 		await owner.animation_controller.animation_finished
+
 	end_action()
 
 
@@ -152,9 +110,10 @@ func move_to_target_unit(targ_unit: Unit) -> void:
 	return
 
 
+
 func declare_attack(target_unit: Unit) -> void:
 	await CombatSystem.instance.declare_attack(self, owner, target_unit)
-	pass
+
 
 
 func rotate_towards_target(target: Unit) -> void:
@@ -167,16 +126,31 @@ func rotate_towards_target(target: Unit) -> void:
 	await owner.movement_controller.rotation_precomplete
 
 
+
+func get_reaction_anim_pack() -> AnimationPackage:
+	var reaction: Reaction = CombatSystem.instance.current_combat_event_data.reaction
+
+	var reaction_anim_pack: AnimationPackage = null
+
+	if reaction != null and reaction.has_method("get_reaction_package"):
+		reaction_anim_pack = reaction.call("get_reaction_package")
+
+	return reaction_anim_pack
+
+
+
+func modify_shake_and_hitstop() -> void:
+	var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
+	var is_hit: bool = cd.is_hit
+	var is_graze: bool = cd.is_graze
+	_modify_camera_shake_effect(is_hit, is_graze, cd.effective_damage)
+	_modify_hit_stop(is_hit, is_graze, cd.effective_damage)
+
 # ----------------------------
 # Hit resolution timing
 # ----------------------------
-func _resolve_at_hit_moment_or_timer(attack_pack: AnimationPackage, attack_delay: float, atk_hit: Vector2, defender: Unit, effective_damage: int) -> void:
+func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
 	var ctrl := owner.animation_controller
-	var resolved := false
-	
-	#do_resolve(resolved, defender, effective_damage)
-
-
 
 	# Prefer: wait for HitMomentAnimationEffect fired by the attack animation
 	var used_signal := false
@@ -184,26 +158,29 @@ func _resolve_at_hit_moment_or_timer(attack_pack: AnimationPackage, attack_delay
 
 		await ctrl.effects_controller.on_hit_moment
 		print_debug("Signal Recieved")
-		do_resolve(resolved, defender, effective_damage)
+		do_resolve()
 		used_signal = true
+		return
 
 	# Fallback: timer to hit-center (attack_delay + center of window)
 	if !used_signal:
-		var hit_center := 0.5 * (atk_hit.x + atk_hit.y)
+		var attack_delay: float = sync.get("attack_delay", -1.0)
+		var hit_center: float = sync.get("attack_center", -1.0)
+		if hit_center == -1.0 or attack_delay == -1.0:
+			return
 		await owner.get_tree().create_timer(max(0.0, attack_delay + hit_center)).timeout
-		do_resolve(resolved, defender, effective_damage)
+		do_resolve()
 
 
 
-	
 
 
-func do_resolve(resolved: bool, defender: Unit, effective_damage: int):
-	if resolved:
-		return
-	resolved = true
+
+func do_resolve() -> void:
 
 	var ev := CombatSystem.instance.current_combat_event_data
+	var defender: Unit = ev.defender
+	var effective_damage: int = ev.effective_damage
 	var is_hit := ev.is_hit
 	var is_graze := ev.is_graze
 
@@ -216,6 +193,7 @@ func do_resolve(resolved: bool, defender: Unit, effective_damage: int):
 			Utilities.spawn_text_line(defender, "MISS", Color.AQUA)
 		return
 
+
 	# On-hit damage
 	defender.get_attributes_container().add_attribute_modifier("health", -effective_damage)
 	var color: Color
@@ -225,38 +203,73 @@ func do_resolve(resolved: bool, defender: Unit, effective_damage: int):
 		color = Color.FIREBRICK
 		defender.animation_controller.play_hit_reaction()
 	Utilities.spawn_damage_label(defender, effective_damage, color, 0.5)
-	
+
+
+
+func get_animation_sync(reaction_anim_pack: AnimationPackage) -> Dictionary:
+	var reaction: Reaction = CombatSystem.instance.current_combat_event_data.reaction
+	var reaction_latency: float = default_reaction_latency
+
+	if reaction != null and reaction.has_method("get_reaction_latency"):
+		reaction_latency = float(reaction.call("get_reaction_latency"))
+
+	var atk_hit := _safe_marker_window(animation_package, &"HIT_START", &"HIT_END")
+	var dd_inv := _safe_marker_window(reaction_anim_pack, &"REACT_ON", &"REACT_OFF")
+	var dd_peak := _safe_marker_time(reaction_anim_pack, &"PEAK")
+	var scale_range := _safe_scale_range(reaction_anim_pack)
+	#var can_sync: bool = atk_hit.x >= 0.0 and dd_inv.x >= 0.0
+
+
+	var sync: Dictionary = _compute_sync(
+		atk_hit, dd_inv, dd_peak,
+		desired_react_lead, reaction_latency, scale_range
+	)
+	return sync
 
 
 # ----------------------------
 # Animation scheduling
 # ----------------------------
-func _play_attack_with_delay(pack: AnimationPackage, delay: float) -> void:
+func _play_attack_with_delay(pack: AnimationPackage, sync: Dictionary) -> void:
 	if owner.animation_controller == null:
 		return
 
+	var attack_delay_val: float = sync.get("attack_delay", 0.0) as float
+
 	if owner.animation_controller.has_method("play_package_timed"):
-		owner.animation_controller.play_package_timed(pack, max(0.0, delay), 1.0)
+		owner.animation_controller.play_package_timed(pack, max(0.0, attack_delay_val), 1.0)
 		return
 
-	await owner.get_tree().create_timer(max(0.0, delay)).timeout
+	await owner.get_tree().create_timer(max(0.0, attack_delay_val)).timeout
 	owner.animation_controller.play_package(pack)
 
 
-func _play_dodge_with_delay(defender: Unit, pack: AnimationPackage, delay: float, scale: float) -> void:
-	if defender.animation_controller == null:
+
+func _play_reaction_with_delay(reaction_anim_pack: AnimationPackage, sync: Dictionary) -> void:
+	var c_event: CombatEventData = CombatSystem.instance.current_combat_event_data
+	var defender: Unit = c_event.defender
+	var anim_contr: AnimationController = defender.animation_controller
+
+	var should_play_reaction: bool = !c_event.is_hit and (reaction_anim_pack != null) and (defender != null)
+	if !should_play_reaction:
 		return
 
-	if defender.animation_controller.has_method("play_package_timed"):
-		defender.animation_controller.play_package_timed(pack, max(0.0, delay), max(0.01, scale))
+	if anim_contr == null:
 		return
 
-	await defender.get_tree().create_timer(max(0.0, delay)).timeout
-	var old := defender.animation_controller.animator.speed_scale
-	defender.animation_controller.animator.speed_scale = max(0.01, scale)
-	defender.animation_controller.play_package(pack)
-	await defender.animation_controller.animation_finished
-	defender.animation_controller.animator.speed_scale = old
+	var delay: float = sync.get("reaction_delay", 0.0) as float
+	var scale: float = sync.get("reaction_scale", 1.0) as float
+	if anim_contr.has_method("play_package_timed"):
+		anim_contr.play_package_timed(reaction_anim_pack, max(0.0, delay), max(0.01, scale))
+		return
+
+	await defender.get_tree().create_timer(maxf(0.0, delay)).timeout
+	var old := anim_contr.animator.speed_scale
+	anim_contr.set_timescales(maxf(0.01, scale))
+	anim_contr.play_package(reaction_anim_pack)
+	await anim_contr.animation_finished
+	anim_contr.set_timescales(old)
+
 
 
 # ----------------------------
@@ -264,7 +277,7 @@ func _play_dodge_with_delay(defender: Unit, pack: AnimationPackage, delay: float
 # ----------------------------
 func _modify_camera_shake_effect(is_hit: bool, is_graze: bool, effective_damage: int) -> void:
 	var effect: CameraShakeAnimationEffect = null
-	var effects: Array[AnimationEffect] = attack_success_animation.get_anim_effects()
+	var effects: Array[AnimationEffect] = animation_package.get_anim_effects()
 	for e in effects:
 		if e is CameraShakeAnimationEffect:
 			effect = e
@@ -289,7 +302,7 @@ func _modify_camera_shake_effect(is_hit: bool, is_graze: bool, effective_damage:
 
 func _modify_hit_stop(is_hit: bool, is_graze: bool, effective_damage: int) -> void:
 	var effect: HitstopAnimationEffect = null
-	var effects: Array[AnimationEffect] = attack_success_animation.get_anim_effects()
+	var effects: Array[AnimationEffect] = animation_package.get_anim_effects()
 	for e in effects:
 		if e is HitstopAnimationEffect:
 			effect = e
@@ -306,23 +319,30 @@ func _modify_hit_stop(is_hit: bool, is_graze: bool, effective_damage: int) -> vo
 			effect.duration = hit_stop_effect.duration
 
 
+func spawn_action_name_text() -> void:
+	Utilities.spawn_text_line(owner, action_name)
+
 # ----------------------------
 # Queries
 # ----------------------------
 func get_stat_name() -> String:
-	return attack_attribute
+	return damage_attribute
 
 
 func can_activate_on_target(target_pack: TargetPackage) -> bool:
 	if target_pack == null or !target_pack.has_tag("unit"):
 		return false
-	var unit: Unit = target_pack.unit
+
+	var target_unit: Unit = target_pack.unit
+
 	if action_container == null:
 		return false
-	if unit == action_container.unit:
+
+	if target_unit == action_container.unit:
 		return false
-	if get_distance_to_owner(unit) > attack_range:
-		if !can_move_to_unit(unit):
+
+	if get_distance_to_owner(target_unit) > attack_range:
+		if !can_move_to_unit(target_unit):
 			return false
 	return true
 
@@ -354,31 +374,32 @@ func get_move_to_action() -> MoveToUnitAction:
 # ----------------------------
 # Sync math & safe accessors
 # ----------------------------
-static func _compute_sync(atk_hit: Vector2, inv: Vector2, peak_time: float, lead: float, reaction_latency: float, scale_range: Vector2) -> Dictionary:
+static func _compute_sync(atk_window: Vector2, react_window: Vector2, peak_time: float, lead: float, reaction_latency: float, scale_range: Vector2) -> Dictionary:
 	# Centers
-	var hit_c := 0.5 * (atk_hit.x + atk_hit.y)
-	var inv_c := peak_time if peak_time >= 0.0 else 0.5 * (inv.x + inv.y)
+	var attack_center: float = 0.5 * (atk_window.x + atk_window.y)
+	var react_center: float = peak_time if peak_time >= 0.0 else 0.5 * (react_window.x + react_window.y)
 
-	# We want invuln to slightly LEAD the hit
-	var adjusted_inv_c := inv_c - maxf(0.0, lead)
+	# We want reaction to slightly LEAD the hit
+	var adjusted_react_c: float = react_center - maxf(0.0, lead)
 
 	# Choose non-negative schedule delays
-	var attack_delay := reaction_latency + adjusted_inv_c - hit_c
-	var dodge_delay := reaction_latency
+	var attack_delay: float = reaction_latency + adjusted_react_c - attack_center
+	var reaction_delay: float = reaction_latency
 	if attack_delay < 0.0:
 		# Push both forward equally so neither is negative
-		dodge_delay -= attack_delay
+		reaction_delay -= attack_delay
 		attack_delay = 0.0
 
-	# Micro time scale so invuln span roughly matches the hit span
-	var hit_len := maxf(0.001, atk_hit.y - atk_hit.x)
-	var inv_len := maxf(0.001, inv.y - inv.x)
-	var dodge_scale := clampf(hit_len / inv_len, scale_range.x, scale_range.y)
+	# Micro time scale so reaction span roughly matches the attack span
+	var hit_len := maxf(0.001, atk_window.y - atk_window.x)
+	var react_len := maxf(0.001, react_window.y - react_window.x)
+	var reaction_scale := clampf(hit_len / react_len, scale_range.x, scale_range.y)
 
 	return {
 		"attack_delay": attack_delay,
-		"dodge_delay": dodge_delay,
-		"dodge_scale": dodge_scale
+		"attack_center": attack_center,
+		"reaction_delay": reaction_delay,
+		"reaction_scale": reaction_scale
 	}
 
 

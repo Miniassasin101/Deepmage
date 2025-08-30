@@ -39,6 +39,13 @@ func declare_attack(action: Action, attacker: Unit, defender: Unit) -> void:
 	
 	current_combat_event_data.reaction.resolve_reaction()
 	
+	
+	var effective_damage: int = maxi(action.base_damage - current_combat_event_data.armor_test_hits, 0)
+	
+	current_combat_event_data.effective_damage += effective_damage
+	
+
+func debug_print_attack_results() -> void:
 	var attacker_hits: int = current_combat_event_data.attacker_hits
 	var defender_hits: int = current_combat_event_data.defender_hits
 	
@@ -55,9 +62,9 @@ func declare_attack(action: Action, attacker: Unit, defender: Unit) -> void:
 	print_debug(l3)
 
 	print_debug("Armor hits: " + str(current_combat_event_data.armor_test_hits))
+	
 
 	pass
-
 
 func prompt_player_reaction(defender: Unit) -> void:
 	UnitActionSystem.instance.prompt_reaction(defender)

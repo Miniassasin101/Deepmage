@@ -110,7 +110,6 @@ func _on_anim_finished(anim_name: StringName) -> void:
 	if matches:
 		# stop events player too
 		if event_animator and event_animator.is_playing():
-			var pos: float = animator.current_animation_position
 			event_animator.stop()
 		animator.speed_scale = _restore_speed_on_finish
 		animation_finished.emit(current_animation)
@@ -137,7 +136,6 @@ func _play_events_for_package(pack: AnimationPackage) -> void:
 
 	# keep players in lock-step
 	event_animator.speed_scale = animator.speed_scale
-	var lib: AnimationLibrary = event_library if event_library else event_animator.get_animation_library("")
 	if event_animator.has_animation(ev_name):
 		pass
 	event_animator.play(ev_name)
@@ -174,12 +172,11 @@ func _ensure_events_animation(pack: AnimationPackage) -> StringName:
 			}
 
 		anim.track_insert_key(track, fx.timing, method_details)
-		var key_count: int = anim.track_get_key_count(track)
 		pass
 
-	# 2) Optional: add named markers for sync/debug (HIT/INVULN/PEAK)
+	# 2) Optional: add named markers for sync/debug (HIT/REACT/PEAK)
 	if pack.has_method("marker_time"):
-		var labels := [&"HIT_START", &"HIT_END", &"INVULN_ON", &"INVULN_OFF", &"PEAK"]
+		var labels := [&"HIT_START", &"HIT_END", &"REACT_ON", &"REACT_OFF", &"PEAK"]
 		for label in labels:
 			var t := float(pack.marker_time(label))
 			if t >= 0.0:
@@ -199,10 +196,8 @@ func _register_events_anim(in_name: StringName, anim: Animation) -> void:
 		event_library = lib
 	else:
 		lib = event_library
-	var plist_size: int = event_library.get_animation_list_size()
 	lib.add_animation(in_name, anim)
-	var list_size: int = lib.get_animation_list_size()
-	return
+
 
 func _last_effect_time(pack: AnimationPackage) -> float:
 	var t := 0.0
@@ -220,7 +215,5 @@ func play_hit_reaction() -> void:
 	if !hit_reaction_anim:
 		return
 	var h_r_name: StringName = hit_reaction_anim.resource_name
-	
-	var path: String = _libpath(h_r_name)
 	
 	await play_animation_by_name(h_r_name)

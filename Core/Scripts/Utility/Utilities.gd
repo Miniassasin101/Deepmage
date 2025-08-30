@@ -94,33 +94,3 @@ func slow_game(new_time_scale: float = 1.0, duration: float = 0.7) -> void:
 	if new_time_scale != 1.0:
 		await get_tree().create_timer(duration, true, false, true).timeout
 		Engine.set_time_scale(1.0)
-
-
-
-static func compute_sync(hit: Vector2, inv: Vector2, center: float, lead: float, scale_range: Vector2, reaction_latency: float) -> Dictionary:
-	# centers
-	var hit_c := 0.5 * (hit.x + hit.y)
-	var inv_c := center if center >= 0.0 else 0.5 * (inv.x + inv.y)
-
-	# we want invuln to lead the hit (i.e., happen slightly earlier)
-	inv_c -= max(0.0, lead)
-
-	# choose non-negative delays A (attack) and D (dodge = reaction_latency)
-	var A0 := reaction_latency + inv_c - hit_c
-	var attack_delay := A0
-	var dodge_delay := reaction_latency
-	if attack_delay < 0.0:
-		dodge_delay -= attack_delay   # push both forward equally
-		attack_delay = 0.0
-
-	# optional micro time scaling to match spans
-	var hit_len := maxf(0.001, hit.y - hit.x)
-	var inv_len := maxf(0.001, inv.y - inv.x)
-	var target_scale := clampf(hit_len / inv_len, scale_range.x, scale_range.y)
-
-	return {
-		"attack_delay": attack_delay,
-		"dodge_delay": dodge_delay,
-		"dodge_scale": target_scale,
-		"hit_center": hit_c
-	}
