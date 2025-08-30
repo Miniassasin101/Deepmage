@@ -7,8 +7,11 @@ extends Node
 @export_category("References")
 @export var unit: Unit = null
 @export var action_container: ActionContainer = null
-@export var attributes_container: AttributesContainer
+@export var attributes_container: AttributesContainer = null
 
+
+func get_action_container() -> ActionContainer:
+	return action_container
 
 func get_attributes_container() -> AttributesContainer:
 	return attributes_container

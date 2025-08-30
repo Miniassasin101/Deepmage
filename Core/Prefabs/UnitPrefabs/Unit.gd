@@ -67,23 +67,6 @@ func setup_mesh_colors() -> void:
 
 
 
-
-
-
-
-#func setup_navigation() -> void:
-#	if !nav_agent:
-#		nav_agent = find_child("NavigationAgent3D")
-
-
-
-
-
-
-
-
-
-
 func set_movement_target(movement_target: Vector3):
 	nav_agent.set_target_position(movement_target)
 	

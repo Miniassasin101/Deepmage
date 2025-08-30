@@ -8,7 +8,7 @@ var defender: Unit = null
 
 
 # Actions/Reactions
-var action: Action = null
+var action: AttackAction = null
 
 var reaction: Reaction = null
 

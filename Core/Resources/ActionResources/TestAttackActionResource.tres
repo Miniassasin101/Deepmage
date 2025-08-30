@@ -1,0 +1,72 @@
+[gd_resource type="Resource" script_class="AttackAction" load_steps=13 format=3 uid="uid://cuudvrampevcg"]
+
+[ext_resource type="Script" uid="uid://caggmbav8c0ky" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/AttackAction.gd" id="1_etyeu"]
+[ext_resource type="Resource" uid="uid://8mq08eqitt0g" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/CapsuleBashPackage.tres" id="1_t5pgb"]
+[ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="2_amr0d"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_jhkta"]
+[ext_resource type="Script" uid="uid://dfqq4lgq8fr27" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="3_amr0d"]
+[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="6_2me7b"]
+
+[sub_resource type="Resource" id="Resource_2me7b"]
+script = ExtResource("2_amr0d")
+strength = 0.15
+shake_time = 0.4
+shake_frequency = 50
+timing = 0.55
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_6kg6w"]
+script = ExtResource("3_amr0d")
+duration = 0.217
+timing = 0.6
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_vavmt"]
+script = ExtResource("2_amr0d")
+strength = 0.1
+shake_time = 0.3
+shake_frequency = 50
+timing = 0.55
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_52xn1"]
+script = ExtResource("3_amr0d")
+duration = 0.138
+timing = 0.6
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_g1p88"]
+script = ExtResource("2_amr0d")
+strength = 0.15
+shake_time = 0.4
+shake_frequency = 50
+timing = 0.55
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_jfhli"]
+script = ExtResource("3_amr0d")
+duration = 0.349
+timing = 0.6
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[resource]
+script = ExtResource("1_etyeu")
+animation_package = ExtResource("1_t5pgb")
+hit_anim_effect = SubResource("Resource_g1p88")
+graze_anim_effect = SubResource("Resource_vavmt")
+block_anim_effect = SubResource("Resource_2me7b")
+hit_stop_effect = SubResource("Resource_jfhli")
+graze_stop_effect = SubResource("Resource_52xn1")
+block_stop_effect = SubResource("Resource_6kg6w")
+attack_range = 2.0
+accuracy_attribute1 = "agility"
+accuracy_attribute2 = "martial"
+damage_attribute = "might"
+base_damage = 3
+desired_react_lead = 0.05
+default_reaction_latency = 0.06
+action_name = "Test Bash"
+selection_types = Array[ExtResource("2_jhkta")]([ExtResource("6_2me7b")])
+reaction_check_timing = 0.3
+tags = Array[String](["melee", "attack"])
+metadata/_custom_type_script = "uid://caggmbav8c0ky"

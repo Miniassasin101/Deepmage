@@ -32,13 +32,23 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 
 func resolve_reaction() -> void:
 	if CombatSystem.instance.current_combat_event_data.is_success:
+		print_debug("Block Failed")
 		return
 	
-	var guard_pool: DicePool = DicePool.new(base_defend_value)
+	var block_value: int = 0
 	
-	CombatSystem.instance.current_combat_event_data.armor_test_hits += guard_pool.success_count
+	var defending_att: Attribute = action_container.unit.get_attributes_container().get_attribute(defend_attribute)
 	
-	print_debug("Blocked " + str(guard_pool.success_count))
+	if defending_att:
+		var guard_pool: DicePool = DicePool.new(defending_att.get_current_modified_value())
+		block_value += guard_pool.success_count
+	
+	block_value += base_defend_value
+	
+	
+	CombatSystem.instance.current_combat_event_data.armor_test_hits += block_value
+	
+	print_debug("Blocked " + str(block_value))
 	
 	
 

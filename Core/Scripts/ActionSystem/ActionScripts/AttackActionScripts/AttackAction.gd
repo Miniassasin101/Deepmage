@@ -1,10 +1,15 @@
 class_name AttackAction
 extends Action
 
-#NOTE: Animation Timing Instructions:
-# adjust Sync profile in action/reaction (hit start/end), (react start/end)
+# -----------------------------------------------------------------------------
+# NOTE: Animation Timing Tips
+# Adjust sync profiles in action/reaction (hit start/end), (react start/end)
+# -----------------------------------------------------------------------------
 
 
+# =========================
+# Exported Variables
+# =========================
 
 @export_category("Action Variables")
 @export var animation_package: AnimationPackage
@@ -22,12 +27,10 @@ extends Action
 @export_group("Selection Data")
 @export var attack_range: float = 2.0
 
-
 @export_group("Attack Data")
 @export var accuracy_attribute1: String = "agility"
 @export var accuracy_attribute2: String = "martial"
 @export var damage_attribute: String = "might"
-
 @export var base_damage: int = 3
 
 # === Sync tuning ===
@@ -35,6 +38,7 @@ extends Action
 @export var desired_react_lead: float = 0.05      # reaction center happens slightly before hit center
 @export var default_reaction_latency: float = 0.06 # reaction input → start
 
+# Cached helper action reference
 var move_to_action: MoveToUnitAction = null
 
 ## Optional: how close (in radians) we want to be before starting the attack.
@@ -42,9 +46,11 @@ var move_to_action: MoveToUnitAction = null
 const pre_rotation_margin_override: float = 0.12   # ~7 degrees feels nice
 
 
-# ----------------------------
+# =========================
 # Lifecycle
-# ----------------------------
+# =========================
+
+## Starts the full attack flow: ensure range, face target, prompt reactions, sync and play anims, resolve on hit, then end.
 func start_action(targ_pack: TargetPackage = null) -> void:
 	super.start_action(targ_pack)
 
@@ -57,39 +63,28 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	# 1) Move into range if needed
 	await move_to_target_unit(target_unit)
 
-
 	spawn_action_name_text()
 
 	# 2) Face target
 	await rotate_towards_target(target_unit)
 
-
 	# 3) Declare attack (triggers reaction prompt + tests)
 	await declare_attack(target_unit)
 
-
 	# 5) Build sync with chosen reaction (if any)
 	var reaction_anim_pack: AnimationPackage = get_reaction_anim_pack()
-
 	var sync: Dictionary = get_animation_sync(reaction_anim_pack)
-
 
 	# 6) Configure effects based on FX intent (NOT the rules result)
 	modify_shake_and_hitstop()
 
 	# 7) Schedule plays with offsets/time-scale (attack always plays)
-
 	_play_attack_with_delay(animation_package, sync)
-
-
 	_play_reaction_with_delay(reaction_anim_pack, sync)
-
-
 
 	# 8) Resolve exactly at the hit moment (keeps the actual rules result)
 	await _resolve_at_hit_moment_or_timer(sync)
-	#NOTE: Make sure event timings dont perfectly overlap: Causes animation event override for earlier ones.
-
+	# NOTE: Make sure event timings dont perfectly overlap: Causes animation event override for earlier ones.
 
 	# 9) End once the attack animation completes
 	if owner.animation_controller.is_resolving:
@@ -98,9 +93,11 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	end_action()
 
 
-# ----------------------------
-# Helpers: movement / rotation
-# ----------------------------
+# =========================
+# Helpers: Movement / Rotation / Declaration
+# =========================
+
+## Moves the owner into attack range of the target unit if needed.
 func move_to_target_unit(targ_unit: Unit) -> void:
 	if get_distance_to_owner(targ_unit) <= attack_range:
 		return
@@ -109,13 +106,11 @@ func move_to_target_unit(targ_unit: Unit) -> void:
 	print_debug("moved to target")
 	return
 
-
-
+## Declares the attack to the combat system (prompts for defender reactions & runs hit tests).
 func declare_attack(target_unit: Unit) -> void:
 	await CombatSystem.instance.declare_attack(self, owner, target_unit)
 
-
-
+## Rotates the owner to face the target position, then waits for pre-rotation completion.
 func rotate_towards_target(target: Unit) -> void:
 	var target_pos := target.get_global_position()
 	owner.movement_controller.rotate_unit_towards_target_position(
@@ -125,8 +120,7 @@ func rotate_towards_target(target: Unit) -> void:
 	)
 	await owner.movement_controller.rotation_precomplete
 
-
-
+## Retrieves the reaction animation package from the chosen reaction, if any.
 func get_reaction_anim_pack() -> AnimationPackage:
 	var reaction: Reaction = CombatSystem.instance.current_combat_event_data.reaction
 
@@ -137,8 +131,7 @@ func get_reaction_anim_pack() -> AnimationPackage:
 
 	return reaction_anim_pack
 
-
-
+## Reads current combat event outcome flags (hit/graze/block) and primes FX settings accordingly.
 func modify_shake_and_hitstop() -> void:
 	var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
 	var is_hit: bool = cd.is_hit
@@ -146,9 +139,12 @@ func modify_shake_and_hitstop() -> void:
 	_modify_camera_shake_effect(is_hit, is_graze, cd.effective_damage)
 	_modify_hit_stop(is_hit, is_graze, cd.effective_damage)
 
-# ----------------------------
-# Hit resolution timing
-# ----------------------------
+
+# =========================
+# Hit Resolution Timing
+# =========================
+
+## Resolves rules/effects at the correct hit moment: prefer signal from animation, otherwise uses a timer fallback.
 func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
 	var ctrl := owner.animation_controller
 
@@ -171,11 +167,7 @@ func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
 		await owner.get_tree().create_timer(max(0.0, attack_delay + hit_center)).timeout
 		do_resolve()
 
-
-
-
-
-
+## Applies the combat result to the defender (miss/graze text, damage, and hit reaction + damage label).
 func do_resolve() -> void:
 
 	var ev := CombatSystem.instance.current_combat_event_data
@@ -184,7 +176,6 @@ func do_resolve() -> void:
 	var is_hit := ev.is_hit
 	var is_graze := ev.is_graze
 
-
 	# Feedback / damage
 	if !is_hit:
 		if is_graze:
@@ -192,7 +183,6 @@ func do_resolve() -> void:
 		else:
 			Utilities.spawn_text_line(defender, "MISS", Color.AQUA)
 		return
-
 
 	# On-hit damage
 	defender.get_attributes_container().add_attribute_modifier("health", -effective_damage)
@@ -205,7 +195,11 @@ func do_resolve() -> void:
 	Utilities.spawn_damage_label(defender, effective_damage, color, 0.5)
 
 
+# =========================
+# Animation Sync & Scheduling
+# =========================
 
+## Computes timing offsets and scaling for attack vs reaction based on markers and reaction latency.
 func get_animation_sync(reaction_anim_pack: AnimationPackage) -> Dictionary:
 	var reaction: Reaction = CombatSystem.instance.current_combat_event_data.reaction
 	var reaction_latency: float = default_reaction_latency
@@ -217,8 +211,7 @@ func get_animation_sync(reaction_anim_pack: AnimationPackage) -> Dictionary:
 	var dd_inv := _safe_marker_window(reaction_anim_pack, &"REACT_ON", &"REACT_OFF")
 	var dd_peak := _safe_marker_time(reaction_anim_pack, &"PEAK")
 	var scale_range := _safe_scale_range(reaction_anim_pack)
-	#var can_sync: bool = atk_hit.x >= 0.0 and dd_inv.x >= 0.0
-
+	# var can_sync: bool = atk_hit.x >= 0.0 and dd_inv.x >= 0.0
 
 	var sync: Dictionary = _compute_sync(
 		atk_hit, dd_inv, dd_peak,
@@ -226,10 +219,7 @@ func get_animation_sync(reaction_anim_pack: AnimationPackage) -> Dictionary:
 	)
 	return sync
 
-
-# ----------------------------
-# Animation scheduling
-# ----------------------------
+## Plays the attack animation package after a computed delay (or immediately if supported method absent).
 func _play_attack_with_delay(pack: AnimationPackage, sync: Dictionary) -> void:
 	if owner.animation_controller == null:
 		return
@@ -243,8 +233,7 @@ func _play_attack_with_delay(pack: AnimationPackage, sync: Dictionary) -> void:
 	await owner.get_tree().create_timer(max(0.0, attack_delay_val)).timeout
 	owner.animation_controller.play_package(pack)
 
-
-
+## Plays the defender’s reaction animation (if applicable) with delay/scale from sync data.
 func _play_reaction_with_delay(reaction_anim_pack: AnimationPackage, sync: Dictionary) -> void:
 	var c_event: CombatEventData = CombatSystem.instance.current_combat_event_data
 	var defender: Unit = c_event.defender
@@ -271,10 +260,11 @@ func _play_reaction_with_delay(reaction_anim_pack: AnimationPackage, sync: Dicti
 	anim_contr.set_timescales(old)
 
 
+# =========================
+# Effects Configuration (Pre-Play)
+# =========================
 
-# ----------------------------
-# Effects configuration (pre-play)
-# ----------------------------
+## Chooses camera shake parameters based on outcome (miss/graze/block/hit) and enables/disables effect.
 func _modify_camera_shake_effect(is_hit: bool, is_graze: bool, effective_damage: int) -> void:
 	var effect: CameraShakeAnimationEffect = null
 	var effects: Array[AnimationEffect] = animation_package.get_anim_effects()
@@ -299,7 +289,7 @@ func _modify_camera_shake_effect(is_hit: bool, is_graze: bool, effective_damage:
 			effect.shake_time = hit_anim_effect.shake_time
 			effect.strength = hit_anim_effect.strength
 
-
+## Chooses hit-stop duration based on outcome (miss/graze/block/hit) and enables/disables effect.
 func _modify_hit_stop(is_hit: bool, is_graze: bool, effective_damage: int) -> void:
 	var effect: HitstopAnimationEffect = null
 	var effects: Array[AnimationEffect] = animation_package.get_anim_effects()
@@ -318,17 +308,28 @@ func _modify_hit_stop(is_hit: bool, is_graze: bool, effective_damage: int) -> vo
 		else:
 			effect.duration = hit_stop_effect.duration
 
-
+## Spawns a small text label over the owner with this action’s name (UI feedback).
 func spawn_action_name_text() -> void:
 	Utilities.spawn_text_line(owner, action_name)
 
-# ----------------------------
+
+# =========================
 # Queries
-# ----------------------------
+# =========================
+
+## Returns the attribute used for damage rolls (for UI or rule queries).
 func get_stat_name() -> String:
 	return damage_attribute
 
+func get_damage_attribute() -> String:
+	return damage_attribute
 
+func get_accuracy_attributes() -> Array[String]:
+	var accuracy_attributes: Array[String] = [accuracy_attribute1, accuracy_attribute2]
+	return accuracy_attributes
+
+
+## Checks if this action can be used on the given target pack (range, self-target, and pathing).
 func can_activate_on_target(target_pack: TargetPackage) -> bool:
 	if target_pack == null or !target_pack.has_tag("unit"):
 		return false
@@ -346,11 +347,11 @@ func can_activate_on_target(target_pack: TargetPackage) -> bool:
 			return false
 	return true
 
-
+## Distance helper from owner to a given unit.
 func get_distance_to_owner(unit: Unit) -> float:
 	return unit.get_global_position().distance_to(owner.get_global_position())
 
-
+## Checks if we have a valid MoveToUnitAction and if it can reach the target.
 func can_move_to_unit(target_unit: Unit) -> bool:
 	var move_action: MoveToUnitAction = get_move_to_action()
 	if move_action == null:
@@ -359,7 +360,7 @@ func can_move_to_unit(target_unit: Unit) -> bool:
 		return false
 	return true
 
-
+## Retrieves (and caches) a MoveToUnitAction from the action container, if present.
 func get_move_to_action() -> MoveToUnitAction:
 	if move_to_action:
 		return move_to_action
@@ -371,9 +372,11 @@ func get_move_to_action() -> MoveToUnitAction:
 	return null
 
 
-# ----------------------------
-# Sync math & safe accessors
-# ----------------------------
+# =========================
+# Sync Math & Safe Accessors
+# =========================
+
+## Core timing math: aligns attack window with reaction window using latency and desired lead; returns schedule & scale.
 static func _compute_sync(atk_window: Vector2, react_window: Vector2, peak_time: float, lead: float, reaction_latency: float, scale_range: Vector2) -> Dictionary:
 	# Centers
 	var attack_center: float = 0.5 * (atk_window.x + atk_window.y)
@@ -402,11 +405,7 @@ static func _compute_sync(atk_window: Vector2, react_window: Vector2, peak_time:
 		"reaction_scale": reaction_scale
 	}
 
-
-
-
-
-
+## Safe marker-window access: returns [-1, -1] if missing or method unsupported.
 static func _safe_marker_window(pack: AnimationPackage, a: StringName, b: StringName) -> Vector2:
 	if pack == null:
 		return Vector2(-1.0, -1.0)
@@ -414,7 +413,7 @@ static func _safe_marker_window(pack: AnimationPackage, a: StringName, b: String
 		return pack.marker_window(a, b)
 	return Vector2(-1.0, -1.0)
 
-
+## Safe marker-time access: returns -1 if missing or method unsupported.
 static func _safe_marker_time(pack: AnimationPackage, label: StringName) -> float:
 	if pack == null:
 		return -1.0
@@ -422,7 +421,7 @@ static func _safe_marker_time(pack: AnimationPackage, label: StringName) -> floa
 		return float(pack.marker_time(label))
 	return -1.0
 
-
+## Safe time-scale range access: returns [1, 1] if missing or method unsupported.
 static func _safe_scale_range(pack: AnimationPackage) -> Vector2:
 	if pack == null:
 		return Vector2(1.0, 1.0)
