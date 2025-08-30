@@ -17,3 +17,7 @@ func get_reaction_package() -> AnimationPackage:
 func get_accuracy_attributes() -> Array[String]:
 	var accuracy_attributes: Array[String] = [accuracy_attribute1, accuracy_attribute2]
 	return accuracy_attributes
+
+
+func on_impact() -> void:
+	pass

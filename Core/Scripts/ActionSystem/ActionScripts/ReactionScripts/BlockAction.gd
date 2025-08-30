@@ -17,7 +17,6 @@ extends Reaction
 
 func start_action(targ_pack: TargetPackage = null) -> void:
 	super.start_action(targ_pack)
-	var unit: Unit = action_container.unit
 	#Utilities.spawn_text_line(unit, spawn_text, text_color, scale)
 	
 	var attacking_unit: Unit = CombatSystem.instance.current_combat_event_data.attacker
@@ -31,25 +30,24 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 
 
 func resolve_reaction() -> void:
-	if CombatSystem.instance.current_combat_event_data.is_success:
+	var cbd: CombatEventData = CombatSystem.instance.current_combat_event_data
+	if cbd.is_success:
 		print_debug("Block Failed")
 		return
 	
 	var block_value: int = 0
-	
-	var defending_att: Attribute = action_container.unit.get_attributes_container().get_attribute(defend_attribute)
-	
-	if defending_att:
-		var guard_pool: DicePool = DicePool.new(defending_att.get_current_modified_value())
-		block_value += guard_pool.success_count
+
 	
 	block_value += base_defend_value
 	
+	block_value += maxi(cbd.defender_hits - cbd.defender_hits, 0)
 	
-	CombatSystem.instance.current_combat_event_data.armor_test_hits += block_value
+	cbd.defense_bonus = block_value
+	
+	
 	
 	print_debug("Blocked " + str(block_value))
-	
+#	Utilities.spawn_text_line(owner, "Blocked " + str(block_value), text_color, scale)
 	
 
 
@@ -67,8 +65,8 @@ func rotate_towards_target(target: Unit) -> void:
 	)
 	await owner.movement_controller.rotation_precomplete
 
-func get_stat_name() -> String:
-	return defend_attribute
+func on_impact() -> void:
+	Utilities.spawn_text_line(owner, "Blocked", text_color, scale)
 
 
 func can_activate() -> bool:

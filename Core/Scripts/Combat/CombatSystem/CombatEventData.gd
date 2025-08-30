@@ -25,6 +25,8 @@ var net_hits: int = 0
 
 var effective_damage: int = 0
 
+# also used for armor pen
+var defense_bonus: int = 0
 
 # Dice Pool Data
 var attacker_test: Test = null

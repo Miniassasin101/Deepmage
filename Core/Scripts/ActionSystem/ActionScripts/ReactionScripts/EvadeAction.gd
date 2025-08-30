@@ -54,17 +54,14 @@ func resolve_reaction() -> void:
 		print_debug("Evasion FAIL")
 	
 
-	#cbevent.is_hit = true
 
 
-
-
-func get_stat_name() -> String:
-	return defend_attribute
 
 
 func can_activate() -> bool:
 	return true
+
+
 
 
 func rotate_towards_target(target: Unit) -> void:

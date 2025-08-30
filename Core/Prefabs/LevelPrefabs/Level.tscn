@@ -284,7 +284,7 @@ script = ExtResource("5_jtghi")
 text_controller_scene = ExtResource("9_ccwc0")
 character_log_queue_scene = ExtResource("10_lf0eb")
 
-[node name="ActionSystemUI" type="Control" parent="UILayer" node_paths=PackedStringArray("turn_system_ui", "initiative_queue_ui", "action_button_hbox")]
+[node name="ActionSystemUI" type="Control" parent="UILayer" node_paths=PackedStringArray("turn_system_ui", "initiative_queue_ui", "top_hp_bar", "action_button_hbox")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -297,6 +297,7 @@ mouse_filter = 2
 script = ExtResource("15_j7436")
 turn_system_ui = NodePath("../TurnSystemUI")
 initiative_queue_ui = NodePath("../InitiativeQueueUI")
+top_hp_bar = NodePath("TopHPBar")
 action_button_hbox = NodePath("PanelContainer/MarginContainer/ActionButtonHbox")
 action_button_prefab = ExtResource("16_tko1n")
 
@@ -327,7 +328,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="TopHPBar" parent="UILayer/ActionSystemUI" instance=ExtResource("21_xyav6")]
-visible = false
 layout_mode = 1
 
 [node name="TurnSystemUI" type="Control" parent="UILayer" node_paths=PackedStringArray("turn_system", "combat_system", "end_turn_container", "end_turn_button", "turn_phase_label", "round_counter_label", "cycle_counter_label", "movement_gait_label")]

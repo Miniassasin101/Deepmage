@@ -7,6 +7,7 @@ extends Control
 @export_group("UI References")
 @export var turn_system_ui: TurnSystemUI
 @export var initiative_queue_ui: InitiativeQueueUI
+@export var top_hp_bar: TopHPBar
 @export_group("")
 @export var action_button_hbox: HBoxContainer
 @export var action_button_prefab: PackedScene = null

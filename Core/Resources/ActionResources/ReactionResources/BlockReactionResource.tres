@@ -12,7 +12,7 @@ metadata/_custom_type_script = "uid://cihsn5lxnlupk"
 [resource]
 script = ExtResource("1_ef270")
 spawn_text = "Block"
-text_color = Color(0, 0.640423, 0.990873, 1)
+text_color = Color(0.941176, 0.972549, 1, 1)
 scale = 1.0
 pre_rotation_margin_override = 0.12
 defend_attribute = "might"

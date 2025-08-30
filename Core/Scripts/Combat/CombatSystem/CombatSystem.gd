@@ -39,11 +39,11 @@ func declare_attack(action: AttackAction, attacker: Unit, defender: Unit) -> voi
 	setup_tests()
 
 	current_combat_event_data.reaction.resolve_reaction()
+	
+	setup_effective_damage()
 
 
-	var effective_damage: int = maxi(action.base_damage - current_combat_event_data.armor_test_hits, 0)
 
-	current_combat_event_data.effective_damage += effective_damage
 
 
 func debug_print_attack_results() -> void:
@@ -84,7 +84,6 @@ func setup_tests() -> void:
 	setup_attacker_test()
 	setup_defender_test()
 	setup_degree_of_success()
-	setup_armor()
 
 
 func setup_attacker_test() -> void:
@@ -137,18 +136,29 @@ func setup_degree_of_success() -> void:
 	current_combat_event_data.net_hits = degree_of_success
 
 
-func setup_armor() -> void:
-	var att_cont: AttributesContainer = current_combat_event_data.defender.get_attributes_container()
 
-	var armor_name: String = "armor"
-	var endurance_name: String = "endurance"
 
-	var armor_val: int = att_cont.get_attribute(armor_name).get_current_modified_value()
-	var endurance_val: int = att_cont.get_attribute(endurance_name).get_current_modified_value()
 
-	var test: Test = Test.new(armor_val, endurance_val, 20)
-	test.run_test()
+func setup_effective_damage() -> void:
+	var attack_action: AttackAction = current_combat_event_data.action
+	var defense: int = current_combat_event_data.defender.get_attributes_container().get_defence()
+	
+	defense += current_combat_event_data.defense_bonus
 
-	current_combat_event_data.armor_test = test
+	var damage_pool: int = 0
 
-	current_combat_event_data.armor_test_hits = test.hits
+	var damage_attribute_val: int = current_combat_event_data.attacker.get_attributes_container().get_attribute_current_value(attack_action.damage_attribute)
+	var base_attack_action_dmg: int = attack_action.base_damage
+
+	damage_pool = damage_attribute_val + base_attack_action_dmg
+	
+	var final_dmg_pool: int = maxi(damage_pool - defense, 0)
+
+	var effective_damage: int = 0
+	
+	if final_dmg_pool >= 1:
+		var dmg_pl: DicePool = DicePool.new(final_dmg_pool)
+		effective_damage += dmg_pl.success_count
+	
+
+	current_combat_event_data.effective_damage += effective_damage

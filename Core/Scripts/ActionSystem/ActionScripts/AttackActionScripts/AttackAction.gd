@@ -193,6 +193,8 @@ func do_resolve() -> void:
 		color = Color.FIREBRICK
 		defender.animation_controller.play_hit_reaction()
 	Utilities.spawn_damage_label(defender, effective_damage, color, 0.5)
+	
+	ev.reaction.on_impact()
 
 
 # =========================

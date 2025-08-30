@@ -321,6 +321,8 @@ func on_hovered_unit_changed(in_unit: Unit) -> void:
 	if in_unit != prev_hovered_unit:
 		if prev_hovered_unit and prev_hovered_unit != selected_unit and prev_hovered_unit.selection_visual:
 			prev_hovered_unit.selection_visual.clear_material()
+		
+		setup_top_bar(in_unit)
 
 	# If nothing is hovered, update state and bail early
 	if in_unit == null:
@@ -358,6 +360,15 @@ func on_hovered_unit_changed(in_unit: Unit) -> void:
 
 	# Track current hover
 	prev_hovered_unit = in_unit
+
+
+func setup_top_bar(in_unit: Unit) -> void:
+	var top_hp_bar: TopHPBar = ActionSystemUI.instance.top_hp_bar
+	if !top_hp_bar:
+		return
+	
+	top_hp_bar.setup_from_unit(in_unit)
+
 
 func get_move_to_unit_action(in_unit: Unit) -> MoveToUnitAction:
 	var actions: Array[Action] = in_unit.get_action_container().get_all_actions()

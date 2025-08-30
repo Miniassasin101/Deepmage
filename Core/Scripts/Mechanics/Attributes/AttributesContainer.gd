@@ -27,6 +27,23 @@ func _setup_starting_attributes() -> void:
 		attributes.append(copy)
 		attributes_dict[copy.attribute_name] = copy
 
+
+func get_defence(_only_get_base: bool = false) -> int:
+	var defence: int = 0
+	defence += get_attribute_current_value("armor")
+	defence += get_attribute_current_value("endurance")
+	return defence
+
+
+
+
+
+
+
+
+
+
+
 # Retrieve attribute by name, return null if not found
 func get_attribute(in_name: String) -> Attribute:
 	if attributes_dict.has(in_name):
