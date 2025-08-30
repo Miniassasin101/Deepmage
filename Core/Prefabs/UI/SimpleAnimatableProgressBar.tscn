@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://bqpqkwmw023x3"]
+
+[ext_resource type="Script" uid="uid://b7dirb4tw5gyt" path="res://Deepmage/Core/Prefabs/UI/SimpleAnimatableProgressBar.gd" id="1_7r0k4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrvcs"]
+bg_color = Color(0.2754, 0.295857, 0.34, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.39, 0.39, 0.39, 1)
+
+[sub_resource type="Gradient" id="Gradient_cydlx"]
+colors = PackedColorArray(0.485703, 0.485704, 0.485703, 1, 0.4, 0.4, 0.4, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ci46t"]
+gradient = SubResource("Gradient_cydlx")
+
+[sub_resource type="Gradient" id="Gradient_2merk"]
+colors = PackedColorArray(0.774322, 0.559134, 0.910283, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hmxcl"]
+gradient = SubResource("Gradient_2merk")
+
+[node name="SimpleAnimatableProgressBar" type="PanelContainer" node_paths=PackedStringArray("health_bar")]
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_xrvcs")
+script = ExtResource("1_7r0k4")
+health_bar = NodePath("MarginContainer/HealthBar")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="HealthBar" type="TextureProgressBar" parent="MarginContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+value = 50.0
+rounded = true
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture2D_ci46t")
+texture_progress = SubResource("GradientTexture2D_hmxcl")
+tint_under = Color(0.529067, 0.529067, 0.529067, 1)
+tint_progress = Color(0.875889, 0.106832, 0.200817, 1)

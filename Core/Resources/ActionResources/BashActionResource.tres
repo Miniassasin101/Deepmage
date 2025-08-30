@@ -69,5 +69,5 @@ default_reaction_latency = 0.06
 action_name = "Bash"
 selection_types = Array[ExtResource("2_enivt")]([ExtResource("3_enivt")])
 reaction_check_timing = 0.3
-tags = Array[String](["melee"])
+tags = Array[String](["melee", "attack"])
 metadata/_custom_type_script = "uid://cte0mmqdwrhoe"

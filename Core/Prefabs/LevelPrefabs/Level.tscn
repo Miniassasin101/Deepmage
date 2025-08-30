@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=39 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
@@ -24,6 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://3p3xt0lymqsd" path="res://Deepmage/Core/Prefabs/UI/UnitStatsBar.tscn" id="16_ecsph"]
 [ext_resource type="Script" uid="uid://cjhhvf5ub04kj" path="res://Deepmage/Core/Prefabs/UI/FPSLabel.gd" id="16_ex7fh"]
 [ext_resource type="PackedScene" uid="uid://psdfsrnutgxe" path="res://Deepmage/Core/Prefabs/UI/ActionButtonUI.tscn" id="16_tko1n"]
+[ext_resource type="PackedScene" uid="uid://cdifkxjoiv0eq" path="res://Deepmage/Core/Prefabs/UI/TopHPBar.tscn" id="21_xyav6"]
 [ext_resource type="PackedScene" uid="uid://cqqsm2gpif3dw" path="res://Deepmage/Core/Prefabs/UI/UnitCharacterSheet.tscn" id="22_gh8or"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_lf0eb"]
@@ -52,6 +53,19 @@ point_count = 2
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gh8or"]
 albedo_color = Color(0, 0.615686, 0.882353, 1)
 roughness = 0.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gh8or"]
+bg_color = Color(0.0264, 0.0294, 0.03, 0.945098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_size = 5
+shadow_offset = Vector2(-1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5ega"]
 bg_color = Color(0.15, 0.15, 0.15, 1)
@@ -283,23 +297,38 @@ mouse_filter = 2
 script = ExtResource("15_j7436")
 turn_system_ui = NodePath("../TurnSystemUI")
 initiative_queue_ui = NodePath("../InitiativeQueueUI")
-action_button_hbox = NodePath("ActionButtonHbox")
+action_button_hbox = NodePath("PanelContainer/MarginContainer/ActionButtonHbox")
 action_button_prefab = ExtResource("16_tko1n")
 
-[node name="ActionButtonHbox" type="HBoxContainer" parent="UILayer/ActionSystemUI"]
+[node name="PanelContainer" type="PanelContainer" parent="UILayer/ActionSystemUI"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.898
 anchor_right = 0.5
 anchor_bottom = 0.898
-offset_top = -2.90405
-offset_bottom = -2.90405
+offset_top = -3.0
+offset_bottom = -3.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_gh8or")
 
-[node name="ActionButtonUI" parent="UILayer/ActionSystemUI/ActionButtonHbox" instance=ExtResource("16_tko1n")]
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/ActionSystemUI/PanelContainer"]
 layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ActionButtonHbox" type="HBoxContainer" parent="UILayer/ActionSystemUI/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ActionButtonUI" parent="UILayer/ActionSystemUI/PanelContainer/MarginContainer/ActionButtonHbox" instance=ExtResource("16_tko1n")]
+layout_mode = 2
+
+[node name="TopHPBar" parent="UILayer/ActionSystemUI" instance=ExtResource("21_xyav6")]
+visible = false
+layout_mode = 1
 
 [node name="TurnSystemUI" type="Control" parent="UILayer" node_paths=PackedStringArray("turn_system", "combat_system", "end_turn_container", "end_turn_button", "turn_phase_label", "round_counter_label", "cycle_counter_label", "movement_gait_label")]
 layout_mode = 3
@@ -345,6 +374,7 @@ layout_mode = 2
 text = "END TURN"
 
 [node name="TurnCountContainer" type="PanelContainer" parent="UILayer/TurnSystemUI"]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -383,13 +413,11 @@ label_settings = SubResource("LabelSettings_bwm3i")
 horizontal_alignment = 1
 
 [node name="VSeparator" type="VSeparator" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 4
 theme_override_styles/separator = SubResource("StyleBoxLine_8hl20")
 
 [node name="MarginContainer2" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer"]
-visible = false
 layout_mode = 2
 
 [node name="CycleCounterLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer2"]
@@ -400,13 +428,11 @@ label_settings = SubResource("LabelSettings_bwm3i")
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_a6kyb")
 
 [node name="MarginContainer2" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 
 [node name="TurnPhaseLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer2"]
@@ -417,7 +443,6 @@ label_settings = SubResource("LabelSettings_bwm3i")
 horizontal_alignment = 1
 
 [node name="MarginContainer3" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 
 [node name="MovementGaitLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer3"]

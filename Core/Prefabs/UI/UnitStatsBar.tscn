@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://3p3xt0lymqsd"]
+[gd_scene load_steps=9 format=3 uid="uid://3p3xt0lymqsd"]
 
 [ext_resource type="Script" uid="uid://d31u148mfqqic" path="res://Deepmage/Core/Scripts/UI/UnitStatsBar.gd" id="1_73dlo"]
 [ext_resource type="StyleBox" uid="uid://dxf8kqkw1goiw" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarShadowedStyleBox.tres" id="1_cydlx"]
@@ -6,29 +6,10 @@
 [ext_resource type="StyleBox" uid="uid://ctfdrvgj0jmvy" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarRedShadowedStyleBox.tres" id="3_ee32f"]
 [ext_resource type="StyleBox" uid="uid://dchax7jq33003" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarBlueShadowedStyleBox.tres" id="4_mx6qg"]
 [ext_resource type="StyleBox" uid="uid://cb4hx8gm801ov" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarRedFlatStyleBox.tres" id="5_afvsy"]
+[ext_resource type="PackedScene" uid="uid://bqpqkwmw023x3" path="res://Deepmage/Core/Prefabs/UI/SimpleAnimatableProgressBar.tscn" id="7_5nvtf"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_bwm3i"]
 font_size = 21
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrvcs"]
-bg_color = Color(0.2754, 0.295857, 0.34, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.39, 0.39, 0.39, 1)
-
-[sub_resource type="Gradient" id="Gradient_cydlx"]
-colors = PackedColorArray(0.485703, 0.485704, 0.485703, 1, 0.4, 0.4, 0.4, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ci46t"]
-gradient = SubResource("Gradient_cydlx")
-
-[sub_resource type="Gradient" id="Gradient_2merk"]
-colors = PackedColorArray(0.774322, 0.559134, 0.910283, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_hmxcl"]
-gradient = SubResource("Gradient_2merk")
 
 [node name="UnitStatsBar" type="MarginContainer" node_paths=PackedStringArray("unit_stats_bar_content", "unit_name_label", "initiative_score_label", "multiple_action_penalty_label", "health_text_label", "health_bar")]
 offset_left = 2.0
@@ -41,7 +22,7 @@ unit_name_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/Un
 initiative_score_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/InitiativeScoreLabel")
 multiple_action_penalty_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/MultipleActionPenalty")
 health_text_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/HealthTextLabel")
-health_bar = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HealthBar")
+health_bar = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/SimpleAnimatableProgressBar")
 shadowed_stylebox = ExtResource("1_cydlx")
 red_shadowed_stylebox = ExtResource("3_ee32f")
 blue_shadowed_stylebox = ExtResource("4_mx6qg")
@@ -84,24 +65,5 @@ text = "Health/Max health"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="UnitStatsBarContent/MarginContainer/VBoxContainer"]
+[node name="SimpleAnimatableProgressBar" parent="UnitStatsBarContent/MarginContainer/VBoxContainer" instance=ExtResource("7_5nvtf")]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_xrvcs")
-
-[node name="MarginContainer" type="MarginContainer" parent="UnitStatsBarContent/MarginContainer/VBoxContainer/PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_bottom = 2
-
-[node name="HealthBar" type="TextureProgressBar" parent="UnitStatsBarContent/MarginContainer/VBoxContainer/PanelContainer/MarginContainer"]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 2
-value = 50.0
-rounded = true
-nine_patch_stretch = true
-texture_under = SubResource("GradientTexture2D_ci46t")
-texture_progress = SubResource("GradientTexture2D_hmxcl")
-tint_under = Color(0.529067, 0.529067, 0.529067, 1)
-tint_progress = Color(0.875889, 0.106832, 0.200817, 1)

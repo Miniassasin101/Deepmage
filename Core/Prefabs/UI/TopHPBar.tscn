@@ -1,0 +1,133 @@
+[gd_scene load_steps=6 format=3 uid="uid://cdifkxjoiv0eq"]
+
+[ext_resource type="PackedScene" uid="uid://bqpqkwmw023x3" path="res://Deepmage/Core/Prefabs/UI/SimpleAnimatableProgressBar.tscn" id="1_jvch7"]
+[ext_resource type="Script" uid="uid://c8kjfg6o0nnpe" path="res://Deepmage/Core/Prefabs/UI/TopHPBar.gd" id="1_ukjim"]
+[ext_resource type="Script" uid="uid://mu1wja7yiy3w" path="res://Deepmage/Core/Scripts/UI/SlideDown.gd" id="3_sysu1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yd4wd"]
+bg_color = Color(0.0264, 0.0294, 0.03, 0.945098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_size = 5
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sysu1"]
+bg_color = Color(0.0264, 0.0294, 0.03, 0.945098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_color = Color(0, 0, 0, 0.498039)
+shadow_size = 2
+shadow_offset = Vector2(-1, 1)
+
+[node name="TopHPBar" type="Control" node_paths=PackedStringArray("header", "slide")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_ukjim")
+header = NodePath("MarginContainer/Root/Header")
+slide = NodePath("MarginContainer/Root/SlideDown")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+offset_left = 484.5
+offset_top = 57.0
+offset_right = 667.5
+offset_bottom = 155.0
+grow_horizontal = 2
+
+[node name="Root" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Header" type="PanelContainer" parent="MarginContainer/Root"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yd4wd")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Root/Header"]
+layout_mode = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 7
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Root/Header/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Root/Header/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Unit Name"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Root/Header/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Root/Header/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "20"
+horizontal_alignment = 1
+
+[node name="SimpleAnimatableProgressBar" parent="MarginContainer/Root/Header/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("1_jvch7")]
+custom_minimum_size = Vector2(142.44, 0)
+layout_mode = 2
+
+[node name="SlideDown" type="PanelContainer" parent="MarginContainer/Root" node_paths=PackedStringArray("content", "parent_container")]
+z_index = -1
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_sysu1")
+script = ExtResource("3_sysu1")
+start_open = true
+content = NodePath("MarginContainer/VBoxContainer")
+start_offset = Vector2(0, 13)
+drift_amount = Vector2(0, 60)
+drift_duration = 0.3
+parent_container = NodePath("..")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Root/SlideDown"]
+layout_mode = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 7
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Root/SlideDown/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Root/SlideDown/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Unit Name"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Root/SlideDown/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Root/SlideDown/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "HP"
+horizontal_alignment = 1
+
+[node name="SimpleAnimatableProgressBar" parent="MarginContainer/Root/SlideDown/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("1_jvch7")]
+custom_minimum_size = Vector2(142.44, 0)
+layout_mode = 2
+
+[node name="D" type="Label" parent="MarginContainer/Root/SlideDown/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Min - Max "
+horizontal_alignment = 1

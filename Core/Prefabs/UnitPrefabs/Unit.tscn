@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://2h1a1e1r8hc2"]
+[gd_scene load_steps=52 format=3 uid="uid://2h1a1e1r8hc2"]
 
 [ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
 [ext_resource type="Script" uid="uid://byevnkq30m4mb" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.gd" id="1_ohquw"]
@@ -11,7 +11,6 @@
 [ext_resource type="Script" uid="uid://c2aqj40trpjeq" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/EffectsController.gd" id="4_s3v1t"]
 [ext_resource type="Script" uid="uid://cusgogua72ojh" path="res://Deepmage/Core/Scripts/ActionSystem/ActionContainer.gd" id="5_t2svf"]
 [ext_resource type="Script" uid="uid://cvislitkwpg12" path="res://Deepmage/Core/Scripts/ActionSystem/Action.gd" id="6_mhrm2"]
-[ext_resource type="Script" uid="uid://dyiusi38rqf6w" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextAction.gd" id="7_k5ckj"]
 [ext_resource type="Script" uid="uid://bl34p0y06cyys" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/MoveAction.gd" id="8_3ct77"]
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="9_t3ejk"]
 [ext_resource type="Script" uid="uid://doahtvq8r205k" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextOnUnitAction.gd" id="11_1um36"]
@@ -90,23 +89,6 @@ _data = {
 &"RESET": SubResource("Animation_sxvrp")
 }
 
-[sub_resource type="Resource" id="Resource_jswbx"]
-script = ExtResource("9_t3ejk")
-name = &"button"
-is_true = true
-metadata/_custom_type_script = "uid://cihsn5lxnlupk"
-
-[sub_resource type="Resource" id="Resource_k5ckj"]
-script = ExtResource("7_k5ckj")
-spawn_text = "Testing"
-text_color = Color(0.941176, 0.972549, 1, 1)
-scale = 1.0
-action_name = "Test Text"
-selection_types = Array[ExtResource("9_t3ejk")]([SubResource("Resource_jswbx")])
-reaction_check_timing = 0.3
-tags = Array[String]([])
-metadata/_custom_type_script = "uid://dyiusi38rqf6w"
-
 [sub_resource type="Resource" id="Resource_lsp3f"]
 script = ExtResource("9_t3ejk")
 name = &"ground"
@@ -132,7 +114,7 @@ script = ExtResource("11_1um36")
 spawn_text = "Testing"
 text_color = Color(9.62615e-08, 0.519219, 0.80859, 1)
 scale = 1.0
-action_name = "Unit Text Test"
+action_name = "Unit Text"
 selection_types = Array[ExtResource("9_t3ejk")]([ExtResource("12_aemtr")])
 reaction_check_timing = 0.3
 tags = Array[String]([])
@@ -252,7 +234,7 @@ attributes_container = NodePath("AttributesContainer")
 [node name="ActionContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
 script = ExtResource("5_t2svf")
 unit = NodePath("../..")
-actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_k5ckj"), SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("15_sne6a"), ExtResource("16_pksos"), ExtResource("20_sn2o0"), ExtResource("19_1343x"), ExtResource("21_t7uvv"), ExtResource("22_0xpoi"), ExtResource("23_52ex6")])
+actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("15_sne6a"), ExtResource("16_pksos"), ExtResource("20_sn2o0"), ExtResource("19_1343x"), ExtResource("21_t7uvv"), ExtResource("22_0xpoi"), ExtResource("23_52ex6")])
 
 [node name="AttributesContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
 script = ExtResource("15_jswbx")

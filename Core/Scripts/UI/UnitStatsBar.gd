@@ -7,7 +7,7 @@ extends MarginContainer
 @export var initiative_score_label: Label
 @export var multiple_action_penalty_label: Label
 @export var health_text_label: Label
-@export var health_bar: TextureProgressBar
+@export var health_bar: SimpleAnimatableProgressBar
 
 @export var shadowed_stylebox: StyleBoxFlat
 
@@ -83,11 +83,10 @@ func update_stats(unit: Unit) -> void:
 	
 	# Animate the health bar value.
 	var target_health_percentage: float = (float(health_attribute.get_current_modified_value()) / float(health_attribute.maximum_value) * 100)
-	print_debug("Current Value: " + str(current_modified_value))
-	print_debug("Target Percent: " + str(target_health_percentage))
-	var tween := create_tween()
-	tween.tween_property(health_bar, "value", target_health_percentage, 0.35) \
-		 .set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
+	#print_debug("Current Value: " + str(current_modified_value))
+	#print_debug("Target Percent: " + str(target_health_percentage))
+	
+	health_bar.animate_to_percent(target_health_percentage)
 
 	
 	# Change the stylebox based on whether this unit has already acted.
@@ -164,16 +163,16 @@ func start_pulse() -> void:
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 func stop_pulse() -> void:
-	if pulse_tween:
-		pulse_tween.kill()
-		pulse_tween = null
+	if abort_pulse():
 
 		# Restore original stylebox
 		var current_unit := TurnSystem.instance.selected_unit
 		if current_unit:
 			update_stats(stats_bar_unit)  # Reapply correct stylebox based on current unit state
 
-func abort_pulse() -> void:
+func abort_pulse() -> bool:
 	if pulse_tween:
 		pulse_tween.kill()
 		pulse_tween = null
+		return true
+	return false
