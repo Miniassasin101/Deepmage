@@ -6,9 +6,9 @@
 script = ExtResource("1_3p4ok")
 attribute_name = "sense"
 attribute_type = 0
-current_value = 1
+current_value = 2
 base_value = 0
-maximum_value = 1
+maximum_value = 2
 minimum_value = 0
 modifiers = Array[int]([])
 tags = Array[String]([])

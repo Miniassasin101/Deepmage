@@ -14,6 +14,7 @@ extends Control
 @export var unit_name_label: Label
 @export var armor_points_label: Label
 @export var health_points_label: Label
+@export var posture_points_label: Label
 @export var strain_points_label: Label
 
 @export var experience_rolls_label: Label
@@ -117,6 +118,8 @@ func _populate_from_unit(unit: Unit) -> void:
 	 + "/" + str(unit.get_attributes_container().get_attribute("armor").maximum_value)
 	health_points_label.text = _get_attribute_or_na(unit, "health")\
 	 + "/" + str(unit.get_attributes_container().get_attribute("health").maximum_value)
+	posture_points_label.text = _get_attribute_or_na(unit, "posture")\
+	 + "/" + str(unit.get_attributes_container().get_attribute("posture").maximum_value)
 	strain_points_label.text = _get_attribute_or_na(unit, "strain")\
 	 + "/" + str(unit.get_attributes_container().get_attribute("strain").maximum_value)
 	experience_rolls_label.text = "EXP: " + _get_attribute_or_na(unit, "experience_rolls") 
@@ -135,7 +138,7 @@ func _populate_from_unit(unit: Unit) -> void:
 	martial_label.text = _get_attribute_or_na(unit, "martial")
 	channel_label.text = _get_attribute_or_na(unit, "channel")
 	clash_label.text = _get_attribute_or_na(unit, "clash")
-	evade_label.text = _get_attribute_or_na(unit, "evasion")
+	evade_label.text = _get_attribute_or_na(unit, "evade")
 	will_label.text = _get_attribute_or_na(unit, "will")
 
 

@@ -33,6 +33,7 @@ func resolve_reaction() -> void:
 	var cbd: CombatEventData = CombatSystem.instance.current_combat_event_data
 	if cbd.is_success:
 		print_debug("Block Failed")
+		CombatLog.instance.add_log(owner.ui_name + " Block Failed")
 		return
 	
 	var block_value: int = 0

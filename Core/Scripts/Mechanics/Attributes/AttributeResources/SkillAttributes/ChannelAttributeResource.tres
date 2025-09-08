@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_uqbbs")
-attribute_name = "martial"
+attribute_name = "channel"
 attribute_type = 1
 current_value = 2
 base_value = 0

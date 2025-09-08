@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://2h1a1e1r8hc2"]
+[gd_scene load_steps=62 format=3 uid="uid://2h1a1e1r8hc2"]
 
 [ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
 [ext_resource type="Script" uid="uid://byevnkq30m4mb" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.gd" id="1_ohquw"]
@@ -33,7 +33,12 @@
 [ext_resource type="Resource" uid="uid://d2ysyx0gn34ud" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/PassReactionResource.tres" id="23_52ex6"]
 [ext_resource type="Resource" uid="uid://oapobdj11anu" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/StrainAttributeResource.tres" id="23_hq0j0"]
 [ext_resource type="Resource" uid="uid://cuudvrampevcg" path="res://Deepmage/Core/Resources/ActionResources/TestAttackActionResource.tres" id="25_dg5hf"]
+[ext_resource type="Resource" uid="uid://8mq08eqitt0g" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/CapsuleBashPackage.tres" id="25_o850n"]
+[ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="26_yq0qj"]
+[ext_resource type="Script" uid="uid://dfqq4lgq8fr27" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="27_yq0qj"]
+[ext_resource type="Script" uid="uid://caggmbav8c0ky" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/AttackAction.gd" id="27_yx6lc"]
 [ext_resource type="Resource" uid="uid://dikgw5heeo8wu" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/BaseAttributes/MindAttributeResource.tres" id="29_52ex6"]
+[ext_resource type="Resource" uid="uid://bpylci06i7fs" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/PostureAttributeResource.tres" id="34_dg5hf"]
 [ext_resource type="Resource" uid="uid://cnbwyfenycvuj" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/SkillAttributes/MartialAttributeResource.tres" id="35_3f60d"]
 [ext_resource type="Resource" uid="uid://dfqetcr2x2u5u" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/ArmorAttributeResource.tres" id="36_6g8w4"]
 [ext_resource type="Resource" uid="uid://d62m55i6dqsj" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/SkillAttributes/ChannelAttributeResource.tres" id="36_qyife"]
@@ -147,6 +152,58 @@ reaction_check_timing = 0.3
 tags = Array[String]([])
 metadata/_custom_type_script = "uid://bjhah2xmsklrq"
 
+[sub_resource type="Resource" id="Resource_2me7b"]
+script = ExtResource("26_yq0qj")
+strength = 0.15
+shake_time = 0.4
+shake_frequency = 50
+timing = 0.55
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_jfhli"]
+script = ExtResource("27_yq0qj")
+duration = 0.349
+timing = 0.6
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_vavmt"]
+script = ExtResource("26_yq0qj")
+strength = 0.1
+shake_time = 0.3
+shake_frequency = 50
+timing = 0.55
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_g1p88"]
+script = ExtResource("26_yq0qj")
+strength = 0.15
+shake_time = 0.4
+shake_frequency = 50
+timing = 0.55
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_o850n"]
+script = ExtResource("27_yx6lc")
+animation_package = ExtResource("25_o850n")
+hit_anim_effect = SubResource("Resource_g1p88")
+graze_anim_effect = SubResource("Resource_vavmt")
+block_anim_effect = SubResource("Resource_2me7b")
+hit_stop_effect = SubResource("Resource_jfhli")
+graze_stop_effect = SubResource("Resource_jfhli")
+block_stop_effect = SubResource("Resource_jfhli")
+attack_range = 20.0
+accuracy_attribute1 = "agility"
+accuracy_attribute2 = "martial"
+damage_attribute = "might"
+base_damage = 3
+desired_react_lead = 0.05
+default_reaction_latency = 0.06
+action_name = "Shoot Action"
+selection_types = Array[ExtResource("9_t3ejk")]([ExtResource("12_aemtr")])
+reaction_check_timing = 0.3
+tags = Array[String](["melee", "attack"])
+metadata/_custom_type_script = "uid://caggmbav8c0ky"
+
 [node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual", "character_sheet", "movement_controller", "animation_controller")]
 script = ExtResource("1_ohquw")
 above_head_marker = NodePath("AboveHeadMarker")
@@ -234,9 +291,9 @@ attributes_container = NodePath("AttributesContainer")
 [node name="ActionContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
 script = ExtResource("5_t2svf")
 unit = NodePath("../..")
-actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("15_sne6a"), ExtResource("16_pksos"), ExtResource("25_dg5hf"), ExtResource("21_sn2o0"), ExtResource("21_t7uvv"), ExtResource("22_0xpoi"), ExtResource("23_52ex6")])
+actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("15_sne6a"), ExtResource("16_pksos"), ExtResource("25_dg5hf"), ExtResource("21_sn2o0"), ExtResource("21_t7uvv"), ExtResource("22_0xpoi"), ExtResource("23_52ex6"), SubResource("Resource_o850n")])
 
 [node name="AttributesContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
 script = ExtResource("15_jswbx")
 unit = NodePath("../..")
-starting_attributes = Array[ExtResource("16_mt7xe")]([ExtResource("17_bxfyr"), ExtResource("18_lq7j2"), ExtResource("19_hq0j0"), ExtResource("29_52ex6"), ExtResource("20_sne6a"), ExtResource("21_pksos"), ExtResource("17_kflht"), ExtResource("23_hq0j0"), ExtResource("36_6g8w4"), ExtResource("35_3f60d"), ExtResource("36_qyife"), ExtResource("37_sn2o0"), ExtResource("38_dg5hf"), ExtResource("39_icqgv")])
+starting_attributes = Array[ExtResource("16_mt7xe")]([ExtResource("17_bxfyr"), ExtResource("18_lq7j2"), ExtResource("19_hq0j0"), ExtResource("29_52ex6"), ExtResource("20_sne6a"), ExtResource("21_pksos"), ExtResource("17_kflht"), ExtResource("34_dg5hf"), ExtResource("23_hq0j0"), ExtResource("36_6g8w4"), ExtResource("35_3f60d"), ExtResource("36_qyife"), ExtResource("37_sn2o0"), ExtResource("38_dg5hf"), ExtResource("39_icqgv")])
