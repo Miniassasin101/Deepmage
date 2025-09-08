@@ -17,7 +17,8 @@ var base_position: Vector2 = self.position
 @export var start_offset: Vector2 = Vector2(0.0, 0.0)
 @export var drift_amount: Vector2 = Vector2(0.0, 0.0)
 @export var drift_duration: float = 2.0
-@export var parent_container: Container
+@export var reset_position: bool = false
+@export var parent_container: Control
 
 
 
@@ -26,7 +27,9 @@ var base_position: Vector2 = self.position
 func _ready() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
-
+	
+	base_position = get_position()
+	
 	if parent_container:
 		base_position = parent_container.get_position() + start_offset
 	set_position(base_position)
@@ -35,6 +38,7 @@ func _ready() -> void:
 		open()
 	else:
 		close()
+		pass
 
 func toggle() -> void:
 	if _open:
@@ -52,10 +56,6 @@ func close() -> void:
 	await slide_in()
 	#set_visible(false)
 
-func _animate_to(target_h: float) -> void:
-	if _tween: _tween.kill()
-	_tween = create_tween().set_trans(trans).set_ease(target_ease)
-	_tween.tween_property(self, "custom_minimum_size:y", target_h, duration)
 
 
 
@@ -67,6 +67,9 @@ func slide_out() -> void:
 	mod.a = 0
 	set_modulate(mod)
 	mod.a = 1
+	
+
+	
 	set_position(base_position)
 	
 
@@ -89,12 +92,17 @@ func slide_in() -> void:
 	set_modulate(mod)
 	mod.a = 0
 	
+	if reset_position:
+		base_position = get_position() + -drift_amount
+	
+	
 	drift_tween = get_tree().create_tween()
 	drift_tween.tween_property(self, "modulate", mod, drift_duration)
 	
 	drift_tween.parallel().tween_property(self, "position", base_position, drift_duration)
 	
 	await drift_tween.finished
+
 	
 
 func abort_tween() -> bool:

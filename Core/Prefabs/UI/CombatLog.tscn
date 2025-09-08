@@ -1,0 +1,172 @@
+[gd_scene load_steps=11 format=3 uid="uid://bt5idkoxachxk"]
+
+[ext_resource type="Script" uid="uid://qv2shi7lqk4j" path="res://Deepmage/Core/Scripts/UI/CombatLog.gd" id="1_8it11"]
+[ext_resource type="Script" uid="uid://dvpjdgtyi23ow" path="res://Deepmage/Core/Scripts/UI/ActionButtonUI.gd" id="2_r0ne0"]
+[ext_resource type="Script" uid="uid://mu1wja7yiy3w" path="res://Deepmage/Core/Scripts/UI/SlideDown.gd" id="2_vileu"]
+[ext_resource type="StyleBox" uid="uid://dxf8kqkw1goiw" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarShadowedStyleBox.tres" id="3_vileu"]
+[ext_resource type="StyleBox" uid="uid://n31yek6n5pbc" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarFlatStyleBox.tres" id="4_02qfy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jukg7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yd4wd"]
+bg_color = Color(0.0264, 0.0294, 0.03, 0.945098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_size = 5
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jwycn"]
+font_size = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nmqxa"]
+bg_color = Color(0.132, 0.147, 0.15, 0.945098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.92, 0.92, 0.92, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_size = 5
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_llcqf"]
+font_size = 18
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="CombatLog" type="Control" node_paths=PackedStringArray("button", "slide_panel_container", "log_container")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_8it11")
+label_preset = SubResource("LabelSettings_jukg7")
+button = NodePath("ActionButtonUI2")
+slide_panel_container = NodePath("SlidingStylizedPanel")
+log_container = NodePath("SlidingStylizedPanel/MarginContainer/LogContainer")
+max_logs = 10
+
+[node name="SlidingStylizedPanel" type="PanelContainer" parent="." node_paths=PackedStringArray("parent_container")]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -367.0
+offset_top = 124.0
+offset_right = 177.0
+offset_bottom = 166.0
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(0.6, 0.6)
+theme_override_styles/panel = SubResource("StyleBoxFlat_yd4wd")
+script = ExtResource("2_vileu")
+start_offset = Vector2(-330, 0)
+drift_amount = Vector2(-10, 0)
+drift_duration = 0.3
+reset_position = true
+parent_container = NodePath("../ActionButtonUI2")
+metadata/_custom_type_script = "uid://mu1wja7yiy3w"
+
+[node name="MarginContainer" type="MarginContainer" parent="SlidingStylizedPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="LogContainer" type="VBoxContainer" parent="SlidingStylizedPanel/MarginContainer"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SlidingStylizedPanel/MarginContainer/LogContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+text = "To be or not to be, that is the question.To be or not to be, that is the question.To be or not to be, that is the question.To be or not to be, that is the question."
+label_settings = SubResource("LabelSettings_jwycn")
+vertical_alignment = 2
+autowrap_mode = 2
+
+[node name="Label2" type="Label" parent="SlidingStylizedPanel/MarginContainer/LogContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+text = "To be or not to be, that is the question."
+label_settings = SubResource("LabelSettings_jwycn")
+autowrap_mode = 2
+
+[node name="ActionButtonUI2" type="Button" parent="." node_paths=PackedStringArray("button_text", "button", "panel")]
+custom_minimum_size = Vector2(35, 35)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = 116.0
+offset_right = -2.0
+offset_bottom = 151.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 0
+action_mode = 0
+script = ExtResource("2_r0ne0")
+button_text = NodePath("Text2")
+button = NodePath(".")
+panel = NodePath("Panel")
+button_up_style_box = ExtResource("3_vileu")
+button_down_style_box = ExtResource("4_02qfy")
+
+[node name="Panel" type="Panel" parent="ActionButtonUI2"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.93932, 0.948154)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nmqxa")
+
+[node name="Text2" type="Label" parent="ActionButtonUI2"]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -2.0
+offset_right = 10.0
+offset_bottom = 47.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.43, 0.43)
+text = "Action
+Button"
+label_settings = SubResource("LabelSettings_llcqf")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[connection signal="gui_input" from="ActionButtonUI2" to="ActionButtonUI2" method="_on_gui_input"]
+[connection signal="mouse_exited" from="ActionButtonUI2" to="ActionButtonUI2" method="_on_mouse_exited"]

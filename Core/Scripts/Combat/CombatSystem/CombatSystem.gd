@@ -32,9 +32,13 @@ func declare_attack(action: AttackAction, attacker: Unit, defender: Unit) -> voi
 	# On attack declared events trigger here
 
 	#Utilities.spawn_text_line(attacker, "Attacking " + defender.ui_name + " with " + action.action_name)
-
+	CombatLog.instance.add_log()
+	CombatLog.instance.add_log(attacker.ui_name + " attacks " + defender.ui_name + " with " + action.action_name)
+	
+	setup_attacker_test()
 	# Check if target wants to do a reaction
 	await prompt_player_reaction(defender)
+
 
 	setup_tests()
 
@@ -65,7 +69,7 @@ func debug_print_attack_results() -> void:
 	print_debug("Armor hits: " + str(current_combat_event_data.armor_test_hits))
 
 
-	pass
+
 
 func prompt_player_reaction(defender: Unit) -> void:
 	UnitActionSystem.instance.prompt_reaction(defender)
@@ -78,10 +82,12 @@ func prompt_player_reaction(defender: Unit) -> void:
 		defender.get_action_container().use_action(selected_reaction, null)
 
 		current_combat_event_data.reaction = selected_reaction
+		
+		CombatLog.instance.add_log(current_combat_event_data.defender.ui_name + " reacts with " + selected_reaction.action_name)
 
 
 func setup_tests() -> void:
-	setup_attacker_test()
+
 	setup_defender_test()
 	setup_degree_of_success()
 
@@ -101,11 +107,18 @@ func setup_attacker_test() -> void:
 
 	current_combat_event_data.attacker_test = test
 	current_combat_event_data.attacker_hits = test.hits
+	
+	#Utilities.spawn_text_line(current_combat_event_data.attacker, current_combat_event_data.action.action_name)
+	CombatLog.instance.add_log(current_combat_event_data.attacker.ui_name + " scored " + str(test.hits) + " hits ")
+	
+	
+	if !test.success:
+		current_combat_event_data.is_hit = false
 
 
 
 func setup_defender_test() -> void:
-
+	
 	var accuracy_names: Array[String] = current_combat_event_data.reaction.get_accuracy_attributes()
 
 	var att_cont: AttributesContainer = current_combat_event_data.defender.get_attributes_container()
@@ -119,6 +132,8 @@ func setup_defender_test() -> void:
 
 	current_combat_event_data.defender_test = test
 	current_combat_event_data.defender_hits = test.hits
+	
+	CombatLog.instance.add_log(current_combat_event_data.defender.ui_name + " scored " + str(test.hits) + " hits")
 
 
 
@@ -132,6 +147,9 @@ func setup_degree_of_success() -> void:
 		current_combat_event_data.is_success = true
 	elif degree_of_success == 0:
 		current_combat_event_data.is_graze = true
+	
+	if !current_combat_event_data.attacker_test.success:
+		current_combat_event_data.is_success = false
 
 	current_combat_event_data.net_hits = degree_of_success
 
@@ -139,7 +157,7 @@ func setup_degree_of_success() -> void:
 
 
 
-func setup_effective_damage() -> void:
+func setup_effective_damage_dep() -> void:
 	var attack_action: AttackAction = current_combat_event_data.action
 	var defense: int = current_combat_event_data.defender.get_attributes_container().get_defence()
 	
@@ -160,5 +178,51 @@ func setup_effective_damage() -> void:
 		var dmg_pl: DicePool = DicePool.new(final_dmg_pool)
 		effective_damage += dmg_pl.success_count
 	
+
+	current_combat_event_data.effective_damage += effective_damage
+	
+	#CombatLog.instance.add_log("Effective Damage: " + da)
+
+
+func setup_effective_damage() -> void:
+	var attack_action: AttackAction = current_combat_event_data.action
+
+	# Defense (track base+bonus for logging clarity)
+	var defense: int = current_combat_event_data.defender.get_attributes_container().get_defence()
+	var base_defense: int = defense
+	var defense_bonus: int = current_combat_event_data.defense_bonus
+	defense += defense_bonus
+
+	# Damage pool components
+	var damage_attribute_val: int = current_combat_event_data.attacker.get_attributes_container().get_attribute_current_value(attack_action.damage_attribute)
+	var base_attack_action_dmg: int = attack_action.base_damage
+	var damage_pool: int = damage_attribute_val + base_attack_action_dmg
+
+	# Net pool after defense
+	var final_dmg_pool: int = maxi(damage_pool - defense, 0)
+
+	# Log the calculation breakdown
+	if current_combat_event_data.is_hit:
+		CombatLog.instance.add_log("Damage Pool: " + str(damage_pool) + " - Defense: " + str(defense)+  " = Final Damage Pool: " + str(final_dmg_pool))
+
+	var effective_damage: int = 0
+
+	if final_dmg_pool >= 1:
+		var dmg_pl: DicePool = DicePool.new(final_dmg_pool)
+		effective_damage += dmg_pl.success_count
+
+		var new_total := current_combat_event_data.effective_damage + effective_damage
+		if current_combat_event_data.is_hit:
+			CombatLog.instance.add_log(
+				"Roll %d dice → %d hits ⇒ Effective Damage +%d (total %d)"
+				% [final_dmg_pool, dmg_pl.success_count, effective_damage, new_total]
+			)
+	else:
+		# Nothing to roll; defense fully absorbed it
+		if current_combat_event_data.is_hit:
+			CombatLog.instance.add_log(
+				"No damage: pool %d - defense %d ≤ 0."
+				% [damage_pool, defense]
+			)
 
 	current_combat_event_data.effective_damage += effective_damage

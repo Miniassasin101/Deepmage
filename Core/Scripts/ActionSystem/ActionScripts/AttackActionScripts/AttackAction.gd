@@ -153,7 +153,7 @@ func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
 	if ctrl != null:
 
 		await ctrl.effects_controller.on_hit_moment
-		print_debug("Signal Recieved")
+		#print_debug("Signal Recieved")
 		do_resolve()
 		used_signal = true
 		return
@@ -178,10 +178,12 @@ func do_resolve() -> void:
 
 	# Feedback / damage
 	if !is_hit:
-		if is_graze:
+		if is_graze and ev.is_success:
 			Utilities.spawn_text_line(defender, "Graze", Color.AQUA)
+			CombatLog.instance.add_log("Result: Graze")
 		else:
 			Utilities.spawn_text_line(defender, "MISS", Color.AQUA)
+			CombatLog.instance.add_log("Result: Miss")
 		return
 
 	# On-hit damage

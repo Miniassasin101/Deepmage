@@ -44,7 +44,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_ukjim")
 header = NodePath("MarginContainer/Root/Header")
-slide = NodePath("MarginContainer/Root/SlideDown")
+slide = NodePath("MarginContainer/Root/AttackPreviewSlideContainer")
 unit_name_label = NodePath("MarginContainer/Root/Header/MarginContainer/VBoxContainer/UnitNameLabel")
 health_bar = NodePath("MarginContainer/Root/Header/MarginContainer/VBoxContainer/HBoxContainer/HealthBar")
 current_health_label = NodePath("MarginContainer/Root/Header/MarginContainer/VBoxContainer/HBoxContainer/CurrentHealthLabel")
@@ -52,10 +52,10 @@ current_defense_label = NodePath("MarginContainer/Root/Header/MarginContainer/VB
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
-offset_left = 484.5
-offset_top = 57.0
-offset_right = 667.5
-offset_bottom = 155.0
+offset_left = 473.0
+offset_top = 25.0
+offset_right = 679.0
+offset_bottom = 195.0
 grow_horizontal = 2
 
 [node name="Root" type="VBoxContainer" parent="MarginContainer"]
@@ -100,7 +100,7 @@ text = "20"
 label_settings = SubResource("LabelSettings_sysu1")
 horizontal_alignment = 1
 
-[node name="SlideDown" type="PanelContainer" parent="MarginContainer/Root" node_paths=PackedStringArray("attack_name_label", "min_max_dmg_label", "accuracy_pool_label", "target_successes_label", "parent_container")]
+[node name="AttackPreviewSlideContainer" type="PanelContainer" parent="MarginContainer/Root" node_paths=PackedStringArray("attack_name_label", "min_max_dmg_label", "accuracy_pool_label", "target_successes_label", "parent_container")]
 z_index = -1
 layout_mode = 2
 mouse_filter = 1
@@ -115,39 +115,39 @@ drift_amount = Vector2(0, 60)
 drift_duration = 0.3
 parent_container = NodePath("..")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Root/SlideDown"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Root/AttackPreviewSlideContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 7
 theme_override_constants/margin_top = 7
 theme_override_constants/margin_right = 7
 theme_override_constants/margin_bottom = 7
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Root/SlideDown/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Root/AttackPreviewSlideContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="AttackNameLabel" type="Label" parent="MarginContainer/Root/SlideDown/MarginContainer/VBoxContainer"]
+[node name="AttackNameLabel" type="Label" parent="MarginContainer/Root/AttackPreviewSlideContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Attack Name"
 horizontal_alignment = 1
 
-[node name="DamagePreviewLabel" type="Label" parent="MarginContainer/Root/SlideDown/MarginContainer/VBoxContainer"]
+[node name="DamagePreviewLabel" type="Label" parent="MarginContainer/Root/AttackPreviewSlideContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Min - Max  DMG"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Root/SlideDown/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Root/AttackPreviewSlideContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="AccuracyLabel" type="Label" parent="MarginContainer/Root/SlideDown/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="AccuracyLabel" type="Label" parent="MarginContainer/Root/AttackPreviewSlideContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Acc: 2"
 horizontal_alignment = 1
 
-[node name="VSeparator" type="VSeparator" parent="MarginContainer/Root/SlideDown/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/Root/AttackPreviewSlideContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="DifficultyLabel" type="Label" parent="MarginContainer/Root/SlideDown/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="DifficultyLabel" type="Label" parent="MarginContainer/Root/AttackPreviewSlideContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Diff: 1"

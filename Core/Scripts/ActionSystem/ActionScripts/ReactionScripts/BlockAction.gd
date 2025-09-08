@@ -44,6 +44,8 @@ func resolve_reaction() -> void:
 	
 	cbd.defense_bonus = block_value
 	
+	CombatLog.instance.add_log(owner.ui_name + " Blocked " + str(block_value))
+	
 	
 	
 	print_debug("Blocked " + str(block_value))

@@ -50,8 +50,9 @@ func resolve_reaction() -> void:
 	if !cbevent.is_success:
 		cbevent.is_hit = false
 		print_debug("Evasion SUCCESS")
+		CombatLog.instance.add_log(owner.ui_name + " Evaded Successfully")
 	else:
-		print_debug("Evasion FAIL")
+		CombatLog.instance.add_log(owner.ui_name + " Failed Evasion")
 	
 
 

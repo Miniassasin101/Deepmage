@@ -18,7 +18,14 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	Utilities.spawn_text_line(unit, spawn_text, text_color, scale)
 	end_action()
 
+func resolve_reaction() -> void:
+	var cbe: CombatEventData = CombatSystem.instance.current_combat_event_data
 
+	if cbe.is_success:
+		return
+	
+	#cbe.is_hit = false
+	return
 
 
 func end_action() -> void:

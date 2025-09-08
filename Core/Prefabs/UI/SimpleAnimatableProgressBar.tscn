@@ -20,11 +20,11 @@ colors = PackedColorArray(0.485703, 0.485704, 0.485703, 1, 0.4, 0.4, 0.4, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ci46t"]
 gradient = SubResource("Gradient_cydlx")
 
-[sub_resource type="Gradient" id="Gradient_2merk"]
-colors = PackedColorArray(0.774322, 0.559134, 0.910283, 1, 1, 1, 1, 1)
+[sub_resource type="Gradient" id="Gradient_7r0k4"]
+colors = PackedColorArray(0.871628, 0.8099, 0.91, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_hmxcl"]
-gradient = SubResource("Gradient_2merk")
+gradient = SubResource("Gradient_7r0k4")
 
 [node name="SimpleAnimatableProgressBar" type="PanelContainer" node_paths=PackedStringArray("health_bar")]
 mouse_filter = 1

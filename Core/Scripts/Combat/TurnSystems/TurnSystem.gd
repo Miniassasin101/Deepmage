@@ -81,6 +81,8 @@ func start_combat() -> void:
 	
 	advance_group()
 	SignalBus.update_stat_bars.emit()
+	
+	CombatLog.instance.toggle_log()
 
 
 ## Clears any initiative scores before setting up a new initiative. Then sets the units' turn state to in queue

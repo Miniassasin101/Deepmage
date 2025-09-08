@@ -6,7 +6,7 @@ class_name DicePool
 @export var dice_count: int = 1
 
 ## Rolls this number or higher count as successes, ex: Pokerole is 4+ but shadowrun is 5+
-@export var success_threshold: int = 5  # Rolls ≥ this count as “success”
+@export var success_threshold: int = 4  # Rolls ≥ this count as “success”
 
 ## How many die have to come up as successes in order for it to succeed.
 @export var target_successes: int = 0     # How many successes needed

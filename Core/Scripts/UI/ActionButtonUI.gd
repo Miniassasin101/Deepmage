@@ -1,6 +1,10 @@
 class_name ActionButtonUI
 extends Button
 
+
+
+
+
 @export var button_text: Label
 @export var button: Button
 @export var panel: Panel
@@ -35,10 +39,11 @@ func set_action_system_ui(asui: ActionSystemUI) -> void:
 
 
 func set_base_action(_action: Action) -> void:
-	button_text.set_text(_action.action_name)
+	set_button_text(_action.action_name)
 	action = _action
 
-
+func set_button_text(in_text: String = "") -> void:
+	button_text.set_text(in_text)
 
 
 ## This function is to set up an extra action button when a unit has no AP.
@@ -65,7 +70,8 @@ func handle_special_case() -> void:
 		SpecialCase.NONE:
 			#SignalBus.selected_move_changed.emit(move)
 			#EventBus.selected_action_changed.emit(action)
-			action_system_ui.on_action_button_pressed(action)
+			if action_system_ui and action:
+				action_system_ui.on_action_button_pressed(action)
 			pass
 		
 		SpecialCase.GAIT:
@@ -85,6 +91,8 @@ func _on_gui_input(_event: InputEvent) -> void:
 
 func on_right_mouse_clicked() -> void:
 	if !is_hovered():
+		return
+	if !action:
 		return
 	if action.is_action_type("attack"):
 		# Make action/move preview
