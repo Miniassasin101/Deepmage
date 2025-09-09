@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://2h1a1e1r8hc2"]
+[gd_scene load_steps=73 format=3 uid="uid://2h1a1e1r8hc2"]
 
 [ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
 [ext_resource type="Script" uid="uid://byevnkq30m4mb" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.gd" id="1_ohquw"]
@@ -33,11 +33,14 @@
 [ext_resource type="Resource" uid="uid://d2ysyx0gn34ud" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/PassReactionResource.tres" id="23_52ex6"]
 [ext_resource type="Resource" uid="uid://oapobdj11anu" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/StrainAttributeResource.tres" id="23_hq0j0"]
 [ext_resource type="Resource" uid="uid://cuudvrampevcg" path="res://Deepmage/Core/Resources/ActionResources/TestAttackActionResource.tres" id="25_dg5hf"]
-[ext_resource type="Resource" uid="uid://8mq08eqitt0g" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/CapsuleBashPackage.tres" id="25_o850n"]
+[ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="25_ii8da"]
 [ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="26_yq0qj"]
 [ext_resource type="Script" uid="uid://dfqq4lgq8fr27" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="27_yq0qj"]
 [ext_resource type="Script" uid="uid://caggmbav8c0ky" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/AttackAction.gd" id="27_yx6lc"]
+[ext_resource type="Script" uid="uid://beaqcf4hetaxo" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitMomentAnimationEffect.gd" id="28_rlwmm"]
 [ext_resource type="Resource" uid="uid://dikgw5heeo8wu" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/BaseAttributes/MindAttributeResource.tres" id="29_52ex6"]
+[ext_resource type="Script" uid="uid://brutb7o0hj6td" path="res://Deepmage/Core/Scripts/Animation/AnimationPackage.gd" id="29_s84xn"]
+[ext_resource type="Script" uid="uid://bf2hv6d83v6fv" path="res://Deepmage/Core/Resources/DataStructures/AnimationSyncProfile.gd" id="30_kpxsu"]
 [ext_resource type="Resource" uid="uid://bpylci06i7fs" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/PostureAttributeResource.tres" id="34_dg5hf"]
 [ext_resource type="Resource" uid="uid://cnbwyfenycvuj" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/SkillAttributes/MartialAttributeResource.tres" id="35_3f60d"]
 [ext_resource type="Resource" uid="uid://dfqetcr2x2u5u" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/ArmorAttributeResource.tres" id="36_6g8w4"]
@@ -152,7 +155,34 @@ reaction_check_timing = 0.3
 tags = Array[String]([])
 metadata/_custom_type_script = "uid://bjhah2xmsklrq"
 
-[sub_resource type="Resource" id="Resource_2me7b"]
+[sub_resource type="Animation" id="Animation_byeww"]
+resource_name = "CapsuleBash"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Rig:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.491667, 0.608333, 0.633333, 1),
+"transitions": PackedFloat32Array(1, -2, 2, 1, -2),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, -0.821176), Vector3(0, 0, 0.607738), Vector3(0, 0, 0.784142), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Rig:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.491667, 0.608333, 0.633333, 1),
+"transitions": PackedFloat32Array(1, -2, 2, 1, -2),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.381005, 0, 0), Vector3(0.329466, 0, 0), Vector3(0.442701, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Resource" id="Resource_7dtjx"]
 script = ExtResource("26_yq0qj")
 strength = 0.15
 shake_time = 0.4
@@ -160,13 +190,52 @@ shake_frequency = 50
 timing = 0.55
 metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
 
-[sub_resource type="Resource" id="Resource_jfhli"]
+[sub_resource type="Resource" id="Resource_4cqq6"]
+script = ExtResource("27_yq0qj")
+duration = 0.308
+timing = 0.6
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_lv0cn"]
+script = ExtResource("28_rlwmm")
+timing = 0.61
+metadata/_custom_type_script = "uid://beaqcf4hetaxo"
+
+[sub_resource type="Resource" id="Resource_fux2u"]
+script = ExtResource("30_kpxsu")
+markers = Dictionary[String, float]({
+"HIT_END": 0.65,
+"HIT_START": 0.55
+})
+min_time_scale = 0.85
+max_time_scale = 1.15
+metadata/_custom_type_script = "uid://bf2hv6d83v6fv"
+
+[sub_resource type="Resource" id="Resource_30gbb"]
+script = ExtResource("29_s84xn")
+name = "CapsuleBash"
+animation = SubResource("Animation_byeww")
+animation_effects = Array[ExtResource("25_ii8da")]([SubResource("Resource_7dtjx"), SubResource("Resource_4cqq6"), SubResource("Resource_lv0cn")])
+sync_profile = SubResource("Resource_fux2u")
+tags = Array[String]([])
+uses_root_motion = false
+metadata/_custom_type_script = "uid://brutb7o0hj6td"
+
+[sub_resource type="Resource" id="Resource_pcmaa"]
+script = ExtResource("26_yq0qj")
+strength = 0.15
+shake_time = 0.4
+shake_frequency = 50
+timing = 0.55
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_eiy75"]
 script = ExtResource("27_yq0qj")
 duration = 0.349
 timing = 0.6
 metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 
-[sub_resource type="Resource" id="Resource_vavmt"]
+[sub_resource type="Resource" id="Resource_pkdr8"]
 script = ExtResource("26_yq0qj")
 strength = 0.1
 shake_time = 0.3
@@ -174,7 +243,13 @@ shake_frequency = 50
 timing = 0.55
 metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
 
-[sub_resource type="Resource" id="Resource_g1p88"]
+[sub_resource type="Resource" id="Resource_46hdo"]
+script = ExtResource("27_yq0qj")
+duration = 0.349
+timing = 0.6
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_yf7ro"]
 script = ExtResource("26_yq0qj")
 strength = 0.15
 shake_time = 0.4
@@ -182,15 +257,21 @@ shake_frequency = 50
 timing = 0.55
 metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
 
-[sub_resource type="Resource" id="Resource_o850n"]
+[sub_resource type="Resource" id="Resource_d5psw"]
+script = ExtResource("27_yq0qj")
+duration = 0.349
+timing = 0.6
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_bqf7c"]
 script = ExtResource("27_yx6lc")
-animation_package = ExtResource("25_o850n")
-hit_anim_effect = SubResource("Resource_g1p88")
-graze_anim_effect = SubResource("Resource_vavmt")
-block_anim_effect = SubResource("Resource_2me7b")
-hit_stop_effect = SubResource("Resource_jfhli")
-graze_stop_effect = SubResource("Resource_jfhli")
-block_stop_effect = SubResource("Resource_jfhli")
+animation_package = SubResource("Resource_30gbb")
+hit_anim_effect = SubResource("Resource_yf7ro")
+graze_anim_effect = SubResource("Resource_pkdr8")
+block_anim_effect = SubResource("Resource_pcmaa")
+hit_stop_effect = SubResource("Resource_d5psw")
+graze_stop_effect = SubResource("Resource_46hdo")
+block_stop_effect = SubResource("Resource_eiy75")
 attack_range = 20.0
 accuracy_attribute1 = "agility"
 accuracy_attribute2 = "martial"
@@ -198,6 +279,8 @@ damage_attribute = "might"
 base_damage = 3
 desired_react_lead = 0.05
 default_reaction_latency = 0.06
+hit_delay = 1.5
+use_hit_delay = true
 action_name = "Shoot Action"
 selection_types = Array[ExtResource("9_t3ejk")]([ExtResource("12_aemtr")])
 reaction_check_timing = 0.3
@@ -291,7 +374,7 @@ attributes_container = NodePath("AttributesContainer")
 [node name="ActionContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
 script = ExtResource("5_t2svf")
 unit = NodePath("../..")
-actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("15_sne6a"), ExtResource("16_pksos"), ExtResource("25_dg5hf"), ExtResource("21_sn2o0"), ExtResource("21_t7uvv"), ExtResource("22_0xpoi"), ExtResource("23_52ex6"), SubResource("Resource_o850n")])
+actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("15_sne6a"), ExtResource("16_pksos"), ExtResource("25_dg5hf"), ExtResource("21_sn2o0"), ExtResource("21_t7uvv"), ExtResource("22_0xpoi"), ExtResource("23_52ex6"), SubResource("Resource_bqf7c")])
 
 [node name="AttributesContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
 script = ExtResource("15_jswbx")

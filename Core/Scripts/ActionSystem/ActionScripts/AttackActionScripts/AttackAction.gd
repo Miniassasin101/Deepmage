@@ -38,6 +38,9 @@ extends Action
 @export var desired_react_lead: float = 0.05      # reaction center happens slightly before hit center
 @export var default_reaction_latency: float = 0.06 # reaction input → start
 
+@export var hit_delay: float = 3.0
+@export var use_hit_delay: bool = false
+
 # Cached helper action reference
 var move_to_action: MoveToUnitAction = null
 
@@ -136,6 +139,12 @@ func modify_shake_and_hitstop() -> void:
 	var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
 	var is_hit: bool = cd.is_hit
 	var is_graze: bool = cd.is_graze
+	
+	animation_package.instanced_animation_effects.clear()
+	
+	for event in animation_package.get_anim_effects():
+		animation_package.instanced_animation_effects.append(event.duplicate())
+	
 	_modify_camera_shake_effect(is_hit, is_graze, cd.effective_damage)
 	_modify_hit_stop(is_hit, is_graze, cd.effective_damage)
 
@@ -150,7 +159,7 @@ func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
 
 	# Prefer: wait for HitMomentAnimationEffect fired by the attack animation
 	var used_signal := false
-	if ctrl != null:
+	if ctrl != null and !use_hit_delay:
 
 		await ctrl.effects_controller.on_hit_moment
 		#print_debug("Signal Recieved")
@@ -163,7 +172,12 @@ func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
 		var attack_delay: float = sync.get("attack_delay", -1.0)
 		var hit_center: float = sync.get("attack_center", -1.0)
 		if hit_center == -1.0 or attack_delay == -1.0:
+			push_error("Invalid Hit Center Or Attack Delay (Animation Sync Error)")
 			return
+		
+		if use_hit_delay:
+			attack_delay += hit_delay
+		
 		await owner.get_tree().create_timer(max(0.0, attack_delay + hit_center)).timeout
 		do_resolve()
 
@@ -252,6 +266,11 @@ func _play_reaction_with_delay(reaction_anim_pack: AnimationPackage, sync: Dicti
 
 	var delay: float = sync.get("reaction_delay", 0.0) as float
 	var scale: float = sync.get("reaction_scale", 1.0) as float
+	
+	push_warning("unterminated test in base attack action")
+	delay += hit_delay
+	
+	
 	if anim_contr.has_method("play_package_timed"):
 		anim_contr.play_package_timed(reaction_anim_pack, max(0.0, delay), max(0.01, scale))
 		return
@@ -271,7 +290,7 @@ func _play_reaction_with_delay(reaction_anim_pack: AnimationPackage, sync: Dicti
 ## Chooses camera shake parameters based on outcome (miss/graze/block/hit) and enables/disables effect.
 func _modify_camera_shake_effect(is_hit: bool, is_graze: bool, effective_damage: int) -> void:
 	var effect: CameraShakeAnimationEffect = null
-	var effects: Array[AnimationEffect] = animation_package.get_anim_effects()
+	var effects: Array[AnimationEffect] = animation_package.get_instanced_animation_effects()
 	for e in effects:
 		if e is CameraShakeAnimationEffect:
 			effect = e
@@ -292,11 +311,16 @@ func _modify_camera_shake_effect(is_hit: bool, is_graze: bool, effective_damage:
 			effect.shake_frequency = hit_anim_effect.shake_frequency
 			effect.shake_time = hit_anim_effect.shake_time
 			effect.strength = hit_anim_effect.strength
+		
+		if use_hit_delay:
+			effect.timing += hit_delay
+	
+
 
 ## Chooses hit-stop duration based on outcome (miss/graze/block/hit) and enables/disables effect.
 func _modify_hit_stop(is_hit: bool, is_graze: bool, effective_damage: int) -> void:
 	var effect: HitstopAnimationEffect = null
-	var effects: Array[AnimationEffect] = animation_package.get_anim_effects()
+	var effects: Array[AnimationEffect] = animation_package.get_instanced_animation_effects()
 	for e in effects:
 		if e is HitstopAnimationEffect:
 			effect = e
@@ -311,6 +335,13 @@ func _modify_hit_stop(is_hit: bool, is_graze: bool, effective_damage: int) -> vo
 			effect.duration = block_stop_effect.duration
 		else:
 			effect.duration = hit_stop_effect.duration
+		
+		push_warning("Unterminated test")
+		if use_hit_delay:
+			CombatLog.instance.add_log("Effect Timing: " + str(effect.timing))
+			effect.timing += hit_delay
+
+
 
 ## Spawns a small text label over the owner with this action’s name (UI feedback).
 func spawn_action_name_text() -> void:
@@ -401,6 +432,10 @@ static func _compute_sync(atk_window: Vector2, react_window: Vector2, peak_time:
 	var hit_len := maxf(0.001, atk_window.y - atk_window.x)
 	var react_len := maxf(0.001, react_window.y - react_window.x)
 	var reaction_scale := clampf(hit_len / react_len, scale_range.x, scale_range.y)
+	
+	# Testing Purposes
+	
+	
 
 	return {
 		"attack_delay": attack_delay,

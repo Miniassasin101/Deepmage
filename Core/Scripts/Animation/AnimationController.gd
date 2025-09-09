@@ -77,7 +77,7 @@ func play_package_timed(pack: AnimationPackage, delay: float = 0.0, speed_scale:
 
 @rpc("call_local")
 func _start_after_delay(pack: AnimationPackage, delay: float) -> void:
-	await get_tree().create_timer(max(0.0, delay)).timeout
+	await get_tree().create_timer(maxf(0.0, delay)).timeout
 	set_timescales(_override_speed)
 	play_package(pack)
 
@@ -110,15 +110,21 @@ func _on_anim_finished(anim_name: StringName) -> void:
 	if matches:
 		# stop events player too
 		if event_animator and event_animator.is_playing():
-			event_animator.stop()
+			#event_animator.stop()
+			pass
 		animator.speed_scale = _restore_speed_on_finish
 		animation_finished.emit(current_animation)
+	
+	if event_animator and event_animator.is_playing():
+		await event_animator.animation_finished
 	
 	if event_library:
 		for anim in event_library.get_animation_list():
 			event_library.remove_animation(anim)
 	
 	is_resolving = false
+	
+	animation_finished.emit()
 
 # Called by method keys on the events animation
 func _on_event_key(effect: AnimationEffect) -> void:
@@ -136,22 +142,26 @@ func _play_events_for_package(pack: AnimationPackage) -> void:
 
 	# keep players in lock-step
 	event_animator.speed_scale = animator.speed_scale
-	if event_animator.has_animation(ev_name):
-		pass
+
 	event_animator.play(ev_name)
 	# update immediately so first key at t=0 fires if present
 	event_animator.advance(0)
+	
+	await event_animator.animation_finished
+
 
 func _ensure_events_animation(pack: AnimationPackage) -> StringName:
 	var ename := StringName(pack.get_anim_name() + "__events")
 
 	# already present in player?
 	if event_animator.has_animation(ename):
-		return ename
+		#return ename
+		pass
 	# built and cached but not yet registered?
 	if _event_anim_cache.has(ename):
-		_register_events_anim(ename, _event_anim_cache[ename])
-		return ename
+		#_register_events_anim(ename, _event_anim_cache[ename])
+		#return ename
+		pass
 
 	# Build fresh
 	var anim := Animation.new()
@@ -160,12 +170,12 @@ func _ensure_events_animation(pack: AnimationPackage) -> StringName:
 	# Length: at least main length or last effect + small pad
 	var main_len := pack.animation.length
 	var last_fx := _last_effect_time(pack)
-	anim.length = max(main_len, last_fx + 0.01)
+	anim.length = maxf(main_len, last_fx + 0.01)
 
 	# 1) Method track that calls back into this controller
 	var track := anim.add_track(Animation.TYPE_METHOD)
 	anim.track_set_path(track, NodePath("."))  # "." resolves to AnimationController (event_animator's root_node parent)
-	for fx in pack.get_anim_effects():
+	for fx in pack.get_instanced_animation_effects():
 		var method_details: Dictionary = {
 			"method": "_on_event_key",
 			"args": [fx]
@@ -190,10 +200,16 @@ func _ensure_events_animation(pack: AnimationPackage) -> StringName:
 func _register_events_anim(in_name: StringName, anim: Animation) -> void:
 	# Ensure default library exists and add the animation there
 	var lib: AnimationLibrary = null#event_animator.get_animation_library("default")
+	for library in event_animator.get_animation_library_list():
+		event_animator.remove_animation_library(library)
+
+
 	if !event_animator.has_animation_library(""):
 		lib = AnimationLibrary.new()
 		event_animator.add_animation_library("", lib)
 		event_library = lib
+
+		pass
 	else:
 		lib = event_library
 	lib.add_animation(in_name, anim)
@@ -201,10 +217,13 @@ func _register_events_anim(in_name: StringName, anim: Animation) -> void:
 
 func _last_effect_time(pack: AnimationPackage) -> float:
 	var t := 0.0
-	for fx in pack.get_anim_effects():
+	for fx in pack.get_instanced_animation_effects():
 		if fx.timing > t:
 			t = fx.timing
-	return t
+	
+	var grace_amount: float = 0.01
+	
+	return t + grace_amount
 
 # Optional helper to build "library/anim" or just "anim" when library == ""
 func _libpath(anim_name: String) -> String:

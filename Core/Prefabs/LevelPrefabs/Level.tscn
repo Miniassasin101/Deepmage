@@ -505,6 +505,7 @@ mouse_controller = NodePath("../../MouseController")
 pathfinding = NodePath("../../PathfindingSystem")
 
 [node name="CombatLog" parent="UILayer" instance=ExtResource("27_2gnov")]
+max_logs = 15
 
 [connection signal="pressed" from="UILayer/TurnSystemUI/EndTurnContainer/MarginContainer/EndTurnButton" to="UILayer/TurnSystemUI" method="_on_end_turn_button_pressed"]
 

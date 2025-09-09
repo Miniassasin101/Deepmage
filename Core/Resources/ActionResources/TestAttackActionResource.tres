@@ -65,6 +65,7 @@ damage_attribute = "might"
 base_damage = 3
 desired_react_lead = 0.05
 default_reaction_latency = 0.06
+hit_delay = 3.0
 action_name = "Test Bash"
 selection_types = Array[ExtResource("2_jhkta")]([ExtResource("6_2me7b")])
 reaction_check_timing = 0.3

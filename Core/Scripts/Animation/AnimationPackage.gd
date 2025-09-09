@@ -12,6 +12,8 @@ extends Resource
 @export var tags: Array[String] = []   # optional (e.g., ["melee","right_to_left"])
 @export var uses_root_motion: bool = false
 
+var instanced_animation_effects: Array[AnimationEffect] = []
+
 
 func get_anim_name() -> StringName:
 	if animation:
@@ -21,6 +23,9 @@ func get_anim_name() -> StringName:
 
 func get_anim_effects() -> Array[AnimationEffect]:
 	return animation_effects
+
+func get_instanced_animation_effects() -> Array[AnimationEffect]:
+	return instanced_animation_effects
 
 
 # AnimationPackage.gd (helpers used by sync)
