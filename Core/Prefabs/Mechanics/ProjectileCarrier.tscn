@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://df1kudjdmyk6"]
+
+[ext_resource type="Script" uid="uid://04uyrep1nvc6" path="res://Deepmage/Core/Prefabs/Mechanics/ProjectileCarrier.gd" id="1_ocaf4"]
+
+[node name="ProjectileCarrier" type="Node3D"]
+script = ExtResource("1_ocaf4")

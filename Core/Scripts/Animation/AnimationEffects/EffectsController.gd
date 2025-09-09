@@ -3,6 +3,8 @@ extends Node
 
 signal on_hit_moment
 
+signal effect_tag(tag: String)
+
 @export var unit: Unit
 @export var animation_controller: AnimationController
 

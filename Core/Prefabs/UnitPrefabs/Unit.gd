@@ -33,6 +33,9 @@ enum TurnState {
 @export var is_enemy: bool = false
 @export var visor_color: Color = Color.ALICE_BLUE
 
+@export_category("Visual Modifiers")
+@export var white_hit_flash_mat: StandardMaterial3D
+@export var hit_flash_time: float = 0.3
 
 #@export_group("Movement Parameters")
 #@export var movement_speed: float = 2.0
@@ -71,8 +74,22 @@ func set_movement_target(movement_target: Vector3):
 	nav_agent.set_target_position(movement_target)
 	
 
-	pass
+func flash_white(flash_time: float = hit_flash_time) -> void:
+	var unit_meshes: Array[MeshInstance3D] = get_all_unit_meshes()
+	var saved_mat_overrides: Array[StandardMaterial3D] = []
+	for mesh in unit_meshes:
+		saved_mat_overrides.append(mesh.get_material_override())
+		mesh.set_material_override(white_hit_flash_mat)
 
+	await get_tree().create_timer(flash_time).timeout
+
+	for mesh in unit_meshes:
+		mesh.set_material_override(saved_mat_overrides.pop_front())
+
+
+
+func get_all_unit_meshes() -> Array[MeshInstance3D]:
+	return [capsule_body, capsule_visor]
 
 
 func get_world_position_above_marker() -> Vector3:

@@ -268,7 +268,8 @@ func _play_reaction_with_delay(reaction_anim_pack: AnimationPackage, sync: Dicti
 	var scale: float = sync.get("reaction_scale", 1.0) as float
 	
 	push_warning("unterminated test in base attack action")
-	delay += hit_delay
+	if use_hit_delay:
+		delay += hit_delay
 	
 	
 	if anim_contr.has_method("play_package_timed"):
@@ -298,9 +299,10 @@ func _modify_camera_shake_effect(is_hit: bool, is_graze: bool, effective_damage:
 		effect.is_disabled = false
 		if !is_hit:
 			if is_graze:
-				effect.shake_frequency = graze_anim_effect.shake_frequency
-				effect.shake_time = graze_anim_effect.shake_time
-				effect.strength = graze_anim_effect.strength
+				#effect.shake_frequency = graze_anim_effect.shake_frequency
+				#effect.shake_time = graze_anim_effect.shake_time
+				#effect.strength = graze_anim_effect.strength
+				effect.is_disabled = true
 			else:
 				effect.is_disabled = true
 		elif effective_damage == 0:

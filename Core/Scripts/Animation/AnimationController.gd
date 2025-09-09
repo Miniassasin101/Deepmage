@@ -230,9 +230,13 @@ func _libpath(anim_name: String) -> String:
 	return anim_name if current_library == "" else current_library + "/" + anim_name
 
 
-func play_hit_reaction() -> void:
+func play_hit_reaction(flash_white: bool = true) -> void:
 	if !hit_reaction_anim:
 		return
+	
 	var h_r_name: StringName = hit_reaction_anim.resource_name
 	
+	if flash_white:
+		unit.flash_white()
+		
 	await play_animation_by_name(h_r_name)
