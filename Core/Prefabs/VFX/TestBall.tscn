@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://kybquhg07l5i"]
+
+[ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_mfied"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_wolyt"]
+
+[node name="TestBall" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+mesh = SubResource("SphereMesh_wolyt")
+surface_material_override/0 = ExtResource("1_mfied")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://2h1a1e1r8hc2"]
+[gd_scene load_steps=75 format=3 uid="uid://2h1a1e1r8hc2"]
 
 [ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
 [ext_resource type="Script" uid="uid://byevnkq30m4mb" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.gd" id="1_ohquw"]
@@ -42,6 +42,7 @@
 [ext_resource type="Resource" uid="uid://dikgw5heeo8wu" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/BaseAttributes/MindAttributeResource.tres" id="29_52ex6"]
 [ext_resource type="Script" uid="uid://brutb7o0hj6td" path="res://Deepmage/Core/Scripts/Animation/AnimationPackage.gd" id="29_s84xn"]
 [ext_resource type="Script" uid="uid://bf2hv6d83v6fv" path="res://Deepmage/Core/Resources/DataStructures/AnimationSyncProfile.gd" id="30_kpxsu"]
+[ext_resource type="Resource" uid="uid://dci1vghxdl7pd" path="res://Deepmage/Core/Resources/ActionResources/TestRangedAttackActionResource.tres" id="33_s84xn"]
 [ext_resource type="Resource" uid="uid://bpylci06i7fs" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/PostureAttributeResource.tres" id="34_dg5hf"]
 [ext_resource type="Resource" uid="uid://cnbwyfenycvuj" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/SkillAttributes/MartialAttributeResource.tres" id="35_3f60d"]
 [ext_resource type="Resource" uid="uid://dfqetcr2x2u5u" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/ArmorAttributeResource.tres" id="36_6g8w4"]
@@ -377,7 +378,7 @@ attributes_container = NodePath("AttributesContainer")
 [node name="ActionContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
 script = ExtResource("5_t2svf")
 unit = NodePath("../..")
-actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("15_sne6a"), ExtResource("16_pksos"), ExtResource("25_dg5hf"), ExtResource("21_sn2o0"), ExtResource("21_t7uvv"), ExtResource("22_0xpoi"), ExtResource("23_52ex6"), SubResource("Resource_bqf7c")])
+actions = Array[ExtResource("6_mhrm2")]([SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("15_sne6a"), ExtResource("16_pksos"), ExtResource("25_dg5hf"), ExtResource("21_sn2o0"), ExtResource("21_t7uvv"), ExtResource("22_0xpoi"), ExtResource("23_52ex6"), SubResource("Resource_bqf7c"), ExtResource("33_s84xn")])
 
 [node name="AttributesContainer" type="Node" parent="CharacterSheet" node_paths=PackedStringArray("unit")]
 script = ExtResource("15_jswbx")

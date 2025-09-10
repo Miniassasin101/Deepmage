@@ -1,0 +1,49 @@
+[gd_resource type="Resource" script_class="AnimationPackage" load_steps=12 format=3 uid="uid://uwibxof05smc"]
+
+[ext_resource type="Animation" uid="uid://dpvv676nx31dy" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/Throw.res" id="1_kw84v"]
+[ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="1_skvam"]
+[ext_resource type="Script" uid="uid://brutb7o0hj6td" path="res://Deepmage/Core/Scripts/Animation/AnimationPackage.gd" id="2_13qgx"]
+[ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="3_h8djc"]
+[ext_resource type="Script" uid="uid://dfqq4lgq8fr27" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="4_m1mbx"]
+[ext_resource type="Script" uid="uid://beaqcf4hetaxo" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitMomentAnimationEffect.gd" id="5_pox3h"]
+[ext_resource type="Script" uid="uid://bf2hv6d83v6fv" path="res://Deepmage/Core/Resources/DataStructures/AnimationSyncProfile.gd" id="7_c6br4"]
+
+[sub_resource type="Resource" id="Resource_h8djc"]
+script = ExtResource("3_h8djc")
+strength = 0.15
+shake_time = 0.4
+shake_frequency = 50
+timing = 1.34
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_m1mbx"]
+script = ExtResource("4_m1mbx")
+duration = 0.308
+timing = 1.36
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_pox3h"]
+script = ExtResource("5_pox3h")
+timing = 1.35
+metadata/_custom_type_script = "uid://beaqcf4hetaxo"
+
+[sub_resource type="Resource" id="Resource_c6br4"]
+script = ExtResource("7_c6br4")
+markers = Dictionary[String, float]({
+"HIT_END": 1.4,
+"HIT_START": 1.3,
+"RELEASE": 1.4
+})
+min_time_scale = 0.85
+max_time_scale = 1.15
+metadata/_custom_type_script = "uid://bf2hv6d83v6fv"
+
+[resource]
+script = ExtResource("2_13qgx")
+name = "BallThrow"
+animation = ExtResource("1_kw84v")
+animation_effects = Array[ExtResource("1_skvam")]([SubResource("Resource_h8djc"), SubResource("Resource_m1mbx"), SubResource("Resource_pox3h")])
+sync_profile = SubResource("Resource_c6br4")
+tags = Array[String]([])
+uses_root_motion = false
+metadata/_custom_type_script = "uid://brutb7o0hj6td"

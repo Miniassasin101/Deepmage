@@ -1,9 +1,10 @@
-[gd_scene load_steps=40 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=42 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
 [ext_resource type="Script" uid="uid://d00flrde4n8v4" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugConsoleController.gd" id="2_swo3b"]
 [ext_resource type="Environment" uid="uid://c7cx2thxig2w6" path="res://Deepmage/Core/Resources/Environment/Lighting/TestEnvironment1.tres" id="3_gh8or"]
+[ext_resource type="Script" uid="uid://csywy3ienecb4" path="res://Deepmage/Core/Prefabs/LevelPrefabs/ProjectileConsole.gd" id="3_s0dbn"]
 [ext_resource type="PackedScene" uid="uid://du3efvmcdx31a" path="res://Deepmage/Core/Prefabs/Cameras/Camera.tscn" id="3_wbgr3"]
 [ext_resource type="PackedScene" uid="uid://bauq6rq7jnnvw" path="res://Deepmage/Core/Prefabs/InteractionPrefabs/MouseController.tscn" id="4_avqdt"]
 [ext_resource type="Script" uid="uid://dsmekjbchblby" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UILayer.gd" id="5_jtghi"]
@@ -21,6 +22,7 @@
 [ext_resource type="Script" uid="uid://hbm8nks1et3p" path="res://Deepmage/Core/Scripts/UI/TurnSystemUI.gd" id="15_ex7fh"]
 [ext_resource type="Script" uid="uid://cby42fxiu4cv5" path="res://Deepmage/Core/Scripts/UI/ActionSystemUI.gd" id="15_j7436"]
 [ext_resource type="Script" uid="uid://dyngi1ipggvgb" path="res://Deepmage/Core/Scripts/UI/InitiativeQueueUI.gd" id="16_2uyvs"]
+[ext_resource type="Script" uid="uid://cc6pcq4yohj7m" path="res://Deepmage/Core/Scripts/Projectile/PathBuilder3D.gd" id="16_dfmjn"]
 [ext_resource type="PackedScene" uid="uid://3p3xt0lymqsd" path="res://Deepmage/Core/Prefabs/UI/UnitStatsBar.tscn" id="16_ecsph"]
 [ext_resource type="Script" uid="uid://cjhhvf5ub04kj" path="res://Deepmage/Core/Prefabs/UI/FPSLabel.gd" id="16_ex7fh"]
 [ext_resource type="PackedScene" uid="uid://psdfsrnutgxe" path="res://Deepmage/Core/Prefabs/UI/ActionButtonUI.tscn" id="16_tko1n"]
@@ -119,6 +121,9 @@ script = ExtResource("1_uoqcs")
 
 [node name="DebugConsoleController" type="Node" parent="."]
 script = ExtResource("2_swo3b")
+
+[node name="ProjectileConsole" type="Node" parent="DebugConsoleController"]
+script = ExtResource("3_s0dbn")
 
 [node name="Environment" type="Node3D" parent="."]
 
@@ -279,6 +284,10 @@ script = ExtResource("13_wbm0i")
 radius_profile = ExtResource("14_calw8")
 material = SubResource("StandardMaterial3D_gh8or")
 metadata/_custom_type_script = "uid://ian5eam30p0l"
+
+[node name="PathBuilder3D" type="Node" parent="PathfindingSystem"]
+script = ExtResource("16_dfmjn")
+metadata/_custom_type_script = "uid://cc6pcq4yohj7m"
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 script = ExtResource("5_jtghi")
