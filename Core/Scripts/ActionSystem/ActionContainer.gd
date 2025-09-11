@@ -10,7 +10,8 @@ extends Node
 var last_used_action: Action = null
 
 func _ready() -> void:
-	make_actions_unique()
+	make_actions_unique.call_deferred()
+	#make_actions_unique()
 
 ## Called once at start to make sure actions are all unique so changing one on this unit wont affect another.
 func make_actions_unique() -> void:

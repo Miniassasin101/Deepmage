@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=43 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://dsmekjbchblby" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UILayer.gd" id="5_jtghi"]
 [ext_resource type="PackedScene" uid="uid://bf575s2vrxvov" path="res://Deepmage/Core/Prefabs/UI/TextController.tscn" id="9_ccwc0"]
 [ext_resource type="Script" uid="uid://brupu7akvtuia" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UnitActionSystem.gd" id="9_lf0eb"]
+[ext_resource type="PackedScene" uid="uid://14nkak1a1qkg" path="res://Deepmage/Core/Prefabs/Mechanics/CharacterSheet.tscn" id="9_srkvl"]
 [ext_resource type="Script" uid="uid://b3vsba7uy6t7o" path="res://Deepmage/Core/Scripts/Combat/TurnSystems/TurnSystem.gd" id="10_k2c3k"]
 [ext_resource type="PackedScene" uid="uid://8oord2o1icck" path="res://Deepmage/Core/Prefabs/UI/CharacterLogQueue.tscn" id="10_lf0eb"]
 [ext_resource type="Script" uid="uid://brh8qmh2c4g8f" path="res://Deepmage/Core/Scripts/Combat/CombatSystem/CombatSystem.gd" id="11_g7q3m"]
@@ -242,15 +243,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
 ui_name = "Ruby"
 visor_color = Color(0.73, 0.2993, 0.306478, 1)
 
+[node name="CharacterSheet" parent="UnitManager/Unit" instance=ExtResource("9_srkvl")]
+
 [node name="Unit2" parent="UnitManager" instance=ExtResource("12_k2c3k")]
 ui_name = "Azure"
 is_enemy = true
 visor_color = Color(0.3818, 0.62831, 0.83, 1)
 
+[node name="CharacterSheet" parent="UnitManager/Unit2" instance=ExtResource("9_srkvl")]
+
 [node name="Unit3" parent="UnitManager" instance=ExtResource("12_k2c3k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.68029)
 ui_name = "Marigold"
 visor_color = Color(0.8832, 0.9, 0.396, 1)
+
+[node name="CharacterSheet" parent="UnitManager/Unit3" instance=ExtResource("9_srkvl")]
 
 [node name="MouseController" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_avqdt")]
 camera = NodePath("../Camera/CamOrigin/SpringArm3D/fCamera")
@@ -518,4 +525,5 @@ max_logs = 15
 
 [connection signal="pressed" from="UILayer/TurnSystemUI/EndTurnContainer/MarginContainer/EndTurnButton" to="UILayer/TurnSystemUI" method="_on_end_turn_button_pressed"]
 
+[editable path="UnitManager/Unit/CharacterSheet"]
 [editable path="MouseController"]

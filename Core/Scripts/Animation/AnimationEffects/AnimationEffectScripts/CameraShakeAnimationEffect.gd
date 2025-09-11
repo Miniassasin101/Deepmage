@@ -8,8 +8,8 @@ extends AnimationEffect
 
 var is_disabled: bool = false
 
-func play_effect(owner: Unit = null) -> void:
-	if !owner or is_disabled:
+func play_effect(unit: Unit = null) -> void:
+	if !unit or is_disabled:
 		return
 	
 	CameraShake.instance.shake(strength, shake_time, shake_frequency)

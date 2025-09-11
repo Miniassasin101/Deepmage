@@ -25,3 +25,10 @@ transform = Transform3D(1, 5.96046e-08, 5.96046e-08, -2.47364e-08, 1, -4.76837e-
 [node name="CameraShake" type="Node" parent="."]
 script = ExtResource("2_hxpu6")
 camera_path = NodePath("../CamOrigin/SpringArm3D/fCamera")
+use_debug_prints = null
+min_strength = null
+min_duration = null
+min_frequency = null
+max_strength = null
+max_duration = null
+max_frequency = null

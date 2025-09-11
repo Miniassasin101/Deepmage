@@ -33,7 +33,7 @@ func resolve_reaction() -> void:
 	var cbd: CombatEventData = CombatSystem.instance.current_combat_event_data
 	if cbd.is_success:
 		print_debug("Block Failed")
-		CombatLog.instance.add_log(owner.ui_name + " Block Failed")
+		CombatLog.instance.add_log(unit.ui_name + " Block Failed")
 		return
 	
 	var block_value: int = 0
@@ -45,12 +45,12 @@ func resolve_reaction() -> void:
 	
 	cbd.defense_bonus = block_value
 	
-	CombatLog.instance.add_log(owner.ui_name + " Blocked " + str(block_value))
+	CombatLog.instance.add_log(unit.ui_name + " Blocked " + str(block_value))
 	
 	
 	
 	print_debug("Blocked " + str(block_value))
-#	Utilities.spawn_text_line(owner, "Blocked " + str(block_value), text_color, scale)
+#	Utilities.spawn_text_line(unit, "Blocked " + str(block_value), text_color, scale)
 	
 
 
@@ -61,15 +61,15 @@ func end_action() -> void:
 func rotate_towards_target(target: Unit) -> void:
 	var target_pos := target.get_global_position()
 
-	owner.movement_controller.rotate_unit_towards_target_position(
+	unit.movement_controller.rotate_unit_towards_target_position(
 		target_pos,
 		4.0,                         # rotation speed
 		pre_rotation_margin_override # your early-start margin
 	)
-	await owner.movement_controller.rotation_precomplete
+	await unit.movement_controller.rotation_precomplete
 
 func on_impact() -> void:
-	Utilities.spawn_text_line(owner, "Blocked", text_color, scale)
+	Utilities.spawn_text_line(unit, "Blocked", text_color, scale)
 
 
 func can_activate() -> bool:

@@ -37,13 +37,13 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 func _begin_movement(to_pos: Vector3) -> void:
 
 	#	return
-	var path_pack: PathPackage = PathfindingSystem.instance.get_path_package(to_pos as Vector3, action_container.unit, true)
+	var path_pack: PathPackage = PathfindingSystem.instance.get_path_package(to_pos as Vector3, unit, true)
 	movement_curve = path_pack.get_curve_3d_from_path()
 	curve_length    = movement_curve.get_baked_length()
 	
 	
 	# 2) make movement along curve request
-	var move_controller: MovementController = action_container.unit.movement_controller
+	var move_controller: MovementController = unit.movement_controller
 	move_controller.animate_movement_along_curve(
 		move_speed, movement_curve, curve_length, acceleration_timer, rotation_acceleration_timer, stopping_distance, rotate_speed)
 	
@@ -57,7 +57,7 @@ func _begin_movement(to_pos: Vector3) -> void:
 func _end_movement() -> void:
 	# Loop until move_along_curve_process flips is_moving to false
 	var rounded_curve_length: float = snappedf(curve_length, 0.01)
-	Utilities.spawn_text_line(action_container.unit, "Moved: " + str(rounded_curve_length), Color.ALICE_BLUE)
+	Utilities.spawn_text_line(unit, "Moved: " + str(rounded_curve_length), Color.ALICE_BLUE)
 	
 	
 	
@@ -91,7 +91,7 @@ func _is_too_close_to_any_unit(target_pos: Vector3) -> bool:
 	# Grab every unit in the world
 	for other in UnitManager.instance.get_all_units():
 		# skip ourselves
-		if other == action_container.unit:
+		if other == unit:
 			continue
 		# compare distance
 		if other.global_transform.origin.distance_to(target_pos) < unit_avoid_radius:

@@ -14,7 +14,6 @@ extends Reaction
 
 func start_action(targ_pack: TargetPackage = null) -> void:
 	super.start_action(targ_pack)
-	var unit: Unit = action_container.unit
 	Utilities.spawn_text_line(unit, spawn_text, text_color, scale)
 	end_action()
 

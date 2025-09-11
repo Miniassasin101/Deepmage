@@ -17,7 +17,6 @@ extends Reaction
 
 func start_action(targ_pack: TargetPackage = null) -> void:
 	super.start_action(targ_pack)
-	#var unit: Unit = action_container.unit
 	#Utilities.spawn_text_line(unit, spawn_text, text_color)
 	
 	var attacking_unit: Unit = CombatSystem.instance.current_combat_event_data.attacker
@@ -50,9 +49,9 @@ func resolve_reaction() -> void:
 	if !cbevent.is_success:
 		cbevent.is_hit = false
 		print_debug("Evasion SUCCESS")
-		CombatLog.instance.add_log(owner.ui_name + " Evaded Successfully")
+		CombatLog.instance.add_log(unit.ui_name + " Evaded Successfully")
 	else:
-		CombatLog.instance.add_log(owner.ui_name + " Failed Evasion")
+		CombatLog.instance.add_log(unit.ui_name + " Failed Evasion")
 	
 
 
@@ -68,9 +67,9 @@ func can_activate() -> bool:
 func rotate_towards_target(target: Unit) -> void:
 	var target_pos := target.get_global_position()
 
-	owner.movement_controller.rotate_unit_towards_target_position(
+	unit.movement_controller.rotate_unit_towards_target_position(
 		target_pos,
 		4.0,                         # rotation speed
 		pre_rotation_margin_override # your early-start margin
 	)
-	await owner.movement_controller.rotation_precomplete
+	await unit.movement_controller.rotation_precomplete

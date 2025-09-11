@@ -90,8 +90,8 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	# NOTE: Make sure event timings dont perfectly overlap: Causes animation event override for earlier ones.
 
 	# 9) End once the attack animation completes
-	if owner.animation_controller.is_resolving:
-		await owner.animation_controller.animation_finished
+	if unit.animation_controller.is_resolving:
+		await unit.animation_controller.animation_finished
 
 	end_action()
 
@@ -100,9 +100,9 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 # Helpers: Movement / Rotation / Declaration
 # =========================
 
-## Moves the owner into attack range of the target unit if needed.
+## Moves the unit into attack range of the target unit if needed.
 func move_to_target_unit(targ_unit: Unit) -> void:
-	if get_distance_to_owner(targ_unit) <= attack_range:
+	if get_distance_to_unit(targ_unit) <= attack_range:
 		return
 	action_container.use_action(get_move_to_action(), targ_unit)
 	await SignalBus.on_action_ended
@@ -111,17 +111,17 @@ func move_to_target_unit(targ_unit: Unit) -> void:
 
 ## Declares the attack to the combat system (prompts for defender reactions & runs hit tests).
 func declare_attack(target_unit: Unit) -> void:
-	await CombatSystem.instance.declare_attack(self, owner, target_unit)
+	await CombatSystem.instance.declare_attack(self, unit, target_unit)
 
-## Rotates the owner to face the target position, then waits for pre-rotation completion.
+## Rotates the unit to face the target position, then waits for pre-rotation completion.
 func rotate_towards_target(target: Unit) -> void:
 	var target_pos := target.get_global_position()
-	owner.movement_controller.rotate_unit_towards_target_position(
+	unit.movement_controller.rotate_unit_towards_target_position(
 		target_pos,
 		4.0,                         # rotation speed
 		pre_rotation_margin_override # early-start margin
 	)
-	await owner.movement_controller.rotation_precomplete
+	await unit.movement_controller.rotation_precomplete
 
 ## Retrieves the reaction animation package from the chosen reaction, if any.
 func get_reaction_anim_pack() -> AnimationPackage:
@@ -155,7 +155,7 @@ func modify_shake_and_hitstop() -> void:
 
 ## Resolves rules/effects at the correct hit moment: prefer signal from animation, otherwise uses a timer fallback.
 func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
-	var ctrl := owner.animation_controller
+	var ctrl := unit.animation_controller
 
 	# Prefer: wait for HitMomentAnimationEffect fired by the attack animation
 	var used_signal := false
@@ -178,7 +178,7 @@ func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
 		if use_hit_delay:
 			attack_delay += hit_delay
 		
-		await owner.get_tree().create_timer(max(0.0, attack_delay + hit_center)).timeout
+		await unit.get_tree().create_timer(max(0.0, attack_delay + hit_center)).timeout
 		do_resolve()
 
 ## Applies the combat result to the defender (miss/graze text, damage, and hit reaction + damage label).
@@ -239,17 +239,17 @@ func get_animation_sync(reaction_anim_pack: AnimationPackage) -> Dictionary:
 
 ## Plays the attack animation package after a computed delay (or immediately if supported method absent).
 func _play_attack_with_delay(pack: AnimationPackage, sync: Dictionary) -> void:
-	if owner.animation_controller == null:
+	if unit.animation_controller == null:
 		return
 
 	var attack_delay_val: float = sync.get("attack_delay", 0.0) as float
 
-	if owner.animation_controller.has_method("play_package_timed"):
-		owner.animation_controller.play_package_timed(pack, max(0.0, attack_delay_val), 1.0)
+	if unit.animation_controller.has_method("play_package_timed"):
+		unit.animation_controller.play_package_timed(pack, max(0.0, attack_delay_val), 1.0)
 		return
 
-	await owner.get_tree().create_timer(max(0.0, attack_delay_val)).timeout
-	owner.animation_controller.play_package(pack)
+	await unit.get_tree().create_timer(max(0.0, attack_delay_val)).timeout
+	unit.animation_controller.play_package(pack)
 
 ## Plays the defender’s reaction animation (if applicable) with delay/scale from sync data.
 func _play_reaction_with_delay(reaction_anim_pack: AnimationPackage, sync: Dictionary) -> void:
@@ -345,9 +345,9 @@ func _modify_hit_stop(is_hit: bool, is_graze: bool, effective_damage: int) -> vo
 
 
 
-## Spawns a small text label over the owner with this action’s name (UI feedback).
+## Spawns a small text label over the unit with this action’s name (UI feedback).
 func spawn_action_name_text() -> void:
-	Utilities.spawn_text_line(owner, action_name)
+	Utilities.spawn_text_line(unit, action_name)
 
 
 # =========================
@@ -379,14 +379,14 @@ func can_activate_on_target(target_pack: TargetPackage) -> bool:
 	if target_unit == action_container.unit:
 		return false
 
-	if get_distance_to_owner(target_unit) > attack_range:
+	if get_distance_to_unit(target_unit) > attack_range:
 		if !can_move_to_unit(target_unit):
 			return false
 	return true
 
-## Distance helper from owner to a given unit.
-func get_distance_to_owner(unit: Unit) -> float:
-	return unit.get_global_position().distance_to(owner.get_global_position())
+## Distance helper from unit to a given unit.
+func get_distance_to_unit(in_unit: Unit) -> float:
+	return unit.get_global_position().distance_to(in_unit.get_global_position())
 
 ## Checks if we have a valid MoveToUnitAction and if it can reach the target.
 func can_move_to_unit(target_unit: Unit) -> bool:

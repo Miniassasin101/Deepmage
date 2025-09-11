@@ -24,7 +24,7 @@ func _begin_movement(to_pos: Vector3) -> void:
 
 	var new_pos: Vector3 = PathfindingSystem.instance.get_closest_nav_point_to(to_pos)
 	
-	action_container.unit.set_global_position(new_pos)
+	unit.set_global_position(new_pos)
 	
 	_end_movement(new_pos)
 	
@@ -33,7 +33,7 @@ func _begin_movement(to_pos: Vector3) -> void:
 
 func _end_movement(new_pos: Vector3) -> void:
 	
-	Utilities.spawn_text_line(action_container.unit, "Moved to: " + str(new_pos), Color.ALICE_BLUE)
+	Utilities.spawn_text_line(unit, "Moved to: " + str(new_pos), Color.ALICE_BLUE)
 	
 	
 	
@@ -67,7 +67,7 @@ func _is_too_close_to_any_unit(target_pos: Vector3) -> bool:
 	# Grab every unit in the world
 	for other in UnitManager.instance.get_all_units():
 		# skip ourselves
-		if other == action_container.unit:
+		if other == unit:
 			continue
 		# compare distance
 		if other.global_transform.origin.distance_to(target_pos) < unit_avoid_radius:

@@ -6,8 +6,8 @@ extends AnimationEffect
 @export var color: Color = Color.ALICE_BLUE
 
 
-func play_effect(owner: Unit = null) -> void:
-	if !owner:
+func play_effect(unit: Unit = null) -> void:
+	if !unit:
 		return
 	
-	Utilities.spawn_text_line(owner, text_line)
+	Utilities.spawn_text_line(unit, text_line)

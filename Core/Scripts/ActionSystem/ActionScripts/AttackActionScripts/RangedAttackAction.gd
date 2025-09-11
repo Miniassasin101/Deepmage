@@ -110,9 +110,9 @@ func get_animation_sync(reaction_anim_pack: AnimationPackage) -> Dictionary:
 # =========================
 
 func _get_fire_world_position() -> Vector3:
-	if spawn_at_node != NodePath() and owner.has_node(spawn_at_node):
-		return owner.get_node(spawn_at_node).global_transform.origin
-	return owner.get_global_position() + Vector3(0.0, start_height, 0.0)
+	if spawn_at_node != NodePath() and unit.has_node(spawn_at_node):
+		return unit.get_node(spawn_at_node).global_transform.origin
+	return unit.get_global_position() + Vector3(0.0, start_height, 0.0)
 
 func _get_target_world_position() -> Vector3:
 	var ev := CombatSystem.instance.current_combat_event_data
@@ -121,7 +121,7 @@ func _get_target_world_position() -> Vector3:
 	return ev.defender.get_global_position() + Vector3(0.0, target_height, 0.0)
 
 func _build_path(start_pos: Vector3, end_pos: Vector3) -> Path3D:
-	var parent := owner.get_tree().current_scene if owner.get_tree().current_scene != null else owner.get_tree().root
+	var parent := unit.get_tree().current_scene if unit.get_tree().current_scene != null else unit.get_tree().root
 	if use_path_arc:
 		return PathBuilder3D.make_path_arc(
 			start_pos, end_pos,
@@ -152,7 +152,7 @@ func _launch_projectile_after(delay_sec: float) -> void:
 	if delay_sec <= 0.0:
 		_carrier.activate()
 	else:
-		var t: SceneTreeTimer = owner.get_tree().create_timer(delay_sec)
+		var t: SceneTreeTimer = unit.get_tree().create_timer(delay_sec)
 		await t.timeout
 		# if action got canceled and cleaned up meanwhile, guard:
 		if _carrier != null and is_instance_valid(_carrier):

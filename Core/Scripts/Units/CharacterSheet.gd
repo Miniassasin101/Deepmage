@@ -9,6 +9,19 @@ extends Node
 @export var action_container: ActionContainer = null
 @export var attributes_container: AttributesContainer = null
 
+func _ready() -> void:
+	if !unit:
+		unit = get_parent() if get_parent() is Unit else null
+		
+	if unit:
+		if !unit.character_sheet:
+			unit.character_sheet = self
+	
+	if action_container:
+		action_container.unit = unit
+	
+	if attributes_container:
+		attributes_container.unit = unit
 
 func get_action_container() -> ActionContainer:
 	return action_container

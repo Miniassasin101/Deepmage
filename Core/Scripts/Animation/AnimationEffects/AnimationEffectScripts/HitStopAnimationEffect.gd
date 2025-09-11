@@ -5,14 +5,14 @@ extends AnimationEffect
 
 var is_disabled: bool = false
 
-func play_effect(owner: Unit = null) -> void:
-	if owner == null or is_disabled:
+func play_effect(unit: Unit = null) -> void:
+	if unit == null or is_disabled:
 		return
 	
 	if duration <= 0.0:
 		return
 	
-	var ctrl: AnimationController = owner.animation_controller
+	var ctrl: AnimationController = unit.animation_controller
 	var combat_data: CombatEventData = CombatSystem.instance.current_combat_event_data
 	var enemy_crtl: AnimationController = combat_data.defender.animation_controller if combat_data else null
 	

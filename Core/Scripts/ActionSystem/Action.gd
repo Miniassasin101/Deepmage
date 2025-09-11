@@ -10,7 +10,7 @@ signal on_action_ended
 
 var action_container: ActionContainer = null
 
-var owner: Unit = null
+var unit: Unit = null
 
 
 
@@ -25,8 +25,10 @@ func setup_action(in_action_container: ActionContainer) -> void:
 	if !action_container:
 		action_container = in_action_container
 	
-	if !owner and action_container:
-		owner = action_container.unit
+	if !unit and action_container:
+		unit = action_container.unit
+		if self is MoveAction:
+			pass
 
 
 @warning_ignore("unused_parameter")

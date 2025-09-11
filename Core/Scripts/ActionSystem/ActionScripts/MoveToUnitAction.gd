@@ -27,23 +27,23 @@ var is_moving:           bool = false
 
 func start_action(targ_pack: TargetPackage = null) -> void:
 	super.start_action(targ_pack)
-	var unit: Unit = targ_pack.unit
-	await _begin_movement(unit)
+	var targ_unit: Unit = targ_pack.unit
+	await _begin_movement(targ_unit)
 	end_action()
 
 
 
 
-func _begin_movement(unit: Unit) -> void:
+func _begin_movement(targ_unit: Unit) -> void:
 
 	# Target position is target unit
-	var path_pack: PathPackage = get_path_pack_to_unit(unit)
+	var path_pack: PathPackage = get_path_pack_to_unit(targ_unit)
 	movement_curve = path_pack.get_curve_3d_from_path()
 	curve_length    = movement_curve.get_baked_length()
 	
 	
 	# 2) make movement along curve request
-	var move_controller: MovementController = action_container.unit.movement_controller
+	var move_controller: MovementController = unit.movement_controller
 	move_controller.animate_movement_along_curve(
 		move_speed, movement_curve, maxf(0.0, curve_length - unit_avoid_radius), acceleration_timer, rotation_acceleration_timer, stopping_distance, rotate_speed)
 	
@@ -57,16 +57,16 @@ func _begin_movement(unit: Unit) -> void:
 func _end_movement() -> void:
 	# Loop until move_along_curve_process flips is_moving to false
 	var rounded_curve_length: float = snappedf(curve_length, 0.01)
-	Utilities.spawn_text_line(action_container.unit, "Moved: " + str(rounded_curve_length), Color.ALICE_BLUE)
+	Utilities.spawn_text_line(unit, "Moved: " + str(rounded_curve_length), Color.ALICE_BLUE)
 	
 	
 	
 	#end_action()
 
-func get_path_pack_to_unit(unit: Unit) -> PathPackage:
-	var to_pos: Vector3 = unit.get_global_position()
+func get_path_pack_to_unit(in_unit: Unit) -> PathPackage:
+	var to_pos: Vector3 = in_unit.get_global_position()
 	
-	var path_pack: PathPackage = PathfindingSystem.instance.get_path_package(to_pos, action_container.unit, true)
+	var path_pack: PathPackage = PathfindingSystem.instance.get_path_package(to_pos, unit, true)
 	
 	return path_pack
 
@@ -85,12 +85,12 @@ func can_activate_on_target(target_pack: TargetPackage) -> bool:
 	if !target_pack or !target_pack.has_tag("unit"):
 		return false
 
-	var unit: Unit = target_pack.unit
+	var targ_unit: Unit = target_pack.unit
 	
 	if !action_container:
 		return false
 	
-	if unit == owner:
+	if targ_unit == unit:
 		return false
 	
 	return true

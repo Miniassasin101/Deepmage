@@ -12,8 +12,8 @@ extends Action
  
 func start_action(targ_pack: TargetPackage = null) -> void:
 	super.start_action(targ_pack)
-	var unit: Unit = targ_pack.unit
-	Utilities.spawn_text_line(unit, spawn_text + " " + unit.ui_name, text_color, scale)
+	var targ_unit: Unit = targ_pack.unit
+	Utilities.spawn_text_line(targ_unit, spawn_text + " " + targ_unit.ui_name, text_color, scale)
 	end_action()
 
 
