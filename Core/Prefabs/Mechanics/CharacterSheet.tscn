@@ -243,4 +243,4 @@ actions = Array[ExtResource("3_qntpm")]([SubResource("Resource_1oy7d"), SubResou
 
 [node name="AttributesContainer" type="Node" parent="."]
 script = ExtResource("25_ui78x")
-starting_attributes = Array[ExtResource("26_7mv87")]([ExtResource("27_ital0"), ExtResource("28_op3vs"), ExtResource("29_7r1tj"), ExtResource("30_rmrwd"), ExtResource("31_bjfxb"), ExtResource("32_hk2qx"), ExtResource("33_hbdwl"), ExtResource("34_ndo2o"), ExtResource("35_67ewx"), ExtResource("36_ifxhe"), ExtResource("37_rbxho"), ExtResource("38_skohu"), ExtResource("39_adf4v"), ExtResource("40_34a6i"), ExtResource("41_53fh1")])
+starting_attributes = Array[ExtResource("26_7mv87")]([ExtResource("33_hbdwl"), ExtResource("34_ndo2o"), ExtResource("35_67ewx"), ExtResource("36_ifxhe"), ExtResource("37_rbxho"), ExtResource("38_skohu"), ExtResource("39_adf4v"), ExtResource("40_34a6i"), ExtResource("41_53fh1"), ExtResource("27_ital0"), ExtResource("28_op3vs"), ExtResource("29_7r1tj"), ExtResource("31_bjfxb"), ExtResource("30_rmrwd"), ExtResource("32_hk2qx")])

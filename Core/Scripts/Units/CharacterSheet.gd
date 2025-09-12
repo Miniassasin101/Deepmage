@@ -1,3 +1,4 @@
+@tool
 class_name CharacterSheet
 extends Node
 
@@ -9,7 +10,22 @@ extends Node
 @export var action_container: ActionContainer = null
 @export var attributes_container: AttributesContainer = null
 
+@export_category("Attributes")
+@export var attributes: Array[Attribute] = []
+
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		await get_tree().process_frame
+		await get_tree().process_frame
+		if attributes_container:
+			if !attributes_container.starting_attributes.is_empty():
+				attributes.assign(attributes_container.starting_attributes)
+			else:
+				print("attributes are empty")
+		else:
+			print("no attributes container")
+		return
+
 	if !unit:
 		unit = get_parent() if get_parent() is Unit else null
 		

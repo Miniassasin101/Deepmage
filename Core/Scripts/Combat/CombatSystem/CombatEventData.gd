@@ -40,3 +40,7 @@ var defender_hits: int = 0
 var armor_test: Test = null
 
 var armor_test_hits: int = 0
+
+
+# Modifiers
+var accuracy_mod: int = 0

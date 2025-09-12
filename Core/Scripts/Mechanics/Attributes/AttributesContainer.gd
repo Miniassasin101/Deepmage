@@ -1,3 +1,4 @@
+@tool
 class_name AttributesContainer
 extends Node
 
@@ -14,18 +15,41 @@ var attributes: Array[Attribute] = []
 var attributes_dict: Dictionary[String, Attribute] = {}
 
 
+
+
+
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		if !starting_attributes.is_empty():
+			print_debug("working")
+			var new_atts: Array[Attribute] = []
+			for att in starting_attributes:
+				#print_debug(att.attribute_name)
+				var new_att: Attribute = att.duplicate(true)
+				#att = att.duplicate(true)
+				new_atts.append(new_att)
+				new_att.set_name(new_att.attribute_name.to_pascal_case() + "AttributeResource")
+			starting_attributes = new_atts
+		#set_editable_instance(self, true)
+		return
 	
-	_setup_starting_attributes()
+	
+	
+	_setup_starting_attributes.call_deferred()
 
 
 func _setup_starting_attributes() -> void:
 	attributes.clear()
 	attributes_dict.clear()
+	
+	if unit:
+		var cs := unit.character_sheet
+		if cs:
+			starting_attributes = cs.attributes
 	for att in starting_attributes:
-		var copy = att.duplicate()
-		attributes.append(copy)
-		attributes_dict[copy.attribute_name] = copy
+		#var copy = att.duplicate(true)
+		attributes.append(att)#(copy)
+		attributes_dict[att.attribute_name] = att
 
 
 func get_defence(_only_get_base: bool = false) -> int:

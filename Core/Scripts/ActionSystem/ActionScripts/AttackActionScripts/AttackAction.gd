@@ -338,7 +338,6 @@ func _modify_hit_stop(is_hit: bool, is_graze: bool, effective_damage: int) -> vo
 		else:
 			effect.duration = hit_stop_effect.duration
 		
-		push_warning("Unterminated test")
 		if use_hit_delay:
 			CombatLog.instance.add_log("Effect Timing: " + str(effect.timing))
 			effect.timing += hit_delay

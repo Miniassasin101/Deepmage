@@ -6,6 +6,7 @@ var units: Array[Unit] = []
 
 static var instance: UnitManager = null
 
+var unit_number: int = 1
 
 
 func _ready() -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=89 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://14nkak1a1qkg" path="res://Deepmage/Core/Prefabs/Mechanics/CharacterSheet.tscn" id="9_srkvl"]
 [ext_resource type="Script" uid="uid://b3vsba7uy6t7o" path="res://Deepmage/Core/Scripts/Combat/TurnSystems/TurnSystem.gd" id="10_k2c3k"]
 [ext_resource type="PackedScene" uid="uid://8oord2o1icck" path="res://Deepmage/Core/Prefabs/UI/CharacterLogQueue.tscn" id="10_lf0eb"]
+[ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="10_p6f6u"]
 [ext_resource type="Script" uid="uid://brh8qmh2c4g8f" path="res://Deepmage/Core/Scripts/Combat/CombatSystem/CombatSystem.gd" id="11_g7q3m"]
 [ext_resource type="Script" uid="uid://1miy676tt71s" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UnitManager.gd" id="11_lf0eb"]
 [ext_resource type="Script" uid="uid://xwiyhnl8erp1" path="res://Deepmage/Core/Scripts/Pathfinding/PathfindingSystem.gd" id="12_fnj5h"]
@@ -40,6 +41,591 @@ geometry_source_geometry_mode = 2
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_avqdt"]
 data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="Resource" id="Resource_ncdyc"]
+resource_name = "HealthAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "health"
+attribute_type = 2
+current_value = 10
+base_value = 0
+maximum_value = 10
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_w1smv"]
+resource_name = "PostureAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "posture"
+attribute_type = 2
+current_value = 10
+base_value = 0
+maximum_value = 10
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_4j4u3"]
+resource_name = "StrainAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "strain"
+attribute_type = 2
+current_value = 10
+base_value = 0
+maximum_value = 10
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_5r8ps"]
+resource_name = "ArmorAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "armor"
+attribute_type = 2
+current_value = 1
+base_value = 0
+maximum_value = 1
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_qsjt4"]
+resource_name = "MartialAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "martial"
+attribute_type = 1
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_6kl6n"]
+resource_name = "ChannelAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "channel"
+attribute_type = 1
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_336d5"]
+resource_name = "ClashAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "clash"
+attribute_type = 1
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_x4bhx"]
+resource_name = "EvadeAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "evade"
+attribute_type = 1
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_m1qim"]
+resource_name = "WillAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "will"
+attribute_type = 1
+current_value = 3
+base_value = 0
+maximum_value = 3
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_p6f6u"]
+resource_name = "MightAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "might"
+attribute_type = 0
+current_value = 4
+base_value = 0
+maximum_value = 4
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_51q8q"]
+resource_name = "EnduranceAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "endurance"
+attribute_type = 0
+current_value = 1
+base_value = 0
+maximum_value = 1
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_allnq"]
+resource_name = "AgilityAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "agility"
+attribute_type = 0
+current_value = 1
+base_value = 0
+maximum_value = 1
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_qdwhh"]
+resource_name = "SenseAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "sense"
+attribute_type = 0
+current_value = 3
+base_value = 0
+maximum_value = 3
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_862d3"]
+resource_name = "MindAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "mind"
+attribute_type = 0
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_22ak0"]
+resource_name = "PresenceAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "presence"
+attribute_type = 0
+current_value = 3
+base_value = 0
+maximum_value = 3
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_cel8m"]
+resource_name = "HealthAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "health"
+attribute_type = 2
+current_value = 8
+base_value = 0
+maximum_value = 8
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_sgxdm"]
+resource_name = "PostureAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "posture"
+attribute_type = 2
+current_value = 10
+base_value = 0
+maximum_value = 10
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_f2qps"]
+resource_name = "StrainAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "strain"
+attribute_type = 2
+current_value = 10
+base_value = 0
+maximum_value = 10
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_iq36j"]
+resource_name = "ArmorAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "armor"
+attribute_type = 2
+current_value = 1
+base_value = 0
+maximum_value = 1
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_v8epg"]
+resource_name = "MartialAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "martial"
+attribute_type = 1
+current_value = 3
+base_value = 0
+maximum_value = 3
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_k6sm3"]
+resource_name = "ChannelAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "channel"
+attribute_type = 1
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_bvt28"]
+resource_name = "ClashAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "clash"
+attribute_type = 1
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_23xud"]
+resource_name = "EvadeAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "evade"
+attribute_type = 1
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_hymmt"]
+resource_name = "WillAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "will"
+attribute_type = 1
+current_value = 3
+base_value = 0
+maximum_value = 3
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_v4iap"]
+resource_name = "MightAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "might"
+attribute_type = 0
+current_value = 1
+base_value = 0
+maximum_value = 1
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_8v6vh"]
+resource_name = "EnduranceAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "endurance"
+attribute_type = 0
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_11ubm"]
+resource_name = "AgilityAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "agility"
+attribute_type = 0
+current_value = 4
+base_value = 0
+maximum_value = 4
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_w01yd"]
+resource_name = "SenseAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "sense"
+attribute_type = 0
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_00nvd"]
+resource_name = "MindAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "mind"
+attribute_type = 0
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_5lfvx"]
+resource_name = "PresenceAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "presence"
+attribute_type = 0
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_f0670"]
+resource_name = "HealthAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "health"
+attribute_type = 2
+current_value = 15
+base_value = 0
+maximum_value = 15
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_ebomw"]
+resource_name = "PostureAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "posture"
+attribute_type = 2
+current_value = 10
+base_value = 0
+maximum_value = 10
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_04ue1"]
+resource_name = "StrainAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "strain"
+attribute_type = 2
+current_value = 10
+base_value = 0
+maximum_value = 10
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_cb3j6"]
+resource_name = "ArmorAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "armor"
+attribute_type = 2
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_e15dp"]
+resource_name = "MartialAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "martial"
+attribute_type = 1
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_c2k8n"]
+resource_name = "ChannelAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "channel"
+attribute_type = 1
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_hja2s"]
+resource_name = "ClashAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "clash"
+attribute_type = 1
+current_value = 3
+base_value = 0
+maximum_value = 3
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_f3uqp"]
+resource_name = "EvadeAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "evade"
+attribute_type = 1
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_0fvkv"]
+resource_name = "WillAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "will"
+attribute_type = 1
+current_value = 3
+base_value = 0
+maximum_value = 3
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_dpue3"]
+resource_name = "MightAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "might"
+attribute_type = 0
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_mpmhl"]
+resource_name = "EnduranceAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "endurance"
+attribute_type = 0
+current_value = 4
+base_value = 0
+maximum_value = 4
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_yl67w"]
+resource_name = "AgilityAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "agility"
+attribute_type = 0
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_6odjx"]
+resource_name = "SenseAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "sense"
+attribute_type = 0
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_lk7si"]
+resource_name = "MindAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "mind"
+attribute_type = 0
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_8pahp"]
+resource_name = "PresenceAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "presence"
+attribute_type = 0
+current_value = 4
+base_value = 0
+maximum_value = 4
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xyav6"]
 albedo_color = Color(1, 0, 0.183333, 1)
@@ -238,26 +824,29 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.735, 1.03, 0.84)
 [node name="UnitManager" type="Node" parent="."]
 script = ExtResource("11_lf0eb")
 
-[node name="Unit" parent="UnitManager" instance=ExtResource("12_k2c3k")]
+[node name="Ruby" parent="UnitManager" instance=ExtResource("12_k2c3k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
 ui_name = "Ruby"
 visor_color = Color(0.73, 0.2993, 0.306478, 1)
 
-[node name="CharacterSheet" parent="UnitManager/Unit" instance=ExtResource("9_srkvl")]
+[node name="CharacterSheet" parent="UnitManager/Ruby" instance=ExtResource("9_srkvl")]
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_ncdyc"), SubResource("Resource_w1smv"), SubResource("Resource_4j4u3"), SubResource("Resource_5r8ps"), SubResource("Resource_qsjt4"), SubResource("Resource_6kl6n"), SubResource("Resource_336d5"), SubResource("Resource_x4bhx"), SubResource("Resource_m1qim"), SubResource("Resource_p6f6u"), SubResource("Resource_51q8q"), SubResource("Resource_allnq"), SubResource("Resource_qdwhh"), SubResource("Resource_862d3"), SubResource("Resource_22ak0")])
 
-[node name="Unit2" parent="UnitManager" instance=ExtResource("12_k2c3k")]
+[node name="Azure" parent="UnitManager" instance=ExtResource("12_k2c3k")]
 ui_name = "Azure"
 is_enemy = true
 visor_color = Color(0.3818, 0.62831, 0.83, 1)
 
-[node name="CharacterSheet" parent="UnitManager/Unit2" instance=ExtResource("9_srkvl")]
+[node name="CharacterSheet" parent="UnitManager/Azure" instance=ExtResource("9_srkvl")]
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_cel8m"), SubResource("Resource_sgxdm"), SubResource("Resource_f2qps"), SubResource("Resource_iq36j"), SubResource("Resource_v8epg"), SubResource("Resource_k6sm3"), SubResource("Resource_bvt28"), SubResource("Resource_23xud"), SubResource("Resource_hymmt"), SubResource("Resource_v4iap"), SubResource("Resource_8v6vh"), SubResource("Resource_11ubm"), SubResource("Resource_w01yd"), SubResource("Resource_00nvd"), SubResource("Resource_5lfvx")])
 
-[node name="Unit3" parent="UnitManager" instance=ExtResource("12_k2c3k")]
+[node name="Marigold" parent="UnitManager" instance=ExtResource("12_k2c3k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.68029)
 ui_name = "Marigold"
 visor_color = Color(0.8832, 0.9, 0.396, 1)
 
-[node name="CharacterSheet" parent="UnitManager/Unit3" instance=ExtResource("9_srkvl")]
+[node name="CharacterSheet" parent="UnitManager/Marigold" instance=ExtResource("9_srkvl")]
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_f0670"), SubResource("Resource_ebomw"), SubResource("Resource_04ue1"), SubResource("Resource_cb3j6"), SubResource("Resource_e15dp"), SubResource("Resource_c2k8n"), SubResource("Resource_hja2s"), SubResource("Resource_f3uqp"), SubResource("Resource_0fvkv"), SubResource("Resource_dpue3"), SubResource("Resource_mpmhl"), SubResource("Resource_yl67w"), SubResource("Resource_6odjx"), SubResource("Resource_lk7si"), SubResource("Resource_8pahp")])
 
 [node name="MouseController" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_avqdt")]
 camera = NodePath("../Camera/CamOrigin/SpringArm3D/fCamera")
@@ -269,7 +858,7 @@ collision_mask = 2
 
 [node name="UnitActionSystem" type="Node" parent="." node_paths=PackedStringArray("test_unit")]
 script = ExtResource("9_lf0eb")
-test_unit = NodePath("../UnitManager/Unit")
+test_unit = NodePath("../UnitManager/Ruby")
 
 [node name="TurnSystem" type="Node" parent="." node_paths=PackedStringArray("unit_manager")]
 script = ExtResource("10_k2c3k")
@@ -525,5 +1114,4 @@ max_logs = 15
 
 [connection signal="pressed" from="UILayer/TurnSystemUI/EndTurnContainer/MarginContainer/EndTurnButton" to="UILayer/TurnSystemUI" method="_on_end_turn_button_pressed"]
 
-[editable path="UnitManager/Unit/CharacterSheet"]
 [editable path="MouseController"]

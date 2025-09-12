@@ -32,6 +32,8 @@ func get_current_modified_value() -> int:
 	return  current_value + get_current_modifier()
 
 
+
+
 func get_current_modifier() -> int:
 	var current_modifier: int = 0
 	for mod in modifiers:

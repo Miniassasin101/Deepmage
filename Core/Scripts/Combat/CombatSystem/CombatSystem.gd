@@ -189,7 +189,7 @@ func setup_effective_damage() -> void:
 
 	# Defense (track base+bonus for logging clarity)
 	var defense: int = current_combat_event_data.defender.get_attributes_container().get_defence()
-	var base_defense: int = defense
+
 	var defense_bonus: int = current_combat_event_data.defense_bonus
 	defense += defense_bonus
 

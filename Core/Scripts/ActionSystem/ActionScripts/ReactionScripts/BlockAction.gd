@@ -69,7 +69,10 @@ func rotate_towards_target(target: Unit) -> void:
 	await unit.movement_controller.rotation_precomplete
 
 func on_impact() -> void:
-	Utilities.spawn_text_line(unit, "Blocked", text_color, scale)
+	#var cbd: CombatEventData = CombatSystem.instance.current_combat_event_data
+	
+	#Utilities.spawn_text_line(unit, "Blocked", text_color, scale)
+	pass
 
 
 func can_activate() -> bool:

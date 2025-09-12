@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://2h1a1e1r8hc2"]
+[gd_scene load_steps=16 format=3 uid="uid://2h1a1e1r8hc2"]
 
 [ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
 [ext_resource type="Script" uid="uid://byevnkq30m4mb" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.gd" id="1_ohquw"]
 [ext_resource type="Material" uid="uid://caeve0dltuafr" path="res://Deepmage/Core/Art/Materials/WhiteHitFXMaterial.tres" id="2_rlwmm"]
+[ext_resource type="PackedScene" uid="uid://14nkak1a1qkg" path="res://Deepmage/Core/Prefabs/Mechanics/CharacterSheet.tscn" id="2_t3ejk"]
 [ext_resource type="PackedScene" uid="uid://cwusixosbj5vk" path="res://Deepmage/Core/Prefabs/UI/3D/SquareVisual.tscn" id="3_0qgfu"]
 [ext_resource type="Script" uid="uid://dcltq1auxqj26" path="res://Deepmage/Core/Scripts/Units/MovementController.gd" id="3_1oy7d"]
 [ext_resource type="Script" uid="uid://h4o2321q5l0u" path="res://Deepmage/Core/Scripts/Animation/AnimationController.gd" id="3_sxvrp"]
@@ -67,6 +68,7 @@ capsule_visor = NodePath("Rig/MeshInstance3D/MeshInstance3D")
 selection_visual = NodePath("SelectionSquareRoot/GridSystemVisual")
 movement_controller = NodePath("MovementController")
 animation_controller = NodePath("AnimationController")
+character_sheet_packed_scene = ExtResource("2_t3ejk")
 speed = 15
 white_hit_flash_mat = ExtResource("2_rlwmm")
 hit_flash_time = 0.2

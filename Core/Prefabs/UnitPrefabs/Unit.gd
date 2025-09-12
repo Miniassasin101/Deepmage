@@ -1,3 +1,4 @@
+@tool
 class_name Unit
 extends Node3D
 
@@ -21,7 +22,8 @@ enum TurnState {
 @export var movement_controller: MovementController
 @export var animation_controller: AnimationController
 
-
+@export_category("Prefabs")
+@export var character_sheet_packed_scene: PackedScene = null
 
 @export_category("Temp Stats")
 @export var speed: int = 6
@@ -29,7 +31,12 @@ enum TurnState {
 
 
 @export_category("Attributes")
-@export var ui_name: String = "None"
+
+@export var ui_name: String = "Unit":
+	set(val):
+		ui_name = val
+		change_node_name_to_unit()
+
 @export var is_enemy: bool = false
 @export var visor_color: Color = Color.ALICE_BLUE
 
@@ -54,10 +61,33 @@ var turn_state: TurnState = TurnState.OUTSIDE_COMBAT
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		if !character_sheet_packed_scene:
+			print("Packed Scene Not Found")
+			return
+		if find_child("CharacterSheet", false):
+			print("Character sheet found")
+			return
+		var char_sheet: CharacterSheet = character_sheet_packed_scene.instantiate() as CharacterSheet
+
+		add_child(char_sheet)
+		char_sheet.set_owner(get_tree().edited_scene_root)
+		character_sheet = char_sheet
+		print("added child")
+		property_list_changed.connect(change_node_name_to_unit)
+		return
 	setup_navigation()
 	call_deferred("setup_mesh_colors")
 	
-
+func change_node_name_to_unit() -> void:
+	if !Engine.is_editor_hint():
+		return
+	if (ui_name != "Unit") and (get_name() != ui_name):
+		if ui_name.is_empty():
+			set_name("Unit")
+		else:
+			set_name(ui_name)
+		print("name changed to " + name)
 
 
 func setup_mesh_colors() -> void:
