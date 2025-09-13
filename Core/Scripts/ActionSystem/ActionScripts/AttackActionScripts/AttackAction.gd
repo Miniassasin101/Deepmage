@@ -32,6 +32,7 @@ extends Action
 @export var accuracy_attribute2: String = "martial"
 @export var damage_attribute: String = "might"
 @export var base_damage: int = 3
+@export var base_target_number: int = 1
 
 # === Sync tuning ===
 @export_group("Animation Sync Tuning")
@@ -257,7 +258,7 @@ func _play_reaction_with_delay(reaction_anim_pack: AnimationPackage, sync: Dicti
 	var defender: Unit = c_event.defender
 	var anim_contr: AnimationController = defender.animation_controller
 
-	var should_play_reaction: bool = !c_event.is_hit and (reaction_anim_pack != null) and (defender != null)
+	var should_play_reaction: bool = true#!c_event.is_hit and (reaction_anim_pack != null) and (defender != null)
 	if !should_play_reaction:
 		return
 
@@ -267,7 +268,6 @@ func _play_reaction_with_delay(reaction_anim_pack: AnimationPackage, sync: Dicti
 	var delay: float = sync.get("reaction_delay", 0.0) as float
 	var scale: float = sync.get("reaction_scale", 1.0) as float
 	
-	push_warning("unterminated test in base attack action")
 	if use_hit_delay:
 		delay += hit_delay
 	

@@ -222,6 +222,7 @@ accuracy_attribute1 = "agility"
 accuracy_attribute2 = "martial"
 damage_attribute = "might"
 base_damage = 3
+base_target_number = 1
 desired_react_lead = 0.05
 default_reaction_latency = 0.06
 hit_delay = 1.5

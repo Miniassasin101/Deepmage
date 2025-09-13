@@ -47,9 +47,9 @@ resource_name = "HealthAttributeResource"
 script = ExtResource("10_p6f6u")
 attribute_name = "health"
 attribute_type = 2
-current_value = 10
+current_value = 9
 base_value = 0
-maximum_value = 10
+maximum_value = 9
 minimum_value = 0
 modifiers = Array[int]([])
 tags = Array[String]([])
@@ -99,9 +99,9 @@ resource_name = "MartialAttributeResource"
 script = ExtResource("10_p6f6u")
 attribute_name = "martial"
 attribute_type = 1
-current_value = 2
+current_value = 4
 base_value = 0
-maximum_value = 2
+maximum_value = 4
 minimum_value = 0
 modifiers = Array[int]([])
 tags = Array[String]([])
@@ -177,9 +177,9 @@ resource_name = "EnduranceAttributeResource"
 script = ExtResource("10_p6f6u")
 attribute_name = "endurance"
 attribute_type = 0
-current_value = 1
+current_value = 2
 base_value = 0
-maximum_value = 1
+maximum_value = 2
 minimum_value = 0
 modifiers = Array[int]([])
 tags = Array[String]([])
@@ -190,9 +190,9 @@ resource_name = "AgilityAttributeResource"
 script = ExtResource("10_p6f6u")
 attribute_name = "agility"
 attribute_type = 0
-current_value = 1
+current_value = 2
 base_value = 0
-maximum_value = 1
+maximum_value = 2
 minimum_value = 0
 modifiers = Array[int]([])
 tags = Array[String]([])
@@ -203,9 +203,9 @@ resource_name = "SenseAttributeResource"
 script = ExtResource("10_p6f6u")
 attribute_name = "sense"
 attribute_type = 0
-current_value = 3
+current_value = 2
 base_value = 0
-maximum_value = 3
+maximum_value = 2
 minimum_value = 0
 modifiers = Array[int]([])
 tags = Array[String]([])
@@ -229,9 +229,9 @@ resource_name = "PresenceAttributeResource"
 script = ExtResource("10_p6f6u")
 attribute_name = "presence"
 attribute_type = 0
-current_value = 3
+current_value = 2
 base_value = 0
-maximum_value = 3
+maximum_value = 2
 minimum_value = 0
 modifiers = Array[int]([])
 tags = Array[String]([])
@@ -242,9 +242,9 @@ resource_name = "HealthAttributeResource"
 script = ExtResource("10_p6f6u")
 attribute_name = "health"
 attribute_type = 2
-current_value = 8
+current_value = 10
 base_value = 0
-maximum_value = 8
+maximum_value = 10
 minimum_value = 0
 modifiers = Array[int]([])
 tags = Array[String]([])
@@ -294,9 +294,9 @@ resource_name = "MartialAttributeResource"
 script = ExtResource("10_p6f6u")
 attribute_name = "martial"
 attribute_type = 1
-current_value = 3
+current_value = 2
 base_value = 0
-maximum_value = 3
+maximum_value = 2
 minimum_value = 0
 modifiers = Array[int]([])
 tags = Array[String]([])
@@ -333,9 +333,9 @@ resource_name = "EvadeAttributeResource"
 script = ExtResource("10_p6f6u")
 attribute_name = "evade"
 attribute_type = 1
-current_value = 2
+current_value = 4
 base_value = 0
-maximum_value = 2
+maximum_value = 4
 minimum_value = 0
 modifiers = Array[int]([])
 tags = Array[String]([])
@@ -359,9 +359,9 @@ resource_name = "MightAttributeResource"
 script = ExtResource("10_p6f6u")
 attribute_name = "might"
 attribute_type = 0
-current_value = 1
+current_value = 2
 base_value = 0
-maximum_value = 1
+maximum_value = 2
 minimum_value = 0
 modifiers = Array[int]([])
 tags = Array[String]([])
@@ -385,9 +385,9 @@ resource_name = "AgilityAttributeResource"
 script = ExtResource("10_p6f6u")
 attribute_name = "agility"
 attribute_type = 0
-current_value = 4
+current_value = 2
 base_value = 0
-maximum_value = 4
+maximum_value = 2
 minimum_value = 0
 modifiers = Array[int]([])
 tags = Array[String]([])
@@ -515,9 +515,9 @@ resource_name = "ClashAttributeResource"
 script = ExtResource("10_p6f6u")
 attribute_name = "clash"
 attribute_type = 1
-current_value = 3
+current_value = 2
 base_value = 0
-maximum_value = 3
+maximum_value = 2
 minimum_value = 0
 modifiers = Array[int]([])
 tags = Array[String]([])
@@ -619,9 +619,9 @@ resource_name = "PresenceAttributeResource"
 script = ExtResource("10_p6f6u")
 attribute_name = "presence"
 attribute_type = 0
-current_value = 4
+current_value = 2
 base_value = 0
-maximum_value = 4
+maximum_value = 2
 minimum_value = 0
 modifiers = Array[int]([])
 tags = Array[String]([])
@@ -824,28 +824,34 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.735, 1.03, 0.84)
 [node name="UnitManager" type="Node" parent="."]
 script = ExtResource("11_lf0eb")
 
-[node name="Ruby" parent="UnitManager" instance=ExtResource("12_k2c3k")]
+[node name="Ruby" parent="UnitManager" node_paths=PackedStringArray("character_sheet") instance=ExtResource("12_k2c3k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+character_sheet = NodePath("CharacterSheet1")
 ui_name = "Ruby"
 visor_color = Color(0.73, 0.2993, 0.306478, 1)
 
-[node name="CharacterSheet" parent="UnitManager/Ruby" instance=ExtResource("9_srkvl")]
+[node name="CharacterSheet1" parent="UnitManager/Ruby" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
+unit = NodePath("..")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_ncdyc"), SubResource("Resource_w1smv"), SubResource("Resource_4j4u3"), SubResource("Resource_5r8ps"), SubResource("Resource_qsjt4"), SubResource("Resource_6kl6n"), SubResource("Resource_336d5"), SubResource("Resource_x4bhx"), SubResource("Resource_m1qim"), SubResource("Resource_p6f6u"), SubResource("Resource_51q8q"), SubResource("Resource_allnq"), SubResource("Resource_qdwhh"), SubResource("Resource_862d3"), SubResource("Resource_22ak0")])
 
-[node name="Azure" parent="UnitManager" instance=ExtResource("12_k2c3k")]
+[node name="Azure" parent="UnitManager" node_paths=PackedStringArray("character_sheet") instance=ExtResource("12_k2c3k")]
+character_sheet = NodePath("CharacterSheet2")
 ui_name = "Azure"
 is_enemy = true
 visor_color = Color(0.3818, 0.62831, 0.83, 1)
 
-[node name="CharacterSheet" parent="UnitManager/Azure" instance=ExtResource("9_srkvl")]
+[node name="CharacterSheet2" parent="UnitManager/Azure" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
+unit = NodePath("..")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_cel8m"), SubResource("Resource_sgxdm"), SubResource("Resource_f2qps"), SubResource("Resource_iq36j"), SubResource("Resource_v8epg"), SubResource("Resource_k6sm3"), SubResource("Resource_bvt28"), SubResource("Resource_23xud"), SubResource("Resource_hymmt"), SubResource("Resource_v4iap"), SubResource("Resource_8v6vh"), SubResource("Resource_11ubm"), SubResource("Resource_w01yd"), SubResource("Resource_00nvd"), SubResource("Resource_5lfvx")])
 
-[node name="Marigold" parent="UnitManager" instance=ExtResource("12_k2c3k")]
+[node name="Marigold" parent="UnitManager" node_paths=PackedStringArray("character_sheet") instance=ExtResource("12_k2c3k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.68029)
+character_sheet = NodePath("CharacterSheet3")
 ui_name = "Marigold"
 visor_color = Color(0.8832, 0.9, 0.396, 1)
 
-[node name="CharacterSheet" parent="UnitManager/Marigold" instance=ExtResource("9_srkvl")]
+[node name="CharacterSheet3" parent="UnitManager/Marigold" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
+unit = NodePath("..")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_f0670"), SubResource("Resource_ebomw"), SubResource("Resource_04ue1"), SubResource("Resource_cb3j6"), SubResource("Resource_e15dp"), SubResource("Resource_c2k8n"), SubResource("Resource_hja2s"), SubResource("Resource_f3uqp"), SubResource("Resource_0fvkv"), SubResource("Resource_dpue3"), SubResource("Resource_mpmhl"), SubResource("Resource_yl67w"), SubResource("Resource_6odjx"), SubResource("Resource_lk7si"), SubResource("Resource_8pahp")])
 
 [node name="MouseController" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_avqdt")]

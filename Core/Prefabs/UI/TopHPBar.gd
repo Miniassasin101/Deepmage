@@ -10,6 +10,7 @@ extends Control
 @export var current_health_label: Label
 @export var current_defense_label: Label
 
+
 var current_unit: Unit = null
 
 # --- Preview state tracking ---

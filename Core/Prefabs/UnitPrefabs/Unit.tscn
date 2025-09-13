@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://2h1a1e1r8hc2"]
+[gd_scene load_steps=18 format=3 uid="uid://2h1a1e1r8hc2"]
 
 [ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
 [ext_resource type="Script" uid="uid://byevnkq30m4mb" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.gd" id="1_ohquw"]
@@ -10,12 +10,15 @@
 [ext_resource type="AnimationLibrary" uid="uid://oosve5txyoqs" path="res://Deepmage/Core/Resources/AnimationResources/AnimationLibraries/TestAnimationLibraries/CapsuleAnims.res" id="4_7ehp6"]
 [ext_resource type="Animation" uid="uid://dl5c4nb4fybhk" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/BackHitReaction.res" id="4_dg5hf"]
 [ext_resource type="Script" uid="uid://c2aqj40trpjeq" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/EffectsController.gd" id="4_s3v1t"]
+[ext_resource type="Script" uid="uid://ck2buvlnnr6il" path="res://Deepmage/Core/Scripts/Mechanics/Tokens/TokenController.gd" id="11_1um36"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ohquw"]
 lightmap_size_hint = Vector2i(17, 14)
 
 [sub_resource type="BoxMesh" id="BoxMesh_0qgfu"]
 size = Vector3(0.725, 0.2, 0.325)
+
+[sub_resource type="SphereMesh" id="SphereMesh_1um36"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0qgfu"]
 size = Vector3(1, 1.69678, 1)
@@ -53,21 +56,73 @@ tracks/2/path = NodePath("Rig")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Rig/LeftHandMesh:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.713219, 1.02331, 0.140477)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Rig/LeftHandMesh:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3.30775e-05, -8.00054e-05, -0.000265496)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Rig/RightHandMesh:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.723787, 1.02331, 0.140477)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Rig/RightHandMesh:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7ehp6"]
 _data = {
 &"RESET": SubResource("Animation_sxvrp")
 }
 
-[node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual", "movement_controller", "animation_controller")]
+[node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual", "character_sheet", "movement_controller", "animation_controller", "token_controller", "left_hand_socket", "right_hand_socket")]
 script = ExtResource("1_ohquw")
 above_head_marker = NodePath("AboveHeadMarker")
 nav_agent = NodePath("NavigationAgent3D")
 capsule_body = NodePath("Rig/MeshInstance3D")
 capsule_visor = NodePath("Rig/MeshInstance3D/MeshInstance3D")
 selection_visual = NodePath("SelectionSquareRoot/GridSystemVisual")
+character_sheet = NodePath("")
 movement_controller = NodePath("MovementController")
 animation_controller = NodePath("AnimationController")
+token_controller = NodePath("TokenController")
+left_hand_socket = NodePath("Rig/LeftHandMesh/LeftHandSocket")
+right_hand_socket = NodePath("Rig/RightHandMesh/RightHandSocket")
 character_sheet_packed_scene = ExtResource("2_t3ejk")
 speed = 15
 white_hit_flash_mat = ExtResource("2_rlwmm")
@@ -86,6 +141,22 @@ surface_material_override/0 = ExtResource("1_cc6tg")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.423313, 0.411077)
 mesh = SubResource("BoxMesh_0qgfu")
 surface_material_override/0 = ExtResource("1_cc6tg")
+
+[node name="LeftHandMesh" type="MeshInstance3D" parent="Rig"]
+transform = Transform3D(0.3, 7.9648e-05, -2.40016e-05, -7.96488e-05, 0.3, -9.92325e-06, 2.3999e-05, 9.92962e-06, 0.3, 0.713219, 1.02331, 0.140477)
+mesh = SubResource("SphereMesh_1um36")
+surface_material_override/0 = ExtResource("1_cc6tg")
+
+[node name="LeftHandSocket" type="Marker3D" parent="Rig/LeftHandMesh"]
+gizmo_extents = 0.8
+
+[node name="RightHandMesh" type="MeshInstance3D" parent="Rig"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -0.723787, 1.02331, 0.140477)
+mesh = SubResource("SphereMesh_1um36")
+surface_material_override/0 = ExtResource("1_cc6tg")
+
+[node name="RightHandSocket" type="Marker3D" parent="Rig/RightHandMesh"]
+gizmo_extents = 0.8
 
 [node name="UnitArea3D" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.854524, 0)
@@ -138,3 +209,8 @@ top_level = true
 remote_path = NodePath("../GridSystemVisual")
 update_rotation = false
 update_scale = false
+
+[node name="TokenController" type="Node" parent="." node_paths=PackedStringArray("unit")]
+script = ExtResource("11_1um36")
+unit = NodePath("..")
+metadata/_custom_type_script = "uid://ck2buvlnnr6il"

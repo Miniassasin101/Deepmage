@@ -18,10 +18,10 @@ func _ready() -> void:
 		await get_tree().process_frame
 		await get_tree().process_frame
 		if attributes_container:
-			if !attributes_container.starting_attributes.is_empty():
+			if !attributes_container.starting_attributes.is_empty() and attributes.is_empty():
 				attributes.assign(attributes_container.starting_attributes)
 			else:
-				print("attributes are empty")
+				print("starting attributes are empty or attributes arent empty")
 		else:
 			print("no attributes container")
 		return

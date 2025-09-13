@@ -13,7 +13,9 @@ extends Reaction
 
 @export var base_defend_value: int = 3
 
-
+@export_category("Animation Package")
+@export var block_package: AnimationPackage
+@export var reaction_latency: float = 0.06  # seconds; tune per game
 
 func start_action(targ_pack: TargetPackage = null) -> void:
 	super.start_action(targ_pack)
@@ -67,6 +69,14 @@ func rotate_towards_target(target: Unit) -> void:
 		pre_rotation_margin_override # your early-start margin
 	)
 	await unit.movement_controller.rotation_precomplete
+
+
+func get_reaction_package() -> AnimationPackage:
+	return block_package
+
+func get_reaction_latency() -> float:
+	return reaction_latency
+
 
 func on_impact() -> void:
 	#var cbd: CombatEventData = CombatSystem.instance.current_combat_event_data

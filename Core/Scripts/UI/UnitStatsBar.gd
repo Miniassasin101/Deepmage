@@ -75,6 +75,7 @@ func update_stats(unit: Unit) -> void:
 	# Shows the initiative score of the unit. Resets at the start of the next round so the lowest unit has a 0 to keep numbers more readable.
 	initiative_score_label.text = "Initiative Score: " + str(TurnSystem.instance.initiative_scores[unit] - lowest_score)
 	var health_attribute: Attribute = unit.get_attributes_container().get_attribute("health")
+
 	var current_modified_value: int = health_attribute.get_current_modified_value()
 	health_text_label.text = "Health: %d / %d" % [
 		maxi(current_modified_value, 0), 

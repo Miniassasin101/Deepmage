@@ -73,6 +73,7 @@ func get_animation_sync(reaction_anim_pack: AnimationPackage) -> Dictionary:
 		push_error("RangedAttackAction: projectile_scene is missing or not a Node3D.")
 	else:
 		_carrier.attach_projectile(_proj, true)
+		
 
 	# PRECOMPUTE travel (this is the key bit you needed)
 	projectile_travel_time = _carrier.plan_travel()
@@ -112,7 +113,7 @@ func get_animation_sync(reaction_anim_pack: AnimationPackage) -> Dictionary:
 func _get_fire_world_position() -> Vector3:
 	if spawn_at_node != NodePath() and unit.has_node(spawn_at_node):
 		return unit.get_node(spawn_at_node).global_transform.origin
-	return unit.get_global_position() + Vector3(0.0, start_height, 0.0)
+	return unit.right_hand_socket.get_global_position()#.get_global_position() + Vector3(0.0, start_height, 0.0)
 
 func _get_target_world_position() -> Vector3:
 	var ev := CombatSystem.instance.current_combat_event_data

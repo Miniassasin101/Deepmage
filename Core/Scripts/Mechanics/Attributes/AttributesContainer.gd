@@ -21,7 +21,6 @@ var attributes_dict: Dictionary[String, Attribute] = {}
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		if !starting_attributes.is_empty():
-			print_debug("working")
 			var new_atts: Array[Attribute] = []
 			for att in starting_attributes:
 				#print_debug(att.attribute_name)

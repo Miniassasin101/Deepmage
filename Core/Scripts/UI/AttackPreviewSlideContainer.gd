@@ -64,7 +64,7 @@ func fill_from_attack(attack: AttackAction, attacker: Unit, target: Unit) -> voi
 	if min_max_dmg_label:
 		min_max_dmg_label.text = "Dmg: 0–%d" % [pool]
 
-	var target_success: int = 1
+	var target_success: int = attack.base_target_number # + Multiple action penalty
 	# Success condition note
 	if target_successes_label:
 		target_successes_label.text = "Obs: " + str(target_success)

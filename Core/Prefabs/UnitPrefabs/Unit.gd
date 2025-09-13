@@ -21,6 +21,10 @@ enum TurnState {
 @export var character_sheet: CharacterSheet
 @export var movement_controller: MovementController
 @export var animation_controller: AnimationController
+@export var token_controller: TokenController
+
+@export var left_hand_socket: Marker3D
+@export var right_hand_socket: Marker3D
 
 @export_category("Prefabs")
 @export var character_sheet_packed_scene: PackedScene = null
@@ -62,11 +66,14 @@ var turn_state: TurnState = TurnState.OUTSIDE_COMBAT
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
+		if not get_parent() is UnitManager:
+			print_debug("Parent is not UnitManager")
+			return
 		if !character_sheet_packed_scene:
 			print("Packed Scene Not Found")
 			return
-		if find_child("CharacterSheet", false):
-			print("Character sheet found")
+		if character_sheet:
+			print_debug("Character sheet already found")
 			return
 		var char_sheet: CharacterSheet = character_sheet_packed_scene.instantiate() as CharacterSheet
 
@@ -78,7 +85,9 @@ func _ready() -> void:
 		return
 	setup_navigation()
 	call_deferred("setup_mesh_colors")
-	
+
+
+
 func change_node_name_to_unit() -> void:
 	if !Engine.is_editor_hint():
 		return

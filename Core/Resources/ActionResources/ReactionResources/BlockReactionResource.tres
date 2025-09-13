@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="BlockAction" load_steps=4 format=3 uid="uid://c5dl1dlq1jmiy"]
+[gd_resource type="Resource" script_class="BlockAction" load_steps=5 format=3 uid="uid://c5dl1dlq1jmiy"]
 
 [ext_resource type="Script" uid="uid://6qs4p4pind1l" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/ReactionScripts/BlockAction.gd" id="1_ef270"]
+[ext_resource type="Resource" uid="uid://djrw5nkydvyv6" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BlockPackage.tres" id="1_jkvav"]
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_jkvav"]
 
 [sub_resource type="Resource" id="Resource_ef270"]
@@ -17,6 +18,8 @@ scale = 1.0
 pre_rotation_margin_override = 0.12
 defend_attribute = "might"
 base_defend_value = 3
+block_package = ExtResource("1_jkvav")
+reaction_latency = 0.06
 action_name = "Block"
 selection_types = Array[ExtResource("2_jkvav")]([SubResource("Resource_ef270")])
 reaction_check_timing = 0.3
