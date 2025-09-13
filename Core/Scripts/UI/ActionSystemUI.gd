@@ -97,7 +97,7 @@ func on_action_button_pressed(action: Action) -> void:
 	pass
 
 func try_press_button_by_number(num: int) -> void:
-	if active_buttons.is_empty():
+	if active_buttons.is_empty() or UnitActionSystem.instance.is_busy and !UnitActionSystem.instance.is_prompting_reaction:
 		return
 	
 	var btn: ActionButtonUI = null

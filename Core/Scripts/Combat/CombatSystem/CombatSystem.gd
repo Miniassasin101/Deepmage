@@ -129,22 +129,29 @@ func setup_defender_test() -> void:
 	var test: Test = Test.new(skill_value, attribute_value, 20)
 	test.run_test()
 	print_debug(test.to_str())
-
+	
 	current_combat_event_data.defender_test = test
 	current_combat_event_data.defender_hits = test.hits
 	
-	CombatLog.instance.add_log(current_combat_event_data.defender.ui_name + " scored " + str(test.hits) + " hits")
+	if not current_combat_event_data.reaction is PassAction:
+		current_combat_event_data.required_successes = current_combat_event_data.defender_hits # Note: max of defender hits and M.A.P.
+		CombatLog.instance.add_log(current_combat_event_data.defender.ui_name + " scored " + str(test.hits) + " hits")
+	else:
+		
+		CombatLog.instance.add_log(current_combat_event_data.defender.ui_name + " Did Not React")
 
 
 
 
 
 func setup_degree_of_success() -> void:
-
-	var degree_of_success: int = current_combat_event_data.attacker_test.hits - current_combat_event_data.defender_test.hits
+	
+	var degree_of_success: int = current_combat_event_data.attacker_test.hits - current_combat_event_data.required_successes
 
 	if degree_of_success >= 1:
 		current_combat_event_data.is_success = true
+		if degree_of_success >= 3:
+			current_combat_event_data.is_critical_success = true
 	elif degree_of_success == 0:
 		current_combat_event_data.is_graze = true
 	
@@ -157,31 +164,7 @@ func setup_degree_of_success() -> void:
 
 
 
-func setup_effective_damage_dep() -> void:
-	var attack_action: AttackAction = current_combat_event_data.action
-	var defense: int = current_combat_event_data.defender.get_attributes_container().get_defence()
-	
-	defense += current_combat_event_data.defense_bonus
 
-	var damage_pool: int = 0
-
-	var damage_attribute_val: int = current_combat_event_data.attacker.get_attributes_container().get_attribute_current_value(attack_action.damage_attribute)
-	var base_attack_action_dmg: int = attack_action.base_damage
-
-	damage_pool = damage_attribute_val + base_attack_action_dmg
-	
-	var final_dmg_pool: int = maxi(damage_pool - defense, 0)
-
-	var effective_damage: int = 0
-	
-	if final_dmg_pool >= 1:
-		var dmg_pl: DicePool = DicePool.new(final_dmg_pool)
-		effective_damage += dmg_pl.success_count
-	
-
-	current_combat_event_data.effective_damage += effective_damage
-	
-	#CombatLog.instance.add_log("Effective Damage: " + da)
 
 
 func setup_effective_damage() -> void:
@@ -197,7 +180,12 @@ func setup_effective_damage() -> void:
 	var damage_attribute_val: int = current_combat_event_data.attacker.get_attributes_container().get_attribute_current_value(attack_action.damage_attribute)
 	var base_attack_action_dmg: int = attack_action.base_damage
 	var damage_pool: int = damage_attribute_val + base_attack_action_dmg
-
+	
+	if current_combat_event_data.is_critical_success:
+		damage_pool += current_combat_event_data.crit_bonus_damage_pool  # Typically 2
+		CombatLog.instance.add_log("Crit!")
+		current_combat_event_data.on_impact_lines.append("Crit!")
+	
 	# Net pool after defense
 	var final_dmg_pool: int = maxi(damage_pool - defense, 0)
 

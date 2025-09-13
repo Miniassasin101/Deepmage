@@ -77,7 +77,7 @@ func update_stats(unit: Unit) -> void:
 	var health_attribute: Attribute = unit.get_attributes_container().get_attribute("health")
 	var current_modified_value: int = health_attribute.get_current_modified_value()
 	health_text_label.text = "Health: %d / %d" % [
-		current_modified_value, 
+		maxi(current_modified_value, 0), 
 		health_attribute.maximum_value
 	]
 	

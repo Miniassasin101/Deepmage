@@ -16,6 +16,8 @@ var reaction: Reaction = null
 # Attack Data
 var is_success: bool = false
 
+var is_critical_success: bool = false
+
 var is_graze: bool = false
 
 # sometimes an attack will hit even if the attack loses, Ex: Guard reaction.
@@ -41,6 +43,12 @@ var armor_test: Test = null
 
 var armor_test_hits: int = 0
 
+var required_successes: int = 1
 
 # Modifiers
 var accuracy_mod: int = 0
+
+var crit_bonus_damage_pool: int = 2
+
+# Text lines
+var on_impact_lines: Array[String] = []
