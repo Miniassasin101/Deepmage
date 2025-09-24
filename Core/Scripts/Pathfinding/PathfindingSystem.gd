@@ -15,6 +15,9 @@ var navmap: RID = RID()
 
 static var instance: PathfindingSystem = null
 
+# How far we're willing to let a snapped point drift from the ideal ring sample
+const MAX_SNAP := 2.0
+
 
 func _ready() -> void:
 	if instance != null:
@@ -130,3 +133,52 @@ func make_visible_path(path_package: PathPackage) -> void:
 
 func get_closest_nav_point_to(pos: Vector3) -> Vector3:
 	return NavigationServer3D.map_get_closest_point(navmap, pos) + Utilities.nav_vector_offset
+
+
+func get_radial_points_surrounding_unit(in_unit: Unit, radius: float, points_sampled: int) -> Array[Vector3]:
+	var radial_points: Array[Vector3] = []
+	
+	if in_unit == null or points_sampled <= 0 or radius <= 0.0:
+		push_error("Invalid Data On Radial Points")
+		return radial_points
+	
+	if not navmap.is_valid():
+		push_error("PathfindingSystem.navmap is not ready yet.")
+		return radial_points
+	
+	# Center point to sample around
+	var center: Vector3 = in_unit.get_global_position()
+	
+	#Snap center to the navmesh
+	var start_on_nav: Vector3 = NavigationServer3D.map_get_closest_point(navmap, center)
+	
+	var optimize_path := true
+	
+	for i in range(points_sampled):
+		var t := float(i) / float(points_sampled)
+		var angle := TAU * t
+		var dir := Vector3(cos(angle), 0.0, sin(angle))
+		var desired_sample := center + dir * radius
+
+		# Snap each ring sample to the nearest navmesh point
+		var on_nav := NavigationServer3D.map_get_closest_point(navmap, desired_sample)
+
+		# (Optional) Discard if snapping jumps too far (e.g., over a wall / different island)
+		if on_nav.distance_to(desired_sample) > MAX_SNAP:
+			continue
+
+		# (Optional but useful) Keep only if reachable from the center's island
+		var path := NavigationServer3D.map_get_path(navmap, start_on_nav, on_nav, optimize_path)
+		if path.size() >= 2:
+			radial_points.append(on_nav + Utilities.nav_vector_offset)
+	
+	
+	return radial_points
+
+
+# Sorts the passed-in array in-place, nearest -> farthest.
+func sort_positions_by_distance_inplace(positions: Array[Vector3], to: Vector3) -> Array[Vector3]:
+	positions.sort_custom(func(a: Vector3, b: Vector3) -> bool:
+		return a.distance_squared_to(to) < b.distance_squared_to(to)
+	)
+	return positions

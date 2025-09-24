@@ -26,21 +26,6 @@
 [ext_resource type="Resource" uid="uid://dci1vghxdl7pd" path="res://Deepmage/Core/Resources/ActionResources/TestRangedAttackActionResource.tres" id="24_2en3j"]
 [ext_resource type="Script" uid="uid://p4bb1ulowyag" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributesContainer.gd" id="25_ui78x"]
 [ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="26_7mv87"]
-[ext_resource type="Resource" uid="uid://cmmt2i8h8nyry" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/BaseAttributes/MightAttributeResource.tres" id="27_ital0"]
-[ext_resource type="Resource" uid="uid://43whq50jhvrm" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/BaseAttributes/EnduranceAttributeResource.tres" id="28_op3vs"]
-[ext_resource type="Resource" uid="uid://c7ce7gpokhoir" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/BaseAttributes/AgilityAttributeResource.tres" id="29_7r1tj"]
-[ext_resource type="Resource" uid="uid://dikgw5heeo8wu" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/BaseAttributes/MindAttributeResource.tres" id="30_rmrwd"]
-[ext_resource type="Resource" uid="uid://blhslcjt07b8o" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/BaseAttributes/SenseAttributeResource.tres" id="31_bjfxb"]
-[ext_resource type="Resource" uid="uid://dfmpwmr3pmh4d" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/BaseAttributes/PresenceAttributeResource.tres" id="32_hk2qx"]
-[ext_resource type="Resource" uid="uid://ckn1cj427edt8" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/HealthAttributeResource.tres" id="33_hbdwl"]
-[ext_resource type="Resource" uid="uid://bpylci06i7fs" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/PostureAttributeResource.tres" id="34_ndo2o"]
-[ext_resource type="Resource" uid="uid://oapobdj11anu" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/StrainAttributeResource.tres" id="35_67ewx"]
-[ext_resource type="Resource" uid="uid://dfqetcr2x2u5u" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/ArmorAttributeResource.tres" id="36_ifxhe"]
-[ext_resource type="Resource" uid="uid://cnbwyfenycvuj" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/SkillAttributes/MartialAttributeResource.tres" id="37_rbxho"]
-[ext_resource type="Resource" uid="uid://d62m55i6dqsj" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/SkillAttributes/ChannelAttributeResource.tres" id="38_skohu"]
-[ext_resource type="Resource" uid="uid://c8lg8lnxkvj03" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/SkillAttributes/ClashAttributeResource.tres" id="39_adf4v"]
-[ext_resource type="Resource" uid="uid://ld6mogxfe8aj" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/SkillAttributes/EvadeAttributeResource.tres" id="40_34a6i"]
-[ext_resource type="Resource" uid="uid://bwpldyvwlipqq" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/SkillAttributes/WillAttributeResource.tres" id="41_53fh1"]
 
 [sub_resource type="Resource" id="Resource_lsp3f"]
 script = ExtResource("5_p3ymn")
@@ -233,6 +218,201 @@ reaction_check_timing = 0.3
 tags = Array[String](["melee", "attack"])
 metadata/_custom_type_script = "uid://caggmbav8c0ky"
 
+[sub_resource type="Resource" id="Resource_ol66b"]
+resource_name = "HealthAttributeResource"
+script = ExtResource("26_7mv87")
+attribute_name = "health"
+attribute_type = 2
+current_value = 9
+base_value = 0
+maximum_value = 10
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_tccs3"]
+resource_name = "PostureAttributeResource"
+script = ExtResource("26_7mv87")
+attribute_name = "posture"
+attribute_type = 2
+current_value = 10
+base_value = 0
+maximum_value = 10
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_grtb5"]
+resource_name = "StrainAttributeResource"
+script = ExtResource("26_7mv87")
+attribute_name = "strain"
+attribute_type = 2
+current_value = 10
+base_value = 0
+maximum_value = 10
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_jxnhy"]
+resource_name = "ArmorAttributeResource"
+script = ExtResource("26_7mv87")
+attribute_name = "armor"
+attribute_type = 2
+current_value = 1
+base_value = 0
+maximum_value = 1
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_vcafi"]
+resource_name = "MartialAttributeResource"
+script = ExtResource("26_7mv87")
+attribute_name = "martial"
+attribute_type = 1
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_ucxv2"]
+resource_name = "ChannelAttributeResource"
+script = ExtResource("26_7mv87")
+attribute_name = "channel"
+attribute_type = 1
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_xyrbs"]
+resource_name = "ClashAttributeResource"
+script = ExtResource("26_7mv87")
+attribute_name = "clash"
+attribute_type = 1
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_rmt2h"]
+resource_name = "EvadeAttributeResource"
+script = ExtResource("26_7mv87")
+attribute_name = "evade"
+attribute_type = 1
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_hd7qr"]
+resource_name = "WillAttributeResource"
+script = ExtResource("26_7mv87")
+attribute_name = "will"
+attribute_type = 1
+current_value = 3
+base_value = 0
+maximum_value = 3
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_semri"]
+resource_name = "MightAttributeResource"
+script = ExtResource("26_7mv87")
+attribute_name = "might"
+attribute_type = 0
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_dpcrq"]
+resource_name = "EnduranceAttributeResource"
+script = ExtResource("26_7mv87")
+attribute_name = "endurance"
+attribute_type = 0
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_m2aod"]
+resource_name = "AgilityAttributeResource"
+script = ExtResource("26_7mv87")
+attribute_name = "agility"
+attribute_type = 0
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_uowym"]
+resource_name = "SenseAttributeResource"
+script = ExtResource("26_7mv87")
+attribute_name = "sense"
+attribute_type = 0
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_bxxpl"]
+resource_name = "MindAttributeResource"
+script = ExtResource("26_7mv87")
+attribute_name = "mind"
+attribute_type = 0
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_fujxc"]
+resource_name = "PresenceAttributeResource"
+script = ExtResource("26_7mv87")
+attribute_name = "presence"
+attribute_type = 0
+current_value = 2
+base_value = 0
+maximum_value = 2
+minimum_value = 0
+modifiers = Array[int]([])
+tags = Array[String]([])
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
 [node name="CharacterSheet" type="Node" node_paths=PackedStringArray("action_container", "attributes_container")]
 script = ExtResource("1_rgld4")
 action_container = NodePath("ActionContainer")
@@ -244,4 +424,4 @@ actions = Array[ExtResource("3_qntpm")]([SubResource("Resource_1oy7d"), SubResou
 
 [node name="AttributesContainer" type="Node" parent="."]
 script = ExtResource("25_ui78x")
-starting_attributes = Array[ExtResource("26_7mv87")]([ExtResource("33_hbdwl"), ExtResource("34_ndo2o"), ExtResource("35_67ewx"), ExtResource("36_ifxhe"), ExtResource("37_rbxho"), ExtResource("38_skohu"), ExtResource("39_adf4v"), ExtResource("40_34a6i"), ExtResource("41_53fh1"), ExtResource("27_ital0"), ExtResource("28_op3vs"), ExtResource("29_7r1tj"), ExtResource("31_bjfxb"), ExtResource("30_rmrwd"), ExtResource("32_hk2qx")])
+starting_attributes = Array[ExtResource("26_7mv87")]([SubResource("Resource_ol66b"), SubResource("Resource_tccs3"), SubResource("Resource_grtb5"), SubResource("Resource_jxnhy"), SubResource("Resource_vcafi"), SubResource("Resource_ucxv2"), SubResource("Resource_xyrbs"), SubResource("Resource_rmt2h"), SubResource("Resource_hd7qr"), SubResource("Resource_semri"), SubResource("Resource_dpcrq"), SubResource("Resource_m2aod"), SubResource("Resource_uowym"), SubResource("Resource_bxxpl"), SubResource("Resource_fujxc")])

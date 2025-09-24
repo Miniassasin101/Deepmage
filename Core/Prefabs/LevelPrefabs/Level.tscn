@@ -825,7 +825,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.735, 1.03, 0.84)
 script = ExtResource("11_lf0eb")
 
 [node name="Ruby" parent="UnitManager" node_paths=PackedStringArray("character_sheet") instance=ExtResource("12_k2c3k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 character_sheet = NodePath("CharacterSheet1")
 ui_name = "Ruby"
 visor_color = Color(0.73, 0.2993, 0.306478, 1)

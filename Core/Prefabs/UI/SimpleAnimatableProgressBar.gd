@@ -24,6 +24,13 @@ func animate_to_percent(in_percent: float = 100.0) -> void:
 		progress_tween.tween_property(health_bar, "value", in_percent, animation_duration) \
 		.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
 
+func set_to_percent(in_percent: float = 100.0) -> void:
+	abort_tween()
+	
+	in_percent = clampf(in_percent, 0.0, 100.0)
+	
+	if health_bar:
+		health_bar.set_value(in_percent)
 
 func abort_tween() -> void:
 	if progress_tween != null:

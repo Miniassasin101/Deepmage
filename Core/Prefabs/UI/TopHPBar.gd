@@ -124,4 +124,5 @@ func setup_from_unit(in_unit: Unit) -> void:
 	current_defense_label.set_text(str(defence))
 
 	var target_health_percentage: float = (float(current_modified_value) / float(health_attribute.maximum_value) * 100.0)
-	health_bar.animate_to_percent(target_health_percentage)
+	#health_bar.animate_to_percent(target_health_percentage)
+	health_bar.set_to_percent(target_health_percentage)

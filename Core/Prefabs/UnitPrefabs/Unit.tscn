@@ -110,14 +110,13 @@ _data = {
 &"RESET": SubResource("Animation_sxvrp")
 }
 
-[node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual", "character_sheet", "movement_controller", "animation_controller", "token_controller", "left_hand_socket", "right_hand_socket")]
+[node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual", "movement_controller", "animation_controller", "token_controller", "left_hand_socket", "right_hand_socket")]
 script = ExtResource("1_ohquw")
 above_head_marker = NodePath("AboveHeadMarker")
 nav_agent = NodePath("NavigationAgent3D")
 capsule_body = NodePath("Rig/MeshInstance3D")
 capsule_visor = NodePath("Rig/MeshInstance3D/MeshInstance3D")
 selection_visual = NodePath("SelectionSquareRoot/GridSystemVisual")
-character_sheet = NodePath("")
 movement_controller = NodePath("MovementController")
 animation_controller = NodePath("AnimationController")
 token_controller = NodePath("TokenController")

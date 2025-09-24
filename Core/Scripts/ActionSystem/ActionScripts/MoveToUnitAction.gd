@@ -23,10 +23,12 @@ var rotation_acceleration_timer: float
 var curve_travel_offset: float
 var is_moving:           bool = false
 
+var already_shortened: bool = false
 
 
 func start_action(targ_pack: TargetPackage = null) -> void:
 	super.start_action(targ_pack)
+	already_shortened = false
 	var targ_unit: Unit = targ_pack.unit
 	await _begin_movement(targ_unit)
 	end_action()
@@ -41,11 +43,14 @@ func _begin_movement(targ_unit: Unit) -> void:
 	movement_curve = path_pack.get_curve_3d_from_path()
 	curve_length    = movement_curve.get_baked_length()
 	
+	if !already_shortened:
+		curve_length = maxf(0.0, curve_length - unit_avoid_radius)
+	
 	
 	# 2) make movement along curve request
 	var move_controller: MovementController = unit.movement_controller
 	move_controller.animate_movement_along_curve(
-		move_speed, movement_curve, maxf(0.0, curve_length - unit_avoid_radius), acceleration_timer, rotation_acceleration_timer, stopping_distance, rotate_speed)
+		move_speed, movement_curve, curve_length, acceleration_timer, rotation_acceleration_timer, stopping_distance, rotate_speed)
 	
 	await move_controller.movement_complete
 	
@@ -58,6 +63,7 @@ func _end_movement() -> void:
 	# Loop until move_along_curve_process flips is_moving to false
 	var rounded_curve_length: float = snappedf(curve_length, 0.01)
 	Utilities.spawn_text_line(unit, "Moved: " + str(rounded_curve_length), Color.ALICE_BLUE)
+	CombatLog.instance.add_log(unit.ui_name + " Moved: " + str(rounded_curve_length))
 	
 	
 	
@@ -66,12 +72,44 @@ func _end_movement() -> void:
 func get_path_pack_to_unit(in_unit: Unit) -> PathPackage:
 	var to_pos: Vector3 = in_unit.get_global_position()
 	
+
+	
 	var path_pack: PathPackage = PathfindingSystem.instance.get_path_package(to_pos, unit, true)
+	
+	var move_curve: Curve3D = path_pack.get_curve_3d_from_path()
+	
+	var curve_len: float = move_curve.get_baked_length() - unit_avoid_radius
+	
+	var sample_point: Vector3 = move_curve.sample_baked(maxf(curve_len, 0.0))
+	
+	
+	if _is_too_close_to_any_unit(sample_point, in_unit):
+		var new_point: Vector3 = get_new_valid_position(in_unit, sample_point)
+		if new_point != Vector3(-1, -1, -1):
+			path_pack = PathfindingSystem.instance.get_path_package(new_point, unit, true)
+			already_shortened = true
+	
+
 	
 	return path_pack
 
 
-
+func get_new_valid_position(target_unit: Unit, ideal_position: Vector3) -> Vector3:
+	var new_pos: Vector3 = Vector3(-1, -1, -1)
+	
+	var pathfind_sys: PathfindingSystem = PathfindingSystem.instance
+	
+	var test_positions: Array[Vector3] = pathfind_sys.get_radial_points_surrounding_unit(target_unit, unit_avoid_radius, 10)
+	
+	pathfind_sys.sort_positions_by_distance_inplace(test_positions, ideal_position)
+	
+	for pos in test_positions:
+		Utilities.create_debug_sphere(pos, 5.0)
+		if !_is_too_close_to_any_unit(pos, target_unit):
+			new_pos = pos
+			break
+	
+	return new_pos
 
 
 
@@ -96,5 +134,16 @@ func can_activate_on_target(target_pack: TargetPackage) -> bool:
 	return true
 
 
-
+func _is_too_close_to_any_unit(target_pos: Vector3, target_unit: Unit) -> bool:
+	# Grab every unit in the world
+	for other in UnitManager.instance.get_all_units():
+		# skip ourselves
+		if other == unit:
+			continue
+		if other == target_unit:
+			continue
+		# compare distance
+		if other.global_transform.origin.distance_to(target_pos) < unit_avoid_radius:
+			return true
+	return false
 #

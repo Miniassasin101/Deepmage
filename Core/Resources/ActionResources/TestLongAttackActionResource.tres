@@ -63,6 +63,7 @@ accuracy_attribute1 = "might"
 accuracy_attribute2 = "martial"
 damage_attribute = "might"
 base_damage = 5
+base_target_number = 1
 desired_react_lead = 0.05
 default_reaction_latency = 0.06
 hit_delay = 3.0

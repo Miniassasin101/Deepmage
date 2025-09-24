@@ -3,7 +3,7 @@
 extends Node
 
 
-
+const TEST_BALL = preload("res://Deepmage/Core/Prefabs/VFX/TestBall.tscn")
 
 static var nav_y_offset: float = -0.156482
 
@@ -94,3 +94,16 @@ func slow_game(new_time_scale: float = 1.0, duration: float = 0.7) -> void:
 	if new_time_scale != 1.0:
 		await get_tree().create_timer(duration, true, false, true).timeout
 		Engine.set_time_scale(1.0)
+
+
+func create_debug_sphere(at_pos: Vector3, timer: float = -1.0) -> void:
+	var new_sphere: TestBall = TEST_BALL.instantiate() as TestBall
+	if !new_sphere:
+		push_error("No Test Ball")
+		return
+	
+	add_child(new_sphere)
+	new_sphere.set_global_position(at_pos)
+	
+	if timer >= 0.0:
+		new_sphere.set_timer(timer)
