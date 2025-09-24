@@ -10,64 +10,34 @@
 
 [sub_resource type="Resource" id="Resource_gi5u1"]
 script = ExtResource("2_72k2y")
-strength = 0.15
-shake_time = 0.4
-shake_frequency = 50
-timing = 0.0
 metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
 
 [sub_resource type="Resource" id="Resource_n7lae"]
 script = ExtResource("3_46apj")
-duration = 0.2
-timing = 0.0
 metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 
 [sub_resource type="Resource" id="Resource_1qm4u"]
 script = ExtResource("2_72k2y")
-strength = 0.15
-shake_time = 0.4
-shake_frequency = 50
-timing = 0.0
 metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
 
 [sub_resource type="Resource" id="Resource_jyvkj"]
 script = ExtResource("3_46apj")
 duration = 0.0
-timing = 0.0
 metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 
 [sub_resource type="Resource" id="Resource_2qrjt"]
 script = ExtResource("2_72k2y")
-strength = 0.15
-shake_time = 0.4
-shake_frequency = 50
-timing = 0.0
 metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
 
 [sub_resource type="Resource" id="Resource_rtscm"]
 script = ExtResource("3_46apj")
-duration = 0.2
-timing = 0.0
 metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 
 [resource]
 script = ExtResource("1_bqwr4")
 projectile_scene = ExtResource("1_u3c00")
-spawn_at_node = NodePath("")
-start_height = 1.0
-target_height = 1.0
-cleanup_on_arrival = true
-use_path_arc = false
-path_arc_height = 2.0
-path_apex_t = 0.5
-path_smooth = 0.25
-bake_interval = 0.05
 projectile_speed = 40.0
 carrier_arc_height = 1.0
-face_velocity_on = true
-yaw_only_facing = true
-fire_marker = &"RELEASE"
-fallback_fire_if_missing = &"HIT_START"
 animation_package = ExtResource("1_l3mvo")
 hit_anim_effect = SubResource("Resource_2qrjt")
 graze_anim_effect = SubResource("Resource_1qm4u")
@@ -76,17 +46,7 @@ hit_stop_effect = SubResource("Resource_rtscm")
 graze_stop_effect = SubResource("Resource_jyvkj")
 block_stop_effect = SubResource("Resource_n7lae")
 attack_range = 100.0
-accuracy_attribute1 = "agility"
-accuracy_attribute2 = "martial"
-damage_attribute = "might"
-base_damage = 3
-base_target_number = 1
-desired_react_lead = 0.05
-default_reaction_latency = 0.06
-hit_delay = 3.0
-use_hit_delay = false
 action_name = "Throw Ball"
 selection_types = Array[ExtResource("2_u3c00")]([ExtResource("7_72k2y")])
-reaction_check_timing = 0.3
 tags = Array[String](["melee", "attack"])
 metadata/_custom_type_script = "uid://nqjg83o6epyn"

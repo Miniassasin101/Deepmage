@@ -11,9 +11,9 @@ fractal_gain = 0.815
 fractal_weighted_strength = 0.51
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3pvor"]
-seamless = true
-color_ramp = SubResource("Gradient_01b8k")
 noise = SubResource("FastNoiseLite_01b8k")
+color_ramp = SubResource("Gradient_01b8k")
+seamless = true
 
 [resource]
 shading_mode = 0

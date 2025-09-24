@@ -9,9 +9,6 @@
 
 [sub_resource type="Resource" id="Resource_2me7b"]
 script = ExtResource("2_rkfpy")
-strength = 0.15
-shake_time = 0.4
-shake_frequency = 50
 timing = 0.55
 metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
 
@@ -25,7 +22,6 @@ metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 script = ExtResource("2_rkfpy")
 strength = 0.1
 shake_time = 0.3
-shake_frequency = 50
 timing = 0.55
 metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
 
@@ -39,8 +35,6 @@ metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 script = ExtResource("2_rkfpy")
 strength = 0.21
 shake_time = 0.45
-shake_frequency = 50
-timing = 0.0
 metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
 
 [sub_resource type="Resource" id="Resource_jfhli"]
@@ -58,18 +52,9 @@ block_anim_effect = SubResource("Resource_2me7b")
 hit_stop_effect = SubResource("Resource_jfhli")
 graze_stop_effect = SubResource("Resource_52xn1")
 block_stop_effect = SubResource("Resource_6kg6w")
-attack_range = 2.0
 accuracy_attribute1 = "might"
-accuracy_attribute2 = "martial"
-damage_attribute = "might"
 base_damage = 5
-base_target_number = 1
-desired_react_lead = 0.05
-default_reaction_latency = 0.06
-hit_delay = 3.0
-use_hit_delay = false
 action_name = "Test LBash"
 selection_types = Array[ExtResource("5_dqh0h")]([ExtResource("6_wt0sl")])
-reaction_check_timing = 0.3
 tags = Array[String](["melee", "attack"])
 metadata/_custom_type_script = "uid://caggmbav8c0ky"

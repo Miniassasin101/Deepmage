@@ -11,16 +11,11 @@ markers = Dictionary[String, float]({
 "REACT_OFF": 0.4,
 "REACT_ON": 0.27
 })
-min_time_scale = 0.85
-max_time_scale = 1.15
 metadata/_custom_type_script = "uid://bf2hv6d83v6fv"
 
 [resource]
 script = ExtResource("3_g3uxd")
 name = "UnarmedBlock"
 animation = ExtResource("1_a7lng")
-animation_effects = Array[ExtResource("2_gabnd")]([])
 sync_profile = SubResource("Resource_40fny")
-tags = Array[String]([])
-uses_root_motion = false
 metadata/_custom_type_script = "uid://brutb7o0hj6td"

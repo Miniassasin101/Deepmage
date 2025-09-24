@@ -51,7 +51,7 @@ current_health_label = NodePath("MarginContainer/Root/Header/MarginContainer/VBo
 current_defense_label = NodePath("MarginContainer/Root/Header/MarginContainer/VBoxContainer/HBoxContainer/CurrentDefenseLabel")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 2
+layout_mode = 0
 offset_left = 473.0
 offset_top = 25.0
 offset_right = 679.0

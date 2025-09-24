@@ -12,6 +12,7 @@ extends Action
 
 ## Minimum distance from any unit that the final position can be to avoid overlap.
 @export var unit_avoid_radius: float = 0.0
+@export var unit_avoid_sample_number: int = 15
 
 # Internal state:
 var movement_curve:      Curve3D
@@ -99,7 +100,8 @@ func get_new_valid_position(target_unit: Unit, ideal_position: Vector3) -> Vecto
 	
 	var pathfind_sys: PathfindingSystem = PathfindingSystem.instance
 	
-	var test_positions: Array[Vector3] = pathfind_sys.get_radial_points_surrounding_unit(target_unit, unit_avoid_radius, 10)
+	var test_positions: Array[Vector3] = \
+	pathfind_sys.get_radial_points_surrounding_unit(target_unit, unit_avoid_radius, unit_avoid_sample_number)
 	
 	pathfind_sys.sort_positions_by_distance_inplace(test_positions, ideal_position)
 	

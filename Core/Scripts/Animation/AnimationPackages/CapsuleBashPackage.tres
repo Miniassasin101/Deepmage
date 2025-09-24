@@ -10,9 +10,6 @@
 
 [sub_resource type="Resource" id="Resource_7dtjx"]
 script = ExtResource("5_b375h")
-strength = 0.15
-shake_time = 0.4
-shake_frequency = 50
 timing = 0.55
 metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
 
@@ -33,8 +30,6 @@ markers = Dictionary[String, float]({
 "HIT_END": 0.65,
 "HIT_START": 0.55
 })
-min_time_scale = 0.85
-max_time_scale = 1.15
 metadata/_custom_type_script = "uid://bf2hv6d83v6fv"
 
 [resource]
@@ -43,6 +38,4 @@ name = "CapsuleBash"
 animation = ExtResource("1_7m2ij")
 animation_effects = Array[ExtResource("2_vsak5")]([SubResource("Resource_7dtjx"), SubResource("Resource_4cqq6"), SubResource("Resource_lv0cn")])
 sync_profile = SubResource("Resource_u32or")
-tags = Array[String]([])
-uses_root_motion = false
 metadata/_custom_type_script = "uid://brutb7o0hj6td"

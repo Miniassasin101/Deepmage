@@ -11,12 +11,8 @@ metadata/_custom_type_script = "uid://cihsn5lxnlupk"
 
 [resource]
 script = ExtResource("1_5avna")
-spawn_text = "Pass"
 text_color = Color(0.941176, 0.972549, 1, 1)
-scale = 1.0
-defend_attribute = ""
 action_name = "Pass"
 selection_types = Array[ExtResource("2_ju328")]([SubResource("Resource_02pk8")])
-reaction_check_timing = 0.3
 tags = Array[String](["reaction"])
 metadata/_custom_type_script = "uid://285qbhvjqa08"
