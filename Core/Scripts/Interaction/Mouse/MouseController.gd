@@ -31,8 +31,13 @@ var current_hovered_position: Vector3
 
 var current_hovered_unit: Unit
 
+var _initialized := false
+
 static var instance: MouseController = null
 
+
+func _enter_tree() -> void:
+	set_physics_process(false)   # nothing will tick yet
 
 
 # Called when the node enters the scene tree
@@ -42,6 +47,9 @@ func _ready() -> void:
 		queue_free()
 		return
 	instance = self
+	
+	await get_tree().process_frame
+	
 	if !camera:
 		camera = get_viewport().get_camera_3d()
 	# Create and add the RayCast3D node dynamically if it's not in the scene
@@ -52,6 +60,9 @@ func _ready() -> void:
 		_change_layer_mask_to_grid()
 		raycast.enabled = true  # Enable the RayCast3D node
 		add_child(raycast)  # Add RayCast3D to the scene
+	
+	_initialized = true
+	set_physics_process(true)    # start ticking only now
 
 
 

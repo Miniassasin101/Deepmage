@@ -31,7 +31,11 @@ var is_initiated: bool = false
 func get_current_modified_value() -> int:
 	return  current_value + get_current_modifier()
 
+func get_max_value() -> int:
+	return maximum_value
 
+func get_min_value() -> int:
+	return minimum_value
 
 
 func get_current_modifier() -> int:

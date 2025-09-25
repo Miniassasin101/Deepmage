@@ -6,7 +6,7 @@ extends Control
 
 @export_category("References")
 @export var unit_name_label: Label
-@export var health_bar: SimpleAnimatableProgressBar
+@export var health_bar: HealthProgressBar
 @export var current_health_label: Label
 @export var current_defense_label: Label
 
@@ -98,10 +98,13 @@ func _refresh_preview() -> void:
 		slide.clear()
 		_close_slide()
 		return
+	
 
+	
 	# All good: fill & open
 	slide.fill_from_attack(_selected_action as AttackAction, attacker, target)
 	_open_slide()
+
 
 
 func update() -> void:
@@ -124,5 +127,6 @@ func setup_from_unit(in_unit: Unit) -> void:
 	current_defense_label.set_text(str(defence))
 
 	var target_health_percentage: float = (float(current_modified_value) / float(health_attribute.maximum_value) * 100.0)
-	#health_bar.animate_to_percent(target_health_percentage)
-	health_bar.set_to_percent(target_health_percentage)
+	health_bar.animate_to_percent(target_health_percentage)
+
+	#health_bar.set_to_percent(target_health_percentage)

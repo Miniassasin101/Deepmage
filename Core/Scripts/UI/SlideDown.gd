@@ -8,7 +8,6 @@ extends PanelContainer
 @export var start_open := false
 
 var _open := false
-var _tween: Tween
 
 
 var drift_tween: Tween

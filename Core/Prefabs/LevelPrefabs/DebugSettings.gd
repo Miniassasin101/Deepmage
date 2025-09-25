@@ -18,7 +18,7 @@ func _ready() -> void:
 	instance = self
 
 
-func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input_deact(_event: InputEvent) -> void:
 	if !(Input.is_action_just_pressed("testkey_n") and Input.is_action_pressed("testkey_c")):
 		return
 	

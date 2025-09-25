@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://cdifkxjoiv0eq"]
+[gd_scene load_steps=12 format=3 uid="uid://cdifkxjoiv0eq"]
 
-[ext_resource type="PackedScene" uid="uid://bqpqkwmw023x3" path="res://Deepmage/Core/Prefabs/UI/SimpleAnimatableProgressBar.tscn" id="1_jvch7"]
 [ext_resource type="Script" uid="uid://c8kjfg6o0nnpe" path="res://Deepmage/Core/Prefabs/UI/TopHPBar.gd" id="1_ukjim"]
+[ext_resource type="Script" uid="uid://7fr43al0y86s" path="res://Deepmage/Core/Prefabs/UI/HealthProgressBar.gd" id="2_sysu1"]
 [ext_resource type="Script" uid="uid://xf22oummx5qu" path="res://Deepmage/Core/Scripts/UI/AttackPreviewSlideContainer.gd" id="3_sysu1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yd4wd"]
@@ -16,6 +16,30 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 shadow_size = 5
 shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7r0k4"]
+bg_color = Color(0.2025, 0.217542, 0.25, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.39, 0.39, 0.39, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="Gradient" id="Gradient_cydlx"]
+colors = PackedColorArray(0.485703, 0.485704, 0.485703, 1, 0.4, 0.4, 0.4, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ci46t"]
+gradient = SubResource("Gradient_cydlx")
+
+[sub_resource type="Gradient" id="Gradient_7r0k4"]
+colors = PackedColorArray(0.871628, 0.8099, 0.91, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hmxcl"]
+gradient = SubResource("Gradient_7r0k4")
 
 [sub_resource type="LabelSettings" id="LabelSettings_sysu1"]
 font_color = Color(0.4816, 0.51296, 0.56, 1)
@@ -86,26 +110,71 @@ layout_mode = 2
 
 [node name="CurrentHealthLabel" type="Label" parent="MarginContainer/Root/Header/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "20"
+text = "10"
 horizontal_alignment = 1
 
-[node name="HealthBar" parent="MarginContainer/Root/Header/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("1_jvch7")]
+[node name="HealthBar" type="PanelContainer" parent="MarginContainer/Root/Header/MarginContainer/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("top_health_bar", "middle_health_bar", "bottom_health_bar")]
 custom_minimum_size = Vector2(142.44, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_7r0k4")
+script = ExtResource("2_sysu1")
+top_health_bar = NodePath("MarginContainer/TopHealthBar")
+middle_health_bar = NodePath("MarginContainer/MiddleHealthBar")
+bottom_health_bar = NodePath("MarginContainer/BottomHealthBar")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Root/Header/MarginContainer/VBoxContainer/HBoxContainer/HealthBar"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="BottomHealthBar" type="TextureProgressBar" parent="MarginContainer/Root/Header/MarginContainer/VBoxContainer/HBoxContainer/HealthBar/MarginContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+value = 70.0
+rounded = true
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture2D_ci46t")
+texture_progress = SubResource("GradientTexture2D_hmxcl")
+tint_under = Color(0.446777, 0.446777, 0.446777, 1)
+tint_progress = Color(0.9999998, 0.89652085, 0.95472986, 1)
+
+[node name="MiddleHealthBar" type="TextureProgressBar" parent="MarginContainer/Root/Header/MarginContainer/VBoxContainer/HBoxContainer/HealthBar/MarginContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+value = 50.0
+rounded = true
+nine_patch_stretch = true
+texture_progress = SubResource("GradientTexture2D_hmxcl")
+tint_under = Color(0.446777, 0.446777, 0.446777, 1)
+tint_progress = Color(0.99629194, 0.6977775, 0.7002283, 1)
+
+[node name="TopHealthBar" type="TextureProgressBar" parent="MarginContainer/Root/Header/MarginContainer/VBoxContainer/HBoxContainer/HealthBar/MarginContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+value = 30.0
+rounded = true
+nine_patch_stretch = true
+texture_progress = SubResource("GradientTexture2D_hmxcl")
+tint_under = Color(0.446777, 0.446777, 0.446777, 1)
+tint_progress = Color(0.875889, 0.106832, 0.200817, 1)
 
 [node name="CurrentDefenseLabel" type="Label" parent="MarginContainer/Root/Header/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "20"
+text = "2"
 label_settings = SubResource("LabelSettings_sysu1")
 horizontal_alignment = 1
 
-[node name="AttackPreviewSlideContainer" type="PanelContainer" parent="MarginContainer/Root" node_paths=PackedStringArray("attack_name_label", "min_max_dmg_label", "accuracy_pool_label", "target_successes_label", "parent_container")]
+[node name="AttackPreviewSlideContainer" type="PanelContainer" parent="MarginContainer/Root" node_paths=PackedStringArray("top_hp_bar", "attack_name_label", "min_max_dmg_label", "accuracy_pool_label", "target_successes_label", "parent_container")]
 z_index = -1
 layout_mode = 2
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_sysu1")
 script = ExtResource("3_sysu1")
+top_hp_bar = NodePath("../../..")
 attack_name_label = NodePath("MarginContainer/VBoxContainer/AttackNameLabel")
 min_max_dmg_label = NodePath("MarginContainer/VBoxContainer/DamagePreviewLabel")
 accuracy_pool_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/AccuracyLabel")

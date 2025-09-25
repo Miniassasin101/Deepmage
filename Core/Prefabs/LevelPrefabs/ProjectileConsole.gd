@@ -53,12 +53,12 @@ func _scene_root() -> Node:
 		return get_tree().current_scene
 	return get_tree().root
 
-func _find_unit_world(name: String) -> Vector3:
+func _find_unit_world(in_name: String) -> Vector3:
 	if UnitManager.instance == null:
 		Console.print_line("UnitManager.instance is null.", true); return Vector3.ZERO
-	var u = UnitManager.instance.get_unit_by_name(name)
+	var u = UnitManager.instance.get_unit_by_name(in_name)
 	if u == null:
-		Console.print_line("Unit '%s' not found." % name, true); return Vector3.ZERO
+		Console.print_line("Unit '%s' not found." % in_name, true); return Vector3.ZERO
 	return u.global_transform.origin + Vector3(0.0, 1.0, 0.0)
 
 func _bool_from_str(s: String, default_val: bool) -> bool:
@@ -336,11 +336,11 @@ func proj_info() -> void:
 	if last_path == null or !is_instance_valid(last_path):
 		Console.print_line("No path.", true); return
 	var curve := last_path.curve
-	var len := curve.get_baked_length() if (curve != null) else 0.0 # <-- will replace next lines; Godot may flag '?', so do it verbose:
+	var leng := curve.get_baked_length() if (curve != null) else 0.0 # <-- will replace next lines; Godot may flag '?', so do it verbose:
 	# Replace the line above if your GDScript flags '?' here:
-	# var len := 0.0
+	# var leng := 0.0
 	# if curve != null:
-	# 	len = curve.get_baked_length()
+	# 	leng = curve.get_baked_length()
 
 	var carrier_str := "null"
 	if last_carrier != null and is_instance_valid(last_carrier):
@@ -351,7 +351,7 @@ func proj_info() -> void:
 		proj_str = last_projectile.name
 
 	Console.print_line("Path: %s | CurveLen=%.3f | Carrier=%s | Projectile=%s" %
-		[last_path.name, len, carrier_str, proj_str], true)
+		[last_path.name, leng, carrier_str, proj_str], true)
 
 	if last_carrier != null and is_instance_valid(last_carrier):
 		Console.print_line("    speed=%.3f, arc_h=%.3f, face=%s, yaw_only=%s" %
