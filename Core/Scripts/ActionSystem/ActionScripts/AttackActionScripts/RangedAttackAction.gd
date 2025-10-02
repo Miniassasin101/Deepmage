@@ -77,6 +77,18 @@ func get_animation_sync(reaction_anim_pack: AnimationPackage) -> Dictionary:
 
 	# PRECOMPUTE travel (this is the key bit you needed)
 	projectile_travel_time = _carrier.plan_travel()
+	
+	if _proj is SatelliteCarrier:
+		_carrier.started.connect(func(_p, _dur):
+			_proj.set_bob_enabled(false)
+			_proj.set_follow_active(false)
+		)
+		_carrier.detached.connect(func(p):
+			# When the carrier gives it back (cleanup/arrival), restore behavior.
+			if p is SatelliteCarrier:
+				p.set_bob_enabled(true)
+				p.set_follow_active(true))
+	
 
 	# Figure out WHEN the projectile is released in the attack anim
 	var release_t := _safe_marker_time(animation_package, fire_marker)
@@ -146,7 +158,7 @@ func _make_or_fetch_projectile() -> Node3D:
 	_owned_projectile = true
 	return n
 
-func _launch_projectile_after(delay_sec: float) -> void:
+func _launch_projectile_after_dep(delay_sec: float) -> void:
 	if _carrier == null:
 		return
 	# place at start immediately (carrier handles that), then activate after delay
@@ -159,6 +171,23 @@ func _launch_projectile_after(delay_sec: float) -> void:
 		if _carrier != null and is_instance_valid(_carrier):
 			_carrier.activate()
 
+func _launch_projectile_after(delay_sec: float) -> void:
+	if _carrier == null:
+		return
+	if delay_sec > 0.0:
+		var t := unit.get_tree().create_timer(delay_sec)
+		await t.timeout
+
+	if _carrier != null and is_instance_valid(_carrier):
+		# Snap path start to current projectile position to avoid any visual pop.
+		if _proj != null and is_instance_valid(_proj) and _path != null and is_instance_valid(_path):
+			var c := _path.curve
+			if c != null and c.get_point_count() > 0:
+				c.set_point_position(0, _path.to_local(_proj.global_position))
+				_carrier.plan_travel() # recompute with the tiny change
+
+		_carrier.activate()
+
 func _cleanup_projectile() -> void:
 	if _carrier != null and is_instance_valid(_carrier):
 		_carrier.detach_projectile(true, true)
@@ -167,6 +196,9 @@ func _cleanup_projectile() -> void:
 	_path = null
 	_carrier = null
 	if _owned_projectile and _proj != null and is_instance_valid(_proj):
-		_proj.queue_free()
+		if _proj is SatelliteCarrier:
+			_proj.destroy_satellite()
+		else:
+			_proj.queue_free()
 	_proj = null
 	_owned_projectile = false

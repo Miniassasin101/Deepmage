@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://2h1a1e1r8hc2"]
+[gd_scene load_steps=20 format=3 uid="uid://2h1a1e1r8hc2"]
 
 [ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
 [ext_resource type="Script" uid="uid://byevnkq30m4mb" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.gd" id="1_ohquw"]
@@ -10,6 +10,8 @@
 [ext_resource type="AnimationLibrary" uid="uid://oosve5txyoqs" path="res://Deepmage/Core/Resources/AnimationResources/AnimationLibraries/TestAnimationLibraries/CapsuleAnims.res" id="4_7ehp6"]
 [ext_resource type="Animation" uid="uid://dl5c4nb4fybhk" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/BackHitReaction.res" id="4_dg5hf"]
 [ext_resource type="Script" uid="uid://c2aqj40trpjeq" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/EffectsController.gd" id="4_s3v1t"]
+[ext_resource type="Script" uid="uid://br2ouvjnr5mbk" path="res://Deepmage/Core/Prefabs/UnitPrefabs/SatelliteController.gd" id="9_aemtr"]
+[ext_resource type="PackedScene" uid="uid://2ba8bs3ad48b" path="res://Deepmage/Core/Prefabs/VFX/SatelliteCarrier.tscn" id="10_lsp3f"]
 [ext_resource type="Script" uid="uid://ck2buvlnnr6il" path="res://Deepmage/Core/Scripts/Mechanics/Tokens/TokenController.gd" id="11_1um36"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ohquw"]
@@ -110,7 +112,7 @@ _data = {
 &"RESET": SubResource("Animation_sxvrp")
 }
 
-[node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual", "movement_controller", "animation_controller", "token_controller", "left_hand_socket", "right_hand_socket")]
+[node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual", "movement_controller", "animation_controller", "satellite_controller", "token_controller", "left_hand_socket", "right_hand_socket")]
 script = ExtResource("1_ohquw")
 above_head_marker = NodePath("AboveHeadMarker")
 nav_agent = NodePath("NavigationAgent3D")
@@ -119,6 +121,7 @@ capsule_visor = NodePath("Rig/MeshInstance3D/MeshInstance3D")
 selection_visual = NodePath("SelectionSquareRoot/GridSystemVisual")
 movement_controller = NodePath("MovementController")
 animation_controller = NodePath("AnimationController")
+satellite_controller = NodePath("SatelliteController")
 token_controller = NodePath("TokenController")
 left_hand_socket = NodePath("Rig/LeftHandMesh/LeftHandSocket")
 right_hand_socket = NodePath("Rig/RightHandMesh/RightHandSocket")
@@ -142,7 +145,7 @@ mesh = SubResource("BoxMesh_0qgfu")
 surface_material_override/0 = ExtResource("1_cc6tg")
 
 [node name="LeftHandMesh" type="MeshInstance3D" parent="Rig"]
-transform = Transform3D(0.3, 7.9648e-05, -2.40016e-05, -7.96488e-05, 0.3, -9.92325e-06, 2.3999e-05, 9.92962e-06, 0.3, 0.713219, 1.02331, 0.140477)
+transform = Transform3D(0.29999995, 7.9648e-05, -2.400162e-05, -7.9648795e-05, 0.29999995, -9.92325e-06, 2.399898e-05, 9.929621e-06, 0.3, 0.713219, 1.02331, 0.140477)
 mesh = SubResource("SphereMesh_1um36")
 surface_material_override/0 = ExtResource("1_cc6tg")
 
@@ -190,6 +193,30 @@ libraries = {
 &"": SubResource("AnimationLibrary_7ehp6"),
 &"CapsuleAnims": ExtResource("4_7ehp6")
 }
+
+[node name="SatelliteController" type="Node3D" parent="." node_paths=PackedStringArray("spawn_markers")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.283377, 0)
+script = ExtResource("9_aemtr")
+satellite_prefab = ExtResource("10_lsp3f")
+spawn_markers = [NodePath("SpawnMarker1"), NodePath("SpawnMarker2"), NodePath("SpawnMarker3"), NodePath("SpawnMarker4"), NodePath("SpawnMarker5"), NodePath("SpawnMarker6")]
+
+[node name="SpawnMarker1" type="Marker3D" parent="SatelliteController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8481349, 0.1903224, 0)
+
+[node name="SpawnMarker2" type="Marker3D" parent="SatelliteController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.82162154, 0.1903224, 0)
+
+[node name="SpawnMarker3" type="Marker3D" parent="SatelliteController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6864845, 0.60697126, -0.23070657)
+
+[node name="SpawnMarker4" type="Marker3D" parent="SatelliteController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6599712, 0.60697126, -0.23070657)
+
+[node name="SpawnMarker5" type="Marker3D" parent="SatelliteController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4062649, 0.9591547, -0.37589395)
+
+[node name="SpawnMarker6" type="Marker3D" parent="SatelliteController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.37975156, 0.9591547, -0.37589395)
 
 [node name="MovementController" type="Node" parent="." node_paths=PackedStringArray("unit")]
 script = ExtResource("3_1oy7d")

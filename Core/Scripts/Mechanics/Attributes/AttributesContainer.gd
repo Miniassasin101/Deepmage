@@ -91,6 +91,16 @@ func set_attribute_current_value(in_name: String, value: int) -> bool:
 		return true
 	return false
 
+func change_attribute_current_value_by(in_name: String, value: int) -> bool:
+	var att = get_attribute(in_name)
+	if att:
+		att.current_value += value
+		emit_signal("attribute_changed", in_name, att.current_value)
+		SignalBus.update_stat_bars.emit()
+		return true
+	return false
+
+
 # Add modifier to attribute by name
 func add_attribute_modifier(in_name: String, modifier_value: int) -> bool:
 	var att = get_attribute(in_name)

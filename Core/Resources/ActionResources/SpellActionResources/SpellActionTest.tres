@@ -1,0 +1,123 @@
+[gd_resource type="Resource" script_class="SpellAction" load_steps=12 format=3 uid="uid://gol0peu7b8bs"]
+
+[ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="1_caut8"]
+[ext_resource type="Script" uid="uid://burmhj2kqsd8y" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/SpellAction.gd" id="1_x50jb"]
+[ext_resource type="Script" uid="uid://brutb7o0hj6td" path="res://Deepmage/Core/Scripts/Animation/AnimationPackage.gd" id="2_dvalv"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_nhs2g"]
+[ext_resource type="Script" uid="uid://beaqcf4hetaxo" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitMomentAnimationEffect.gd" id="2_th36e"]
+[ext_resource type="Script" uid="uid://bf2hv6d83v6fv" path="res://Deepmage/Core/Resources/DataStructures/AnimationSyncProfile.gd" id="3_th36e"]
+[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="6_pcx0h"]
+
+[sub_resource type="Animation" id="Animation_hitdq"]
+resource_name = "UnarmedBlockAnim"
+length = 1.5
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"BlockMoment",
+"time": 0.27135882
+}]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Rig:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2474154, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, -0.27079678), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Rig:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2474154, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.15191345, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Rig/LeftHandMesh:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.20666665, 0.3966666, 0.56666666, 1.5),
+"transitions": PackedFloat32Array(1, -2, -2, -2, 1),
+"update": 0,
+"values": [Vector3(0.7132191, 1.0233141, 0.14047682), Vector3(0.23721237, 1.1372879, 0.7773879), Vector3(0.17016885, 1.1641049, 0.7773879), Vector3(0.23721237, 1.1372879, 0.7773879), Vector3(0.7132191, 1.0233141, 0.14047682)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Rig/LeftHandMesh:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.20666665, 0.56666666, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(3.3077507e-05, -8.000545e-05, -0.00026549603), Vector3(3.307751e-05, -8.0005426e-05, -0.000265496), Vector3(3.307751e-05, -8.0005426e-05, -0.000265496), Vector3(3.3077507e-05, -8.000545e-05, -0.00026549603)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Rig/RightHandMesh:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.20666665, 0.3966666, 0.56666666, 1.5),
+"transitions": PackedFloat32Array(1, -2, -2, -2, 1),
+"update": 0,
+"values": [Vector3(-0.72378725, 1.0233141, 0.14047682), Vector3(-0.21422449, 0.9471738, 0.7869566), Vector3(-0.1874071, 0.87342614, 0.78695655), Vector3(-0.21422449, 0.9471738, 0.7869566), Vector3(-0.72378725, 1.0233141, 0.14047682)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Rig/RightHandMesh:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.20666665, 0.56666666, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Resource" id="Resource_pcx0h"]
+script = ExtResource("2_th36e")
+timing = 0.32
+metadata/_custom_type_script = "uid://beaqcf4hetaxo"
+
+[sub_resource type="Resource" id="Resource_qrgqx"]
+script = ExtResource("3_th36e")
+markers = Dictionary[String, float]({
+"CAST_OFF": 0.4,
+"CAST_ON": 0.27,
+"REACT_OFF": 0.4,
+"REACT_ON": 0.27
+})
+metadata/_custom_type_script = "uid://bf2hv6d83v6fv"
+
+[sub_resource type="Resource" id="Resource_7dcpu"]
+script = ExtResource("2_dvalv")
+name = "UnarmedBlock"
+animation = SubResource("Animation_hitdq")
+animation_effects = Array[ExtResource("1_caut8")]([SubResource("Resource_pcx0h")])
+sync_profile = SubResource("Resource_qrgqx")
+metadata/_custom_type_script = "uid://brutb7o0hj6td"
+
+[resource]
+script = ExtResource("1_x50jb")
+mana_cost = 1
+spell_name = "Test Spell"
+animation_package = SubResource("Resource_7dcpu")
+action_name = "Test Spell"
+selection_types = Array[ExtResource("2_nhs2g")]([ExtResource("6_pcx0h")])
+tags = Array[String](["spell"])
+metadata/_custom_type_script = "uid://burmhj2kqsd8y"

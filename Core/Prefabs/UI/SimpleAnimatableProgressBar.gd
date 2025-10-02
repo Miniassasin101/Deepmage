@@ -7,9 +7,10 @@ var progress_tween: Tween = null
 
 
 func _ready() -> void:
-	await get_tree().process_frame
-	await get_tree().process_frame
-	animate_to_percent()
+	#await get_tree().process_frame
+	#await get_tree().process_frame
+	#set_to_percent()
+	pass
 
 func reset() -> void:
 	pass

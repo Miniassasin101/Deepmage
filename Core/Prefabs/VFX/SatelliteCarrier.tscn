@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://2ba8bs3ad48b"]
+
+[ext_resource type="Script" uid="uid://dq4lh03na6ws2" path="res://SatelliteCarrier.gd" id="1_4s3lf"]
+
+[node name="SatelliteCarrier" type="Node3D"]
+transform = Transform3D(8.5850725, 0, 0, 0, 8.5850725, 0, 0, 0, 8.5850725, 0, 0, 0)
+script = ExtResource("1_4s3lf")
+bob_amplitude = 0.01
+bob_frequency_hz = 0.5

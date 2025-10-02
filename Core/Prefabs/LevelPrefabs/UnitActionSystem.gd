@@ -315,12 +315,16 @@ func on_hovered_unit_changed(in_unit: Unit) -> void:
 	if !is_enabled:
 		return
 	
+	
 	var selected_unit: Unit = get_selected_unit()
 
 	# If the hovered unit changed, clear the previous one (unless it’s the selected unit)
 	if in_unit != prev_hovered_unit:
-		if prev_hovered_unit and prev_hovered_unit != selected_unit and prev_hovered_unit.selection_visual:
-			prev_hovered_unit.selection_visual.clear_material()
+		if prev_hovered_unit and prev_hovered_unit.selection_visual:
+			if in_unit == selected_unit or prev_hovered_unit == selected_unit:
+				selected_unit.selection_visual.set_blue()
+			else:
+				prev_hovered_unit.selection_visual.clear_material()
 		
 		setup_top_bar(in_unit)
 
@@ -330,9 +334,9 @@ func on_hovered_unit_changed(in_unit: Unit) -> void:
 		return
 
 	# Don’t override the selected unit’s own visuals
-	if selected_unit and in_unit == selected_unit:
-		prev_hovered_unit = in_unit
-		return
+	#if selected_unit and in_unit == selected_unit:
+	#	prev_hovered_unit = in_unit
+	#	return
 	
 
 	
@@ -343,7 +347,7 @@ func on_hovered_unit_changed(in_unit: Unit) -> void:
 	
 	if selected_unit and selected_unit.get_action_container() and selected_action:
 		can_use = selected_unit.get_action_container().can_use_action_at_target(selected_action, in_unit)
-	
+		
 
 	# Apply visuals
 	if in_unit.selection_visual:
@@ -356,7 +360,12 @@ func on_hovered_unit_changed(in_unit: Unit) -> void:
 			in_unit.selection_visual.pulse_square(action_hover_pulse_scale)
 		else:
 			# Optional: neutral or clear to avoid stale highlights
-			in_unit.selection_visual.clear_material()
+			if in_unit == selected_unit:
+				#in_unit.selection_visual.set_blue()
+				pass
+			else:
+				#in_unit.selection_visual.clear_material()
+				pass
 
 	# Track current hover
 	prev_hovered_unit = in_unit

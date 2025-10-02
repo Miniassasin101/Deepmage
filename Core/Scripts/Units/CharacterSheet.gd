@@ -20,10 +20,11 @@ func _ready() -> void:
 		if attributes_container:
 			if !attributes_container.starting_attributes.is_empty() and attributes.is_empty():
 				attributes.assign(attributes_container.starting_attributes)
+				print_debug("attributes setup successfully")
 			else:
-				print("starting attributes are empty or attributes arent empty")
+				print_debug("starting attributes are empty or attributes arent empty")
 		else:
-			print("no attributes container")
+			print_debug("no attributes container")
 		return
 
 	if !unit:

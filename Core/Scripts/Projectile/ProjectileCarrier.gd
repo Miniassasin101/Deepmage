@@ -142,13 +142,15 @@ func attach_projectile(p: Node3D, keep_global: bool = true) -> void:
 	if !projectile.get_parent():
 		add_child(projectile)
 	else:
-		projectile.reparent(self)
+		projectile.reparent(self, keep_global)
 		
-	if keep_global:
+	#if keep_global:
 		projectile.global_transform = prior
 
 	# Reset relative offset so we can drive global pos every frame
-	projectile.position = Vector3.ZERO
+	#projectile.position = Vector3.ZERO
+	if !keep_global and !projectile.top_level:
+		projectile.position = Vector3.ZERO
 
 
 ## Return projectile to its original parent (if any).
@@ -156,7 +158,7 @@ func detach_projectile(return_to_original: bool = true, keep_global: bool = true
 	if projectile == null:
 		return
 
-	var prior = projectile.global_transform
+	var prior := projectile.global_transform
 	remove_child(projectile)
 
 	if return_to_original and _original_parent != null:
@@ -348,7 +350,8 @@ func _on_arrived() -> void:
 		_active = false
 		_paused = false
 	_update_projectile_transform(_resolved_end_distance)
-	emit_signal("arrived", projectile)
+
+	arrived.emit(projectile)
 
 	if auto_detach_on_arrival:
 		detach_projectile(true, true)

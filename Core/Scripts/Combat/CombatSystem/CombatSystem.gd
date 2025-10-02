@@ -37,12 +37,17 @@ func declare_attack(action: AttackAction, attacker: Unit, defender: Unit) -> voi
 	
 	setup_attacker_test()
 	# Check if target wants to do a reaction
-	await prompt_player_reaction(defender)
+	if action.tags.has("attack"):
+		await prompt_player_reaction(defender)
+		
+		setup_defender_test()
 
+	setup_degree_of_success()
 
-	setup_tests()
-
-	current_combat_event_data.reaction.resolve_reaction()
+	
+	if current_combat_event_data.reaction:
+	
+		current_combat_event_data.reaction.resolve_reaction()
 	
 	setup_effective_damage()
 
@@ -86,10 +91,7 @@ func prompt_player_reaction(defender: Unit) -> void:
 		CombatLog.instance.add_log(current_combat_event_data.defender.ui_name + " reacts with " + selected_reaction.action_name)
 
 
-func setup_tests() -> void:
 
-	setup_defender_test()
-	setup_degree_of_success()
 
 
 func setup_attacker_test() -> void:
@@ -169,6 +171,9 @@ func setup_degree_of_success() -> void:
 
 func setup_effective_damage() -> void:
 	var attack_action: AttackAction = current_combat_event_data.action
+	
+	if !attack_action.tags.has("attack"):
+		return
 
 	# Defense (track base+bonus for logging clarity)
 	var defense: int = current_combat_event_data.defender.get_attributes_container().get_defence()

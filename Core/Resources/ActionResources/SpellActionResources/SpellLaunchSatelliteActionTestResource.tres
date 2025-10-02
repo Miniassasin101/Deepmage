@@ -1,0 +1,107 @@
+[gd_resource type="Resource" script_class="SpellLaunchSatelliteAction" load_steps=18 format=3 uid="uid://056wlunxgtlm"]
+
+[ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="1_8byyr"]
+[ext_resource type="Script" uid="uid://bm3qks4yfr6rm" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/SpellLaunchSatelliteAction.gd" id="1_v56iu"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_3kljd"]
+[ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="2_6dccn"]
+[ext_resource type="Script" uid="uid://dfqq4lgq8fr27" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="3_2blxp"]
+[ext_resource type="Script" uid="uid://beaqcf4hetaxo" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitMomentAnimationEffect.gd" id="4_f0438"]
+[ext_resource type="Script" uid="uid://brutb7o0hj6td" path="res://Deepmage/Core/Scripts/Animation/AnimationPackage.gd" id="5_ko24f"]
+[ext_resource type="Script" uid="uid://bf2hv6d83v6fv" path="res://Deepmage/Core/Resources/DataStructures/AnimationSyncProfile.gd" id="6_hspqc"]
+[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="9_6dccn"]
+
+[sub_resource type="Animation" id="Animation_dee4o"]
+resource_name = "Throw"
+length = 2.5
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"Spawn Moment",
+"time": 1.35
+}]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Rig:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.31333345, 1.2633333, 1.4333333, 2.5),
+"transitions": PackedFloat32Array(-2, -2, -2, 0.5, -2),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.010403464, 0.003956971, 0.13284197), Vector3(0, 0, -0.16595173), Vector3(0, 0, 0.106913716), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Rig:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.31333342, 1.2533333, 1.4333333, 2.5),
+"transitions": PackedFloat32Array(-2, -2, -2, 0.5, -2),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.1721851, 0.19125313, 0.033161767), Vector3(-0.12666297, -0.3333027, 0.04370814), Vector3(0.29673705, 0.2087569, -0.019117326), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Resource" id="Resource_h8djc"]
+script = ExtResource("2_6dccn")
+timing = 1.34
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_m1mbx"]
+script = ExtResource("3_2blxp")
+duration = 0.308
+timing = 1.36
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_pox3h"]
+script = ExtResource("4_f0438")
+timing = 1.35
+metadata/_custom_type_script = "uid://beaqcf4hetaxo"
+
+[sub_resource type="Resource" id="Resource_anx20"]
+script = ExtResource("6_hspqc")
+markers = Dictionary[String, float]({
+"HIT_END": 1.4,
+"HIT_START": 1.3,
+"RELEASE": 1.4
+})
+metadata/_custom_type_script = "uid://bf2hv6d83v6fv"
+
+[sub_resource type="Resource" id="Resource_mlsku"]
+script = ExtResource("5_ko24f")
+name = "BallThrow"
+animation = SubResource("Animation_dee4o")
+animation_effects = Array[ExtResource("1_8byyr")]([SubResource("Resource_h8djc"), SubResource("Resource_m1mbx"), SubResource("Resource_pox3h")])
+sync_profile = SubResource("Resource_anx20")
+metadata/_custom_type_script = "uid://brutb7o0hj6td"
+
+[sub_resource type="Resource" id="Resource_2qrjt"]
+script = ExtResource("2_6dccn")
+shake_time = 0.3
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_vgc8f"]
+script = ExtResource("3_2blxp")
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[resource]
+script = ExtResource("1_v56iu")
+mana_cost = 1
+spell_name = "Launch Spell"
+projectile_speed = 70.0
+animation_package = SubResource("Resource_mlsku")
+hit_anim_effect = SubResource("Resource_2qrjt")
+graze_anim_effect = SubResource("Resource_2qrjt")
+block_anim_effect = SubResource("Resource_2qrjt")
+hit_stop_effect = SubResource("Resource_vgc8f")
+graze_stop_effect = SubResource("Resource_vgc8f")
+block_stop_effect = SubResource("Resource_vgc8f")
+attack_range = 100.0
+accuracy_attribute1 = "sense"
+accuracy_attribute2 = "channel"
+damage_attribute = "mind"
+action_name = "Launch Spell"
+selection_types = Array[ExtResource("2_3kljd")]([ExtResource("9_6dccn")])
+tags = Array[String](["attack"])
+metadata/_custom_type_script = "uid://bm3qks4yfr6rm"

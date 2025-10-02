@@ -87,6 +87,7 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	_play_reaction_with_delay(reaction_anim_pack, sync)
 
 	# 8) Resolve exactly at the hit moment (keeps the actual rules result)
+	await unit.get_tree().process_frame
 	await _resolve_at_hit_moment_or_timer(sync)
 	# NOTE: Make sure event timings dont perfectly overlap: Causes animation event override for earlier ones.
 
@@ -103,6 +104,9 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 
 ## Moves the unit into attack range of the target unit if needed.
 func move_to_target_unit(targ_unit: Unit) -> void:
+	if targ_unit == unit:
+		return
+	
 	if get_distance_to_unit(targ_unit) <= attack_range:
 		return
 	action_container.use_action(get_move_to_action(), targ_unit)
@@ -116,6 +120,8 @@ func declare_attack(target_unit: Unit) -> void:
 
 ## Rotates the unit to face the target position, then waits for pre-rotation completion.
 func rotate_towards_target(target: Unit) -> void:
+	if target == unit:
+		return
 	var target_pos := target.get_global_position()
 	unit.movement_controller.rotate_unit_towards_target_position(
 		target_pos,
@@ -249,7 +255,7 @@ func _play_attack_with_delay(pack: AnimationPackage, sync: Dictionary) -> void:
 		unit.animation_controller.play_package_timed(pack, max(0.0, attack_delay_val), 1.0)
 		return
 
-	await unit.get_tree().create_timer(max(0.0, attack_delay_val)).timeout
+	await unit.get_tree().create_timer(maxf(0.0, attack_delay_val)).timeout
 	unit.animation_controller.play_package(pack)
 
 ## Plays the defender’s reaction animation (if applicable) with delay/scale from sync data.

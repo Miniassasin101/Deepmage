@@ -72,6 +72,7 @@ offset_bottom = 166.0
 grow_horizontal = 0
 grow_vertical = 2
 scale = Vector2(0.6, 0.6)
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_yd4wd")
 script = ExtResource("2_vileu")
 start_offset = Vector2(-330, 0)

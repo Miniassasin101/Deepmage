@@ -5,8 +5,9 @@
 
 [sub_resource type="SphereMesh" id="SphereMesh_wolyt"]
 
-[node name="TestBall" type="Node3D"]
+[node name="TestBall" type="Node3D" node_paths=PackedStringArray("mesh_ball")]
 script = ExtResource("1_wolyt")
+mesh_ball = NodePath("MeshInstance3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)

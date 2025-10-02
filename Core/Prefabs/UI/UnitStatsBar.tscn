@@ -11,7 +11,7 @@
 [sub_resource type="LabelSettings" id="LabelSettings_bwm3i"]
 font_size = 21
 
-[node name="UnitStatsBar" type="MarginContainer" node_paths=PackedStringArray("unit_stats_bar_content", "unit_name_label", "initiative_score_label", "multiple_action_penalty_label", "health_text_label", "health_bar")]
+[node name="UnitStatsBar" type="MarginContainer" node_paths=PackedStringArray("unit_stats_bar_content", "unit_name_label", "initiative_score_label", "multiple_action_penalty_label", "mana_points_label", "health_text_label", "health_bar")]
 offset_left = 2.0
 offset_top = 2.0
 offset_right = 157.0
@@ -21,6 +21,7 @@ unit_stats_bar_content = NodePath("UnitStatsBarContent")
 unit_name_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/UnitNameLabel")
 initiative_score_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/InitiativeScoreLabel")
 multiple_action_penalty_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/MultipleActionPenalty")
+mana_points_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/ManaLabel")
 health_text_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/HealthTextLabel")
 health_bar = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/SimpleAnimatableProgressBar")
 shadowed_stylebox = ExtResource("1_cydlx")
@@ -57,6 +58,11 @@ horizontal_alignment = 1
 [node name="MultipleActionPenalty" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Multiple Action Penalty"
+horizontal_alignment = 1
+
+[node name="ManaLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Mana Points"
 horizontal_alignment = 1
 
 [node name="HealthTextLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer"]

@@ -6,6 +6,7 @@ extends MarginContainer
 @export var unit_name_label: Label
 @export var initiative_score_label: Label
 @export var multiple_action_penalty_label: Label
+@export var mana_points_label: Label
 @export var health_text_label: Label
 @export var health_bar: SimpleAnimatableProgressBar
 
@@ -60,7 +61,7 @@ func make_styleboxes_unique() -> void:
 
 
 # Update the stats bar with the given unit's stats.
-func update_stats(unit: Unit) -> void:
+func update_stats(unit: Unit, with_health_anim: bool = true) -> void:
 	if !TurnSystem.instance.is_combat_started:
 		#return
 		pass
@@ -74,6 +75,9 @@ func update_stats(unit: Unit) -> void:
 
 	# Shows the initiative score of the unit. Resets at the start of the next round so the lowest unit has a 0 to keep numbers more readable.
 	initiative_score_label.text = "Initiative Score: " + str(TurnSystem.instance.initiative_scores[unit] - lowest_score)
+	
+	mana_points_label.set_text("Mana: " + str(unit.get_attributes_container().get_attribute_current_value("mana")))
+	
 	var health_attribute: Attribute = unit.get_attributes_container().get_attribute("health")
 
 	var current_modified_value: int = health_attribute.get_current_modified_value()
@@ -82,13 +86,12 @@ func update_stats(unit: Unit) -> void:
 		health_attribute.maximum_value
 	]
 	
+	
 	# Animate the health bar value.
 	var target_health_percentage: float = (float(current_modified_value) / float(health_attribute.maximum_value) * 100)
 	#print_debug("Current Value: " + str(current_modified_value))
 	#print_debug("Target Percent: " + str(target_health_percentage))
 	
-	health_bar.animate_to_percent(target_health_percentage)
-
 	
 	# Change the stylebox based on whether this unit has already acted.
 	if unit.turn_state == unit.TurnState.TURN_ENDED:
@@ -103,6 +106,12 @@ func update_stats(unit: Unit) -> void:
 			
 		else:
 			unit_stats_bar_content.add_theme_stylebox_override("panel", blue_shadowed_stylebox)
+	
+	await get_tree().process_frame
+	if with_health_anim:
+		health_bar.animate_to_percent(target_health_percentage)
+	else:
+		health_bar.set_to_percent(target_health_percentage)
 	
 	if TurnSystem.instance.selected_unit == unit:
 		start_pulse()

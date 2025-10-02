@@ -96,14 +96,16 @@ func slow_game(new_time_scale: float = 1.0, duration: float = 0.7) -> void:
 		Engine.set_time_scale(1.0)
 
 
-func create_debug_sphere(at_pos: Vector3, timer: float = -1.0) -> void:
+func create_debug_sphere(at_pos: Vector3, timer: float = -1.0) -> TestBall:
 	var new_sphere: TestBall = TEST_BALL.instantiate() as TestBall
 	if !new_sphere:
 		push_error("No Test Ball")
-		return
+		return null
 	
 	add_child(new_sphere)
 	new_sphere.set_global_position(at_pos)
 	
 	if timer >= 0.0:
 		new_sphere.set_timer(timer)
+	
+	return new_sphere

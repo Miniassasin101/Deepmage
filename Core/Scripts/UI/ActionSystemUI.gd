@@ -92,6 +92,10 @@ func make_action_buttons(unit: Unit, make_reactions: bool = false, auto_select_f
 
 
 func on_action_button_pressed(action: Action) -> void:
+	if UnitActionSystem.instance.is_busy and !UnitActionSystem.instance.is_prompting_reaction:
+		await SignalBus.on_action_ended
+		await get_tree().process_frame
+
 	SignalBus.on_selected_action_changed.emit(action)
 	#CombatLog.instance.add_log("Action Pressed: " + action.action_name)
 	pass

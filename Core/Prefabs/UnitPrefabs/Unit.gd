@@ -21,6 +21,7 @@ enum TurnState {
 @export var character_sheet: CharacterSheet
 @export var movement_controller: MovementController
 @export var animation_controller: AnimationController
+@export var satellite_controller: SatelliteController
 @export var token_controller: TokenController
 
 @export var left_hand_socket: Marker3D

@@ -10,7 +10,7 @@ extends Control
 var unit_stats_bars: Dictionary = {}
 var units_to_create_for: Array
 
-
+var is_first_setup: bool = true
 
 
 # Called when the node enters the scene tree for the first time.
@@ -57,9 +57,11 @@ func instantiate_initiative_queue(_unit: Unit = null) -> void:
 		for unit in units_to_create_for:
 			var stats_bar = unit_stats_bar_scene.instantiate() as UnitStatsBar
 			unit_stats_container.add_child(stats_bar)
-			stats_bar.update_stats(unit)  # Initialize with current values.
+			stats_bar.update_stats(unit, is_first_setup)  # Initialize with current values.
 			unit_stats_bars[unit] = stats_bar
+			
 		
+		is_first_setup = false
 
 
 func _on_update_stats_bars() -> void:
@@ -76,12 +78,18 @@ func _on_update_stats_bars() -> void:
 
 
 func on_unit_selected(unit: Unit) -> void:
-	await get_tree().process_frame
-	var stats_bar: UnitStatsBar = unit_stats_bars[unit]
-	stats_bar.start_pulse()
+
+	var stats_bar: UnitStatsBar = unit_stats_bars[unit] if unit_stats_bars.has(unit) else null
+	if stats_bar:
+		
+		stats_bar.start_pulse()
 
 
 func on_unit_unselected(unit: Unit) -> void:
-	await get_tree().process_frame
-	var stats_bar: UnitStatsBar = unit_stats_bars[unit]
-	stats_bar.stop_pulse()
+
+
+	var stats_bar: UnitStatsBar = unit_stats_bars[unit] if unit_stats_bars.has(unit) else null
+	if stats_bar:
+		
+
+		stats_bar.stop_pulse()

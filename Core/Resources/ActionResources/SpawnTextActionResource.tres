@@ -6,21 +6,15 @@
 [sub_resource type="Resource" id="Resource_bbcsa"]
 script = ExtResource("2_wigkr")
 name = &"ground"
-is_true = false
 metadata/_custom_type_script = "uid://cihsn5lxnlupk"
 
 [sub_resource type="Resource" id="Resource_ukhm1"]
 script = ExtResource("2_wigkr")
 name = &"unit"
-is_true = false
 metadata/_custom_type_script = "uid://cihsn5lxnlupk"
 
 [resource]
 script = ExtResource("1_8rvop")
-spawn_text = "Testing"
 text_color = Color(0.941176, 0.972549, 1, 1)
-scale = 1.0
-action_name = "none"
 selection_types = Array[ExtResource("2_wigkr")]([SubResource("Resource_bbcsa"), SubResource("Resource_ukhm1")])
-tags = Array[String]([])
 metadata/_custom_type_script = "uid://dyiusi38rqf6w"
