@@ -15,8 +15,9 @@ extends Node
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
-		await get_tree().process_frame
-		await get_tree().process_frame
+		if get_tree():
+			await get_tree().process_frame
+			await get_tree().process_frame
 		if attributes_container:
 			if !attributes_container.starting_attributes.is_empty() and attributes.is_empty():
 				attributes.assign(attributes_container.starting_attributes)
