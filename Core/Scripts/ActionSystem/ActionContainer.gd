@@ -29,10 +29,23 @@ func make_actions_unique() -> void:
 
 
 func use_action(in_action: Action, target: Variant) -> void:
-	if actions.has(in_action):
+	if !in_action:
+		return
+	
+	var test_action: Action = get_action_by_name(in_action.action_name)
+	
+	if test_action:
 		var targ_pack: TargetPackage = Utilities.make_target_package(target)
-		in_action.try_activate(targ_pack)
+		test_action.try_activate(targ_pack)
+	else:
+		pass
+	
 
+func get_action_by_name(in_name: String) -> Action:
+	for action in actions:
+		if action.action_name == in_name:
+			return action
+	return null
 
 func on_action_started(in_action: Action) -> void:
 	SignalBus.on_action_started.emit(in_action)

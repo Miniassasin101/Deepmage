@@ -378,10 +378,10 @@ func can_activate_on_target(target_pack: TargetPackage) -> bool:
 
 	var target_unit: Unit = target_pack.unit
 
-	if action_container == null:
+	if unit == null:
 		return false
 
-	if target_unit == action_container.unit:
+	if target_unit == unit:
 		return false
 
 	if get_distance_to_unit(target_unit) > attack_range:

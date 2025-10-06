@@ -44,13 +44,17 @@ func setup_combat_log() -> void:
 	
 	button.gui_input.connect(on_button_pressed)
 
-func add_log(new_log: String = "") -> void:
+func add_log(new_log: String = "", to_godot: bool = false) -> void:
 	var new_label: Label = Label.new()
 	new_label.label_settings = label_preset
 	new_label.set_text(new_log)
 	log_container.add_child(new_label)
 	
 	logs.append(new_label)
+	
+	# Also print to console
+	if to_godot:
+		print_debug(new_log)
 	
 	if logs.size() <= max_logs:
 		return

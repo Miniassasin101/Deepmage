@@ -27,7 +27,7 @@ func setup_action(in_action_container: ActionContainer) -> void:
 	
 	if !unit and action_container:
 		unit = action_container.unit
-		if self is MoveAction:
+		if self is AttackAction:
 			pass
 
 
@@ -56,6 +56,8 @@ func can_activate_on_target(target_pack: TargetPackage) -> bool:
 func can_activate() -> bool:
 	return true
 
+func has_valid_targets() -> bool:
+	return false
 
 func is_action_type(in_type: String) -> bool:
 	if tags.has(in_type):
