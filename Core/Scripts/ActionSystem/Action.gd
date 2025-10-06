@@ -46,6 +46,7 @@ func start_reaction() -> void:
 	pass
 
 func end_reaction() -> void:
+	
 	pass
 
 
