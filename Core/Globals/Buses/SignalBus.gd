@@ -14,6 +14,8 @@ signal on_action_started(in_action: Action)
 signal on_action_ended(in_action: Action)
 
 
+signal on_combat_started
+
 
 
 

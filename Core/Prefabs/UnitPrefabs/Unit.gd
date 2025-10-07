@@ -23,6 +23,7 @@ enum TurnState {
 @export var animation_controller: AnimationController
 @export var satellite_controller: SatelliteController
 @export var token_controller: TokenController
+@export var tactics_controller: TacticsController
 
 @export var left_hand_socket: Marker3D
 @export var right_hand_socket: Marker3D
@@ -33,7 +34,8 @@ enum TurnState {
 @export_category("Temp Stats")
 @export var speed: int = 6
 
-
+@export_category("Tactics")
+@export var starting_tactic: Tactic = null
 
 @export_category("Attributes")
 
@@ -48,6 +50,9 @@ enum TurnState {
 @export_category("Visual Modifiers")
 @export var white_hit_flash_mat: StandardMaterial3D
 @export var hit_flash_time: float = 0.3
+
+@export_category("Tags")
+@export var tags: Array[String] = []
 
 #@export_group("Movement Parameters")
 #@export var movement_speed: float = 2.0
@@ -130,7 +135,10 @@ func flash_white(flash_time: float = hit_flash_time) -> void:
 	for mesh in unit_meshes:
 		mesh.set_material_override(saved_mat_overrides.pop_front())
 
-
+func has_tag(in_tag: String) -> bool:
+	if tags.has(in_tag.to_lower()):
+		return true
+	return false
 
 func get_all_unit_meshes() -> Array[MeshInstance3D]:
 	return [capsule_body, capsule_visor]

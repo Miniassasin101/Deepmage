@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="Skill" load_steps=11 format=3 uid="uid://c74afabw0rnw0"]
+
+[ext_resource type="Resource" uid="uid://cuudvrampevcg" path="res://Deepmage/Core/Resources/ActionResources/TestAttackActionResource.tres" id="1_tle3y"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="2_6rnng"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="3_6xuwk"]
+[ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IsUnitInRangeSkillCondition.gd" id="4_6xuwk"]
+[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IsEnemySkillCondition.gd" id="5_6hcli"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="6_tarsi"]
+[ext_resource type="Script" uid="uid://csqgchb51x8ra" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreferenceScripts/HighestHPPercentPreference.gd" id="7_tmtcl"]
+
+[sub_resource type="Resource" id="Resource_whesq"]
+script = ExtResource("4_6xuwk")
+metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
+
+[sub_resource type="Resource" id="Resource_q2c7t"]
+script = ExtResource("5_6hcli")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_ibn4v"]
+script = ExtResource("7_tmtcl")
+metadata/_custom_type_script = "uid://csqgchb51x8ra"
+
+[resource]
+script = ExtResource("2_6rnng")
+skill_name = "Bash"
+action = ExtResource("1_tle3y")
+skill_conditions = Array[ExtResource("3_6xuwk")]([SubResource("Resource_whesq"), SubResource("Resource_q2c7t")])
+target_preferences = Array[ExtResource("6_tarsi")]([SubResource("Resource_ibn4v")])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

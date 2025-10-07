@@ -76,6 +76,7 @@ func start_combat() -> void:
 	
 	# Setup the ui of initiative
 	SignalBus.instantiate_initiative_queue.emit()
+	SignalBus.on_combat_started.emit()
 	
 	is_combat_started = true
 	
