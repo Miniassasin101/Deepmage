@@ -26,7 +26,10 @@ extends Resource
 
 var is_initiated: bool = false
 
-
+func _init() -> void:
+	# Ensures that when this resource is attached in a scene,
+	# the scene owns its copy (editing one unit’s attribute won’t affect others).
+	set_local_to_scene(true)
 
 func get_current_modified_value() -> int:
 	return  current_value + get_current_modifier()

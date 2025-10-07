@@ -81,12 +81,12 @@ func _ready() -> void:
 		if character_sheet:
 			print_debug("Character sheet already found")
 			return
-		var char_sheet: CharacterSheet = character_sheet_packed_scene.instantiate() as CharacterSheet
+		#var char_sheet: CharacterSheet = character_sheet_packed_scene.instantiate() as CharacterSheet
 
-		add_child(char_sheet)
-		char_sheet.set_owner(get_tree().edited_scene_root)
-		character_sheet = char_sheet
-		print("added child")
+		#add_child(char_sheet)
+		#char_sheet.set_owner(get_tree().edited_scene_root)
+		#character_sheet = char_sheet
+		#print("added child")
 		property_list_changed.connect(change_node_name_to_unit)
 		return
 	setup_navigation()

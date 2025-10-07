@@ -4,14 +4,20 @@ extends Node
 
 signal attribute_changed
 
+@export_category("References")
 @export var unit: Unit
 
-@export var starting_attributes: Array[Attribute] = []
 
+@export_category("Initialization")
+@export var profile: AttributesProfile          # <- assign in the inspector per Unit
+@export var auto_apply_profile_in_editor: bool = true
+@export var auto_apply_profile_on_play: bool = true
+
+@export_category("Runtime State (read-only at runtime)")
+@export var starting_attributes: Array[Attribute] = []  # Inspector-visible snapshot
 
 
 var attributes: Array[Attribute] = []
-
 var attributes_dict: Dictionary[String, Attribute] = {}
 
 
@@ -20,35 +26,59 @@ var attributes_dict: Dictionary[String, Attribute] = {}
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
-		if !starting_attributes.is_empty():
-			var new_atts: Array[Attribute] = []
-			for att in starting_attributes:
-				#print_debug(att.attribute_name)
-				var new_att: Attribute = att.duplicate(true)
-				#att = att.duplicate(true)
-				new_atts.append(new_att)
-				new_att.set_name(new_att.attribute_name.to_pascal_case() + "AttributeResource")
-			starting_attributes = new_atts
-		#set_editable_instance(self, true)
+		# Keep the inspector experience smooth: if you assign a profile
+		# and the Unit has no starting_attributes yet, populate them once.
+		if auto_apply_profile_in_editor and profile != null and starting_attributes.is_empty():
+			apply_profile_to_starting_attributes(true)
+		# Listen for live edits to the profile in the editor
+		if profile != null:
+			profile.changed.connect(_on_profile_changed)
 		return
+
+	# Runtime: ensure we have a concrete set of attributes to operate on.
+	if auto_apply_profile_on_play and starting_attributes.is_empty() and profile != null:
+		apply_profile_to_starting_attributes(true)
+
+	_rebuild_runtime_cache()
 	
-	
-	
-	_setup_starting_attributes.call_deferred()
+
+func _on_profile_changed() -> void:
+	# Editor-only: when you tweak the profile, refresh the snapshot for convenience
+	if Engine.is_editor_hint() and auto_apply_profile_in_editor and profile != null:
+		apply_profile_to_starting_attributes(true)
+		print_debug("Profile Changed")
 
 
-func _setup_starting_attributes() -> void:
+func apply_profile_to_starting_attributes(make_unique: bool) -> void:
+	if profile == null:
+		return
+	starting_attributes.clear()
+	if make_unique:
+		starting_attributes = profile.make_unique_attribute_array()
+	else:
+		# Rare: keep shared refs (not recommended). Prefer unique.
+		starting_attributes.assign(profile.attributes)
+	_rebuild_runtime_cache()
+	# Let the inspector refresh
+	property_list_changed.emit()
+
+
+
+func _rebuild_runtime_cache() -> void:
 	attributes.clear()
 	attributes_dict.clear()
-	
-	if unit:
-		var cs := unit.character_sheet
-		if cs:
-			starting_attributes = cs.attributes
-	for att in starting_attributes:
-		#var copy = att.duplicate(true)
-		attributes.append(att)#(copy)
-		attributes_dict[att.attribute_name] = att
+	for attribute_resource in starting_attributes:
+		# We keep the same instances to preserve inspector edits;
+		# they are already unique and local to scene.
+		attributes.append(attribute_resource)
+		attributes_dict[attribute_resource.attribute_name] = attribute_resource
+
+
+
+
+
+
+# ---------- Utility / Query API (unchanged semantics) ----------
 
 
 func get_defence(_only_get_base: bool = false) -> int:
@@ -56,14 +86,6 @@ func get_defence(_only_get_base: bool = false) -> int:
 	defence += get_attribute_current_value("armor")
 	defence += get_attribute_current_value("endurance")
 	return defence
-
-
-
-
-
-
-
-
 
 
 
@@ -87,7 +109,7 @@ func set_attribute_current_value(in_name: String, value: int) -> bool:
 	var att = get_attribute(in_name)
 	if att:
 		att.current_value = value
-		emit_signal("attribute_changed", in_name, att.current_value)
+		attribute_changed.emit(in_name, att.current_value)
 		return true
 	return false
 
@@ -95,7 +117,7 @@ func change_attribute_current_value_by(in_name: String, value: int) -> bool:
 	var att = get_attribute(in_name)
 	if att:
 		att.current_value += value
-		emit_signal("attribute_changed", in_name, att.current_value)
+		attribute_changed.emit(in_name, att.current_value)
 		SignalBus.update_stat_bars.emit()
 		return true
 	return false
@@ -107,6 +129,7 @@ func add_attribute_modifier(in_name: String, modifier_value: int) -> bool:
 	if att:
 		att.add_modifier(modifier_value)
 		emit_signal("attribute_changed", in_name, att.get_current_modified_value())
+		attribute_changed.emit(in_name, att.get_current_modified_value())
 		SignalBus.update_stat_bars.emit()
 		return true
 	return false
@@ -116,7 +139,7 @@ func remove_attribute_modifier(in_name: String, modifier_value: int) -> bool:
 	var att = get_attribute(in_name)
 	if att:
 		att.remove_modifier(modifier_value)
-		emit_signal("attribute_changed", in_name, att.get_current_modified_value())
+		attribute_changed.emit(in_name, att.get_current_modified_value())
 		SignalBus.update_stat_bars.emit()
 		return true
 	return false
@@ -132,7 +155,7 @@ func add_attribute(attribute: Attribute) -> bool:
 	var copy = attribute.duplicate()
 	attributes.append(copy)
 	attributes_dict[copy.attribute_name] = copy
-	emit_signal("attribute_changed", copy.attribute_name, copy.get_current_modified_value())
+	attribute_changed.emit(copy.attribute_name, copy.get_current_modified_value())
 	return true
 
 # Remove attribute by name
@@ -142,6 +165,7 @@ func remove_attribute(in_name: String) -> bool:
 		attributes.erase(att)
 		attributes_dict.erase(in_name)
 		emit_signal("attribute_changed", in_name, 0)
+		attribute_changed.emit(in_name, 0)
 		return true
 	return false
 

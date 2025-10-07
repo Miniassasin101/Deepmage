@@ -10,36 +10,28 @@ extends Node
 @export var action_container: ActionContainer = null
 @export var attributes_container: AttributesContainer = null
 
-@export_category("Attributes")
-@export var attributes: Array[Attribute] = []
+@export_category("Attributes Preset")
+@export var attributes_profile: AttributesProfile   # <- Pick a profile here per Unit
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
-		if get_tree():
-			await get_tree().process_frame
-			await get_tree().process_frame
-		if attributes_container:
-			if !attributes_container.starting_attributes.is_empty() and attributes.is_empty():
-				attributes.assign(attributes_container.starting_attributes)
-				print_debug("attributes setup successfully")
-			else:
-				print_debug("starting attributes are empty or attributes arent empty")
-		else:
-			print_debug("no attributes container")
+		# Light editor wiring: push the profile into the container for you.
+		if attributes_container and attributes_profile and attributes_container.profile != attributes_profile:
+			attributes_container.profile = attributes_profile
 		return
 
 	if !unit:
 		unit = get_parent() if get_parent() is Unit else null
-		
-	if unit:
-		if !unit.character_sheet:
-			unit.character_sheet = self
-	
+	if unit and !unit.character_sheet:
+		unit.character_sheet = self
+
 	if action_container:
 		action_container.unit = unit
-	
 	if attributes_container:
 		attributes_container.unit = unit
+		# Runtime safety: if the container has no snapshot, apply the profile now.
+		if attributes_container.profile == null and attributes_profile != null:
+			attributes_container.profile = attributes_profile
 
 func get_action_container() -> ActionContainer:
 	return action_container
