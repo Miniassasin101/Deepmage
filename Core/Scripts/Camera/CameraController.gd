@@ -62,28 +62,30 @@ func _physics_process(delta: float):
 	if hovered_control != null:
 		if Console.is_visible():
 			return
+		
+
 	
 	# Handle player movement
 	handle_movement()
 
 	# Handle zoom input
-	handle_zoom_input()
+	handle_zoom_input(hovered_control)
 
 	# Handle rotation input
 	handle_rotation_input()
 
 # Update the camera's zoom level
-func update_zoom(delta: float):
+func update_zoom(delta: float) -> void:
 	var current_length = spring_arm.spring_length
 	var new_length = lerp(current_length, Zoom_Desired, clamp(delta * Zoom_Interp, 0, 1))
 	spring_arm.spring_length = new_length
 
 # Update the actor's position smoothly
-func update_location(delta: float):
+func update_location(delta: float) -> void:
 	global_transform.origin = global_transform.origin.lerp(Location_Desired, smooth_speed * delta)
 
 # Update rotation of the camera smoothly using the shortest path
-func update_rotation(delta: float):
+func update_rotation(delta: float) -> void:
 	# Horizontal (Y) Rotation (affects the actor's body)
 	var current_actor_y_rotation = rotation.y
 	var new_actor_y_rotation = shortest_angle_between(current_actor_y_rotation, Rotation_Desired.y)
@@ -101,7 +103,7 @@ func update_rotation(delta: float):
 	Rotation_Desired.y = wrapf(Rotation_Desired.y, -PI, PI)
 
 # Handle player movement input (forward/backward, left/right)
-func handle_movement():
+func handle_movement() -> void:
 	# Forward/backward movement (Z-axis)
 	var forward_input = Input.get_axis("back", "forward") * Location_Speed
 	Location_Desired += transform.basis.z * -forward_input
@@ -111,19 +113,21 @@ func handle_movement():
 	Location_Desired += transform.basis.x * right_input
 
 # Handle zoom input (zoom in/out)
-func handle_zoom_input():
+func handle_zoom_input(in_hovered_control: Control) -> void:
 	if Input.is_action_just_pressed("zoom_out"):
-		var zoom_input: float = Zoom_Speed
-		var zoom_clamp: float = Zoom_Desired + zoom_input
-		Zoom_Desired = clamp(zoom_clamp, Zoom_Min, Zoom_Max)
+		if CombatLog.instance.can_camera_zoom(in_hovered_control):
+			var zoom_input: float = Zoom_Speed
+			var zoom_clamp: float = Zoom_Desired + zoom_input
+			Zoom_Desired = clamp(zoom_clamp, Zoom_Min, Zoom_Max)
 
 	if Input.is_action_just_pressed("zoom_in"):
-		var zoom_input = Zoom_Speed
-		var zoom_clamp = Zoom_Desired - zoom_input
-		Zoom_Desired = clamp(zoom_clamp, Zoom_Min, Zoom_Max)
+		if CombatLog.instance.can_camera_zoom(in_hovered_control):
+			var zoom_input = Zoom_Speed
+			var zoom_clamp = Zoom_Desired - zoom_input
+			Zoom_Desired = clamp(zoom_clamp, Zoom_Min, Zoom_Max)
 
 # Handle camera rotation input (horizontal and vertical rotation)
-func handle_rotation_input():
+func handle_rotation_input() -> void:
 	# Handle horizontal rotation (left/right) for the character
 	if Input.is_action_just_pressed("rotate_right"):
 		Rotation_Desired.y += deg_to_rad(45)  # Rotate right by 45 degrees

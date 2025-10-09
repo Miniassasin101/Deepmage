@@ -64,9 +64,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	
 	# If user is on ui, ignore.
-	var hovered_control = get_viewport().gui_get_hovered_control()
+	var hovered_control: Control = get_viewport().gui_get_hovered_control()
 	if hovered_control != null:
-		return
+		if !hovered_control.is_class("ScrollContainer"):
+			return
 	
 	
 
@@ -80,6 +81,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	var num_pressed: int = get_pressed_num_shortcut(event)
 	if num_pressed != -1:
 		ActionSystemUI.instance.try_press_button_by_number(num_pressed)
+
 
 func get_pressed_num_shortcut(event: InputEvent) -> int:
 	if event.is_action("1_key"):

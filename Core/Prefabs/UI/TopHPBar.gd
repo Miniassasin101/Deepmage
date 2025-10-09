@@ -36,7 +36,7 @@ func _on_header_gui_input(event: InputEvent) -> void:
 		_toggle_slide()
 
 
-# --- Slide helpers (don’t call slide.toggle() everywhere; keep state in sync here) ---
+# --- Slide helpers (don’t call slide.toggle() everywhere; keep state in sync here) ---n
 func _toggle_slide() -> void:
 	slide.toggle()
 	_slide_open = !_slide_open

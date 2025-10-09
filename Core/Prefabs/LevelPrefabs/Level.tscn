@@ -58,8 +58,8 @@ resource_name = "HealthAttributeResource"
 script = ExtResource("10_p6f6u")
 attribute_name = "health"
 attribute_type = 2
-current_value = 10
-maximum_value = 10
+current_value = 20
+maximum_value = 20
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_hymmt"]
@@ -210,14 +210,14 @@ script = ExtResource("11_6kl6n")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_23xud"), SubResource("Resource_hymmt"), SubResource("Resource_v4iap"), SubResource("Resource_8v6vh"), SubResource("Resource_11ubm"), SubResource("Resource_w01yd"), SubResource("Resource_00nvd"), SubResource("Resource_5lfvx"), SubResource("Resource_f0670"), SubResource("Resource_ebomw"), SubResource("Resource_04ue1"), SubResource("Resource_cb3j6"), SubResource("Resource_e15dp"), SubResource("Resource_c2k8n"), SubResource("Resource_hja2s"), SubResource("Resource_f3uqp")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
 
-[sub_resource type="Resource" id="Resource_dpue3"]
+[sub_resource type="Resource" id="Resource_6kl6n"]
 resource_local_to_scene = true
 resource_name = "HealthAttributeResource"
 script = ExtResource("10_p6f6u")
 attribute_name = "health"
 attribute_type = 2
-current_value = 11
-maximum_value = 11
+current_value = 20
+maximum_value = 20
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_mpmhl"]
@@ -365,17 +365,17 @@ metadata/_custom_type_script = "uid://7vw8btajjq0q"
 [sub_resource type="Resource" id="Resource_73fol"]
 resource_local_to_scene = true
 script = ExtResource("11_6kl6n")
-attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_dpue3"), SubResource("Resource_mpmhl"), SubResource("Resource_yl67w"), SubResource("Resource_6odjx"), SubResource("Resource_lk7si"), SubResource("Resource_8pahp"), SubResource("Resource_8hoel"), SubResource("Resource_jiskd"), SubResource("Resource_rx2vc"), SubResource("Resource_gam6i"), SubResource("Resource_7g53y"), SubResource("Resource_05afn"), SubResource("Resource_rfnuq"), SubResource("Resource_ufsey"), SubResource("Resource_o24kd"), SubResource("Resource_utj8h")])
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_6kl6n"), SubResource("Resource_mpmhl"), SubResource("Resource_yl67w"), SubResource("Resource_6odjx"), SubResource("Resource_lk7si"), SubResource("Resource_8pahp"), SubResource("Resource_8hoel"), SubResource("Resource_jiskd"), SubResource("Resource_rx2vc"), SubResource("Resource_gam6i"), SubResource("Resource_7g53y"), SubResource("Resource_05afn"), SubResource("Resource_rfnuq"), SubResource("Resource_ufsey"), SubResource("Resource_o24kd"), SubResource("Resource_utj8h")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
 
-[sub_resource type="Resource" id="Resource_6kl6n"]
+[sub_resource type="Resource" id="Resource_dpue3"]
 resource_local_to_scene = true
 resource_name = "HealthAttributeResource"
 script = ExtResource("10_p6f6u")
 attribute_name = "health"
 attribute_type = 2
-current_value = 10
-maximum_value = 10
+current_value = 19
+maximum_value = 19
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_336d5"]
@@ -523,7 +523,7 @@ metadata/_custom_type_script = "uid://7vw8btajjq0q"
 [sub_resource type="Resource" id="Resource_bvt28"]
 resource_local_to_scene = true
 script = ExtResource("11_6kl6n")
-attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_6kl6n"), SubResource("Resource_336d5"), SubResource("Resource_x4bhx"), SubResource("Resource_m1qim"), SubResource("Resource_p6f6u"), SubResource("Resource_51q8q"), SubResource("Resource_allnq"), SubResource("Resource_qdwhh"), SubResource("Resource_862d3"), SubResource("Resource_22ak0"), SubResource("Resource_cel8m"), SubResource("Resource_sgxdm"), SubResource("Resource_f2qps"), SubResource("Resource_iq36j"), SubResource("Resource_v8epg"), SubResource("Resource_k6sm3")])
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_dpue3"), SubResource("Resource_336d5"), SubResource("Resource_x4bhx"), SubResource("Resource_m1qim"), SubResource("Resource_p6f6u"), SubResource("Resource_51q8q"), SubResource("Resource_allnq"), SubResource("Resource_qdwhh"), SubResource("Resource_862d3"), SubResource("Resource_22ak0"), SubResource("Resource_cel8m"), SubResource("Resource_sgxdm"), SubResource("Resource_f2qps"), SubResource("Resource_iq36j"), SubResource("Resource_v8epg"), SubResource("Resource_k6sm3")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xyav6"]
@@ -709,6 +709,7 @@ unit_manager = NodePath("../UnitManager")
 
 [node name="CombatSystem" type="Node" parent="."]
 script = ExtResource("11_g7q3m")
+combat_debug_enabled = true
 
 [node name="PathfindingSystem" type="Node" parent="." node_paths=PackedStringArray("nav_region_3d")]
 script = ExtResource("12_fnj5h")
@@ -953,7 +954,9 @@ mouse_controller = NodePath("../../MouseController")
 pathfinding = NodePath("../../PathfindingSystem")
 
 [node name="CombatLog" parent="UILayer" instance=ExtResource("27_2gnov")]
-max_logs = 20
+max_logs = 30
+change_amount = 240
+test_num = 40.0
 
 [connection signal="pressed" from="UILayer/TurnSystemUI/EndTurnContainer/MarginContainer/EndTurnButton" to="UILayer/TurnSystemUI" method="_on_end_turn_button_pressed"]
 

@@ -27,12 +27,27 @@ extends Action
 @export_group("Selection Data")
 @export var attack_range: float = 2.0
 
+
 @export_group("Attack Data")
+@export var die_size: int = 6   # Ex: d6, d10
+@export var die_count: int = 1  # Ex: 2d4, 5d6
+@export var is_melee_attack: bool = true
+@export var prowess_attribute: String = "might"
+@export var defense_attribute: String = "endurance"
+@export var uses_area_pattern: bool = false
+
+
+
+@export_group("Pokerole Attack Data")
 @export var accuracy_attribute1: String = "agility"
 @export var accuracy_attribute2: String = "martial"
 @export var damage_attribute: String = "might"
 @export var base_damage: int = 3
 @export var base_target_number: int = 1
+
+
+
+
 
 # === Sync tuning ===
 @export_group("Animation Sync Tuning")
@@ -188,14 +203,42 @@ func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
 		await unit.get_tree().create_timer(max(0.0, attack_delay + hit_center)).timeout
 		do_resolve()
 
-## Applies the combat result to the defender (miss/graze text, damage, and hit reaction + damage label).
+
+
 func do_resolve() -> void:
+	var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
+	var defender: Unit = cd.defender
+
+	if not cd.is_hit:
+		Utilities.spawn_text_line(defender, "EVADE", Color.AQUA)
+		CombatLog.instance.add_log("Result: Evaded")
+		return
+
+	# OPTIONAL: switch to Posture track later.
+	# For now, keep your health to minimize refactor:
+	defender.get_attributes_container().add_attribute_modifier("health", -cd.effective_damage)
+
+	# Fx
+	if cd.effective_damage > 0:
+		defender.animation_controller.play_hit_reaction()
+
+	Utilities.spawn_damage_label(defender, cd.effective_damage, Color.FIREBRICK, 0.5)
+
+	# Reaction on-impact hook
+	if cd.reaction and cd.reaction.has_method("on_impact"):
+		cd.reaction.on_impact()
+
+
+
+
+## Applies the combat result to the defender (miss/graze text, damage, and hit reaction + damage label).
+func do_resolve_dep() -> void:
 
 	var ev := CombatSystem.instance.current_combat_event_data
 	var defender: Unit = ev.defender
 	var effective_damage: int = ev.effective_damage
-	var is_hit := ev.is_hit
-	var is_graze := ev.is_graze
+	var is_hit: bool = ev.is_hit
+	var is_graze: bool = ev.is_graze
 
 	# Feedback / damage
 	if !is_hit:
