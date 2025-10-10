@@ -11,12 +11,6 @@ var button = make_unique_attribute_array
 
 @export var attributes: Array[Attribute] = []
 
-func _init() -> void:
-	if !Engine.is_editor_hint():
-		return
-	if attributes.is_empty():
-		return
-	
 
 
 
@@ -26,4 +20,9 @@ func make_unique_attribute_array() -> Array[Attribute]:
 		var unique_copy: Attribute = source_attribute.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
 		unique_copy.resource_local_to_scene = true
 		result.append(unique_copy)
+	
+	if !result.is_empty():
+		attributes = result
+		print_debug("Made Attributes Unique")
+	
 	return result

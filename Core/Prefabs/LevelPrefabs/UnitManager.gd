@@ -25,7 +25,14 @@ func initialize_units() -> void:
 			if child in units:
 				continue
 			units.append(child)
+			#setup_unit_stats(child)
 
+func setup_unit_stats(in_unit: Unit) -> void:
+	if !in_unit.character_sheet:
+		return
+	#var start: Array[Attribute] = in_unit.character_sheet.attributes_container.starting_attributes
+
+	#in_unit.character_sheet.attributes_container.starting_attributes.assign(in_unit.character_sheet.attributes_profile.attributes)
 
 func get_first_unit() -> Unit:
 	if units.is_empty():

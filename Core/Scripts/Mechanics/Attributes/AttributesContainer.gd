@@ -1,4 +1,3 @@
-@tool
 class_name AttributesContainer
 extends Node
 
@@ -6,13 +5,10 @@ signal attribute_changed
 
 @export_category("References")
 @export var unit: Unit
-
+@export var character_sheet: CharacterSheet
 
 @export_category("Initialization")
-@export var profile: AttributesProfile:          # <- assign in the inspector per Unit
-	set(val):
-		profile = val if val is AttributesProfile else profile
-		_on_profile_changed()
+
 
 @export var auto_apply_profile_in_editor: bool = true
 @export var auto_apply_profile_on_play: bool = true
@@ -29,49 +25,17 @@ var attributes_dict: Dictionary[String, Attribute] = {}
 
 
 func _ready() -> void:
-	if Engine.is_editor_hint():
-		# Keep the inspector experience smooth: if you assign a profile
-		# and the Unit has no starting_attributes yet, populate them once.
-		if auto_apply_profile_in_editor and profile != null:# and starting_attributes.is_empty():
-			apply_profile_to_starting_attributes(true)
-		# Listen for live edits to the profile in the editor
-		if profile != null:
-			profile.changed.connect(_on_profile_changed)
-		return
-
-	# Runtime: ensure we have a concrete set of attributes to operate on.
-	if auto_apply_profile_on_play and profile != null and starting_attributes.is_empty():
-		apply_profile_to_starting_attributes(true)
-
 	_rebuild_runtime_cache()
 	
 
-func _on_profile_changed() -> void:
-	# Editor-only: when you tweak the profile, refresh the snapshot for convenience
-	if Engine.is_editor_hint() and auto_apply_profile_in_editor and profile != null:
-		apply_profile_to_starting_attributes(true)
-		print_debug("Profile Changed")
-
-
-func apply_profile_to_starting_attributes(make_unique: bool) -> void:
-	if profile == null:
-		return
-	starting_attributes.clear()
-	if make_unique:
-		starting_attributes = profile.make_unique_attribute_array()
-	else:
-		# Rare: keep shared refs (not recommended). Prefer unique.
-		starting_attributes.assign(profile.attributes)
-	_rebuild_runtime_cache()
-	# Let the inspector refresh
-	property_list_changed.emit()
 
 
 
 func _rebuild_runtime_cache() -> void:
 	attributes.clear()
 	attributes_dict.clear()
-	for attribute_resource in starting_attributes:
+	var attr_array: Array[Attribute] = character_sheet.attributes_profile.make_unique_attribute_array()
+	for attribute_resource in attr_array:
 		# We keep the same instances to preserve inspector edits;
 		# they are already unique and local to scene.
 		attributes.append(attribute_resource)

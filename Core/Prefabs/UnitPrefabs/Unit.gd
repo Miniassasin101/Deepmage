@@ -93,6 +93,12 @@ func _ready() -> void:
 	call_deferred("setup_mesh_colors")
 
 
+# FIXME: Placeholder
+func is_alive() -> bool:
+	
+	return true
+
+
 
 func change_node_name_to_unit() -> void:
 	if !Engine.is_editor_hint():
@@ -139,6 +145,8 @@ func has_tag(in_tag: String) -> bool:
 	if tags.has(in_tag.to_lower()):
 		return true
 	return false
+
+
 
 func get_all_unit_meshes() -> Array[MeshInstance3D]:
 	return [capsule_body, capsule_visor]

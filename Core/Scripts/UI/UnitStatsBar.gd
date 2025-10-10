@@ -5,7 +5,8 @@ extends MarginContainer
 
 @export var unit_name_label: Label
 @export var initiative_score_label: Label
-@export var multiple_action_penalty_label: Label
+@export var active_points_label: Label
+@export var passive_points_label: Label
 @export var mana_points_label: Label
 @export var health_text_label: Label
 @export var health_bar: SimpleAnimatableProgressBar
@@ -75,6 +76,12 @@ func update_stats(unit: Unit, with_health_anim: bool = true) -> void:
 
 	# Shows the initiative score of the unit. Resets at the start of the next round so the lowest unit has a 0 to keep numbers more readable.
 	initiative_score_label.text = "Initiative Score: " + str(TurnSystem.instance.initiative_scores[unit] - lowest_score)
+	
+	
+	var active_points: int = unit.get_attributes_container().get_attribute_current_value("active_points")
+	var passive_points: int = unit.get_attributes_container().get_attribute_current_value("passive_points")
+	active_points_label.set_text("AP: " + str(active_points))
+	passive_points_label.set_text("PP: " + str(passive_points))
 	
 	mana_points_label.set_text("Mana: " + str(unit.get_attributes_container().get_attribute_current_value("mana")))
 	

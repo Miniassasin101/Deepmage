@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Attribute" load_steps=2 format=3 uid="uid://ccg4hyfom5iis"]
+
+[ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="1_wm86p"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_wm86p")
+attribute_name = "initiative"
+attribute_type = 2
+current_value = 13
+maximum_value = 13
+minimum_value = -100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"

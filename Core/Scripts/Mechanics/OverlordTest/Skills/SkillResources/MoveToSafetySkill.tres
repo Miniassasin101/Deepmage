@@ -20,6 +20,9 @@ metadata/_custom_type_script = "uid://cihsn5lxnlupk"
 
 [sub_resource type="Resource" id="Resource_gam6i"]
 script = ExtResource("1_y3a5q")
+rotate_speed = 2.0
+acceleration_time = 2.0
+rotation_acceleration_time = 2.0
 action_name = "Move Test"
 selection_types = Array[ExtResource("2_73tcp")]([SubResource("Resource_src6p")])
 metadata/_custom_type_script = "uid://bl34p0y06cyys"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://3p3xt0lymqsd"]
+[gd_scene load_steps=11 format=3 uid="uid://3p3xt0lymqsd"]
 
 [ext_resource type="Script" uid="uid://d31u148mfqqic" path="res://Deepmage/Core/Scripts/UI/UnitStatsBar.gd" id="1_73dlo"]
 [ext_resource type="StyleBox" uid="uid://dxf8kqkw1goiw" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarShadowedStyleBox.tres" id="1_cydlx"]
@@ -11,7 +11,13 @@
 [sub_resource type="LabelSettings" id="LabelSettings_bwm3i"]
 font_size = 21
 
-[node name="UnitStatsBar" type="MarginContainer" node_paths=PackedStringArray("unit_stats_bar_content", "unit_name_label", "initiative_score_label", "multiple_action_penalty_label", "mana_points_label", "health_text_label", "health_bar")]
+[sub_resource type="LabelSettings" id="LabelSettings_gpv71"]
+font_color = Color(1, 0.90999997, 0.90999997, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5nvtf"]
+font_color = Color(0.84000003, 0.90133333, 1, 1)
+
+[node name="UnitStatsBar" type="MarginContainer" node_paths=PackedStringArray("unit_stats_bar_content", "unit_name_label", "initiative_score_label", "active_points_label", "passive_points_label", "mana_points_label", "health_text_label", "health_bar")]
 offset_left = 2.0
 offset_top = 2.0
 offset_right = 157.0
@@ -20,7 +26,8 @@ script = ExtResource("1_73dlo")
 unit_stats_bar_content = NodePath("UnitStatsBarContent")
 unit_name_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/UnitNameLabel")
 initiative_score_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/InitiativeScoreLabel")
-multiple_action_penalty_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/MultipleActionPenalty")
+active_points_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/ActivePointsLabel")
+passive_points_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/PassivePointsLabel")
 mana_points_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/ManaLabel")
 health_text_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/HealthTextLabel")
 health_bar = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/SimpleAnimatableProgressBar")
@@ -55,10 +62,29 @@ layout_mode = 2
 text = "Initiative Score"
 horizontal_alignment = 1
 
-[node name="MultipleActionPenalty" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UnitStatsBarContent/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Multiple Action Penalty"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UnitStatsBarContent/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ActivePointsLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "AP: 1"
+label_settings = SubResource("LabelSettings_gpv71")
+horizontal_alignment = 2
+
+[node name="DividingLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "|"
 horizontal_alignment = 1
+
+[node name="PassivePointsLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "PP: 1"
+label_settings = SubResource("LabelSettings_5nvtf")
 
 [node name="ManaLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer"]
 layout_mode = 2

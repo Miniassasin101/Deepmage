@@ -139,8 +139,8 @@ func try_handle_unit_selection(do_action_check: bool = false) -> bool:
 		if check_can_activate_action_on_unit(unit):
 			return false
 	
-	if unit.turn_state != Unit.TurnState.TURN_STARTED:
-		return false
+	#if unit.turn_state != Unit.TurnState.TURN_STARTED:
+	#	return false
 	
 	if unit == TurnSystem.instance.selected_unit:
 		return false
@@ -194,7 +194,7 @@ func on_selected_action_changed(in_action: Action) -> void:
 		return
 
 	var is_reaction: bool = in_action.is_action_type("reaction")
-	var unit := TurnSystem.instance.selected_unit
+	var unit: Unit= TurnSystem.instance.selected_unit
 	if unit == null:
 		return
 

@@ -7,5 +7,6 @@ script = ExtResource("1_87a4y")
 attribute_name = "passive_points"
 attribute_type = 2
 current_value = 2
+base_value = 2
 maximum_value = 4
 metadata/_custom_type_script = "uid://7vw8btajjq0q"

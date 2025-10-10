@@ -3,7 +3,7 @@ extends Node
 
 
 @export var combat_debug_enabled: bool = false
-
+@export var skill_trigger_system: SkillTriggerSystem = null
 
 
 var current_combat_event_data: CombatEventData = null
