@@ -1,0 +1,65 @@
+[gd_resource type="Resource" script_class="AttributesProfile" load_steps=14 format=3 uid="uid://chcmb33h3icuk"]
+
+[ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="1_piq8p"]
+[ext_resource type="Script" uid="uid://dgwgvxp80lmhb" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributesProfile.gd" id="2_36pwq"]
+[ext_resource type="Resource" uid="uid://bofxqst5tg73o" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/SkillAttributes/ParryAttributeResource.tres" id="2_thdnl"]
+[ext_resource type="Resource" uid="uid://kfawcj75fgef" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/SkillAttributes/ResistAttributeResource.tres" id="3_udgds"]
+[ext_resource type="Resource" uid="uid://21dos45b37b2" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/SpeedAttributeResource.tres" id="4_owgt1"]
+[ext_resource type="Resource" uid="uid://dvorl7wrio2hk" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/JumpAttributeResource.tres" id="5_xv8lw"]
+[ext_resource type="Resource" uid="uid://55a0mwxshf8g" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/ActivePointsAttributeResource.tres" id="6_ombkl"]
+[ext_resource type="Resource" uid="uid://bcai4uncv87bp" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/PassivePointsAttributeResource.tres" id="7_ah0vk"]
+
+[sub_resource type="Resource" id="Resource_0fy5k"]
+resource_local_to_scene = true
+resource_name = "PostureAttributeResource"
+script = ExtResource("1_piq8p")
+attribute_name = "posture"
+attribute_type = 2
+current_value = 20
+maximum_value = 20
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_704ky"]
+resource_local_to_scene = true
+resource_name = "EvadeAttributeResource"
+script = ExtResource("1_piq8p")
+attribute_name = "evade"
+attribute_type = 2
+current_value = 1
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_wrqbw"]
+resource_local_to_scene = true
+resource_name = "MartialAttributeResource"
+script = ExtResource("1_piq8p")
+attribute_name = "martial"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_t0b1j"]
+resource_local_to_scene = true
+resource_name = "ChannelAttributeResource"
+script = ExtResource("1_piq8p")
+attribute_name = "channel"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_8e77q"]
+resource_local_to_scene = true
+resource_name = "ManaAttributeResource"
+script = ExtResource("1_piq8p")
+attribute_name = "mana"
+attribute_type = 2
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("2_36pwq")
+attributes = Array[ExtResource("1_piq8p")]([SubResource("Resource_0fy5k"), ExtResource("4_owgt1"), ExtResource("5_xv8lw"), SubResource("Resource_704ky"), SubResource("Resource_wrqbw"), SubResource("Resource_t0b1j"), ExtResource("2_thdnl"), ExtResource("3_udgds"), SubResource("Resource_8e77q"), ExtResource("6_ombkl"), ExtResource("7_ah0vk")])
+metadata/_custom_type_script = "uid://dgwgvxp80lmhb"

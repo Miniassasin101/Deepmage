@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Attribute" load_steps=2 format=3 uid="uid://55a0mwxshf8g"]
+
+[ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="1_ddker"]
+
+[resource]
+script = ExtResource("1_ddker")
+attribute_name = "active_points"
+attribute_type = 2
+current_value = 2
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"

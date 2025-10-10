@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Attribute" load_steps=2 format=3 uid="uid://kfawcj75fgef"]
+
+[ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="1_v6uuc"]
+
+[resource]
+script = ExtResource("1_v6uuc")
+attribute_name = "resist"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"

@@ -34,7 +34,7 @@ func do_resolve() -> void:
 		return
 
 	# On-hit damage
-	defender.get_attributes_container().add_attribute_modifier("health", -effective_damage)
+	defender.get_attributes_container().add_attribute_modifier("posture", -effective_damage)
 	var color: Color
 	if effective_damage == 0:
 		color = Color.ALICE_BLUE
@@ -43,7 +43,8 @@ func do_resolve() -> void:
 		defender.animation_controller.play_hit_reaction()
 	Utilities.spawn_damage_label(defender, effective_damage, color, 0.5)
 	
-	ev.reaction.on_impact()
+	if ev.reaction:
+		ev.reaction.on_impact()
 	
 
 func _make_or_fetch_projectile() -> Node3D:

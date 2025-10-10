@@ -1,14 +1,14 @@
 class_name TopHPBar
 extends Control
 
-@export var header: PanelContainer
-@export var slide: AttackPreviewSlideContainer
-
+@export var enable_slide_preview: bool = false
 @export_category("References")
 @export var unit_name_label: Label
 @export var health_bar: HealthProgressBar
 @export var current_health_label: Label
 @export var current_defense_label: Label
+@export var header: PanelContainer
+@export var slide: AttackPreviewSlideContainer
 
 
 var current_unit: Unit = null
@@ -67,7 +67,7 @@ func _on_unit_hovered_changed(in_unit: Unit) -> void:
 # --- Decides whether to show/hide/fill the preview slide ---
 func _refresh_preview() -> void:
 	# Must have an AttackAction selected
-	if _selected_action == null or !(_selected_action is AttackAction):
+	if !enable_slide_preview or _selected_action == null or !(_selected_action is AttackAction):
 		slide.clear()
 		_close_slide()
 		return
@@ -119,11 +119,11 @@ func setup_from_unit(in_unit: Unit) -> void:
 
 	unit_name_label.text = in_unit.ui_name
 
-	var health_attribute: Attribute = in_unit.get_attributes_container().get_attribute("health")
+	var health_attribute: Attribute = in_unit.get_attributes_container().get_attribute("posture")
 	var current_modified_value: int = health_attribute.get_current_modified_value()
-	current_health_label.text = "HP: %d" % [current_modified_value]
+	current_health_label.text = "POS: %d" % [current_modified_value]
 
-	var defence: int = in_unit.get_attributes_container().get_defence()
+	var defence: int = in_unit.get_attributes_container().get_attribute_current_value("evade")
 	current_defense_label.set_text(str(defence))
 
 	var target_health_percentage: float = (float(current_modified_value) / float(health_attribute.maximum_value) * 100.0)

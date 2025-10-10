@@ -1,7 +1,7 @@
 class_name TargetPreference
 extends Resource
 
-var hp_attribute_name: String = "health"
+var hp_attribute_name: String = "posture"
 
 # A soft filter that may narrow (or leave unchanged) a list of candidate targets.
 # Order matters: earlier preferences run first and constrain the pool for later ones.

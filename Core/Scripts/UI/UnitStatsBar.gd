@@ -78,10 +78,10 @@ func update_stats(unit: Unit, with_health_anim: bool = true) -> void:
 	
 	mana_points_label.set_text("Mana: " + str(unit.get_attributes_container().get_attribute_current_value("mana")))
 	
-	var health_attribute: Attribute = unit.get_attributes_container().get_attribute("health")
+	var health_attribute: Attribute = unit.get_attributes_container().get_attribute("posture")
 
 	var current_modified_value: int = health_attribute.get_current_modified_value()
-	health_text_label.text = "Health: %d / %d" % [
+	health_text_label.text = "Posture: %d / %d" % [
 		maxi(current_modified_value, 0), 
 		health_attribute.maximum_value
 	]

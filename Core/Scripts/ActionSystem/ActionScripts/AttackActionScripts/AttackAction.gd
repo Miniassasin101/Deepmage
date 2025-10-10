@@ -216,7 +216,7 @@ func do_resolve() -> void:
 
 	# OPTIONAL: switch to Posture track later.
 	# For now, keep your health to minimize refactor:
-	defender.get_attributes_container().add_attribute_modifier("health", -cd.effective_damage)
+	defender.get_attributes_container().add_attribute_modifier("posture", -cd.effective_damage)
 
 	# Fx
 	if cd.effective_damage > 0:
@@ -251,7 +251,7 @@ func do_resolve_dep() -> void:
 		return
 
 	# On-hit damage
-	defender.get_attributes_container().add_attribute_modifier("health", -effective_damage)
+	defender.get_attributes_container().add_attribute_modifier("posture", -effective_damage)
 	var color: Color
 	if effective_damage == 0:
 		color = Color.ALICE_BLUE

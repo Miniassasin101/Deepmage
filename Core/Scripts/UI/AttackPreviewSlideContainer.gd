@@ -15,7 +15,7 @@ func get_damage_preview(attack: AttackAction, attacker: Unit, target: Unit) -> D
 	var att := attacker.get_attributes_container()
 	var tgt := target.get_attributes_container()
 	
-	var tgt_hp_att: Attribute = tgt.get_attribute("health")
+	var tgt_hp_att: Attribute = tgt.get_attribute("posture")
 	var tgt_curr_hp: int = tgt_hp_att.get_current_modified_value()
 	var tgt_max_hp: int = tgt_hp_att.get_max_value()
 	

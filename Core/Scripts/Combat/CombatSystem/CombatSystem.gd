@@ -23,38 +23,6 @@ func _ready() -> void:
 
 
 
-func declare_attack_dep(action: AttackAction, attacker: Unit, defender: Unit) -> void:
-	current_combat_event_data = CombatEventData.new()
-
-	# Set combat event participants
-	current_combat_event_data.attacker = attacker
-	current_combat_event_data.defender = defender
-
-	# Set Combat Event Action
-	current_combat_event_data.action = action
-
-	# On attack declared events trigger here
-
-	#Utilities.spawn_text_line(attacker, "Attacking " + defender.ui_name + " with " + action.action_name)
-	CombatLog.instance.add_log()
-	CombatLog.instance.add_log(attacker.ui_name + " attacks " + defender.ui_name + " with " + action.action_name)
-	
-	setup_attacker_test()
-	# Check if target wants to do a reaction
-	if action.tags.has("attack"):
-		await prompt_player_reaction(defender)
-		
-		setup_defender_test()
-
-	setup_degree_of_success()
-
-	
-	if current_combat_event_data.reaction:
-	
-		current_combat_event_data.reaction.resolve_reaction()
-	
-	setup_effective_damage()
-
 
 func declare_attack(action: AttackAction, attacker: Unit, defender: Unit) -> void:
 	current_combat_event_data = CombatEventData.new()
@@ -71,16 +39,14 @@ func declare_attack(action: AttackAction, attacker: Unit, defender: Unit) -> voi
 	CombatLog.instance.add_log()
 	CombatLog.instance.add_log(attacker.ui_name + " attacks " + defender.ui_name + " with " + action.action_name)
 
-	# Trigger for ally attacked, enemy attacked, ect.
+	# Triggers for ally attacked, enemy attacked, ect.
 	
 	
-	#setup_attacker_test()
-	# Check if target wants to do a reaction
+	# Check which reaction animation the target wants to play
 	if action.tags.has("attack"):
 		#await prompt_player_reaction(defender)
 		pass
-		
-		#setup_defender_test()
+
 
 	# 2) Resolve using Gubat Banwa steps
 	_resolve_attack_gubat_banwa(action, attacker, defender)
@@ -90,10 +56,131 @@ func declare_attack(action: AttackAction, attacker: Unit, defender: Unit) -> voi
 	
 		current_combat_event_data.reaction.resolve_reaction()
 	
-	#setup_effective_damage()
-
 
 func _resolve_attack_gubat_banwa(action: AttackAction, attacker: Unit, defender: Unit) -> void:
+	var cd: CombatEventData = current_combat_event_data
+
+	# Reset
+	cd.per_die_results.clear()
+	cd.total_initial_damage = 0
+	cd.total_after_defense = 0
+	cd.any_die_hit = false
+	cd.was_crit_any = false
+	cd.chained_count = 0
+
+	var attacker_attrs := attacker.get_attributes_container()
+	var defender_attrs := defender.get_attributes_container()
+
+	# Gather stats
+	var prowess_value: int = attacker_attrs.get_attribute_current_value(action.prowess_attribute)  # FER/SPI
+	var defense_value: int = defender_attrs.get_attribute_current_value(action.defense_attribute)  # PAR/RES
+	var evd_value: int = defender_attrs.get_attribute_current_value("evade")                       # EVD
+
+	# Merit/Demerit etc.
+	var die_result_modifier: int = 0
+	var bonus_damage_flat: int = 0
+
+	if cd.reaction and cd.reaction.has_method("modify_attack_context"):
+		var ctx := {
+			"prowess_value": prowess_value,
+			"defense_value": defense_value,
+			"evd_value": evd_value,
+			"die_result_modifier": die_result_modifier,
+			"bonus_damage_flat": bonus_damage_flat,
+			"is_melee_attack": action.is_melee_attack
+		}
+		cd.reaction.modify_attack_context(ctx)
+		prowess_value      = ctx.prowess_value
+		defense_value      = ctx.defense_value
+		evd_value          = ctx.evd_value
+		die_result_modifier = ctx.die_result_modifier
+		bonus_damage_flat   = ctx.bonus_damage_flat
+
+	die_result_modifier += _compute_die_result_modifier(action, attacker, defender)
+
+	var die_size: int = maxi(2, action.die_size)
+	var die_count: int = maxi(1, action.die_count)
+
+	var total_roll_sum: int = 0
+	var any_non_evaded := false
+	var any_ranged_crit := false
+
+	# Roll base dice
+	for _i in die_count:
+		var outcome := _roll_single_die_meta(die_size, die_result_modifier, evd_value)
+		outcome["source"] = "base"
+		cd.per_die_results.append(outcome)
+
+		if not outcome.evaded:
+			any_non_evaded = true
+			total_roll_sum += outcome.modified
+			if not action.is_melee_attack and outcome.crit:
+				any_ranged_crit = true
+
+			# Melee chains can continue
+			if action.is_melee_attack and outcome.chained:
+				var keep_chaining := true
+				while keep_chaining:
+					var chain_outcome := _roll_single_die_meta(die_size, die_result_modifier, evd_value)
+					chain_outcome["is_chain_die"] = true
+					cd.per_die_results.append(chain_outcome)
+
+					if not chain_outcome.evaded:
+						total_roll_sum += chain_outcome.modified
+						any_non_evaded = true
+					# For melee, we only care that we chain again if top-or-higher
+					keep_chaining = chain_outcome.chained
+					if keep_chaining:
+						cd.chained_count += 1
+
+	# Build damage once (GB order)
+	# Initial: sum of kept dice + Prowess (once)
+	var initial_damage := total_roll_sum
+	if any_non_evaded:
+		initial_damage += prowess_value
+		# Ranged crit adds Prowess again (once per attack)
+		if not action.is_melee_attack and any_ranged_crit:
+			initial_damage += prowess_value
+
+	# Flat bonus if any (rare)
+	initial_damage += bonus_damage_flat
+
+	cd.total_initial_damage = initial_damage
+
+	# Defense once
+	var after_defense := initial_damage - defense_value
+
+	# Min 1 if at least one die hit (EVD didn’t stop everything)
+	if any_non_evaded and after_defense < 1:
+		after_defense = 1
+
+	cd.any_die_hit = any_non_evaded
+	cd.was_crit_any = any_ranged_crit
+	cd.total_after_defense = max(0, after_defense)
+	cd.effective_damage = cd.total_after_defense
+
+	# Logs
+	if not any_non_evaded:
+		CombatLog.instance.add_log("Evaded (all dice).")
+	else:
+		if not action.is_melee_attack and any_ranged_crit:
+			CombatLog.instance.add_log("Critical Hit! (+%s prowess)" % action.prowess_attribute)
+		CombatLog.instance.add_log("Total Damage: %d" % cd.effective_damage)
+
+	# Flags
+	cd.is_hit = any_non_evaded
+	cd.is_graze = false
+	cd.is_success = any_non_evaded
+	cd.is_critical_success = any_ranged_crit
+
+	if cd.chained_count >= 1:
+		Utilities.spawn_text_line(attacker, "Chained!", Color.ROYAL_BLUE)
+	elif cd.was_crit_any:
+		Utilities.spawn_text_line(attacker, "Crit!", Color.ROYAL_BLUE)
+
+	_debug_dump_current_event()
+
+func _resolve_attack_gubat_banwa_dep(action: AttackAction, attacker: Unit, defender: Unit) -> void:
 	var cd: CombatEventData = current_combat_event_data
 
 	# Reset the Combat Data
@@ -144,7 +231,7 @@ func _resolve_attack_gubat_banwa(action: AttackAction, attacker: Unit, defender:
 	var contributed_damage_total: int = 0
 	var any_non_evaded: bool = false
 	var any_crit: bool = false
-	var chain_stack: int = 0
+	var _chain_stack: int = 0
 
 	for die_index in die_count:
 		var die_outcome: Dictionary = _process_single_violence_die(
@@ -207,12 +294,36 @@ func _resolve_attack_gubat_banwa(action: AttackAction, attacker: Unit, defender:
 	cd.is_graze = false
 	cd.is_success = any_non_evaded
 	cd.is_critical_success = any_crit
-
+	
+	if cd.chained_count >= 1:
+		Utilities.spawn_text_line(attacker, "Chained!", Color.ROYAL_BLUE)
+	elif cd.was_crit_any:
+		Utilities.spawn_text_line(attacker, "Crit!", Color.ROYAL_BLUE)
+	
 	# Prints the data to the log
 	_debug_dump_current_event()
 
 
+# Die meta only — no prowess, no defense here.
+func _roll_single_die_meta(
+	die_size: int,
+	die_mod: int,
+	evd_value: int
+) -> Dictionary:
+	var raw_roll: int = randi_range(1, die_size)
+	var modified_roll: int = raw_roll + die_mod
 
+	var evaded := modified_roll <= evd_value
+	var chained := (modified_roll >= die_size)  # top-or-higher
+	var crit := (modified_roll >= die_size)     # same threshold; only used for ranged in caller
+
+	return {
+		"roll": raw_roll,
+		"modified": modified_roll,
+		"evaded": evaded,
+		"chained": chained,
+		"crit": crit
+	}
 
 func _process_single_violence_die(
 	die_size: int,
@@ -326,7 +437,7 @@ func _debug_dump_current_event() -> void:
 	var defense_val := defender_attrs.get_attribute_current_value(cd.action.defense_attribute)
 	var evd_val := defender_attrs.get_attribute_current_value("evade")
 
-	var gates := "  Gates: Prowess=%d | Defense=%d | EVD=%d" % [prowess_val, defense_val, evd_val]
+	var gates := "  Gates: %s=%d | %s=%d | EVD=%d" % [cd.action.prowess_attribute.to_pascal_case(), prowess_val, cd.action.defense_attribute.to_pascal_case(), defense_val, evd_val]
 	CombatLog.instance.add_log(gates, true)
 
 
@@ -335,7 +446,7 @@ func _debug_dump_current_event() -> void:
 
 	for idx in cd.per_die_results.size():
 		var d: Dictionary = cd.per_die_results[idx]
-		var line := "    die[%d]: roll=%d | mod=%d | evaded=%s | chain=%s | crit=%s | raw=%d | after_def=%d%s" % [
+		var line := "    die[%d]: roll=%d | mod=%d | evaded=%s | chain=%s | crit=%s | raw=%d | %s" % [
 			idx,
 			int(d.get("roll", -1)),
 			int(d.get("modified", -1)),
@@ -343,7 +454,6 @@ func _debug_dump_current_event() -> void:
 			str(d.get("chained", false)),
 			str(d.get("crit", false)),
 			int(d.get("raw_damage", 0)),
-			int(d.get("after_defense", 0)),
 			" (chain)" if bool(d.get("is_chain_die", false)) else ""
 		]
 		CombatLog.instance.add_log(line, true)
@@ -367,9 +477,41 @@ func _debug_dump_current_event() -> void:
 		CombatLog.instance.add_log(react_line, true)
 
 
+"""
+func declare_attack_dep(action: AttackAction, attacker: Unit, defender: Unit) -> void:
+	current_combat_event_data = CombatEventData.new()
 
+	# Set combat event participants
+	current_combat_event_data.attacker = attacker
+	current_combat_event_data.defender = defender
 
+	# Set Combat Event Action
+	current_combat_event_data.action = action
 
+	# On attack declared events trigger here
+
+	#Utilities.spawn_text_line(attacker, "Attacking " + defender.ui_name + " with " + action.action_name)
+	CombatLog.instance.add_log()
+	CombatLog.instance.add_log(attacker.ui_name + " attacks " + defender.ui_name + " with " + action.action_name)
+	
+	setup_attacker_test()
+	# Check if target wants to do a reaction
+	if action.tags.has("attack"):
+		await prompt_player_reaction(defender)
+		
+		setup_defender_test()
+
+	setup_degree_of_success()
+
+	
+	if current_combat_event_data.reaction:
+	
+		current_combat_event_data.reaction.resolve_reaction()
+	
+	setup_effective_damage()
+"""
+
+"""
 func debug_print_attack_results() -> void:
 	var attacker_hits: int = current_combat_event_data.attacker_hits
 	var defender_hits: int = current_combat_event_data.defender_hits
@@ -405,9 +547,9 @@ func prompt_player_reaction(defender: Unit) -> void:
 		
 		CombatLog.instance.add_log(current_combat_event_data.defender.ui_name + " reacts with " + selected_reaction.action_name)
 
+"""
 
-
-
+"""
 
 func setup_attacker_test() -> void:
 
@@ -457,9 +599,6 @@ func setup_defender_test() -> void:
 		
 		CombatLog.instance.add_log(current_combat_event_data.defender.ui_name + " Did Not React")
 
-class CantStop:
-	extends Resource
-	var taco: int = 1
 
 
 
@@ -478,7 +617,6 @@ func setup_degree_of_success() -> void:
 		current_combat_event_data.is_success = false
 
 	current_combat_event_data.net_hits = degree_of_success
-
 
 
 
@@ -536,3 +674,4 @@ func setup_effective_damage() -> void:
 			)
 
 	current_combat_event_data.effective_damage += effective_damage
+"""

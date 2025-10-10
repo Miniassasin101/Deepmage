@@ -1,8 +1,8 @@
 [gd_scene load_steps=55 format=3 uid="uid://14nkak1a1qkg"]
 
 [ext_resource type="Script" uid="uid://ceujy1qm0i6o6" path="res://Deepmage/Core/Scripts/Units/CharacterSheet.gd" id="1_rgld4"]
+[ext_resource type="Resource" uid="uid://chcmb33h3icuk" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/AttributesProfiles/BaseGubatAttributesProfile.tres" id="2_hd7qr"]
 [ext_resource type="Script" uid="uid://cusgogua72ojh" path="res://Deepmage/Core/Scripts/ActionSystem/ActionContainer.gd" id="2_o1iyq"]
-[ext_resource type="Resource" uid="uid://cpum3p0ce22eq" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/AttributesProfiles/BaseAttributesProfile.tres" id="2_rmt2h"]
 [ext_resource type="Script" uid="uid://cvislitkwpg12" path="res://Deepmage/Core/Scripts/ActionSystem/Action.gd" id="3_qntpm"]
 [ext_resource type="Script" uid="uid://bl34p0y06cyys" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/MoveAction.gd" id="4_lqkdn"]
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="5_p3ymn"]
@@ -209,7 +209,7 @@ metadata/_custom_type_script = "uid://dka6hmfmjlgvl"
 script = ExtResource("1_rgld4")
 action_container = NodePath("ActionContainer")
 attributes_container = NodePath("AttributesContainer")
-attributes_profile = ExtResource("2_rmt2h")
+attributes_profile = ExtResource("2_hd7qr")
 
 [node name="ActionContainer" type="Node" parent="."]
 script = ExtResource("2_o1iyq")
@@ -217,4 +217,4 @@ actions = Array[ExtResource("3_qntpm")]([SubResource("Resource_1oy7d"), SubResou
 
 [node name="AttributesContainer" type="Node" parent="."]
 script = ExtResource("25_ui78x")
-profile = ExtResource("2_rmt2h")
+profile = ExtResource("2_hd7qr")

@@ -3,16 +3,23 @@ extends Resource
 
 signal on_skill_ended
 
+enum SkillType { ACTIVE, PASSIVE, FREE}
+
+
 @export var skill_name: String = "None"
 
 @export var action: Action = null
+@export var skill_type: SkillType = SkillType.ACTIVE
+@export var skill_cost: int = 1 # AP or PP cost
 @export var skill_conditions: Array[SkillCondition] = []
 @export var target_preferences: Array[TargetPreference] = []
 
 @export var tags: Array[String] = []
 
+
 # Unit that owns the skill (set by Tactic when duplicating/assigning).
 var unit: Unit = null
+
 
 # -----------------------------------------------------------------------------
 # Public API
@@ -53,12 +60,36 @@ func can_activate_skill() -> bool:
 		return false
 	if !unit:
 		return false
-
+	
+	check_ap_pp()
+	
 	# True if at least one target unit satisfies all conditions.
 	if check_conditions_against_units():
 		return true
 
 	return false
+
+# Checks to see if the unit has enough action points or passive points to cover the cost of the skill
+func check_ap_pp() -> bool:
+	var points_name: String = "None"
+	
+	match skill_type:
+		SkillType.ACTIVE:
+			points_name = "active_points"
+		SkillType.PASSIVE:
+			points_name = "passive_points"
+	
+	var points_attribute: Attribute = unit.get_attributes_container().get_attribute(points_name)
+	if !points_attribute:
+		return false
+	
+	var curr_val: int = points_attribute.get_current_modified_value()
+	
+	if curr_val > skill_cost:
+		return false
+	
+	
+	return true
 
 
 # -----------------------------------------------------------------------------
@@ -88,7 +119,7 @@ func select_preferred_target(valid_units: Array[Unit]) -> Unit:
 		for pref in target_preferences:
 			# Narrow only if more than one remains.
 			if pool.size() > 1 and pref:
-				var narrowed := pref.apply(self, pool)
+				var narrowed: Array[Unit] = pref.apply(self, pool)
 				# Safety: Do not accept an empty result; keep prior pool if so.
 				if narrowed.size() > 0:
 					pool = narrowed
@@ -127,11 +158,11 @@ func check_conditions_against_units() -> bool:
 # Tags helpers
 # -----------------------------------------------------------------------------
 func has_tag(in_tag: String) -> bool:
+	in_tag = in_tag.to_lower()
 	# Case-insensitive tag check (lowercasing the input tag).
-	if tags.has(in_tag.to_lower()):
+	if tags.has(in_tag):
 		return true
 	return false
-	# TODO: Normalize all tags to lowercase at authoring-time to avoid repeated lowercase calls.
 
 
 func has_any_tag(in_tags: Array[String]) -> bool:
