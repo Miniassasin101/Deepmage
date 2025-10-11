@@ -1,0 +1,118 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3xpwrrdt3fa2"]
+
+[ext_resource type="Script" uid="uid://crn3p160ndo4c" path="res://addons/ReorderableContainer/reorderable_hbox.gd" id="1_dmaep"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dmaep"]
+bg_color = Color(0.22, 0.245, 0.25, 0.5411765)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_size = 3
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dmaep"]
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_syp6n"]
+bg_color = Color(0.1408, 0.1568, 0.16, 0.09019608)
+border_width_left = 3
+border_width_right = 3
+border_color = Color(0.55, 0.55, 0.55, 1)
+border_blend = true
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_offset = Vector2(-1, 1)
+
+[node name="TacticsSkillBar" type="PanelContainer"]
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_dmaep")
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_right = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="PriorityNumberLabel" type="Label" parent="MarginContainer2/HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(46, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+mouse_filter = 1
+text = "0"
+label_settings = SubResource("LabelSettings_dmaep")
+horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer2/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_syp6n")
+
+[node name="SkillLabel" type="Label" parent="MarginContainer2/HBoxContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+text = "Skill Name"
+label_settings = SubResource("LabelSettings_dmaep")
+horizontal_alignment = 1
+text_overrun_behavior = 1
+
+[node name="ReorderableHBox" type="Container" parent="MarginContainer2/HBoxContainer"]
+process_mode = 1
+custom_minimum_size = Vector2(416, 0)
+layout_mode = 2
+mouse_filter = 0
+script = ExtResource("1_dmaep")
+separation = 20
+metadata/_custom_type_script = "uid://crn3p160ndo4c"
+
+[node name="ConditionHeaderLabel" type="Label" parent="MarginContainer2/HBoxContainer/ReorderableHBox"]
+custom_minimum_size = Vector2(89, 0)
+layout_mode = 2
+text = "Condition 1"
+label_settings = SubResource("LabelSettings_dmaep")
+horizontal_alignment = 1
+text_overrun_behavior = 1
+
+[node name="ConditionHeaderLabel2" type="Label" parent="MarginContainer2/HBoxContainer/ReorderableHBox"]
+custom_minimum_size = Vector2(89, 0)
+layout_mode = 2
+text = "Condition 2"
+label_settings = SubResource("LabelSettings_dmaep")
+horizontal_alignment = 1
+text_overrun_behavior = 1
+
+[node name="ConditionHeaderLabel3" type="Label" parent="MarginContainer2/HBoxContainer/ReorderableHBox"]
+custom_minimum_size = Vector2(89, 0)
+layout_mode = 2
+text = "Condition 3"
+label_settings = SubResource("LabelSettings_dmaep")
+horizontal_alignment = 1
+text_overrun_behavior = 1
+
+[node name="ConditionHeaderLabel4" type="Label" parent="MarginContainer2/HBoxContainer/ReorderableHBox"]
+custom_minimum_size = Vector2(89, 0)
+layout_mode = 2
+text = "Condition 4"
+label_settings = SubResource("LabelSettings_dmaep")
+horizontal_alignment = 1
+text_overrun_behavior = 1
+
+[connection signal="sort_children" from="MarginContainer2/HBoxContainer/ReorderableHBox" to="MarginContainer2/HBoxContainer/ReorderableHBox" method="_on_sort_children"]

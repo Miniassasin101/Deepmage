@@ -205,6 +205,8 @@ func _remove_oldest_immediate(remove_count: int) -> void:
 
 # ---------- Input from the LOG button ----------
 
+
+
 func on_button_pressed(input_event: InputEvent) -> void:
 	# Left click + number preset?
 	if input_event.is_action_pressed("left_mouse"):
