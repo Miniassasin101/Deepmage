@@ -1,4 +1,4 @@
-[gd_scene load_steps=129 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=148 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
@@ -20,7 +20,8 @@
 [ext_resource type="Script" uid="uid://1miy676tt71s" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UnitManager.gd" id="11_lf0eb"]
 [ext_resource type="Script" uid="uid://xwiyhnl8erp1" path="res://Deepmage/Core/Scripts/Pathfinding/PathfindingSystem.gd" id="12_fnj5h"]
 [ext_resource type="PackedScene" uid="uid://2h1a1e1r8hc2" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.tscn" id="12_k2c3k"]
-[ext_resource type="Resource" uid="uid://cdo13j8uua6g3" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/MoveToSafetySkill.tres" id="12_qsjt4"]
+[ext_resource type="Resource" uid="uid://cdo13j8uua6g3" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/RushToSafetySkill.tres" id="12_qsjt4"]
+[ext_resource type="Resource" uid="uid://8vem57wbteya" path="res://Deepmage/Core/Resources/ActionResources/RushToUnitActionResource.tres" id="12_v4iap"]
 [ext_resource type="Resource" uid="uid://ov11t88e15s8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/TestProjectileThrow.tres" id="13_6kl6n"]
 [ext_resource type="Script" uid="uid://ian5eam30p0l" path="res://addons/curvemesh3d/curvemesh3d.gd" id="13_wbm0i"]
 [ext_resource type="Curve" uid="uid://b1kq6l63y7lb6" path="res://Deepmage/Core/MathPrefabs/Curves/Level.tres" id="14_calw8"]
@@ -28,6 +29,7 @@
 [ext_resource type="Script" uid="uid://hbm8nks1et3p" path="res://Deepmage/Core/Scripts/UI/TurnSystemUI.gd" id="15_ex7fh"]
 [ext_resource type="Script" uid="uid://cby42fxiu4cv5" path="res://Deepmage/Core/Scripts/UI/ActionSystemUI.gd" id="15_j7436"]
 [ext_resource type="Script" uid="uid://dyngi1ipggvgb" path="res://Deepmage/Core/Scripts/UI/InitiativeQueueUI.gd" id="16_2uyvs"]
+[ext_resource type="Script" uid="uid://copekbxaf13s" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreferenceScripts/ClosestPreference.gd" id="16_8v6vh"]
 [ext_resource type="Resource" uid="uid://uwibxof05smc" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BallThrowPackage.tres" id="16_23xud"]
 [ext_resource type="Script" uid="uid://cc6pcq4yohj7m" path="res://Deepmage/Core/Scripts/Projectile/PathBuilder3D.gd" id="16_dfmjn"]
 [ext_resource type="PackedScene" uid="uid://3p3xt0lymqsd" path="res://Deepmage/Core/Prefabs/UI/UnitStatsBar.tscn" id="16_ecsph"]
@@ -42,16 +44,17 @@
 [ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="22_00nvd"]
 [ext_resource type="PackedScene" uid="uid://cqqsm2gpif3dw" path="res://Deepmage/Core/Prefabs/UI/UnitCharacterSheet.tscn" id="22_gh8or"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="23_5lfvx"]
-[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IsEnemySkillCondition.gd" id="24_f0670"]
+[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="24_f0670"]
 [ext_resource type="Script" uid="uid://bubf25btsnnfv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Tactic.gd" id="24_w01yd"]
-[ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IsUnitInRangeSkillCondition.gd" id="25_ebomw"]
+[ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="25_ebomw"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="26_04ue1"]
 [ext_resource type="Script" uid="uid://c1pcudui7e5qp" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillTriggerSystem.gd" id="26_qdwhh"]
 [ext_resource type="PackedScene" uid="uid://bt5idkoxachxk" path="res://Deepmage/Core/Prefabs/UI/CombatLog.tscn" id="27_2gnov"]
 [ext_resource type="Script" uid="uid://csqgchb51x8ra" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreferenceScripts/HighestHPPercentPreference.gd" id="27_cb3j6"]
 [ext_resource type="Resource" uid="uid://cuudvrampevcg" path="res://Deepmage/Core/Resources/ActionResources/TestAttackActionResource.tres" id="28_e15dp"]
-[ext_resource type="Script" uid="uid://xw1q3xji7lhr" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IsFullHealthSkillCondition.gd" id="29_c2k8n"]
+[ext_resource type="Script" uid="uid://xw1q3xji7lhr" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/HealthBasedSkillConditions/IsFullHealthSkillCondition.gd" id="29_c2k8n"]
 [ext_resource type="Script" uid="uid://cpa7repyr1v6o" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/MoveToUnitAction.gd" id="30_hja2s"]
+[ext_resource type="Resource" uid="uid://ceu3eynl7qehx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/RushToUnitSkillResource.tres" id="30_hymmt"]
 [ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/TestAttackSkillResource.tres" id="31_f3uqp"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_lf0eb"]
@@ -64,14 +67,31 @@ geometry_source_geometry_mode = 2
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_avqdt"]
 data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
 
+[sub_resource type="Resource" id="Resource_4yeyf"]
+script = ExtResource("24_f0670")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_ufsey"]
+script = ExtResource("16_8v6vh")
+metadata/_custom_type_script = "uid://copekbxaf13s"
+
+[sub_resource type="Resource" id="Resource_utj8h"]
+resource_name = "RushToSkillResource"
+script = ExtResource("11_22ak0")
+skill_name = "Rush To"
+action = ExtResource("12_v4iap")
+skill_conditions = Array[ExtResource("23_5lfvx")]([SubResource("Resource_4yeyf")])
+target_preferences = Array[ExtResource("26_04ue1")]([SubResource("Resource_ufsey")])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"
+
 [sub_resource type="Resource" id="Resource_q6bko"]
 script = ExtResource("24_w01yd")
-active_skills = Array[ExtResource("11_22ak0")]([ExtResource("12_qsjt4"), ExtResource("13_6kl6n")])
+active_skills = Array[ExtResource("11_22ak0")]([ExtResource("12_qsjt4"), ExtResource("13_6kl6n"), SubResource("Resource_utj8h")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
-[sub_resource type="Resource" id="Resource_336d5"]
+[sub_resource type="Resource" id="Resource_8v6vh"]
 resource_local_to_scene = true
-resource_name = "PostureAttributeResource"
+resource_name = "Posture"
 script = ExtResource("10_p6f6u")
 attribute_name = "posture"
 attribute_type = 2
@@ -79,8 +99,9 @@ current_value = 20
 maximum_value = 20
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_x4bhx"]
+[sub_resource type="Resource" id="Resource_11ubm"]
 resource_local_to_scene = true
+resource_name = "Speed"
 script = ExtResource("10_p6f6u")
 attribute_name = "speed"
 attribute_type = 2
@@ -88,8 +109,9 @@ current_value = 4
 maximum_value = 4
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_m1qim"]
+[sub_resource type="Resource" id="Resource_w01yd"]
 resource_local_to_scene = true
+resource_name = "Jump"
 script = ExtResource("10_p6f6u")
 attribute_name = "jump"
 attribute_type = 2
@@ -97,18 +119,18 @@ current_value = 2
 maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_p6f6u"]
+[sub_resource type="Resource" id="Resource_00nvd"]
 resource_local_to_scene = true
-resource_name = "EvadeAttributeResource"
+resource_name = "Evade"
 script = ExtResource("10_p6f6u")
 attribute_name = "evade"
 attribute_type = 2
 current_value = 1
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_51q8q"]
+[sub_resource type="Resource" id="Resource_5lfvx"]
 resource_local_to_scene = true
-resource_name = "MartialAttributeResource"
+resource_name = "Martial"
 script = ExtResource("10_p6f6u")
 attribute_name = "martial"
 attribute_type = 1
@@ -116,9 +138,9 @@ current_value = 2
 maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_allnq"]
+[sub_resource type="Resource" id="Resource_f0670"]
 resource_local_to_scene = true
-resource_name = "ChannelAttributeResource"
+resource_name = "Channel"
 script = ExtResource("10_p6f6u")
 attribute_name = "channel"
 attribute_type = 1
@@ -126,8 +148,9 @@ current_value = 2
 maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_qdwhh"]
+[sub_resource type="Resource" id="Resource_ebomw"]
 resource_local_to_scene = true
+resource_name = "Parry"
 script = ExtResource("10_p6f6u")
 attribute_name = "parry"
 attribute_type = 1
@@ -135,8 +158,9 @@ current_value = 2
 maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_862d3"]
+[sub_resource type="Resource" id="Resource_04ue1"]
 resource_local_to_scene = true
+resource_name = "Resist"
 script = ExtResource("10_p6f6u")
 attribute_name = "resist"
 attribute_type = 1
@@ -144,9 +168,9 @@ current_value = 2
 maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_22ak0"]
+[sub_resource type="Resource" id="Resource_cb3j6"]
 resource_local_to_scene = true
-resource_name = "ManaAttributeResource"
+resource_name = "Mana"
 script = ExtResource("10_p6f6u")
 attribute_name = "mana"
 attribute_type = 2
@@ -154,8 +178,9 @@ current_value = 10
 maximum_value = 10
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_cel8m"]
+[sub_resource type="Resource" id="Resource_e15dp"]
 resource_local_to_scene = true
+resource_name = "ActivePoints"
 script = ExtResource("10_p6f6u")
 attribute_name = "active_points"
 attribute_type = 2
@@ -164,8 +189,9 @@ base_value = 2
 maximum_value = 4
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_sgxdm"]
+[sub_resource type="Resource" id="Resource_c2k8n"]
 resource_local_to_scene = true
+resource_name = "PassivePoints"
 script = ExtResource("10_p6f6u")
 attribute_name = "passive_points"
 attribute_type = 2
@@ -174,20 +200,154 @@ base_value = 2
 maximum_value = 4
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_f2qps"]
+[sub_resource type="Resource" id="Resource_hja2s"]
 resource_local_to_scene = true
+resource_name = "Initiative"
 script = ExtResource("10_p6f6u")
 attribute_name = "initiative"
 attribute_type = 2
-current_value = 15
-maximum_value = 15
+current_value = 13
+maximum_value = 13
 minimum_value = -100
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_v8epg"]
 resource_local_to_scene = true
 script = ExtResource("11_6kl6n")
-attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_336d5"), SubResource("Resource_x4bhx"), SubResource("Resource_m1qim"), SubResource("Resource_p6f6u"), SubResource("Resource_51q8q"), SubResource("Resource_allnq"), SubResource("Resource_qdwhh"), SubResource("Resource_862d3"), SubResource("Resource_22ak0"), SubResource("Resource_cel8m"), SubResource("Resource_sgxdm"), SubResource("Resource_f2qps")])
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_8v6vh"), SubResource("Resource_11ubm"), SubResource("Resource_w01yd"), SubResource("Resource_00nvd"), SubResource("Resource_5lfvx"), SubResource("Resource_f0670"), SubResource("Resource_ebomw"), SubResource("Resource_04ue1"), SubResource("Resource_cb3j6"), SubResource("Resource_e15dp"), SubResource("Resource_c2k8n"), SubResource("Resource_hja2s")])
+metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
+
+[sub_resource type="Resource" id="Resource_gam6i"]
+script = ExtResource("24_w01yd")
+active_skills = Array[ExtResource("11_22ak0")]([ExtResource("31_f3uqp"), ExtResource("12_qsjt4"), ExtResource("13_6kl6n")])
+metadata/_custom_type_script = "uid://bubf25btsnnfv"
+
+[sub_resource type="Resource" id="Resource_f3uqp"]
+resource_local_to_scene = true
+resource_name = "Posture"
+script = ExtResource("10_p6f6u")
+attribute_name = "posture"
+attribute_type = 2
+current_value = 20
+maximum_value = 20
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_0fvkv"]
+resource_local_to_scene = true
+resource_name = "Speed"
+script = ExtResource("10_p6f6u")
+attribute_name = "speed"
+attribute_type = 2
+current_value = 4
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_dpue3"]
+resource_local_to_scene = true
+resource_name = "Jump"
+script = ExtResource("10_p6f6u")
+attribute_name = "jump"
+attribute_type = 2
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_mpmhl"]
+resource_local_to_scene = true
+resource_name = "Evade"
+script = ExtResource("10_p6f6u")
+attribute_name = "evade"
+attribute_type = 2
+current_value = 1
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_yl67w"]
+resource_local_to_scene = true
+resource_name = "Martial"
+script = ExtResource("10_p6f6u")
+attribute_name = "martial"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_6odjx"]
+resource_local_to_scene = true
+resource_name = "Channel"
+script = ExtResource("10_p6f6u")
+attribute_name = "channel"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_lk7si"]
+resource_local_to_scene = true
+resource_name = "Parry"
+script = ExtResource("10_p6f6u")
+attribute_name = "parry"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_73fol"]
+resource_local_to_scene = true
+resource_name = "Resist"
+script = ExtResource("10_p6f6u")
+attribute_name = "resist"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_a4tjr"]
+resource_local_to_scene = true
+resource_name = "Mana"
+script = ExtResource("10_p6f6u")
+attribute_name = "mana"
+attribute_type = 2
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_pwtg8"]
+resource_local_to_scene = true
+resource_name = "ActivePoints"
+script = ExtResource("10_p6f6u")
+attribute_name = "active_points"
+attribute_type = 2
+current_value = 2
+base_value = 2
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_src6p"]
+resource_local_to_scene = true
+resource_name = "PassivePoints"
+script = ExtResource("10_p6f6u")
+attribute_name = "passive_points"
+attribute_type = 2
+current_value = 2
+base_value = 2
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_o8y13"]
+resource_local_to_scene = true
+resource_name = "Initiative"
+script = ExtResource("10_p6f6u")
+attribute_name = "initiative"
+attribute_type = 2
+current_value = 14
+maximum_value = 14
+minimum_value = -100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_rfnuq"]
+resource_local_to_scene = true
+script = ExtResource("11_6kl6n")
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_f3uqp"), SubResource("Resource_0fvkv"), SubResource("Resource_dpue3"), SubResource("Resource_mpmhl"), SubResource("Resource_yl67w"), SubResource("Resource_6odjx"), SubResource("Resource_lk7si"), SubResource("Resource_73fol"), SubResource("Resource_a4tjr"), SubResource("Resource_pwtg8"), SubResource("Resource_src6p"), SubResource("Resource_o8y13")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
 
 [sub_resource type="Resource" id="Resource_gi5u1"]
@@ -243,7 +403,7 @@ metadata/_custom_type_script = "uid://2nsctaj2mk50"
 
 [sub_resource type="Resource" id="Resource_2gvhv"]
 script = ExtResource("25_ebomw")
-range_var = 20.0
+range_var = 15.0
 metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
 
 [sub_resource type="Resource" id="Resource_7g53y"]
@@ -251,6 +411,7 @@ script = ExtResource("27_cb3j6")
 metadata/_custom_type_script = "uid://csqgchb51x8ra"
 
 [sub_resource type="Resource" id="Resource_8hoel"]
+resource_name = "ThrowSkillResource"
 script = ExtResource("11_22ak0")
 skill_name = "Throw"
 action = SubResource("Resource_05afn")
@@ -275,6 +436,7 @@ script = ExtResource("27_cb3j6")
 metadata/_custom_type_script = "uid://csqgchb51x8ra"
 
 [sub_resource type="Resource" id="Resource_7ehp6"]
+resource_name = "BashSkillResource"
 script = ExtResource("11_22ak0")
 skill_name = "Bash"
 action = ExtResource("28_e15dp")
@@ -284,6 +446,7 @@ metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_ccdyu"]
 script = ExtResource("30_hja2s")
+limit_by_speed = true
 move_speed = 10.0
 unit_avoid_radius = 1.6
 action_name = "Move To"
@@ -291,41 +454,31 @@ selection_types = Array[ExtResource("21_w01yd")]([ExtResource("22_00nvd")])
 tags = Array[String](["move_to_unit"])
 metadata/_custom_type_script = "uid://cpa7repyr1v6o"
 
-[sub_resource type="Resource" id="Resource_4yeyf"]
+[sub_resource type="Resource" id="Resource_o24kd"]
 script = ExtResource("24_f0670")
 metadata/_custom_type_script = "uid://2nsctaj2mk50"
-
-[sub_resource type="Resource" id="Resource_s3v1t"]
-script = ExtResource("29_c2k8n")
-metadata/_custom_type_script = "uid://xw1q3xji7lhr"
-
-[sub_resource type="Resource" id="Resource_t7uvv"]
-script = ExtResource("11_22ak0")
-skill_name = "Move To"
-action = SubResource("Resource_ccdyu")
-skill_conditions = Array[ExtResource("23_5lfvx")]([SubResource("Resource_4yeyf"), SubResource("Resource_s3v1t")])
-metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_1343x"]
 script = ExtResource("27_cb3j6")
 metadata/_custom_type_script = "uid://csqgchb51x8ra"
 
 [sub_resource type="Resource" id="Resource_u3hxb"]
+resource_name = "MoveToSkillResource"
 script = ExtResource("11_22ak0")
 skill_name = "Move To"
 action = SubResource("Resource_ccdyu")
-skill_conditions = Array[ExtResource("23_5lfvx")]([SubResource("Resource_4yeyf")])
+skill_conditions = Array[ExtResource("23_5lfvx")]([SubResource("Resource_o24kd")])
 target_preferences = Array[ExtResource("26_04ue1")]([SubResource("Resource_1343x")])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_jiskd"]
 script = ExtResource("24_w01yd")
-active_skills = Array[ExtResource("11_22ak0")]([SubResource("Resource_8hoel"), SubResource("Resource_7ehp6"), SubResource("Resource_t7uvv"), ExtResource("31_f3uqp"), SubResource("Resource_u3hxb")])
+active_skills = Array[ExtResource("11_22ak0")]([SubResource("Resource_8hoel"), SubResource("Resource_7ehp6"), ExtResource("30_hymmt"), ExtResource("31_f3uqp"), SubResource("Resource_u3hxb")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
-[sub_resource type="Resource" id="Resource_k6sm3"]
+[sub_resource type="Resource" id="Resource_g2rko"]
 resource_local_to_scene = true
-resource_name = "PostureAttributeResource"
+resource_name = "Posture"
 script = ExtResource("10_p6f6u")
 attribute_name = "posture"
 attribute_type = 2
@@ -333,8 +486,9 @@ current_value = 20
 maximum_value = 20
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_bvt28"]
+[sub_resource type="Resource" id="Resource_su0wa"]
 resource_local_to_scene = true
+resource_name = "Speed"
 script = ExtResource("10_p6f6u")
 attribute_name = "speed"
 attribute_type = 2
@@ -342,8 +496,9 @@ current_value = 4
 maximum_value = 4
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_23xud"]
+[sub_resource type="Resource" id="Resource_lwd1i"]
 resource_local_to_scene = true
+resource_name = "Jump"
 script = ExtResource("10_p6f6u")
 attribute_name = "jump"
 attribute_type = 2
@@ -351,18 +506,18 @@ current_value = 2
 maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_hymmt"]
+[sub_resource type="Resource" id="Resource_4dv0c"]
 resource_local_to_scene = true
-resource_name = "EvadeAttributeResource"
+resource_name = "Evade"
 script = ExtResource("10_p6f6u")
 attribute_name = "evade"
 attribute_type = 2
 current_value = 1
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_v4iap"]
+[sub_resource type="Resource" id="Resource_ub3kf"]
 resource_local_to_scene = true
-resource_name = "MartialAttributeResource"
+resource_name = "Martial"
 script = ExtResource("10_p6f6u")
 attribute_name = "martial"
 attribute_type = 1
@@ -370,9 +525,9 @@ current_value = 2
 maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_8v6vh"]
+[sub_resource type="Resource" id="Resource_p6sl4"]
 resource_local_to_scene = true
-resource_name = "ChannelAttributeResource"
+resource_name = "Channel"
 script = ExtResource("10_p6f6u")
 attribute_name = "channel"
 attribute_type = 1
@@ -380,8 +535,9 @@ current_value = 2
 maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_11ubm"]
+[sub_resource type="Resource" id="Resource_j6cut"]
 resource_local_to_scene = true
+resource_name = "Parry"
 script = ExtResource("10_p6f6u")
 attribute_name = "parry"
 attribute_type = 1
@@ -389,8 +545,9 @@ current_value = 2
 maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_w01yd"]
+[sub_resource type="Resource" id="Resource_qtrpl"]
 resource_local_to_scene = true
+resource_name = "Resist"
 script = ExtResource("10_p6f6u")
 attribute_name = "resist"
 attribute_type = 1
@@ -398,9 +555,9 @@ current_value = 2
 maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_00nvd"]
+[sub_resource type="Resource" id="Resource_8wfs1"]
 resource_local_to_scene = true
-resource_name = "ManaAttributeResource"
+resource_name = "Mana"
 script = ExtResource("10_p6f6u")
 attribute_name = "mana"
 attribute_type = 2
@@ -408,8 +565,9 @@ current_value = 10
 maximum_value = 10
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_5lfvx"]
+[sub_resource type="Resource" id="Resource_wan3k"]
 resource_local_to_scene = true
+resource_name = "ActivePoints"
 script = ExtResource("10_p6f6u")
 attribute_name = "active_points"
 attribute_type = 2
@@ -418,8 +576,9 @@ base_value = 2
 maximum_value = 4
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_f0670"]
+[sub_resource type="Resource" id="Resource_ol02q"]
 resource_local_to_scene = true
+resource_name = "PassivePoints"
 script = ExtResource("10_p6f6u")
 attribute_name = "passive_points"
 attribute_type = 2
@@ -428,8 +587,9 @@ base_value = 2
 maximum_value = 4
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_ebomw"]
+[sub_resource type="Resource" id="Resource_avl6w"]
 resource_local_to_scene = true
+resource_name = "Initiative"
 script = ExtResource("10_p6f6u")
 attribute_name = "initiative"
 attribute_type = 2
@@ -441,12 +601,17 @@ metadata/_custom_type_script = "uid://7vw8btajjq0q"
 [sub_resource type="Resource" id="Resource_iq36j"]
 resource_local_to_scene = true
 script = ExtResource("11_6kl6n")
-attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_k6sm3"), SubResource("Resource_bvt28"), SubResource("Resource_23xud"), SubResource("Resource_hymmt"), SubResource("Resource_v4iap"), SubResource("Resource_8v6vh"), SubResource("Resource_11ubm"), SubResource("Resource_w01yd"), SubResource("Resource_00nvd"), SubResource("Resource_5lfvx"), SubResource("Resource_f0670"), SubResource("Resource_ebomw")])
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_g2rko"), SubResource("Resource_su0wa"), SubResource("Resource_lwd1i"), SubResource("Resource_4dv0c"), SubResource("Resource_ub3kf"), SubResource("Resource_p6sl4"), SubResource("Resource_j6cut"), SubResource("Resource_qtrpl"), SubResource("Resource_8wfs1"), SubResource("Resource_wan3k"), SubResource("Resource_ol02q"), SubResource("Resource_avl6w")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
 
-[sub_resource type="Resource" id="Resource_04ue1"]
+[sub_resource type="Resource" id="Resource_rx2vc"]
+script = ExtResource("24_w01yd")
+active_skills = Array[ExtResource("11_22ak0")]([ExtResource("31_f3uqp"), ExtResource("30_hymmt")])
+metadata/_custom_type_script = "uid://bubf25btsnnfv"
+
+[sub_resource type="Resource" id="Resource_3ixwr"]
 resource_local_to_scene = true
-resource_name = "PostureAttributeResource"
+resource_name = "Posture"
 script = ExtResource("10_p6f6u")
 attribute_name = "posture"
 attribute_type = 2
@@ -454,8 +619,9 @@ current_value = 20
 maximum_value = 20
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_cb3j6"]
+[sub_resource type="Resource" id="Resource_ody2n"]
 resource_local_to_scene = true
+resource_name = "Speed"
 script = ExtResource("10_p6f6u")
 attribute_name = "speed"
 attribute_type = 2
@@ -463,8 +629,9 @@ current_value = 4
 maximum_value = 4
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_e15dp"]
+[sub_resource type="Resource" id="Resource_2qjkf"]
 resource_local_to_scene = true
+resource_name = "Jump"
 script = ExtResource("10_p6f6u")
 attribute_name = "jump"
 attribute_type = 2
@@ -472,18 +639,18 @@ current_value = 2
 maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_c2k8n"]
+[sub_resource type="Resource" id="Resource_5ddj0"]
 resource_local_to_scene = true
-resource_name = "EvadeAttributeResource"
+resource_name = "Evade"
 script = ExtResource("10_p6f6u")
 attribute_name = "evade"
 attribute_type = 2
 current_value = 1
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_hja2s"]
+[sub_resource type="Resource" id="Resource_knq6r"]
 resource_local_to_scene = true
-resource_name = "MartialAttributeResource"
+resource_name = "Martial"
 script = ExtResource("10_p6f6u")
 attribute_name = "martial"
 attribute_type = 1
@@ -491,9 +658,9 @@ current_value = 2
 maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_f3uqp"]
+[sub_resource type="Resource" id="Resource_68abb"]
 resource_local_to_scene = true
-resource_name = "ChannelAttributeResource"
+resource_name = "Channel"
 script = ExtResource("10_p6f6u")
 attribute_name = "channel"
 attribute_type = 1
@@ -501,8 +668,9 @@ current_value = 2
 maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_0fvkv"]
+[sub_resource type="Resource" id="Resource_0gv3y"]
 resource_local_to_scene = true
+resource_name = "Parry"
 script = ExtResource("10_p6f6u")
 attribute_name = "parry"
 attribute_type = 1
@@ -510,8 +678,9 @@ current_value = 2
 maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_dpue3"]
+[sub_resource type="Resource" id="Resource_mt8ep"]
 resource_local_to_scene = true
+resource_name = "Resist"
 script = ExtResource("10_p6f6u")
 attribute_name = "resist"
 attribute_type = 1
@@ -519,9 +688,9 @@ current_value = 2
 maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_mpmhl"]
+[sub_resource type="Resource" id="Resource_t1is0"]
 resource_local_to_scene = true
-resource_name = "ManaAttributeResource"
+resource_name = "Mana"
 script = ExtResource("10_p6f6u")
 attribute_name = "mana"
 attribute_type = 2
@@ -529,8 +698,9 @@ current_value = 10
 maximum_value = 10
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_yl67w"]
+[sub_resource type="Resource" id="Resource_guc2f"]
 resource_local_to_scene = true
+resource_name = "ActivePoints"
 script = ExtResource("10_p6f6u")
 attribute_name = "active_points"
 attribute_type = 2
@@ -539,8 +709,9 @@ base_value = 2
 maximum_value = 4
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_6odjx"]
+[sub_resource type="Resource" id="Resource_gdrlf"]
 resource_local_to_scene = true
+resource_name = "PassivePoints"
 script = ExtResource("10_p6f6u")
 attribute_name = "passive_points"
 attribute_type = 2
@@ -549,8 +720,9 @@ base_value = 2
 maximum_value = 4
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_lk7si"]
+[sub_resource type="Resource" id="Resource_yxhqu"]
 resource_local_to_scene = true
+resource_name = "Initiative"
 script = ExtResource("10_p6f6u")
 attribute_name = "initiative"
 attribute_type = 2
@@ -562,7 +734,7 @@ metadata/_custom_type_script = "uid://7vw8btajjq0q"
 [sub_resource type="Resource" id="Resource_8pahp"]
 resource_local_to_scene = true
 script = ExtResource("11_6kl6n")
-attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_04ue1"), SubResource("Resource_cb3j6"), SubResource("Resource_e15dp"), SubResource("Resource_c2k8n"), SubResource("Resource_hja2s"), SubResource("Resource_f3uqp"), SubResource("Resource_0fvkv"), SubResource("Resource_dpue3"), SubResource("Resource_mpmhl"), SubResource("Resource_yl67w"), SubResource("Resource_6odjx"), SubResource("Resource_lk7si")])
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_3ixwr"), SubResource("Resource_ody2n"), SubResource("Resource_2qjkf"), SubResource("Resource_5ddj0"), SubResource("Resource_knq6r"), SubResource("Resource_68abb"), SubResource("Resource_0gv3y"), SubResource("Resource_mt8ep"), SubResource("Resource_t1is0"), SubResource("Resource_guc2f"), SubResource("Resource_gdrlf"), SubResource("Resource_yxhqu")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xyav6"]
@@ -714,6 +886,19 @@ tags = Array[String]([])
 unit = NodePath("..")
 attributes_profile = SubResource("Resource_v8epg")
 
+[node name="Verdant" parent="UnitManager" node_paths=PackedStringArray("character_sheet") instance=ExtResource("12_k2c3k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.0376267, 0, 0)
+character_sheet = NodePath("CharacterSheet")
+starting_tactic = SubResource("Resource_gam6i")
+ui_name = "Verdant"
+is_enemy = true
+visor_color = Color(0.247, 0.65, 0.30744994, 1)
+tags = Array[String]([])
+
+[node name="CharacterSheet" parent="UnitManager/Verdant" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
+unit = NodePath("..")
+attributes_profile = SubResource("Resource_rfnuq")
+
 [node name="Marigold" parent="UnitManager" node_paths=PackedStringArray("character_sheet") instance=ExtResource("12_k2c3k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.8972347)
 character_sheet = NodePath("CharacterSheet")
@@ -729,6 +914,7 @@ attributes_profile = SubResource("Resource_iq36j")
 [node name="Ruby" parent="UnitManager" node_paths=PackedStringArray("character_sheet") instance=ExtResource("12_k2c3k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.076848)
 character_sheet = NodePath("CharacterSheet")
+starting_tactic = SubResource("Resource_rx2vc")
 ui_name = "Ruby"
 visor_color = Color(0.73, 0.2993, 0.306478, 1)
 
@@ -970,9 +1156,9 @@ anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 5.0
-offset_top = -64.0
+offset_top = -15.9999695
 offset_right = 201.0
-offset_bottom = 63.0
+offset_bottom = 114.00003
 grow_vertical = 2
 scale = Vector2(0.725, 0.725)
 theme_override_styles/panel = SubResource("StyleBoxFlat_o5ega")
@@ -986,8 +1172,21 @@ theme_override_constants/margin_bottom = 2
 
 [node name="UnitStatsContainer" type="VBoxContainer" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer"]
 layout_mode = 2
+alignment = 1
 
 [node name="UnitStatsBar" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer/UnitStatsContainer" instance=ExtResource("16_ecsph")]
+layout_mode = 2
+
+[node name="UnitStatsBar2" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer/UnitStatsContainer" instance=ExtResource("16_ecsph")]
+visible = false
+layout_mode = 2
+
+[node name="UnitStatsBar3" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer/UnitStatsContainer" instance=ExtResource("16_ecsph")]
+visible = false
+layout_mode = 2
+
+[node name="UnitStatsBar4" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer/UnitStatsContainer" instance=ExtResource("16_ecsph")]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="UILayer"]
@@ -1004,7 +1203,7 @@ mouse_controller = NodePath("../../MouseController")
 pathfinding = NodePath("../../PathfindingSystem")
 
 [node name="CombatLog" parent="UILayer" instance=ExtResource("27_2gnov")]
-max_logs = 30
+max_logs = 40
 change_amount = 240
 test_num = 40.0
 

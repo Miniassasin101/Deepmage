@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="Skill" load_steps=9 format=3 uid="uid://ceu3eynl7qehx"]
+
+[ext_resource type="Resource" uid="uid://8vem57wbteya" path="res://Deepmage/Core/Resources/ActionResources/RushToUnitActionResource.tres" id="1_2qh7j"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="2_bkr81"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="3_sb21c"]
+[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="4_l3lly"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="5_83gjv"]
+[ext_resource type="Script" uid="uid://csqgchb51x8ra" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreferenceScripts/HighestHPPercentPreference.gd" id="6_jxedq"]
+
+[sub_resource type="Resource" id="Resource_4yeyf"]
+script = ExtResource("4_l3lly")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_2qh7j"]
+script = ExtResource("6_jxedq")
+metadata/_custom_type_script = "uid://csqgchb51x8ra"
+
+[resource]
+resource_name = "RushToSkillResource"
+script = ExtResource("2_bkr81")
+skill_name = "Rush To"
+action = ExtResource("1_2qh7j")
+skill_conditions = Array[ExtResource("3_sb21c")]([SubResource("Resource_4yeyf")])
+target_preferences = Array[ExtResource("5_83gjv")]([SubResource("Resource_2qh7j")])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

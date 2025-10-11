@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="MoveToUnitAction" load_steps=4 format=3 uid="uid://8vem57wbteya"]
+
+[ext_resource type="Script" uid="uid://cpa7repyr1v6o" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/MoveToUnitAction.gd" id="1_p5x0e"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_5b54w"]
+[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="3_dj7hu"]
+
+[resource]
+script = ExtResource("1_p5x0e")
+limit_by_speed = true
+move_speed = 8.0
+rotate_speed = 2.0
+acceleration_time = 2.0
+rotation_acceleration_time = 2.0
+unit_avoid_radius = 1.6
+action_name = "Rush To"
+selection_types = Array[ExtResource("2_5b54w")]([ExtResource("3_dj7hu")])
+tags = Array[String](["move_to_unit"])
+metadata/_custom_type_script = "uid://cpa7repyr1v6o"

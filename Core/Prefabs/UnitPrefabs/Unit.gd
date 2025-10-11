@@ -12,6 +12,7 @@ enum TurnState {
 
 
 @export_category("References")
+@export_group("Refs")
 @export var above_head_marker: Marker3D
 @export var nav_agent: NavigationAgent3D
 @export var death_vfx_scene: PackedScene
@@ -24,20 +25,20 @@ enum TurnState {
 @export var satellite_controller: SatelliteController
 @export var token_controller: TokenController
 @export var tactics_controller: TacticsController
-
+@export_group("Sockets")
 @export var left_hand_socket: Marker3D
 @export var right_hand_socket: Marker3D
+@export_group("")
+
 
 @export_category("Prefabs")
 @export var character_sheet_packed_scene: PackedScene = null
 
-@export_category("Temp Stats")
-@export var speed: int = 6
 
 @export_category("Tactics")
 @export var starting_tactic: Tactic = null
 
-@export_category("Attributes")
+@export_category("Unique Aspects")
 
 @export var ui_name: String = "Unit":
 	set(val):
@@ -54,14 +55,6 @@ enum TurnState {
 @export_category("Tags")
 @export var tags: Array[String] = []
 
-#@export_group("Movement Parameters")
-#@export var movement_speed: float = 2.0
-#@export var rotation_speed: float = 5.0    # radians per second
-#var movement_target_position: Vector3 = Vector3(-3.0,0.0,2.0)
-#
-#
-#@export var path_desired_distance: float = 0.5
-#@export var target_desired_distance: float = 0.5
 
 
 var turn_state: TurnState = TurnState.OUTSIDE_COMBAT

@@ -58,6 +58,7 @@ label_settings = SubResource("LabelSettings_bwm3i")
 horizontal_alignment = 1
 
 [node name="InitiativeScoreLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 text = "Initiative Score"
 horizontal_alignment = 1
@@ -87,6 +88,7 @@ text = "PP: 1"
 label_settings = SubResource("LabelSettings_5nvtf")
 
 [node name="ManaLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 text = "Mana Points"
 horizontal_alignment = 1

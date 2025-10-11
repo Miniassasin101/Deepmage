@@ -1,9 +1,15 @@
+@tool
 class_name Attribute
 extends Resource
 
 ## Represents an attribute or skill or stat as a class
 
-@export var attribute_name: String = ""
+@export var attribute_name: String = "":
+	set(val):
+		attribute_name = val
+		change_resource_name_to_attribute()
+
+
 
 @export_enum("Attribute", "Skill", "Stat", "Track") var attribute_type: int
 
@@ -30,6 +36,16 @@ func _init() -> void:
 	# Ensures that when this resource is attached in a scene,
 	# the scene owns its copy (editing one unit’s attribute won’t affect others).
 	set_local_to_scene(true)
+
+
+func change_resource_name_to_attribute() -> void:
+	if !Engine.is_editor_hint():
+		return
+	var temp_attribute_name: String = attribute_name.to_pascal_case() if attribute_name != "" else "Unnamed"
+	var temp_resource_name: String = temp_attribute_name# + "Attribute"
+	set_name(temp_resource_name)
+
+
 
 func get_current_modified_value() -> int:
 	return  current_value + get_current_modifier()

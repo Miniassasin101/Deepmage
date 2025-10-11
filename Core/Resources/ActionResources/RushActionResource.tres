@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="MoveAction" load_steps=4 format=3 uid="uid://ckf4jaulgujk1"]
+
+[ext_resource type="Script" uid="uid://bl34p0y06cyys" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/MoveAction.gd" id="1_nda8n"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_yjuh0"]
+
+[sub_resource type="Resource" id="Resource_lsp3f"]
+script = ExtResource("2_yjuh0")
+name = &"ground"
+is_true = true
+metadata/_custom_type_script = "uid://cihsn5lxnlupk"
+
+[resource]
+script = ExtResource("1_nda8n")
+limit_by_speed = true
+move_speed = 8.0
+rotate_speed = 5.0
+acceleration_time = 3.0
+rotation_acceleration_time = 2.0
+action_name = "Rush"
+selection_types = Array[ExtResource("2_yjuh0")]([SubResource("Resource_lsp3f")])
+metadata/_custom_type_script = "uid://bl34p0y06cyys"

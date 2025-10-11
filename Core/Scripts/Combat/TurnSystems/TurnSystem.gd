@@ -153,7 +153,7 @@ func _enter_resolution_phase() -> void:
 		if cycle_index >= 100:
 			push_error("Cycle Count Went Over 100 in TurnSystem")
 			break
-		await get_tree().create_timer(0.5).timeout
+		#await get_tree().create_timer(0.5).timeout
 
 	CombatLog.instance.add_log("Resolution Phase")
 	

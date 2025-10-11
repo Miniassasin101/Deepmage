@@ -1,12 +1,13 @@
-[gd_scene load_steps=69 format=3 uid="uid://14nkak1a1qkg"]
+[gd_scene load_steps=70 format=3 uid="uid://14nkak1a1qkg"]
 
 [ext_resource type="Script" uid="uid://ceujy1qm0i6o6" path="res://Deepmage/Core/Scripts/Units/CharacterSheet.gd" id="1_rgld4"]
 [ext_resource type="Script" uid="uid://cusgogua72ojh" path="res://Deepmage/Core/Scripts/ActionSystem/ActionContainer.gd" id="2_o1iyq"]
 [ext_resource type="Script" uid="uid://cvislitkwpg12" path="res://Deepmage/Core/Scripts/ActionSystem/Action.gd" id="3_qntpm"]
-[ext_resource type="Script" uid="uid://bl34p0y06cyys" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/MoveAction.gd" id="4_lqkdn"]
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="5_p3ymn"]
 [ext_resource type="Script" uid="uid://doahtvq8r205k" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextOnUnitAction.gd" id="6_p3uej"]
+[ext_resource type="Resource" uid="uid://cgy0lblu8p8qy" path="res://Deepmage/Core/Resources/ActionResources/MoveActionResource.tres" id="6_semri"]
 [ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="7_0fy5k"]
+[ext_resource type="Resource" uid="uid://ckf4jaulgujk1" path="res://Deepmage/Core/Resources/ActionResources/RushActionResource.tres" id="7_dpcrq"]
 [ext_resource type="Script" uid="uid://4mdy4qyk2p8b" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextOnGroundAction.gd" id="8_txd4g"]
 [ext_resource type="Script" uid="uid://bjhah2xmsklrq" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/TeleportAction.gd" id="9_e2vah"]
 [ext_resource type="Resource" uid="uid://dkgox1ly7bfii" path="res://Deepmage/Core/Resources/ActionResources/TextDistanceFromUnitActionResource.tres" id="10_wrqbw"]
@@ -15,6 +16,7 @@
 [ext_resource type="Resource" uid="uid://dccj02olf2ba7" path="res://Deepmage/Core/Resources/ActionResources/TestLongAttackActionResource.tres" id="13_704ky"]
 [ext_resource type="Resource" uid="uid://by016ujd3kbnh" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/EvadeReactionResource.tres" id="14_6wat7"]
 [ext_resource type="Resource" uid="uid://c5dl1dlq1jmiy" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/BlockReactionResource.tres" id="15_8ookq"]
+[ext_resource type="Resource" uid="uid://8vem57wbteya" path="res://Deepmage/Core/Resources/ActionResources/RushToUnitActionResource.tres" id="15_m2aod"]
 [ext_resource type="Resource" uid="uid://d2ysyx0gn34ud" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/PassReactionResource.tres" id="16_fpm4q"]
 [ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="17_ic4q3"]
 [ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="18_yrgef"]
@@ -29,7 +31,7 @@
 [ext_resource type="Resource" uid="uid://056wlunxgtlm" path="res://Deepmage/Core/Resources/ActionResources/SpellActionResources/SpellLaunchSatelliteActionTestResource.tres" id="26_grtb5"]
 [ext_resource type="Script" uid="uid://cpj8k2txj2cww" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/UseSkillAction.gd" id="28_vcafi"]
 [ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/TestAttackSkillResource.tres" id="29_ucxv2"]
-[ext_resource type="Resource" uid="uid://ceu3eynl7qehx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/MoveTowardUnitSkillResource.tres" id="30_ucxv2"]
+[ext_resource type="Resource" uid="uid://ceu3eynl7qehx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/RushToUnitSkillResource.tres" id="30_ucxv2"]
 [ext_resource type="Script" uid="uid://dka6hmfmjlgvl" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/UseFirstSkillAction.gd" id="31_xyrbs"]
 [ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="33_rmt2h"]
 [ext_resource type="Script" uid="uid://dgwgvxp80lmhb" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributesProfile.gd" id="34_hd7qr"]
@@ -155,28 +157,17 @@ script = ExtResource("34_hd7qr")
 attributes = Array[ExtResource("33_rmt2h")]([SubResource("Resource_336d5"), SubResource("Resource_x4bhx"), SubResource("Resource_m1qim"), SubResource("Resource_p6f6u"), SubResource("Resource_51q8q"), SubResource("Resource_allnq"), SubResource("Resource_qdwhh"), SubResource("Resource_862d3"), SubResource("Resource_22ak0"), SubResource("Resource_cel8m"), SubResource("Resource_sgxdm"), SubResource("Resource_f2qps")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
 
-[sub_resource type="Resource" id="Resource_lsp3f"]
-script = ExtResource("5_p3ymn")
-name = &"ground"
-is_true = true
-metadata/_custom_type_script = "uid://cihsn5lxnlupk"
-
-[sub_resource type="Resource" id="Resource_1oy7d"]
-script = ExtResource("4_lqkdn")
-move_speed = 8.0
-rotate_speed = 5.0
-acceleration_time = 3.0
-rotation_acceleration_time = 2.0
-unit_avoid_radius = 1.6
-action_name = "Move Test"
-selection_types = Array[ExtResource("5_p3ymn")]([SubResource("Resource_lsp3f")])
-metadata/_custom_type_script = "uid://bl34p0y06cyys"
-
 [sub_resource type="Resource" id="Resource_aemtr"]
 script = ExtResource("6_p3uej")
 action_name = "Unit Text"
 selection_types = Array[ExtResource("5_p3ymn")]([ExtResource("7_0fy5k")])
 metadata/_custom_type_script = "uid://doahtvq8r205k"
+
+[sub_resource type="Resource" id="Resource_lsp3f"]
+script = ExtResource("5_p3ymn")
+name = &"ground"
+is_true = true
+metadata/_custom_type_script = "uid://cihsn5lxnlupk"
 
 [sub_resource type="Resource" id="Resource_b3sv1"]
 script = ExtResource("8_txd4g")
@@ -338,7 +329,7 @@ attributes_profile = SubResource("Resource_0fy5k")
 
 [node name="ActionContainer" type="Node" parent="."]
 script = ExtResource("2_o1iyq")
-actions = Array[ExtResource("3_qntpm")]([SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("10_wrqbw"), ExtResource("11_t0b1j"), ExtResource("12_x34uj"), ExtResource("13_704ky"), ExtResource("14_6wat7"), ExtResource("15_8ookq"), ExtResource("16_fpm4q"), SubResource("Resource_bqf7c"), ExtResource("24_2en3j"), ExtResource("25_tccs3"), ExtResource("26_grtb5"), SubResource("Resource_lqkdn"), SubResource("Resource_p3ymn"), SubResource("Resource_t600r")])
+actions = Array[ExtResource("3_qntpm")]([ExtResource("6_semri"), ExtResource("7_dpcrq"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("10_wrqbw"), ExtResource("11_t0b1j"), ExtResource("15_m2aod"), ExtResource("12_x34uj"), ExtResource("13_704ky"), ExtResource("14_6wat7"), ExtResource("15_8ookq"), ExtResource("16_fpm4q"), SubResource("Resource_bqf7c"), ExtResource("24_2en3j"), ExtResource("25_tccs3"), ExtResource("26_grtb5"), SubResource("Resource_lqkdn"), SubResource("Resource_p3ymn"), SubResource("Resource_t600r")])
 
 [node name="AttributesContainer" type="Node" parent="." node_paths=PackedStringArray("character_sheet")]
 script = ExtResource("25_ui78x")

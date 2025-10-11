@@ -4,14 +4,19 @@ extends Action
 
 
 @export_category("Action Specific Variables")
+@export var limit_by_speed: bool = false
+
+@export_group("Movement Settings")
 @export var move_speed:                  float = 5.0
 @export var rotate_speed:                float = 8.0
 @export var acceleration_time:           float = 0.3
 @export var rotation_acceleration_time:  float = 0.3
 @export var stopping_distance:           float = 0.1
-
 ## Minimum distance from any unit that the final position can be to avoid overlap.
-@export var unit_avoid_radius: float = 0.0
+@export var unit_avoid_radius: float = 1.6
+
+@export_group("")
+
 
 # Internal state:
 var movement_curve:      Curve3D
@@ -40,6 +45,16 @@ func _begin_movement(to_pos: Vector3) -> void:
 	var path_pack: PathPackage = PathfindingSystem.instance.get_path_package(to_pos as Vector3, unit, true)
 	movement_curve = path_pack.get_curve_3d_from_path()
 	curve_length    = movement_curve.get_baked_length()
+	
+	# Optional limiting the movement by the speed
+	if limit_by_speed:
+		var unit_speed: float = float(unit.get_attributes_container().get_attribute_current_value("speed"))
+		unit_speed *= 2 # Double as distance units are not a full grid square
+		if curve_length > unit_speed:
+			
+			curve_length = unit_speed
+		
+			CombatLog.instance.add_log("Movement Cut Short For: " + unit.ui_name + " Due to Speed being: " + str(unit_speed))
 	
 	
 	# 2) make movement along curve request

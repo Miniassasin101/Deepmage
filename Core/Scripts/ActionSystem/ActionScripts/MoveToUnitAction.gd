@@ -4,6 +4,9 @@ extends Action
 
 
 @export_category("Action Specific Variables")
+@export var limit_by_speed: bool = false
+
+@export_group("Movement Settings")
 @export var move_speed:                  float = 5.0
 @export var rotate_speed:                float = 8.0
 @export var acceleration_time:           float = 0.3
@@ -46,6 +49,20 @@ func _begin_movement(targ_unit: Unit) -> void:
 	
 	if !already_shortened:
 		curve_length = maxf(0.0, curve_length - unit_avoid_radius)
+	
+	
+	
+		# Optional limiting the movement by the speed
+	if limit_by_speed:
+		var unit_speed: float = float(unit.get_attributes_container().get_attribute_current_value("speed"))
+		unit_speed *= 2 # Double as distance units are not a full grid square
+		if curve_length > unit_speed:
+			
+			curve_length = unit_speed
+		
+			CombatLog.instance.add_log("Movement Cut Short For: " + unit.ui_name + " Due to Speed being: " + str(unit_speed))
+	
+	
 	
 	
 	# 2) make movement along curve request

@@ -9,8 +9,8 @@
 [ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="7_mxipr"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="8_okv3p"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="9_4d8tx"]
-[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IsEnemySkillCondition.gd" id="10_xddf1"]
-[ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IsUnitInRangeSkillCondition.gd" id="11_eer7t"]
+[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="10_xddf1"]
+[ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="11_eer7t"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="12_8vaeu"]
 [ext_resource type="Script" uid="uid://csqgchb51x8ra" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreferenceScripts/HighestHPPercentPreference.gd" id="13_5xse0"]
 
@@ -67,7 +67,7 @@ metadata/_custom_type_script = "uid://2nsctaj2mk50"
 
 [sub_resource type="Resource" id="Resource_2gvhv"]
 script = ExtResource("11_eer7t")
-range_var = 20.0
+range_var = 10.0
 metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
 
 [sub_resource type="Resource" id="Resource_7g53y"]
@@ -75,6 +75,7 @@ script = ExtResource("13_5xse0")
 metadata/_custom_type_script = "uid://csqgchb51x8ra"
 
 [resource]
+resource_name = "ThrowSkillResource"
 script = ExtResource("8_okv3p")
 skill_name = "Throw"
 action = SubResource("Resource_05afn")

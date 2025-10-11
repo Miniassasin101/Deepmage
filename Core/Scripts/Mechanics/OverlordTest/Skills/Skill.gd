@@ -1,3 +1,4 @@
+@tool
 class_name Skill
 extends Resource
 
@@ -6,7 +7,10 @@ signal on_skill_ended
 enum SkillType { ACTIVE, PASSIVE, FREE}
 
 
-@export var skill_name: String = "None"
+@export var skill_name: String = "None":
+	set(val):
+		skill_name = val
+		change_resource_name_to_skill()
 
 @export var action: Action = null
 @export var skill_type: SkillType = SkillType.ACTIVE
@@ -20,6 +24,9 @@ enum SkillType { ACTIVE, PASSIVE, FREE}
 # Unit that owns the skill (set by Tactic when duplicating/assigning).
 var unit: Unit = null
 
+func _init() -> void:
+	if Engine.is_editor_hint():
+		change_resource_name_to_skill()
 
 # -----------------------------------------------------------------------------
 # Public API
@@ -47,6 +54,14 @@ func activate_skill() -> void:
 	# Finish the skill lifecycle.
 	end_skill()
 	pass
+
+
+func change_resource_name_to_skill() -> void:
+	if !Engine.is_editor_hint():
+		return
+	var temp_skill_name: String = skill_name.to_pascal_case() if skill_name != "" else "Unnamed"
+	var temp_resource_name: String = temp_skill_name + "SkillResource"
+	set_name(temp_resource_name)
 
 
 func end_skill() -> void:
@@ -136,6 +151,8 @@ func get_all_valid_units() -> Array[Unit]:
 		var conditions_passed: bool = true
 
 		for condition in skill_conditions:
+			if !condition:
+				continue
 			if !condition.check_condition(self, test_unit):
 				conditions_passed = false
 				break

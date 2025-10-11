@@ -97,7 +97,7 @@ func _initialize_initiative():
 
 func roll_initiative() -> void:
 	for unit in unit_manager.get_all_units():
-		var roll: DicePool = DicePool.new(unit.speed)
+		var roll: DicePool = DicePool.new(unit.get_attributes_container().get_attribute_current_value("speed"))
 		print_debug(roll.to_str())
 		var initiative: int = roll.success_count
 		initiative_scores[unit] = initiative

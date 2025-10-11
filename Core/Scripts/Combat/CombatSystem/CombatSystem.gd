@@ -177,6 +177,21 @@ func _resolve_attack_gubat_banwa(action: AttackAction, attacker: Unit, defender:
 		Utilities.spawn_text_line(attacker, "Chained!", Color.ROYAL_BLUE)
 	elif cd.was_crit_any:
 		Utilities.spawn_text_line(attacker, "Crit!", Color.ROYAL_BLUE)
+	
+
+	var reaction_name: String = ""
+	if cd.is_hit:
+		if cd.total_after_defense <= 1:
+			reaction_name = "Block"
+	else:
+		reaction_name = "Evade"
+	
+	if reaction_name != "":
+		var temp_reaction: Reaction = defender.get_action_container().get_action_by_name(reaction_name)
+		if temp_reaction:
+			cd.reaction = temp_reaction
+		else:
+			push_error("Block or Evade reaction not found.")
 
 	_debug_dump_current_event()
 

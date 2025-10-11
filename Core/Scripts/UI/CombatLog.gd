@@ -210,6 +210,8 @@ func on_button_pressed(input_event: InputEvent) -> void:
 	if input_event.is_action_pressed("left_mouse"):
 		if _handle_number_preset_click(input_event):
 			return
+		else:
+			toggle_log()
 		# (left click without a digit → no-op here)
 
 	# Right click actions (your existing logic)
