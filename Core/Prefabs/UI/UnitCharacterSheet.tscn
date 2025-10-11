@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cqqsm2gpif3dw"]
+[gd_scene load_steps=10 format=3 uid="uid://cqqsm2gpif3dw"]
 
 [ext_resource type="Script" uid="uid://d23wjfbfks7yo" path="res://Deepmage/Core/Scripts/UI/UnitCharacterSheet.gd" id="1_s4tfa"]
 [ext_resource type="Script" uid="uid://sf85e6lefcql" path="res://Deepmage/Core/Scripts/UI/WeaponsContainer.gd" id="3_6ibqs"]
+[ext_resource type="PackedScene" uid="uid://bdohbmjso32gu" path="res://Deepmage/Core/Prefabs/UI/TacticsManagerUI.tscn" id="3_7gglt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wvosu"]
 bg_color = Color(0.132, 0.147, 0.15, 0.945098)
@@ -74,9 +75,10 @@ offset_bottom = 40.0
 
 [node name="TabContainer" type="TabContainer" parent="MarginContainer"]
 layout_mode = 2
-current_tab = 0
+current_tab = 1
 
 [node name="Character" type="PanelContainer" parent="MarginContainer/TabContainer"]
+visible = false
 custom_minimum_size = Vector2(502, 370)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_wvosu")
@@ -965,12 +967,14 @@ layout_mode = 2
 [node name="ItemEffectsContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/ItemMarginContainer/PanelContainer/MarginContainer/ItemsContainer/VBoxContainer4"]
 layout_mode = 2
 
-[node name="Skills" type="PanelContainer" parent="MarginContainer/TabContainer"]
-visible = false
+[node name="Tactics" type="PanelContainer" parent="MarginContainer/TabContainer"]
 custom_minimum_size = Vector2(502, 370)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_wvosu")
 metadata/_tab_index = 1
+
+[node name="TacticsManagerUI" parent="MarginContainer/TabContainer/Tactics" instance=ExtResource("3_7gglt")]
+layout_mode = 2
 
 [node name="CloseButton" type="Button" parent="MarginContainer"]
 layout_mode = 2
