@@ -57,6 +57,8 @@ extends Action
 @export var hit_delay: float = 3.0
 @export var use_hit_delay: bool = false
 
+@export var reaction_anim_end_wait_margin: float = 0.15
+
 # Cached helper action reference
 var move_to_action: MoveToUnitAction = null
 
@@ -105,10 +107,9 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	await unit.get_tree().process_frame
 	await _resolve_at_hit_moment_or_timer(sync)
 	# NOTE: Make sure event timings dont perfectly overlap: Causes animation event override for earlier ones.
-
-	# 9) End once the attack animation completes
-	if unit.animation_controller.is_resolving:
-		await unit.animation_controller.animation_finished
+	
+	await wait_for_animation_resolve(target_unit)
+	
 
 	end_action()
 
@@ -124,8 +125,8 @@ func move_to_target_unit(targ_unit: Unit) -> void:
 	
 	if get_distance_to_unit(targ_unit) <= attack_range:
 		return
-	action_container.use_action(get_move_to_action(), targ_unit)
-	await SignalBus.on_action_ended
+	var temp_action: Action = action_container.use_action(get_move_to_action(), targ_unit)
+	await temp_action.on_action_ended
 	print_debug("moved to target")
 	return
 
@@ -219,48 +220,33 @@ func do_resolve() -> void:
 	defender.get_attributes_container().add_attribute_modifier("posture", -cd.effective_damage)
 
 	# Fx
-	if cd.effective_damage > 0:
+	if cd.effective_damage > 1:
 		defender.animation_controller.play_hit_reaction()
-
-	Utilities.spawn_damage_label(defender, cd.effective_damage, Color.FIREBRICK, 0.5)
+		Utilities.spawn_damage_label(defender, cd.effective_damage, Color.FIREBRICK, 0.5)
+	else:
+		Utilities.spawn_damage_label(defender, cd.effective_damage, Color.AZURE, 0.5)
 
 	# Reaction on-impact hook
 	if cd.reaction and cd.reaction.has_method("on_impact"):
 		cd.reaction.on_impact()
 
 
+func wait_for_animation_resolve(target_unit: Unit) -> void:
+	# 9) End once the attack animation completes
+	if unit.animation_controller.is_resolving:
+		await unit.animation_controller.animation_finished
+		if target_unit.animation_controller.is_resolving:
+			#CombatLog.instance.add_log()
+			#CombatLog.instance.add_log(str(target_unit.animation_controller.get_anim_time_left()))
+			
+			var time_left: float = target_unit.animation_controller.get_anim_time_left()
+			if time_left >= reaction_anim_end_wait_margin + 0.1:
+				var difference: float = time_left - reaction_anim_end_wait_margin
+				await unit.get_tree().create_timer(difference).timeout
+				return
+			await target_unit.animation_controller.animation_finished
 
 
-## Applies the combat result to the defender (miss/graze text, damage, and hit reaction + damage label).
-func do_resolve_dep() -> void:
-
-	var ev := CombatSystem.instance.current_combat_event_data
-	var defender: Unit = ev.defender
-	var effective_damage: int = ev.effective_damage
-	var is_hit: bool = ev.is_hit
-	var is_graze: bool = ev.is_graze
-
-	# Feedback / damage
-	if !is_hit:
-		if is_graze and ev.is_success:
-			Utilities.spawn_text_line(defender, "Graze", Color.AQUA)
-			CombatLog.instance.add_log("Result: Graze")
-		else:
-			Utilities.spawn_text_line(defender, "MISS", Color.AQUA)
-			CombatLog.instance.add_log("Result: Miss")
-		return
-
-	# On-hit damage
-	defender.get_attributes_container().add_attribute_modifier("posture", -effective_damage)
-	var color: Color
-	if effective_damage == 0:
-		color = Color.ALICE_BLUE
-	else:
-		color = Color.FIREBRICK
-		defender.animation_controller.play_hit_reaction()
-	Utilities.spawn_damage_label(defender, effective_damage, color, 0.5)
-	
-	ev.reaction.on_impact()
 
 
 # =========================

@@ -57,8 +57,8 @@ var on_impact_lines: Array[String] = []
 # Banwa Fields (temp)
 # [{roll:int, modified:int, evaded:bool, chained:bool, crit:bool, raw_damage:int, after_defense:int}, ...]
 var per_die_results: Array[Dictionary] = [] 
-var total_initial_damage: int = 0            # sum of (die + prowess) across non-evaded dice (+chains)
-var total_after_defense: int = 0             # after subtracting defense for each contributing die (min 1 each)
+var total_initial_damage: int = 0            # sum of (die) across non-evaded dice (+chains) and Prowess
+var total_after_defense: int = 0             # after subtracting defense Prowess
 var any_die_hit: bool = false                # at least one die passed EVD
 var was_crit_any: bool = false
 var chained_count: int = 0

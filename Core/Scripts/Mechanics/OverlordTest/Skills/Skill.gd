@@ -44,12 +44,12 @@ func activate_skill() -> void:
 		push_error("No random unit in skills found")
 		return
 
-	CombatLog.instance.add_log("Random Skill Unit: " + random_unit.ui_name, true)
+	CombatLog.instance.add_log("Random Skill Unit: " + random_unit.ui_name)
 
 	# If the Skill is bound to an Action, invoke it via the owner's action container.
 	if action:
-		unit.character_sheet.action_container.use_action(action, random_unit)
-		await SignalBus.on_action_ended
+		var temp_action: Action = unit.character_sheet.action_container.use_action(action, random_unit)
+		await temp_action.on_action_ended
 
 	# Finish the skill lifecycle.
 	end_skill()

@@ -62,8 +62,8 @@ func activate_skill() -> void:
 	var chosen_pos: Vector3 = pool.pick_random()
 	var target_pkg: TargetPackage = _make_position_target_package(chosen_pos)
 
-	unit.character_sheet.action_container.use_action(action, target_pkg)
-	await SignalBus.on_action_ended
+	var temp_action: Action = unit.character_sheet.action_container.use_action(action, target_pkg)
+	await temp_action.on_action_ended
 
 	end_skill()
 

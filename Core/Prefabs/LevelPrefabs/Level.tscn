@@ -541,8 +541,8 @@ resource_name = "Parry"
 script = ExtResource("10_p6f6u")
 attribute_name = "parry"
 attribute_type = 1
-current_value = 2
-maximum_value = 2
+current_value = 7
+maximum_value = 7
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_qtrpl"]

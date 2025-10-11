@@ -120,7 +120,8 @@ func _resolve_attack_gubat_banwa(action: AttackAction, attacker: Unit, defender:
 			# Melee chains can continue
 			if action.is_melee_attack and outcome.chained:
 				var keep_chaining := true
-				while keep_chaining:
+				var chain_cap: int = 3
+				while keep_chaining and chain_cap >= 0:
 					var chain_outcome := _roll_single_die_meta(die_size, die_result_modifier, evd_value)
 					chain_outcome["is_chain_die"] = true
 					cd.per_die_results.append(chain_outcome)
@@ -132,6 +133,7 @@ func _resolve_attack_gubat_banwa(action: AttackAction, attacker: Unit, defender:
 					keep_chaining = chain_outcome.chained
 					if keep_chaining:
 						cd.chained_count += 1
+						chain_cap -= 1
 
 	# Build damage once (GB order)
 	# Initial: sum of kept dice + Prowess (once)
@@ -178,23 +180,12 @@ func _resolve_attack_gubat_banwa(action: AttackAction, attacker: Unit, defender:
 	elif cd.was_crit_any:
 		Utilities.spawn_text_line(attacker, "Crit!", Color.ROYAL_BLUE)
 	
-
-	var reaction_name: String = ""
-	if cd.is_hit:
-		if cd.total_after_defense <= 1:
-			reaction_name = "Block"
-	else:
-		reaction_name = "Evade"
 	
-	if reaction_name != "":
-		var temp_reaction: Reaction = defender.get_action_container().get_action_by_name(reaction_name)
-		if temp_reaction:
-			cd.reaction = temp_reaction
-		else:
-			push_error("Block or Evade reaction not found.")
+	await determine_reaction(cd)
 
 	_debug_dump_current_event()
 
+"""
 func _resolve_attack_gubat_banwa_dep(action: AttackAction, attacker: Unit, defender: Unit) -> void:
 	var cd: CombatEventData = current_combat_event_data
 
@@ -315,9 +306,11 @@ func _resolve_attack_gubat_banwa_dep(action: AttackAction, attacker: Unit, defen
 	elif cd.was_crit_any:
 		Utilities.spawn_text_line(attacker, "Crit!", Color.ROYAL_BLUE)
 	
+	await determine_reaction(cd)
+	
 	# Prints the data to the log
 	_debug_dump_current_event()
-
+"""
 
 # Die meta only — no prowess, no defense here.
 func _roll_single_die_meta(
@@ -414,6 +407,17 @@ func _compute_die_result_modifier(action: AttackAction, attacker: Unit, defender
 	return net_modifier
 
 
+func determine_reaction(cd: CombatEventData) -> void:
+	if cd.is_hit:
+		cd.reaction = cd.defender.get_action_container().get_action_by_name("Block")
+	else:
+		cd.reaction = cd.defender.get_action_container().get_action_by_name("Evade")
+	if cd.reaction:
+		var react: Reaction = cd.defender.get_action_container().use_action(cd.reaction, cd.defender)
+		await react.on_action_ended
+	return
+
+
 
 func _debug_dump_current_event() -> void:
 	if not combat_debug_enabled:
@@ -428,7 +432,7 @@ func _debug_dump_current_event() -> void:
 
 	# Header
 	var header := "[DEBUG] %s -> %s  (%s)" % [attacker_name, defender_name, action_name]
-	CombatLog.instance.add_log(header, true)
+	CombatLog.instance.add_log(header)
 
 	# Core stats
 	var core := (
@@ -442,7 +446,7 @@ func _debug_dump_current_event() -> void:
 			str(cd.action.is_melee_attack)
 		]
 	)
-	CombatLog.instance.add_log(core, true)
+	CombatLog.instance.add_log(core)
 
 
 	# Gates snapshot (at resolution)
@@ -453,11 +457,11 @@ func _debug_dump_current_event() -> void:
 	var evd_val := defender_attrs.get_attribute_current_value("evade")
 
 	var gates := "  Gates: %s=%d | %s=%d | EVD=%d" % [cd.action.prowess_attribute.to_pascal_case(), prowess_val, cd.action.defense_attribute.to_pascal_case(), defense_val, evd_val]
-	CombatLog.instance.add_log(gates, true)
+	CombatLog.instance.add_log(gates)
 
 
 	# Per-die results
-	CombatLog.instance.add_log("  Dice:", true)
+	CombatLog.instance.add_log("  Dice:")
 
 	for idx in cd.per_die_results.size():
 		var d: Dictionary = cd.per_die_results[idx]
@@ -471,25 +475,25 @@ func _debug_dump_current_event() -> void:
 			int(d.get("raw_damage", 0)),
 			" (chain)" if bool(d.get("is_chain_die", false)) else ""
 		]
-		CombatLog.instance.add_log(line, true)
+		CombatLog.instance.add_log(line)
 
 	# Totals and flags
 	var totals := "  Totals: hit_any=%s | crit_any=%s | chained=%d | total_after_def=%d" % [
 		str(cd.any_die_hit), str(cd.was_crit_any), cd.chained_count, cd.total_after_defense
 	]
-	CombatLog.instance.add_log(totals, true)
+	CombatLog.instance.add_log(totals)
 
 
 	var flags := "  Flags: is_hit=%s | is_success=%s | is_crit=%s | is_graze=%s | dmg=%d" % [
 		str(cd.is_hit), str(cd.is_success), str(cd.is_critical_success), str(cd.is_graze), cd.effective_damage
 	]
-	CombatLog.instance.add_log(flags, true)
+	CombatLog.instance.add_log(flags)
 
 
 	# Reaction (if any)
 	if cd.reaction != null:
-		var react_line := "  Reaction: %s" % [cd.reaction.action_name if cd.reaction.has_method("action_name") else cd.reaction.get_class()]
-		CombatLog.instance.add_log(react_line, true)
+		var react_line: String = "  Reaction: %s" % [cd.reaction.action_name]
+		CombatLog.instance.add_log(react_line)
 
 
 """

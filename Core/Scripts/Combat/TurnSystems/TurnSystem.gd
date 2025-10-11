@@ -222,7 +222,7 @@ func _run_one_cycle() -> void:
 		acting_unit.turn_state = Unit.TurnState.TURN_ENDED
 		SignalBus.on_turn_end.emit(acting_unit)
 		SkillTriggerSystem.instance.fire("TURN_END", {"unit": acting_unit, "pass_index": cycle_index})
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(0.1).timeout
 
 		if action_executed:
 			any_action_executed_in_this_pass = true

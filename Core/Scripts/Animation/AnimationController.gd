@@ -67,6 +67,9 @@ func play_package(pack: AnimationPackage) -> void:
 
 	# 2) Bake/play events clip
 	_play_events_for_package(pack)
+	
+	# 3) Setup Early Signal Timer for smoother action transitions
+	
 
 func play_package_timed(pack: AnimationPackage, delay: float = 0.0, speed_scale: float = 1.0) -> void:
 	if pack == null:
@@ -100,6 +103,14 @@ func apply_hitstop_ms(ms: int) -> void:
 func _anim_path_for(package: AnimationPackage) -> String:
 	var t_name := package.get_anim_name()
 	return _libpath(t_name)
+
+
+func get_anim_time_left() -> float:
+	if !animator.is_playing():
+		return 0.0
+		
+	var time_left: float = animator.current_animation_length - animator.current_animation_position
+	return time_left
 
 
 func _on_anim_finished(anim_name: StringName) -> void:

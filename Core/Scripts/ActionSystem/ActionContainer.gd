@@ -28,7 +28,7 @@ func make_actions_unique() -> void:
 	actions.reverse()
 
 
-func use_action(in_action: Action, target: Variant) -> void:
+func use_action(in_action: Action, target: Variant) -> Action:
 	if !in_action:
 		return
 	
@@ -37,8 +37,9 @@ func use_action(in_action: Action, target: Variant) -> void:
 	if test_action:
 		var targ_pack: TargetPackage = Utilities.make_target_package(target)
 		test_action.try_activate(targ_pack)
-	else:
-		pass
+	
+	return test_action
+	
 	
 
 func get_action_by_name(in_name: String) -> Action:
