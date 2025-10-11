@@ -123,6 +123,7 @@ func _populate_from_unit(unit: Unit) -> void:
 	# + "/" + str(unit.get_attributes_container().get_attribute("health").maximum_value)
 	posture_points_label.text = _get_attribute_or_na(unit, "posture")\
 	 + "/" + str(unit.get_attributes_container().get_attribute("posture").maximum_value)
+	speed_label.set_text(_get_attribute_or_na(unit, "speed"))
 	jump_label.text = _get_attribute_or_na(unit, "jump")
 	experience_rolls_label.text = "EXP: " + _get_attribute_or_na(unit, "experience_rolls")
 	movement_rate_label.text = "MOV: " + _get_attribute_or_na(unit, "movement_rate")

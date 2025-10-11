@@ -38,6 +38,7 @@ sampler = SubResource("Resource_rfnuq")
 metadata/_custom_type_script = "uid://cv63cki4l8n4"
 
 [resource]
+resource_name = "RushToSafetySkillResource"
 script = ExtResource("6_4h6h1")
 position_sampler = SubResource("Resource_rfnuq")
 position_preferences = Array[ExtResource("2_4wppd")]([SubResource("Resource_a4tjr"), SubResource("Resource_o8y13")])
