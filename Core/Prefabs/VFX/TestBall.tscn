@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://kybquhg07l5i"]
 
 [ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_mfied"]
-[ext_resource type="Script" uid="uid://cv5i85tiy7age" path="res://Deepmage/Core/Prefabs/VFX/TestBall.gd" id="1_wolyt"]
+[ext_resource type="Script" uid="uid://cv5i85tiy7age" path="res://Deepmage/Core/Scripts/Utility/TestBall.gd" id="1_wolyt"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_wolyt"]
 

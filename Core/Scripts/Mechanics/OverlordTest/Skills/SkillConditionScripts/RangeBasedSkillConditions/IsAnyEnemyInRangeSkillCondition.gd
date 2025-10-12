@@ -3,6 +3,8 @@ extends SkillCondition
 
 @export var threat_radius: float = 6.0
 
+var ui_name: String = "EnemyInRange"
+
 func check_condition(skill: Skill, _target: Unit) -> bool:
 	var owner: Unit = skill.unit
 	if owner == null:

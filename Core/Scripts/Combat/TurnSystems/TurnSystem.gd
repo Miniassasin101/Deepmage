@@ -331,6 +331,7 @@ func _has_viable_actions_remaining() -> bool:
 		var tactics_controller: Node = unit.tactics_controller
 		if tactics_controller and tactics_controller.get_first_valid_active_skill():
 			return true
+		
 	return false
 
 func _is_combat_over() -> bool:

@@ -1,7 +1,7 @@
 class_name IsNotFullHealthSkillCondition
 extends SkillCondition
 
-@export var is_not_toggle: bool = false
+var ui_name: String = "NotMaxHP"
 
 # Passes if the target is on the opposite team of the skill owner.
 func check_condition(_skill: Skill, target: Unit) -> bool:

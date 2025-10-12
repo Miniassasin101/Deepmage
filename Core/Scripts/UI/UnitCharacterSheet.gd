@@ -61,25 +61,27 @@ func _ready() -> void:
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("testkey_c"):
-		open_character_sheet()
-		if Input.is_action_pressed("t_key"):
-			tab_container.set_current_tab(1)
-		else:
-			tab_container.set_current_tab(0)
+		open_character_sheet(null, 0)
+
+
+	elif Input.is_action_just_pressed("t_key"):
+		open_character_sheet(null, 1)
 
 
 
-func open_character_sheet(in_unit: Unit = null) -> void:
+
+
+func open_character_sheet(in_unit: Unit = null, tab_index: int = 0) -> void:
 	# Grab the unit under the mouse or whichever unit you want
 
 	var hovered_unit: Unit = mouse_controller.get_current_hovered_unit() if !in_unit else in_unit
 		#pathfinding.pathfinding_grid_system.get_grid_position(result)
 	if hovered_unit:
 		# Emit your signal passing in the unit reference
-		_on_open_character_sheet(hovered_unit)
+		_on_open_character_sheet(hovered_unit, tab_index)
 
 
-func _on_open_character_sheet(unit: Unit) -> void:
+func _on_open_character_sheet(unit: Unit, tab_index: int = 0) -> void:
 	if not is_instance_valid(unit):
 		hide()
 		is_open = false
@@ -97,6 +99,13 @@ func _on_open_character_sheet(unit: Unit) -> void:
 	if unit != last_unit:
 		# Show and populate for a new unit
 		last_unit = unit
+		
+		match tab_index:
+			0:
+				tab_container.set_current_tab(0)
+			1:
+				tab_container.set_current_tab(1)
+		
 		# Update labels
 		_populate_from_unit(unit)
 		# Update conditions list.
@@ -105,7 +114,14 @@ func _on_open_character_sheet(unit: Unit) -> void:
 		show()
 		is_open = true
 		return
-
+	
+	if tab_container.get_current_tab() == 0 and Input.is_action_just_pressed("t_key"):
+		tab_container.set_current_tab(1)
+		return
+	elif tab_container.get_current_tab() == 1 and Input.is_action_just_pressed("testkey_c"):
+		tab_container.set_current_tab(0)
+		return
+	
 	# Same unit and already visible → toggle off
 	hide()
 	is_open = false
@@ -184,7 +200,7 @@ func _get_attribute_or_na(unit: Unit, attribute_name: String) -> String:
 
 	return str(int(attribute.get_current_modified_value()))
 
-"""
+""" Status Conditions and Weapons
 
 func _populate_conditions(unit: Unit) -> void:
 	# Clear the conditions container first.

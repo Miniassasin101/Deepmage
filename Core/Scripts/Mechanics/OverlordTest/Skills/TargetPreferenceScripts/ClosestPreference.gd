@@ -1,6 +1,7 @@
 class_name ClosestPreference
 extends TargetPreference
 
+var ui_name: String = "Closest"
 
 func apply(skill: Skill, candidates: Array[Unit]) -> Array[Unit]:
 	if candidates.size() <= 1:

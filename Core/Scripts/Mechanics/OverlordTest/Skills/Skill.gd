@@ -12,16 +12,33 @@ enum SkillType { ACTIVE, PASSIVE, FREE}
 		skill_name = val
 		change_resource_name_to_skill()
 
+## The underlying action that the skill uses, and contains most of the operational logic
 @export var action: Action = null
+
+## Determines which resource is required to use the skill.
 @export var skill_type: SkillType = SkillType.ACTIVE
+
+## How many active points or passive points need to be spent to activate this skill.
 @export var skill_cost: int = 1 # AP or PP cost
-@export var skill_conditions: Array[SkillCondition] = []
+
+## Skill conditions that are inherent to the skill and not editable by players.
+@export var internal_skill_conditions: Array[SkillCondition] = []
+
+## Skill conditions that are fully editable by players.
+@export var external_skill_conditions: Array[SkillCondition] = []
+
+## Type of lighter skill condition that will narrow down the pool of unit targets, but never to zero.
 @export var target_preferences: Array[TargetPreference] = []
 
+@export_group("Description")
+## Series of lines describing the behavior and/or effect of the skill.
+@export var description: Array[String] = []
+
+## Mark the skill in various ways so other combat elements know how to interact with it.
 @export var tags: Array[String] = []
 
 
-# Unit that owns the skill (set by Tactic when duplicating/assigning).
+## Unit that owns the skill (set by Tactic when duplicating/assigning).
 var unit: Unit = null
 
 func _init() -> void:
@@ -76,7 +93,8 @@ func can_activate_skill() -> bool:
 	if !unit:
 		return false
 	
-	check_ap_pp()
+	if !check_ap_pp():
+		return false
 	
 	# True if at least one target unit satisfies all conditions.
 	if check_conditions_against_units():
@@ -100,7 +118,7 @@ func check_ap_pp() -> bool:
 	
 	var curr_val: int = points_attribute.get_current_modified_value()
 	
-	if curr_val > skill_cost:
+	if curr_val < skill_cost:
 		return false
 	
 	
@@ -110,8 +128,8 @@ func check_ap_pp() -> bool:
 # -----------------------------------------------------------------------------
 # Targeting helpers
 # -----------------------------------------------------------------------------
+## Returns a random valid unit or null if none are available.
 func get_random_valid_unit() -> Unit:
-	# Returns a random valid unit or null if none are available.
 	var chosen_unit: Unit = null
 	var valid_units: Array[Unit] = get_all_valid_units()
 	chosen_unit = select_preferred_target(valid_units)
@@ -119,9 +137,9 @@ func get_random_valid_unit() -> Unit:
 	# TODO: Consider excluding self as applicable, or add a "self-target" tag/condition.
 
 
+## Applies ordered preferences only if there is more than one valid target.
+## If preferences cannot break ties, falls back to random among remaining.
 func select_preferred_target(valid_units: Array[Unit]) -> Unit:
-	# Applies ordered preferences only if there is more than one valid target.
-	# If preferences cannot break ties, falls back to random among remaining.
 	if valid_units.is_empty():
 		return null
 
@@ -142,15 +160,16 @@ func select_preferred_target(valid_units: Array[Unit]) -> Unit:
 	# If we still have more than one, choose randomly (predictable with seeded RNG if desired).
 	return pool.pick_random()
 
+
+## Builds a list of all units that pass every condition in get_all_skill_conditions.
 func get_all_valid_units() -> Array[Unit]:
-	# Builds a list of all units that pass every condition in skill_conditions.
 	var all_units: Array[Unit] = UnitManager.instance.get_all_units()
 	var valid_units: Array[Unit] = []
 
 	for test_unit in all_units:
 		var conditions_passed: bool = true
 
-		for condition in skill_conditions:
+		for condition in get_all_skill_conditions():
 			if !condition:
 				continue
 			if !condition.check_condition(self, test_unit):
@@ -165,11 +184,27 @@ func get_all_valid_units() -> Array[Unit]:
 	# TODO: Support multi-step filters (e.g., prefilter faction, then range, then custom).
 
 
+## Returns true if at least one unit passes all conditions.
 func check_conditions_against_units() -> bool:
-	# Returns true if at least one unit passes all conditions.
 	var valid_units: Array[Unit] = get_all_valid_units()
 	return !valid_units.is_empty()
 
+
+## Returns a combination of the internal and external skill conditions.
+func get_all_skill_conditions() -> Array[SkillCondition]:
+	var all_skill_cond: Array[SkillCondition] = []
+	all_skill_cond.append_array(internal_skill_conditions)
+	all_skill_cond.append_array(external_skill_conditions)
+	return all_skill_cond
+
+
+func get_external_skill_conditions() -> Array[SkillCondition]:
+	return external_skill_conditions
+
+
+
+func get_target_preferences() -> Array[TargetPreference]:
+	return target_preferences
 
 # -----------------------------------------------------------------------------
 # Tags helpers

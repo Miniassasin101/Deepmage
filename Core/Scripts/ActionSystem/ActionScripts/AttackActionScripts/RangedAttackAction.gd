@@ -5,8 +5,8 @@ extends AttackAction
 # Exports (tune to taste)
 # =========================
 
-@export_category("Projectile")
-@export var projectile_scene: PackedScene                      # required (any Node3D)
+@export_group("Projectile")
+@export var projectile_scene: PackedScene = preload("res://Deepmage/Core/Prefabs/VFX/TestBall.tscn")                      # required (any Node3D)
 @export var spawn_at_node: NodePath                            # optional muzzle node on attacker
 @export var start_height: float = 1.0                          # added if spawn_at_node is empty
 @export var target_height: float = 1.0                         # where the projectile aims on defender
@@ -19,13 +19,13 @@ extends AttackAction
 @export var path_smooth: float = 0.25
 @export var bake_interval: float = 0.05                        # tessellation for preview/precision
 
-@export_category("Carrier motion")
+@export_group("Carrier motion")
 @export var projectile_speed: float = 24.0
 @export var carrier_arc_height: float = 0.0                    # used only when use_path_arc=false
 @export var face_velocity_on: bool = true
 @export var yaw_only_facing: bool = true
 
-@export_category("Animation markers")
+@export_group("Animation markers")
 @export var fire_marker: StringName = &"RELEASE"               # when the projectile leaves the bow/gun
 @export var fallback_fire_if_missing: StringName = &"HIT_START" # fallback marker
 # NOTE: the base class’s "HIT_START/HIT_END" defines the *attack center* window.

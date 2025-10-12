@@ -37,6 +37,18 @@ func setup() -> void:
 	# TODO: Add passive skill hooks (on turn start/end, on damage taken/dealt, etc.).
 
 
+func set_current_tactic_from_skills(in_askills: Array[Skill] = [], in_pskills: Array[Skill] = [], make_unique: bool = false ) -> void:
+	var new_tactic: Tactic = Tactic.new()
+
+	new_tactic.set_active_skills(in_askills)
+	new_tactic.set_passive_skills(in_pskills)
+	
+	if make_unique:
+		new_tactic.make_skills_unique(unit)
+	
+	current_tactic = new_tactic
+
+
 func get_first_valid_active_skill() -> Skill:
 	# Returns the first skill whose conditions allow activation.
 	if !current_tactic:

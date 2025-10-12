@@ -1,5 +1,6 @@
+@abstract
 class_name TargetPreference
-extends Resource
+extends SkillCondition
 
 var hp_attribute_name: String = "posture"
 

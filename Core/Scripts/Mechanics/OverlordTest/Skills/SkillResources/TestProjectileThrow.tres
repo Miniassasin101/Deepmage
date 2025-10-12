@@ -42,7 +42,6 @@ metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 
 [sub_resource type="Resource" id="Resource_05afn"]
 script = ExtResource("5_s2ipy")
-projectile_scene = ExtResource("4_gcuuu")
 projectile_speed = 40.0
 carrier_arc_height = 1.0
 animation_package = ExtResource("1_l43ei")
@@ -61,11 +60,11 @@ selection_types = Array[ExtResource("6_gxc0e")]([ExtResource("7_mxipr")])
 tags = Array[String](["melee", "attack"])
 metadata/_custom_type_script = "uid://nqjg83o6epyn"
 
-[sub_resource type="Resource" id="Resource_dydjx"]
+[sub_resource type="Resource" id="Resource_nhirw"]
 script = ExtResource("10_xddf1")
 metadata/_custom_type_script = "uid://2nsctaj2mk50"
 
-[sub_resource type="Resource" id="Resource_2gvhv"]
+[sub_resource type="Resource" id="Resource_jvs1f"]
 script = ExtResource("11_eer7t")
 range_var = 10.0
 metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
@@ -79,6 +78,8 @@ resource_name = "ThrowSkillResource"
 script = ExtResource("8_okv3p")
 skill_name = "Throw"
 action = SubResource("Resource_05afn")
-skill_conditions = Array[ExtResource("9_4d8tx")]([SubResource("Resource_dydjx"), SubResource("Resource_2gvhv")])
+internal_skill_conditions = Array[ExtResource("9_4d8tx")]([SubResource("Resource_nhirw"), SubResource("Resource_jvs1f")])
 target_preferences = Array[ExtResource("12_8vaeu")]([SubResource("Resource_7g53y")])
+description = PackedStringArray("Throws a ball at an enemy in range 10.")
+tags = Array[String](["ranged"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

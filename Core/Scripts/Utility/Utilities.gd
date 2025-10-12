@@ -5,6 +5,8 @@ extends Node
 
 const TEST_BALL = preload("res://Deepmage/Core/Prefabs/VFX/TestBall.tscn")
 
+const SKILL_CONDITION_SUFFIX: String = "SkillCondition"
+
 static var nav_y_offset: float = -0.156482
 
 static var nav_vector_offset: Vector3 = Vector3(0.0, -0.156482, 0.0)
@@ -109,3 +111,36 @@ func create_debug_sphere(at_pos: Vector3, timer: float = -1.0) -> TestBall:
 		new_sphere.set_timer(timer)
 	
 	return new_sphere
+
+
+## Returns "IsEnemy" for a condition class named "IsEnemySkillCondition".
+## Works with any Object; prefers the script's global class_name if available.
+func get_condition_display_name(skill_condition: Object) -> String:
+	if skill_condition == null:
+		return ""
+
+	var raw_class_name: String = ""
+	
+	
+	# Prefer the script's registered class_name (if the script is present).
+	var script_ref: Script = skill_condition.get_script() as Script
+	if script_ref:
+		# In Godot 4, GDScript has get_global_name(); returns "" if not registered with class_name.
+		
+		raw_class_name = script_ref.get_global_name()
+		# Fallback: try the script resource's resource_name if set in the editor.
+		if raw_class_name == "" and script_ref.has_method("get_resource_name"):
+			raw_class_name = str(script_ref.get_resource_name())
+
+	# Final fallback: Object.get_class() (often returns the script class if class_name was used)
+	if raw_class_name == "":
+		raw_class_name = skill_condition.get_class()
+
+	# Strip suffix if present.
+	if raw_class_name.ends_with(SKILL_CONDITION_SUFFIX):
+		return raw_class_name.substr(
+			0,
+			raw_class_name.length() - SKILL_CONDITION_SUFFIX.length()
+		)
+	else:
+		return raw_class_name

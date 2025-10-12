@@ -211,14 +211,17 @@ metadata/_custom_type_script = "uid://nhsyq3d75icn"
 [node name="TacticsSkillBar" parent="MarginContainer/VBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox" instance=ExtResource("2_vnc2f")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_27dc7")
+red_style_box = SubResource("StyleBoxFlat_27dc7")
 
 [node name="TacticsSkillBar2" parent="MarginContainer/VBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox" instance=ExtResource("2_vnc2f")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_27dc7")
+gray_style_box = null
 
 [node name="TacticsSkillBar3" parent="MarginContainer/VBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox" instance=ExtResource("2_vnc2f")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_27dc7")
+gray_style_box = null
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -236,14 +239,17 @@ metadata/_custom_type_script = "uid://nhsyq3d75icn"
 [node name="TacticsSkillBar" parent="MarginContainer/VBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/PassiveSkillsReorderableVBox" instance=ExtResource("2_vnc2f")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_msis2")
+gray_style_box = null
 
 [node name="TacticsSkillBar2" parent="MarginContainer/VBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/PassiveSkillsReorderableVBox" instance=ExtResource("2_vnc2f")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_msis2")
+gray_style_box = null
 
 [node name="TacticsSkillBar3" parent="MarginContainer/VBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/PassiveSkillsReorderableVBox" instance=ExtResource("2_vnc2f")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_msis2")
+gray_style_box = null
 
 [connection signal="sort_children" from="MarginContainer/VBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox" to="MarginContainer/VBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox" method="_on_sort_children"]
 [connection signal="sort_children" from="MarginContainer/VBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/PassiveSkillsReorderableVBox" to="MarginContainer/VBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/PassiveSkillsReorderableVBox" method="_on_sort_children"]

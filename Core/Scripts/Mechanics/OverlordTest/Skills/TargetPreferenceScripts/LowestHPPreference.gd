@@ -1,7 +1,7 @@
-class_name PreferLowestHPPreference
+class_name LowestHPPreference
 extends TargetPreference
-
-
+ 
+ 
 func apply(_skill: Skill, candidates: Array[Unit]) -> Array[Unit]:
 	if candidates.size() <= 1:
 		return candidates

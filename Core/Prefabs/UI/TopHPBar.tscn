@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://cdifkxjoiv0eq"]
 
-[ext_resource type="Script" uid="uid://c8kjfg6o0nnpe" path="res://Deepmage/Core/Prefabs/UI/TopHPBar.gd" id="1_ukjim"]
-[ext_resource type="Script" uid="uid://7fr43al0y86s" path="res://Deepmage/Core/Prefabs/UI/HealthProgressBar.gd" id="2_sysu1"]
+[ext_resource type="Script" uid="uid://c8kjfg6o0nnpe" path="res://Deepmage/Core/Scripts/UI/TopHPBar.gd" id="1_ukjim"]
+[ext_resource type="Script" uid="uid://7fr43al0y86s" path="res://Deepmage/Core/Scripts/UI/HealthProgressBar.gd" id="2_sysu1"]
 [ext_resource type="Script" uid="uid://xf22oummx5qu" path="res://Deepmage/Core/Scripts/UI/AttackPreviewSlideContainer.gd" id="3_sysu1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yd4wd"]
@@ -58,7 +58,7 @@ shadow_color = Color(0, 0, 0, 0.498039)
 shadow_size = 2
 shadow_offset = Vector2(-1, 1)
 
-[node name="TopHPBar" type="Control" node_paths=PackedStringArray("header", "slide", "unit_name_label", "health_bar", "current_health_label", "current_defense_label")]
+[node name="TopHPBar" type="Control" node_paths=PackedStringArray("unit_name_label", "health_bar", "current_health_label", "current_defense_label", "header", "slide")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -67,12 +67,12 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_ukjim")
-header = NodePath("MarginContainer/Root/Header")
-slide = NodePath("MarginContainer/Root/AttackPreviewSlideContainer")
 unit_name_label = NodePath("MarginContainer/Root/Header/MarginContainer/VBoxContainer/UnitNameLabel")
 health_bar = NodePath("MarginContainer/Root/Header/MarginContainer/VBoxContainer/HBoxContainer/HealthBar")
 current_health_label = NodePath("MarginContainer/Root/Header/MarginContainer/VBoxContainer/HBoxContainer/CurrentHealthLabel")
 current_defense_label = NodePath("MarginContainer/Root/Header/MarginContainer/VBoxContainer/HBoxContainer/CurrentDefenseLabel")
+header = NodePath("MarginContainer/Root/Header")
+slide = NodePath("MarginContainer/Root/AttackPreviewSlideContainer")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0

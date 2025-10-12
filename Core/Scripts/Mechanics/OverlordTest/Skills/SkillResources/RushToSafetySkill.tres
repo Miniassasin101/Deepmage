@@ -1,20 +1,18 @@
-[gd_resource type="Resource" script_class="MoveToSafetySkill" load_steps=18 format=3 uid="uid://cdo13j8uua6g3"]
+[gd_resource type="Resource" script_class="MoveToSafetySkill" load_steps=12 format=3 uid="uid://cdo13j8uua6g3"]
 
 [ext_resource type="Resource" uid="uid://ckf4jaulgujk1" path="res://Deepmage/Core/Resources/ActionResources/RushActionResource.tres" id="1_fxho1"]
 [ext_resource type="Script" uid="uid://bj28140wrmaiv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/PositionPreferences/PositionPreference.gd" id="2_4wppd"]
-[ext_resource type="Script" uid="uid://cwhwg184xsckd" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/PositionPreferences/MinimizePathLengthPreference.gd" id="3_bcg7m"]
 [ext_resource type="Script" uid="uid://dk20xdie5t8dr" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/PositionPreferences/MaximizeMinEnemyDistancePreference.gd" id="4_cb0v1"]
 [ext_resource type="Script" uid="uid://canbipd5camsd" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Samplers/RetreatRingSampler.gd" id="5_g2640"]
 [ext_resource type="Script" uid="uid://c57p01pt3qmue" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/MoveToSafetySkill.gd" id="6_4h6h1"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="7_fi227"]
-[ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="8_7cgqc"]
 [ext_resource type="Script" uid="uid://devt7ks3mmyfv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsAnyEnemyInRangeSkillCondition.gd" id="9_5yieq"]
-[ext_resource type="Script" uid="uid://cv63cki4l8n4" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ReachableBasedSkillConditions/SelfHasReachableSafePositionCondition.gd" id="10_bibr5"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="11_iqdr3"]
 
-[sub_resource type="Resource" id="Resource_a4tjr"]
-script = ExtResource("3_bcg7m")
-metadata/_custom_type_script = "uid://cwhwg184xsckd"
+[sub_resource type="Resource" id="Resource_xptlk"]
+script = ExtResource("9_5yieq")
+threat_radius = 3.0
+metadata/_custom_type_script = "uid://devt7ks3mmyfv"
 
 [sub_resource type="Resource" id="Resource_o8y13"]
 script = ExtResource("4_cb0v1")
@@ -24,25 +22,13 @@ metadata/_custom_type_script = "uid://dk20xdie5t8dr"
 script = ExtResource("5_g2640")
 metadata/_custom_type_script = "uid://canbipd5camsd"
 
-[sub_resource type="Resource" id="Resource_ufsey"]
-script = ExtResource("8_7cgqc")
-metadata/_custom_type_script = "uid://clbt58mwsvag8"
-
-[sub_resource type="Resource" id="Resource_o24kd"]
-script = ExtResource("9_5yieq")
-metadata/_custom_type_script = "uid://devt7ks3mmyfv"
-
-[sub_resource type="Resource" id="Resource_utj8h"]
-script = ExtResource("10_bibr5")
-sampler = SubResource("Resource_rfnuq")
-metadata/_custom_type_script = "uid://cv63cki4l8n4"
-
 [resource]
 resource_name = "RushToSafetySkillResource"
 script = ExtResource("6_4h6h1")
 position_sampler = SubResource("Resource_rfnuq")
-position_preferences = Array[ExtResource("2_4wppd")]([SubResource("Resource_a4tjr"), SubResource("Resource_o8y13")])
+position_preferences = Array[ExtResource("2_4wppd")]([SubResource("Resource_o8y13")])
 skill_name = "Rush To Safety"
 action = ExtResource("1_fxho1")
-skill_conditions = Array[ExtResource("7_fi227")]([SubResource("Resource_ufsey"), SubResource("Resource_o24kd"), SubResource("Resource_utj8h")])
+external_skill_conditions = Array[ExtResource("7_fi227")]([SubResource("Resource_xptlk")])
+description = null
 metadata/_custom_type_script = "uid://c57p01pt3qmue"

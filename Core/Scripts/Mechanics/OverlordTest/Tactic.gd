@@ -8,6 +8,8 @@ func make_skills_unique(owning_unit: Unit) -> void:
 	# Deep-duplicate active skills and bind their owning unit.
 	var new_actives: Array[Skill] = []
 	for original_skill in active_skills:
+		if !original_skill:
+			continue
 		var duplicated_skill: Skill = original_skill.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
 		duplicated_skill.unit = owning_unit
 		new_actives.append(duplicated_skill)
@@ -24,6 +26,19 @@ func make_skills_unique(owning_unit: Unit) -> void:
 	# TODO: Consider a shared pool with reference counting if many units reuse identical skills.
 	# TODO: Validate tags/conditions on duplication and log authoring errors once.
 
+
+func set_all_skills(in_skills: Array[Skill]) -> void:
+	for skill in in_skills:
+		if skill.skill_type == skill.SkillType.ACTIVE:
+			active_skills.append(skill)
+		elif skill.skill_type == skill.SkillType.PASSIVE:
+			passive_skills.append(skill)
+
+func set_active_skills(in_askills: Array[Skill]) -> void:
+	active_skills = in_askills
+
+func set_passive_skills(in_pskills: Array[Skill]) -> void:
+	passive_skills = in_pskills
 
 func get_all_skills() -> Array[Skill]:
 	return active_skills + passive_skills
