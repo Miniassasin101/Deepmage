@@ -28,3 +28,19 @@ func make_skills_unique(owning_unit: Unit) -> void:
 func get_all_skills() -> Array[Skill]:
 	return active_skills + passive_skills
 	# TODO: Cache this concatenation if invoked frequently during a turn/frame.
+
+
+func get_valid_active_skills() -> Array[Skill]:
+	var ret_skills: Array[Skill] = []
+	for skill in active_skills:
+		if skill:
+			ret_skills.append(skill)
+	return ret_skills
+
+func get_valid_passive_skills() -> Array[Skill]:
+	var ret_skills: Array[Skill] = []
+	for skill in active_skills:
+		if skill:
+			ret_skills.append(skill)
+	return ret_skills
+	

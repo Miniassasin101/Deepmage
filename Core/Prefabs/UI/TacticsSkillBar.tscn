@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://c3xpwrrdt3fa2"]
+[gd_scene load_steps=6 format=3 uid="uid://c3xpwrrdt3fa2"]
 
 [ext_resource type="Script" uid="uid://crn3p160ndo4c" path="res://addons/ReorderableContainer/reorderable_hbox.gd" id="1_dmaep"]
+[ext_resource type="Script" uid="uid://dkromkfvkvfgs" path="res://Deepmage/Core/Scripts/UI/TacticsSkillBar.gd" id="1_syp6n"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dmaep"]
 bg_color = Color(0.22, 0.245, 0.25, 0.5411765)
@@ -31,9 +32,14 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 shadow_offset = Vector2(-1, 1)
 
-[node name="TacticsSkillBar" type="PanelContainer"]
+[node name="TacticsSkillBar" type="PanelContainer" node_paths=PackedStringArray("priority_number_label", "skill_name_label", "conditions_rhbox")]
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_dmaep")
+script = ExtResource("1_syp6n")
+priority_number_label = NodePath("MarginContainer2/HBoxContainer/HBoxContainer/PriorityNumberLabel")
+skill_name_label = NodePath("MarginContainer2/HBoxContainer/HBoxContainer/PanelContainer/SkillNameLabel")
+conditions_rhbox = NodePath("MarginContainer2/HBoxContainer/ConditionsRHBox")
+gray_style_box = SubResource("StyleBoxFlat_dmaep")
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -65,7 +71,7 @@ size_flags_horizontal = 3
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_syp6n")
 
-[node name="SkillLabel" type="Label" parent="MarginContainer2/HBoxContainer/HBoxContainer/PanelContainer"]
+[node name="SkillNameLabel" type="Label" parent="MarginContainer2/HBoxContainer/HBoxContainer/PanelContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
@@ -74,7 +80,7 @@ label_settings = SubResource("LabelSettings_dmaep")
 horizontal_alignment = 1
 text_overrun_behavior = 1
 
-[node name="ReorderableHBox" type="Container" parent="MarginContainer2/HBoxContainer"]
+[node name="ConditionsRHBox" type="Container" parent="MarginContainer2/HBoxContainer"]
 process_mode = 1
 custom_minimum_size = Vector2(416, 0)
 layout_mode = 2
@@ -83,7 +89,7 @@ script = ExtResource("1_dmaep")
 separation = 20
 metadata/_custom_type_script = "uid://crn3p160ndo4c"
 
-[node name="ConditionHeaderLabel" type="Label" parent="MarginContainer2/HBoxContainer/ReorderableHBox"]
+[node name="ConditionLabel" type="Label" parent="MarginContainer2/HBoxContainer/ConditionsRHBox"]
 custom_minimum_size = Vector2(89, 0)
 layout_mode = 2
 text = "Condition 1"
@@ -91,7 +97,7 @@ label_settings = SubResource("LabelSettings_dmaep")
 horizontal_alignment = 1
 text_overrun_behavior = 1
 
-[node name="ConditionHeaderLabel2" type="Label" parent="MarginContainer2/HBoxContainer/ReorderableHBox"]
+[node name="ConditionLabel2" type="Label" parent="MarginContainer2/HBoxContainer/ConditionsRHBox"]
 custom_minimum_size = Vector2(89, 0)
 layout_mode = 2
 text = "Condition 2"
@@ -99,7 +105,7 @@ label_settings = SubResource("LabelSettings_dmaep")
 horizontal_alignment = 1
 text_overrun_behavior = 1
 
-[node name="ConditionHeaderLabel3" type="Label" parent="MarginContainer2/HBoxContainer/ReorderableHBox"]
+[node name="ConditionLabel3" type="Label" parent="MarginContainer2/HBoxContainer/ConditionsRHBox"]
 custom_minimum_size = Vector2(89, 0)
 layout_mode = 2
 text = "Condition 3"
@@ -107,7 +113,7 @@ label_settings = SubResource("LabelSettings_dmaep")
 horizontal_alignment = 1
 text_overrun_behavior = 1
 
-[node name="ConditionHeaderLabel4" type="Label" parent="MarginContainer2/HBoxContainer/ReorderableHBox"]
+[node name="ConditionLabel4" type="Label" parent="MarginContainer2/HBoxContainer/ConditionsRHBox"]
 custom_minimum_size = Vector2(89, 0)
 layout_mode = 2
 text = "Condition 4"
@@ -115,4 +121,4 @@ label_settings = SubResource("LabelSettings_dmaep")
 horizontal_alignment = 1
 text_overrun_behavior = 1
 
-[connection signal="sort_children" from="MarginContainer2/HBoxContainer/ReorderableHBox" to="MarginContainer2/HBoxContainer/ReorderableHBox" method="_on_sort_children"]
+[connection signal="sort_children" from="MarginContainer2/HBoxContainer/ConditionsRHBox" to="MarginContainer2/HBoxContainer/ConditionsRHBox" method="_on_sort_children"]

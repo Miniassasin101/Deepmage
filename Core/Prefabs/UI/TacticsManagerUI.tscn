@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://bdohbmjso32gu"]
+[gd_scene load_steps=11 format=3 uid="uid://bdohbmjso32gu"]
 
+[ext_resource type="Script" uid="uid://jnvq5p6s7a2f" path="res://Deepmage/Core/Scripts/UI/TacticsManagerUI.gd" id="1_27dc7"]
 [ext_resource type="Script" uid="uid://nhsyq3d75icn" path="res://addons/ReorderableContainer/reorderable_vbox.gd" id="1_qrecu"]
 [ext_resource type="PackedScene" uid="uid://c3xpwrrdt3fa2" path="res://Deepmage/Core/Prefabs/UI/TacticsSkillBar.tscn" id="2_vnc2f"]
 
@@ -85,14 +86,20 @@ corner_radius_bottom_left = 3
 shadow_size = 3
 shadow_offset = Vector2(-1, 1)
 
-[node name="TacticsManagerUI" type="PanelContainer"]
+[node name="TacticsManagerUI" type="PanelContainer" node_paths=PackedStringArray("tactics_header_label", "active_skills_rvbox", "passive_skills_rvbox")]
 anchors_preset = -1
-anchor_right = 0.4655625
-anchor_bottom = 0.58671606
-offset_right = -0.32800293
-offset_bottom = -0.1920166
-scale = Vector2(0.8457156, 0.8457156)
+anchor_left = 0.00086805556
+anchor_right = 0.5294705
+anchor_bottom = 0.55709875
+offset_right = 32.049988
+offset_bottom = 19.0
+scale = Vector2(0.95, 0.95)
 theme_override_styles/panel = SubResource("StyleBoxFlat_irwtu")
+script = ExtResource("1_27dc7")
+tactics_header_label = NodePath("MarginContainer/VBoxContainer/MarginContainer/TacticsHeaderLabel")
+active_skills_rvbox = NodePath("MarginContainer/VBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox")
+passive_skills_rvbox = NodePath("MarginContainer/VBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/PassiveSkillsReorderableVBox")
+tactics_skill_bar_prefab = ExtResource("2_vnc2f")
 metadata/_edit_use_anchors_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

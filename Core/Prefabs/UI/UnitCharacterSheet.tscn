@@ -36,7 +36,7 @@ gradient = SubResource("Gradient_sbgmx")
 
 [sub_resource type="Theme" id="Theme_32rw0"]
 
-[node name="UnitCharacterSheetUI" type="Control" node_paths=PackedStringArray("unit_name_label", "speed_label", "jump_label", "posture_points_label", "experience_rolls_label", "movement_rate_label", "unused_label_1", "might_label", "endurance_label", "agility_label", "sense_label", "mind_label", "presence_label", "martial_label", "channel_label", "parry_label", "resist_label", "clash_label", "evade_label", "will_label", "conditions_container", "close_button")]
+[node name="UnitCharacterSheetUI" type="Control" node_paths=PackedStringArray("tactics_manager_ui", "unit_name_label", "speed_label", "jump_label", "posture_points_label", "experience_rolls_label", "movement_rate_label", "unused_label_1", "might_label", "endurance_label", "agility_label", "sense_label", "mind_label", "presence_label", "martial_label", "channel_label", "parry_label", "resist_label", "clash_label", "evade_label", "will_label", "conditions_container", "tab_container", "close_button")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 2.0
@@ -45,6 +45,7 @@ offset_right = 686.0
 offset_bottom = 435.0
 scale = Vector2(0.584722, 0.581201)
 script = ExtResource("1_s4tfa")
+tactics_manager_ui = NodePath("MarginContainer/TabContainer/Tactics/TacticsManagerUI")
 unit_name_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer3/PanelContainer/VboxContainer/UnitNameLabel")
 speed_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/PanelContainer/VBoxContainer/SpeedLabel")
 jump_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer2/VBoxContainer/MarginContainer2/PanelContainer/VBoxContainer/JumpLabel")
@@ -66,19 +67,22 @@ clash_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/Upp
 evade_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer2/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer/EvadeLabel")
 will_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/FightSkillsMarginContainer2/PanelContainer/VBoxContainer/GridContainer/MarginContainer6/PanelContainer/MarginContainer/VBoxContainer/WillLabel")
 conditions_container = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer3/PanelContainer/VboxContainer")
+tab_container = NodePath("MarginContainer/TabContainer")
 close_button = NodePath("MarginContainer/CloseButton")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TabContainer" type="TabContainer" parent="MarginContainer"]
 layout_mode = 2
-current_tab = 1
+current_tab = 0
 
 [node name="Character" type="PanelContainer" parent="MarginContainer/TabContainer"]
-visible = false
 custom_minimum_size = Vector2(502, 370)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_wvosu")
@@ -594,7 +598,7 @@ horizontal_alignment = 2
 [node name="FightSkillsMarginContainer2" type="MarginContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.4
+size_flags_stretch_ratio = 0.3
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
@@ -679,7 +683,6 @@ horizontal_alignment = 1
 
 [node name="ChannelLabel" type="Label" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/FightSkillsMarginContainer2/PanelContainer/VBoxContainer/GridContainer/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
 text = "0"
 horizontal_alignment = 2
 
@@ -968,6 +971,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Tactics" type="PanelContainer" parent="MarginContainer/TabContainer"]
+visible = false
 custom_minimum_size = Vector2(502, 370)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_wvosu")

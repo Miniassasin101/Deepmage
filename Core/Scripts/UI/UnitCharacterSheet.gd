@@ -5,12 +5,14 @@ extends Control
 @export_category("References")
 @export var mouse_controller: MouseController = null
 @export var pathfinding: PathfindingSystem= null
+@export var tactics_manager_ui: TacticsManagerUI = null
 
 @export_category("Scenes")
 @export var character_sheet_part_panel_scene: PackedScene  # (Not used for body parts anymore)
 @export var weapon_details_popup_scene: PackedScene = null
 
 @export_category("Labels")
+@export_group("Labels")
 @export var unit_name_label: Label
 #@export var armor_points_label: Label
 @export var speed_label: Label
@@ -43,6 +45,7 @@ extends Control
 @export var conditions_container: VBoxContainer
 @export var weapons_container: WeaponsContainer
 @export var items_container: HBoxContainer
+@export var tab_container: TabContainer
 
 @export_category("Buttons")
 @export var close_button: Button
@@ -59,7 +62,10 @@ func _ready() -> void:
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("testkey_c"):
 		open_character_sheet()
-
+		if Input.is_action_pressed("t_key"):
+			tab_container.set_current_tab(1)
+		else:
+			tab_container.set_current_tab(0)
 
 
 
@@ -111,6 +117,10 @@ func _on_close_button_pressed() -> void:
 	is_open = false
 	return
 
+
+
+
+
 func _populate_from_unit(unit: Unit) -> void:
 	# Update basic attribute labels.
 	if !is_instance_valid(unit):
@@ -146,7 +156,9 @@ func _populate_from_unit(unit: Unit) -> void:
 	evade_label.text = _get_attribute_or_na(unit, "evade")
 	will_label.text = _get_attribute_or_na(unit, "will")
 
-
+	# Triggers the tactics manager to populate itself from the new unit
+	if tactics_manager_ui:
+		tactics_manager_ui.populate_from_unit(unit)
 
 
 #func populate_weapons_from_unit(unit: Unit) -> void:
