@@ -7,6 +7,7 @@ extends Control
 @export var pathfinding: PathfindingSystem= null
 @export var tactics_manager_ui: TacticsManagerUI = null
 
+
 @export_category("Scenes")
 @export var character_sheet_part_panel_scene: PackedScene  # (Not used for body parts anymore)
 @export var weapon_details_popup_scene: PackedScene = null
@@ -70,7 +71,7 @@ func _input(_event: InputEvent) -> void:
 
 
 
-
+## Uses the tab index to open the character sheet at that tab through code.
 func open_character_sheet(in_unit: Unit = null, tab_index: int = 0) -> void:
 	# Grab the unit under the mouse or whichever unit you want
 

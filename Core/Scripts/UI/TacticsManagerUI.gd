@@ -10,6 +10,7 @@ extends PanelContainer
 @export_group("")
 @export var active_skills_rvbox: ReorderableVBox
 @export var passive_skills_rvbox: ReorderableVBox
+@export var library_vbox: VBoxContainer
 
 
 @export_category("Settings")
@@ -17,6 +18,7 @@ extends PanelContainer
 
 @export_category("Prefabs")
 @export var tactics_skill_bar_prefab: PackedScene
+@export var library_skill_bar_prefab: PackedScene
 
 
 var current_unit: Unit = null
@@ -30,7 +32,7 @@ var passive_skills: Array[Skill] = []
 
 func _ready() -> void:
 	active_skills_rvbox.reordered.connect(on_active_skills_reordered)
-	pass
+	_populate_skill_library()
 
 func on_active_skills_reordered(_from_index: int, _to_index: int) -> void:
 	reprioritize_skills(active_skills_rvbox)
@@ -111,8 +113,11 @@ func setup_skills_container(in_unit: Unit, in_skill_cont: ReorderableVBox) -> vo
 		new_skillbar.populate_from_skill(a_skill)
 		new_skillbar.set_priority_num(iteration_num)
 		iteration_num += 1
-	
-	
+
+
+
+
+
 
 func clear_all_skills() -> void:
 	active_skills.clear()
@@ -124,3 +129,78 @@ func clear_all_skills() -> void:
 	
 	for child in passive_skills_rvbox.get_children():
 		child.queue_free()
+
+
+
+# Skill Library Functions:
+func _populate_skill_library() -> void:
+	if library_vbox == null:
+		return
+	_clear_library()
+
+	var combat_system: CombatSystem = CombatSystem.instance
+	if combat_system == null:
+		return
+	var library: SkillLibrary = combat_system.get_skill_library()
+	if library == null:
+		return
+
+	var sorted_skills: Array[Skill] = library.get_skills_sorted_by_category_type_name()
+	for lib_skill in sorted_skills:
+		if lib_skill == null:
+			continue
+		var lib_bar: LibrarySkillBar = library_skill_bar_prefab.instantiate() as LibrarySkillBar
+		library_vbox.add_child(lib_bar)
+		lib_bar.populate_from_skill(lib_skill)
+		if not lib_bar.on_add_to_tactics.is_connected(_on_library_add_skill):
+			lib_bar.on_add_to_tactics.connect(_on_library_add_skill)
+
+func _clear_library() -> void:
+	if library_vbox == null:
+		return
+	for lib_child in library_vbox.get_children():
+		lib_child.queue_free()
+
+func _on_library_add_skill(skill_from_library: Skill) -> void:
+	# Duplicate and wipe external conditions / preferences as requested
+	if skill_from_library == null:
+		return
+	var new_skill: Skill = skill_from_library.duplicate(true)
+	new_skill.external_skill_conditions = []
+	new_skill.target_preferences = []
+	new_skill.is_disabled = false
+
+	var target_container: ReorderableVBox = _get_container_for_category(new_skill.skill_category)
+	if target_container == null:
+		return
+
+	var new_bar: TacticsSkillBar = _spawn_tactics_bar_for_skill(new_skill, target_container)
+	if new_bar == null:
+		return
+
+	# Place at end of that container
+	reprioritize_skills(target_container)
+
+
+func _get_container_for_category(in_category: int) -> ReorderableVBox:
+	if int(in_category) == int(Skill.SkillCategory.ACTIVE):
+		return active_skills_rvbox
+	elif int(in_category) == int(Skill.SkillCategory.PASSIVE):
+		return passive_skills_rvbox
+	else:
+		# Default to active for FREE or others, adjust as you prefer
+		return active_skills_rvbox
+
+func _spawn_tactics_bar_for_skill(in_skill: Skill, target_rvbox: ReorderableVBox) -> TacticsSkillBar:
+	if in_skill == null or target_rvbox == null:
+		return null
+	var new_skillbar: TacticsSkillBar = tactics_skill_bar_prefab.instantiate() as TacticsSkillBar
+	new_skillbar.max_conditions_count = max_conditions_count
+	target_rvbox.add_child(new_skillbar)
+	new_skillbar.populate_from_skill(in_skill)
+
+	# Set priority label immediately (end of list for now)
+	var new_index: int = target_rvbox.get_child_count()
+	new_skillbar.set_priority_num(new_index)
+
+	return new_skillbar

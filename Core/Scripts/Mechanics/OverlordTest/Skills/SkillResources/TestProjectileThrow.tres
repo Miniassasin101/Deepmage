@@ -80,6 +80,5 @@ skill_name = "Throw"
 action = SubResource("Resource_05afn")
 internal_skill_conditions = Array[ExtResource("9_4d8tx")]([SubResource("Resource_nhirw"), SubResource("Resource_jvs1f")])
 target_preferences = Array[ExtResource("12_8vaeu")]([SubResource("Resource_7g53y")])
-description = PackedStringArray("Throws a ball at an enemy in range 10.")
 tags = Array[String](["ranged"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

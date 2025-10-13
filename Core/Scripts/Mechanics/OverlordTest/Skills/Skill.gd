@@ -4,8 +4,8 @@ extends Resource
 
 signal on_skill_ended
 
-enum SkillType { ACTIVE, PASSIVE, FREE}
-
+enum SkillCategory { ACTIVE, PASSIVE, FREE}
+enum SkillType { ATTACK, SUPPORT, SABOTAGE, SPECIAL}
 
 @export var skill_name: String = "None":
 	set(val):
@@ -16,7 +16,9 @@ enum SkillType { ACTIVE, PASSIVE, FREE}
 @export var action: Action = null
 
 ## Determines which resource is required to use the skill.
-@export var skill_type: SkillType = SkillType.ACTIVE
+@export var skill_category: SkillCategory = SkillCategory.ACTIVE
+
+@export var skill_type: SkillType = SkillType.ATTACK
 
 ## How many active points or passive points need to be spent to activate this skill.
 @export var skill_cost: int = 1 # AP or PP cost
@@ -30,12 +32,20 @@ enum SkillType { ACTIVE, PASSIVE, FREE}
 ## Type of lighter skill condition that will narrow down the pool of unit targets, but never to zero.
 @export var target_preferences: Array[TargetPreference] = []
 
+@export var is_disabled: bool = false
+
 @export_group("Description")
+@export var trait_1: String = "Trait 1"
+@export var trait_2: String = "Trait 2"
+@export var trait_3: String = "Trait 3"
+
+
 ## Series of lines describing the behavior and/or effect of the skill.
 @export var description: Array[String] = []
 
 ## Mark the skill in various ways so other combat elements know how to interact with it.
 @export var tags: Array[String] = []
+
 
 
 ## Unit that owns the skill (set by Tactic when duplicating/assigning).
@@ -93,6 +103,9 @@ func can_activate_skill() -> bool:
 	if !unit:
 		return false
 	
+	if is_disabled:
+		return false
+	
 	if !check_ap_pp():
 		return false
 	
@@ -106,11 +119,13 @@ func can_activate_skill() -> bool:
 func check_ap_pp() -> bool:
 	var points_name: String = "None"
 	
-	match skill_type:
-		SkillType.ACTIVE:
+	match skill_category:
+		SkillCategory.ACTIVE:
 			points_name = "active_points"
-		SkillType.PASSIVE:
+		SkillCategory.PASSIVE:
 			points_name = "passive_points"
+		_:
+			points_name = "active_points" # or whatever default you want for FREE
 	
 	var points_attribute: Attribute = unit.get_attributes_container().get_attribute(points_name)
 	if !points_attribute:

@@ -29,9 +29,9 @@ func make_skills_unique(owning_unit: Unit) -> void:
 
 func set_all_skills(in_skills: Array[Skill]) -> void:
 	for skill in in_skills:
-		if skill.skill_type == skill.SkillType.ACTIVE:
+		if skill.skill_type == skill.SkillCategory.ACTIVE:
 			active_skills.append(skill)
-		elif skill.skill_type == skill.SkillType.PASSIVE:
+		elif skill.skill_type == skill.SkillCategory.PASSIVE:
 			passive_skills.append(skill)
 
 func set_active_skills(in_askills: Array[Skill]) -> void:

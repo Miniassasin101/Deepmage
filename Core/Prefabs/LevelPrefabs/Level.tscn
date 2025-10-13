@@ -1,4 +1,4 @@
-[gd_scene load_steps=170 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=171 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
@@ -20,7 +20,7 @@
 [ext_resource type="Script" uid="uid://1miy676tt71s" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UnitManager.gd" id="11_lf0eb"]
 [ext_resource type="Script" uid="uid://xwiyhnl8erp1" path="res://Deepmage/Core/Scripts/Pathfinding/PathfindingSystem.gd" id="12_fnj5h"]
 [ext_resource type="PackedScene" uid="uid://2h1a1e1r8hc2" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.tscn" id="12_k2c3k"]
-[ext_resource type="Resource" uid="uid://cdo13j8uua6g3" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/RushToSafetySkill.tres" id="12_qsjt4"]
+[ext_resource type="Resource" uid="uid://cdo13j8uua6g3" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/RushToSafetySkill.tres" id="12_qsjt4"]
 [ext_resource type="Resource" uid="uid://8vem57wbteya" path="res://Deepmage/Core/Resources/ActionResources/RushToUnitActionResource.tres" id="12_v4iap"]
 [ext_resource type="Resource" uid="uid://ov11t88e15s8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/TestProjectileThrow.tres" id="13_6kl6n"]
 [ext_resource type="Script" uid="uid://ian5eam30p0l" path="res://addons/curvemesh3d/curvemesh3d.gd" id="13_wbm0i"]
@@ -57,8 +57,9 @@
 [ext_resource type="Script" uid="uid://csqgchb51x8ra" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreferenceScripts/HighestHPPercentPreference.gd" id="27_cb3j6"]
 [ext_resource type="Resource" uid="uid://cuudvrampevcg" path="res://Deepmage/Core/Resources/ActionResources/TestAttackActionResource.tres" id="28_e15dp"]
 [ext_resource type="Script" uid="uid://cpa7repyr1v6o" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/MoveToUnitAction.gd" id="30_hja2s"]
-[ext_resource type="Resource" uid="uid://ceu3eynl7qehx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/RushToUnitSkillResource.tres" id="30_hymmt"]
-[ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/TestAttackSkillResource.tres" id="31_f3uqp"]
+[ext_resource type="Resource" uid="uid://ceu3eynl7qehx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/RushToUnitSkillResource.tres" id="30_hymmt"]
+[ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/TestAttackSkillResource.tres" id="31_f3uqp"]
+[ext_resource type="Resource" uid="uid://dkeoolmv8jjeq" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/SkillLibraries/SkillLibraryResource.tres" id="42_5lfvx"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_lf0eb"]
 vertices = PackedVector3Array(-18.6557, 0.5, -18.6557, -18.6557, 0.5, 44.8443, 18.5943, 0.5, 44.8443, 18.5943, 0.5, -18.6557)
@@ -143,8 +144,13 @@ resource_name = "ThrowSkillResource"
 script = ExtResource("11_22ak0")
 skill_name = "Throw"
 action = SubResource("Resource_05afn")
+skill_category = null
 internal_skill_conditions = Array[ExtResource("23_5lfvx")]([SubResource("Resource_nhirw"), SubResource("Resource_jvs1f")])
 target_preferences = Array[ExtResource("26_04ue1")]([SubResource("Resource_7g53y"), SubResource("Resource_k8h5i"), SubResource("Resource_o7bkt")])
+is_disabled = null
+trait_1 = null
+trait_2 = null
+trait_3 = null
 tags = Array[String](["ranged"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
@@ -157,13 +163,18 @@ resource_name = "RushToSkillResource"
 script = ExtResource("11_22ak0")
 skill_name = "Rush To"
 action = ExtResource("12_v4iap")
+skill_category = null
 internal_skill_conditions = Array[ExtResource("23_5lfvx")]([SubResource("Resource_ufsey")])
-description = null
+is_disabled = null
+trait_1 = null
+trait_2 = null
+trait_3 = null
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_bvt28"]
 script = ExtResource("24_w01yd")
 active_skills = Array[ExtResource("11_22ak0")]([ExtResource("12_qsjt4"), SubResource("Resource_yao5x"), SubResource("Resource_utj8h")])
+passive_skills = null
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
 [sub_resource type="Resource" id="Resource_8v6vh"]
@@ -311,13 +322,19 @@ resource_name = "RushToSkillResource"
 script = ExtResource("11_22ak0")
 skill_name = "Rush To"
 action = ExtResource("12_v4iap")
+skill_category = null
 internal_skill_conditions = Array[ExtResource("23_5lfvx")]([SubResource("Resource_bkr81"), SubResource("Resource_sb21c")])
 target_preferences = Array[ExtResource("26_04ue1")]([SubResource("Resource_l3lly")])
+is_disabled = null
+trait_1 = null
+trait_2 = null
+trait_3 = null
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_gam6i"]
 script = ExtResource("24_w01yd")
 active_skills = Array[ExtResource("11_22ak0")]([ExtResource("31_f3uqp"), ExtResource("12_qsjt4"), ExtResource("13_6kl6n"), SubResource("Resource_eixr0")])
+passive_skills = null
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
 [sub_resource type="Resource" id="Resource_f3uqp"]
@@ -465,9 +482,13 @@ resource_name = "BashSkillResource"
 script = ExtResource("11_22ak0")
 skill_name = "Bash"
 action = ExtResource("28_e15dp")
+skill_category = null
 internal_skill_conditions = Array[ExtResource("23_5lfvx")]([SubResource("Resource_2gvhv"), SubResource("Resource_wsem0")])
 target_preferences = Array[ExtResource("26_04ue1")]([SubResource("Resource_6836y")])
-description = null
+is_disabled = null
+trait_1 = null
+trait_2 = null
+trait_3 = null
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_4uu1a"]
@@ -534,9 +555,13 @@ resource_name = "ThrowSkillResource"
 script = ExtResource("11_22ak0")
 skill_name = "Throw"
 action = SubResource("Resource_2ippr")
+skill_category = null
 internal_skill_conditions = Array[ExtResource("23_5lfvx")]([SubResource("Resource_q6bko"), SubResource("Resource_dydjx")])
 target_preferences = Array[ExtResource("26_04ue1")]([SubResource("Resource_0u7jk")])
-description = null
+is_disabled = null
+trait_1 = null
+trait_2 = null
+trait_3 = null
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_ccdyu"]
@@ -558,15 +583,18 @@ resource_name = "MoveToSkillResource"
 script = ExtResource("11_22ak0")
 skill_name = "Move To"
 action = SubResource("Resource_ccdyu")
-internal_skill_conditions = null
-external_skill_conditions = null
+skill_category = null
 target_preferences = Array[ExtResource("26_04ue1")]([SubResource("Resource_1343x")])
-description = null
+is_disabled = null
+trait_1 = null
+trait_2 = null
+trait_3 = null
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_jiskd"]
 script = ExtResource("24_w01yd")
 active_skills = Array[ExtResource("11_22ak0")]([SubResource("Resource_7ehp6"), SubResource("Resource_8hoel"), ExtResource("30_hymmt"), ExtResource("31_f3uqp"), SubResource("Resource_u3hxb"), null])
+passive_skills = null
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
 [sub_resource type="Resource" id="Resource_g2rko"]
@@ -718,14 +746,20 @@ resource_name = "BashSkillResource"
 script = ExtResource("11_22ak0")
 skill_name = "Bash"
 action = ExtResource("28_e15dp")
+skill_category = null
 internal_skill_conditions = Array[ExtResource("23_5lfvx")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
 target_preferences = Array[ExtResource("26_04ue1")]([SubResource("Resource_v4iap"), SubResource("Resource_qlwk2")])
+is_disabled = null
+trait_1 = null
+trait_2 = null
+trait_3 = null
 description = Array[String](["Moves towards then Bashes a unit in range 3"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_rx2vc"]
 script = ExtResource("24_w01yd")
 active_skills = Array[ExtResource("11_22ak0")]([SubResource("Resource_o24kd"), ExtResource("30_hymmt")])
+passive_skills = null
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
 [sub_resource type="Resource" id="Resource_3ixwr"]
@@ -1060,6 +1094,7 @@ unit_manager = NodePath("../UnitManager")
 script = ExtResource("11_g7q3m")
 combat_debug_enabled = true
 skill_trigger_system = NodePath("SkillTriggerSystem")
+skill_library = ExtResource("42_5lfvx")
 
 [node name="SkillTriggerSystem" type="Node" parent="CombatSystem" node_paths=PackedStringArray("combat_system")]
 script = ExtResource("26_qdwhh")

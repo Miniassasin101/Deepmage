@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SkillLibrary" load_steps=6 format=3 uid="uid://dkeoolmv8jjeq"]
+
+[ext_resource type="Script" uid="uid://cqsj2o45u3w7q" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillLibrary.gd" id="1_07uae"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="2_pntk6"]
+[ext_resource type="Resource" uid="uid://ceu3eynl7qehx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/RushToUnitSkillResource.tres" id="4_us4l0"]
+[ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/TestAttackSkillResource.tres" id="5_23st6"]
+[ext_resource type="Resource" uid="uid://cdo13j8uua6g3" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/RushToSafetySkill.tres" id="13_kmtet"]
+
+[resource]
+script = ExtResource("1_07uae")
+skills = Array[ExtResource("2_pntk6")]([ExtResource("5_23st6"), ExtResource("13_kmtet"), ExtResource("4_us4l0")])
+metadata/_custom_type_script = "uid://cqsj2o45u3w7q"

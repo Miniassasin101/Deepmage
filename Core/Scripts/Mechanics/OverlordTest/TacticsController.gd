@@ -70,3 +70,17 @@ func get_first_valid_active_skill() -> Skill:
 	return valid_skill
 	# TODO: Replace linear scan with priority ordering or scoring function.
 	# TODO: Add “selector” strategies (first-valid, best-target, highest-damage, utility).
+
+func get_skill_priority_num(in_skill: Skill) -> int:
+	var prio_num: int = 0
+	if !in_skill:
+		return prio_num
+	
+	for candidate_skill in current_tactic.active_skills:
+		if !candidate_skill:
+			continue
+		prio_num += 1
+		if candidate_skill == in_skill:
+			return prio_num
+	
+	return prio_num

@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Skill" load_steps=9 format=3 uid="uid://c74afabw0rnw0"]
+
+[ext_resource type="Resource" uid="uid://cuudvrampevcg" path="res://Deepmage/Core/Resources/ActionResources/TestAttackActionResource.tres" id="1_bn8j8"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="2_r8df1"]
+[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="4_fjrh5"]
+[ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="5_slhqu"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="6_bthyw"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="7_rv018"]
+
+[sub_resource type="Resource" id="Resource_eu7gh"]
+script = ExtResource("4_fjrh5")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_7kb16"]
+script = ExtResource("5_slhqu")
+range_var = 3.0
+metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
+
+[resource]
+resource_name = "BashSkillResource"
+script = ExtResource("6_bthyw")
+skill_name = "Bash"
+action = ExtResource("1_bn8j8")
+internal_skill_conditions = Array[ExtResource("2_r8df1")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
+is_disabled = null
+trait_1 = "Melee"
+description = Array[String](["Moves towards then Bashes a unit in range 5"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

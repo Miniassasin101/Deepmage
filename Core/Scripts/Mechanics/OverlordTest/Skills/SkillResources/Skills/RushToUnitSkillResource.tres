@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="Skill" load_steps=9 format=3 uid="uid://ceu3eynl7qehx"]
+
+[ext_resource type="Resource" uid="uid://8vem57wbteya" path="res://Deepmage/Core/Resources/ActionResources/RushToUnitActionResource.tres" id="1_qs42l"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="2_7omu2"]
+[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="3_g0jvq"]
+[ext_resource type="Script" uid="uid://daykqau0okf7v" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitOutsideRangeSkillCondition.gd" id="4_h182v"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="5_j3s1b"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="6_wnjc1"]
+
+[sub_resource type="Resource" id="Resource_bkr81"]
+script = ExtResource("3_g0jvq")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_sb21c"]
+script = ExtResource("4_h182v")
+metadata/_custom_type_script = "uid://daykqau0okf7v"
+
+[resource]
+resource_name = "RushToEnemySkillResource"
+script = ExtResource("5_j3s1b")
+skill_name = "Rush To Enemy"
+action = ExtResource("1_qs42l")
+skill_type = 1
+internal_skill_conditions = Array[ExtResource("2_7omu2")]([SubResource("Resource_bkr81"), SubResource("Resource_sb21c")])
+is_disabled = null
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SpellLaunchSatelliteAction" load_steps=18 format=3 uid="uid://056wlunxgtlm"]
+[gd_resource type="Resource" script_class="SpellLaunchSatelliteAction" load_steps=19 format=3 uid="uid://056wlunxgtlm"]
 
 [ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="1_8byyr"]
 [ext_resource type="Script" uid="uid://bm3qks4yfr6rm" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/SpellLaunchSatelliteAction.gd" id="1_v56iu"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://beaqcf4hetaxo" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitMomentAnimationEffect.gd" id="4_f0438"]
 [ext_resource type="Script" uid="uid://brutb7o0hj6td" path="res://Deepmage/Core/Scripts/Animation/AnimationPackage.gd" id="5_ko24f"]
 [ext_resource type="Script" uid="uid://bf2hv6d83v6fv" path="res://Deepmage/Core/Resources/DataStructures/AnimationSyncProfile.gd" id="6_hspqc"]
+[ext_resource type="PackedScene" uid="uid://kybquhg07l5i" path="res://Deepmage/Core/Prefabs/VFX/TestBall.tscn" id="7_2blxp"]
 [ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="9_6dccn"]
 
 [sub_resource type="Animation" id="Animation_dee4o"]

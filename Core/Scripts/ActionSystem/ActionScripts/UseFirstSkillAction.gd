@@ -13,12 +13,14 @@ func start_action(target_package: TargetPackage = null) -> void:
 
 	# Ask TacticsController for the first valid skill.
 	var chosen_skill: Skill = unit.tactics_controller.get_first_valid_active_skill()
-
+	var prio_num: int = unit.tactics_controller.get_skill_priority_num(chosen_skill)
+	
 	# If no valid skill exists, log and fail gracefully.
 	if chosen_skill == null:
 		on_tactic_failed()
 	else:
 		# Activate the chosen skill and wait until it finishes.
+		Utilities.spawn_text_line(unit, "Skill: " + chosen_skill.skill_name + " (" + str(prio_num) + ")")
 		chosen_skill.activate_skill()
 		await chosen_skill.on_skill_ended
 

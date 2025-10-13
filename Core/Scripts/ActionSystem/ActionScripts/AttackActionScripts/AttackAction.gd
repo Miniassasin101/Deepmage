@@ -84,7 +84,7 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	# 1) Move into range if needed
 	await move_to_target_unit(target_unit)
 
-	spawn_action_name_text()
+	#spawn_action_name_text()
 
 	# 2) Face target
 	await rotate_towards_target(target_unit)
