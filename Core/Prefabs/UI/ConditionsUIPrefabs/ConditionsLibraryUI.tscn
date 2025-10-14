@@ -1,0 +1,212 @@
+[gd_scene load_steps=10 format=3 uid="uid://dj4gvfc3kie4s"]
+
+[ext_resource type="Script" uid="uid://xn0bhl55w445" path="res://Deepmage/Core/Scripts/UI/ConditionsLibraryUI.gd" id="1_nqecb"]
+[ext_resource type="PackedScene" uid="uid://bo5oyd0vu6smj" path="res://Deepmage/Core/Prefabs/UI/ConditionsUIPrefabs/ConditionChip.tscn" id="2_sdr8a"]
+[ext_resource type="PackedScene" uid="uid://dvy3w41iuhqe1" path="res://Deepmage/Core/Prefabs/UI/ConditionsUIPrefabs/ConditionCategoryBar.tscn" id="3_srs5m"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hpefi"]
+bg_color = Color(0.2112, 0.2352, 0.24, 0.5411765)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_umswr"]
+bg_color = Color(0.2112, 0.2352, 0.24, 0.5411765)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_srs5m"]
+font_size = 14
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_srs5m"]
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+border_color = Color(0, 0, 0, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xmfyn"]
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lhytx"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.08235294)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 8
+corner_detail = 5
+
+[node name="ConditionsLibraryUI" type="PanelContainer" node_paths=PackedStringArray("search_line_edit", "categories_vbox_container", "conditions_vbox_container")]
+custom_minimum_size = Vector2(617, 200)
+offset_left = -1.0
+offset_right = 616.0
+offset_bottom = 200.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_hpefi")
+script = ExtResource("1_nqecb")
+chip_prefab = ExtResource("2_sdr8a")
+cat_bar_prefab = ExtResource("3_srs5m")
+search_line_edit = NodePath("MarginContainer/HBoxContainer/ConditionsPanelContainer/VBoxContainer/ConditionsHeaderMarginContainer/PanelContainer2/MarginContainer/HBoxContainer/LineEdit")
+categories_vbox_container = NodePath("MarginContainer/HBoxContainer/CategoryPanelContainer/VBoxContainer/MarginContainer/ScrollContainer/CategoryVBoxContainer")
+conditions_vbox_container = NodePath("MarginContainer/HBoxContainer/ConditionsPanelContainer/VBoxContainer/MarginContainer/ScrollContainer/ConditionsVBoxContainer")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="CategoryPanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_umswr")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/CategoryPanelContainer"]
+layout_mode = 2
+
+[node name="CategoryHeaderMarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/CategoryPanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 5
+
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/HBoxContainer/CategoryPanelContainer/VBoxContainer/CategoryHeaderMarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_umswr")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/CategoryPanelContainer/VBoxContainer/CategoryHeaderMarginContainer/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 2
+
+[node name="CategoryHeaderLabel" type="Label" parent="MarginContainer/HBoxContainer/CategoryPanelContainer/VBoxContainer/CategoryHeaderMarginContainer/PanelContainer2/MarginContainer"]
+layout_mode = 2
+text = "Category"
+label_settings = SubResource("LabelSettings_srs5m")
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/CategoryPanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer/CategoryPanelContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="CategoryVBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/CategoryPanelContainer/VBoxContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ConditionCategoryBar" parent="MarginContainer/HBoxContainer/CategoryPanelContainer/VBoxContainer/MarginContainer/ScrollContainer/CategoryVBoxContainer" instance=ExtResource("3_srs5m")]
+layout_mode = 2
+
+[node name="ConditionsPanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_umswr")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/ConditionsPanelContainer"]
+layout_mode = 2
+
+[node name="ConditionsHeaderMarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/ConditionsPanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/HBoxContainer/ConditionsPanelContainer/VBoxContainer/ConditionsHeaderMarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_umswr")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/ConditionsPanelContainer/VBoxContainer/ConditionsHeaderMarginContainer/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/ConditionsPanelContainer/VBoxContainer/ConditionsHeaderMarginContainer/PanelContainer2/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ConditionsHeaderLabel" type="Label" parent="MarginContainer/HBoxContainer/ConditionsPanelContainer/VBoxContainer/ConditionsHeaderMarginContainer/PanelContainer2/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Condition"
+label_settings = SubResource("LabelSettings_srs5m")
+vertical_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/HBoxContainer/ConditionsPanelContainer/VBoxContainer/ConditionsHeaderMarginContainer/PanelContainer2/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_srs5m")
+theme_override_styles/read_only = SubResource("StyleBoxFlat_srs5m")
+theme_override_styles/focus = SubResource("StyleBoxFlat_xmfyn")
+placeholder_text = "Enter Condition Name..."
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/ConditionsPanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer/ConditionsPanelContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ConditionsVBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/ConditionsPanelContainer/VBoxContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/ConditionsPanelContainer/VBoxContainer/MarginContainer/ScrollContainer/ConditionsVBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lhytx")
+
+[node name="ConditionChip" parent="MarginContainer/HBoxContainer/ConditionsPanelContainer/VBoxContainer/MarginContainer/ScrollContainer/ConditionsVBoxContainer/PanelContainer" instance=ExtResource("2_sdr8a")]
+layout_mode = 2

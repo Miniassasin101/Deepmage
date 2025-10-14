@@ -50,7 +50,7 @@ func toggle() -> void:
 
 func open() -> void:
 	_open = true
-	#visible = true
+	visible = true
 	# recompute min-size just in case children changed while hidden
 	update_minimum_size()
 	slide_out()
@@ -58,7 +58,7 @@ func open() -> void:
 func close() -> void:
 	_open = false
 	await slide_in()
-	#visible = false
+	visible = false
 
 func slide_out() -> void:
 	if drift_tween:

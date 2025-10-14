@@ -29,6 +29,9 @@ enum SkillType { ATTACK, SUPPORT, SABOTAGE, SPECIAL}
 ## Skill conditions that are fully editable by players.
 @export var external_skill_conditions: Array[SkillCondition] = []
 
+@export var external_condition_blueprints: Array[ConditionBlueprint] = []
+@export var target_preference_blueprints: Array[ConditionBlueprint] = []
+
 ## Type of lighter skill condition that will narrow down the pool of unit targets, but never to zero.
 @export var target_preferences: Array[TargetPreference] = []
 
@@ -208,18 +211,40 @@ func check_conditions_against_units() -> bool:
 ## Returns a combination of the internal and external skill conditions.
 func get_all_skill_conditions() -> Array[SkillCondition]:
 	var all_skill_cond: Array[SkillCondition] = []
+	# Internal (live, non-editable)
 	all_skill_cond.append_array(internal_skill_conditions)
-	all_skill_cond.append_array(external_skill_conditions)
+	# External from blueprints
+	all_skill_cond.append_array(get_external_skill_conditions())
 	return all_skill_cond
 
 
 func get_external_skill_conditions() -> Array[SkillCondition]:
-	return external_skill_conditions
+	var out_list: Array[SkillCondition] = []
+	for bp in external_condition_blueprints:
+		if bp != null:
+			var inst: SkillCondition = bp.instantiate_condition()
+			if inst != null:
+				out_list.append(inst)
+	return out_list
 
 
 
 func get_target_preferences() -> Array[TargetPreference]:
-	return target_preferences
+	var out_list: Array[TargetPreference] = []
+	for bp in target_preference_blueprints:
+		if bp != null:
+			var inst: SkillCondition = bp.instantiate_condition()
+			var pref: TargetPreference = inst as TargetPreference
+			if pref != null:
+				out_list.append(pref)
+	return out_list
+
+
+func get_external_condition_blueprints() -> Array[ConditionBlueprint]:
+	return external_condition_blueprints
+
+func get_target_preference_blueprints() -> Array[ConditionBlueprint]:
+	return target_preference_blueprints
 
 # -----------------------------------------------------------------------------
 # Tags helpers

@@ -1,6 +1,8 @@
 class_name TacticsSkillBar
 extends PanelContainer
 
+signal on_tactics_skill_bar_update
+
 @export_category("References")
 @export var priority_number_label: Label
 @export var skill_name_label: Label
@@ -22,7 +24,9 @@ extends PanelContainer
 
 var strike_through_rect: ColorRect = null
 
+var is_slot_hovered: bool = false
 
+var input_handled: bool = false
 
 # Stylebox Variables
 var current_stylebox: StyleBoxFlat = null
@@ -50,6 +54,8 @@ var current_skill: Skill = null
 
 var current_conditions: Array[SkillCondition] = []
 
+var current_condition_blueprints: Array[ConditionBlueprint] = []
+
 
 # NOTE: Add the ability to enable and disable conditions and skills with shift + right click
 # NOTE: Add the ability to duplicate conditions and skills with shift + right click
@@ -68,6 +74,54 @@ func _ready() -> void:
 	
 	if not gui_input.is_connected(_on_gui_input_skillbar):
 		gui_input.connect(_on_gui_input_skillbar)
+	
+	_connect_condition_slots()
+
+
+func _connect_condition_slots() -> void:
+	if conditions_rhbox == null:
+		return
+	var index_counter: int = 0
+	for child_node in conditions_rhbox.get_children():
+		var slot: ConditionSlot = child_node as ConditionSlot
+		if slot == null:
+			continue
+		slot.slot_index = index_counter
+		index_counter += 1
+		if not slot.condition_changed.is_connected(_on_slot_condition_changed):
+			slot.condition_changed.connect(_on_slot_condition_changed)
+
+
+func _on_slot_condition_changed(_slot_index: int, _new_blueprint: ConditionBlueprint) -> void:
+	_rebuild_blueprint_order_from_slots()
+	_apply_conditions_order_to_skill()
+
+
+func _rebuild_blueprint_order_from_slots() -> void:
+	current_condition_blueprints.clear()
+	var slots_array: Array[Node] = conditions_rhbox.get_children()
+	for node_item in slots_array:
+		var slot: ConditionSlot = node_item as ConditionSlot
+		if slot == null:
+			continue
+		if slot.current_blueprint != null:
+			current_condition_blueprints.append(slot.current_blueprint)
+
+
+func duplicate_condition_below(slot_index: int) -> void:
+	var slots_array: Array[Node] = conditions_rhbox.get_children()
+	var next_index: int = slot_index + 1
+	if next_index >= slots_array.size():
+		return
+	var src_slot: ConditionSlot = slots_array[slot_index] as ConditionSlot
+	var dst_slot: ConditionSlot = slots_array[next_index] as ConditionSlot
+	if src_slot == null or dst_slot == null or src_slot.current_blueprint == null:
+		return
+	# Reuse same blueprint reference (that’s what a blueprint is for).
+	dst_slot._set_blueprint(src_slot.current_blueprint)
+	if !dst_slot.on_input_handled.is_connected(set_input_handled):
+		dst_slot.on_input_handled.connect(set_input_handled)
+
 
 
 ## Duplicates styleboxes so each bar has its own instance.
@@ -203,6 +257,10 @@ func _on_gui_input_skillbar(input_event: InputEvent) -> void:
 		return
 	if not mouse_button.pressed:
 		return
+	
+	if input_handled:
+		input_handled = false
+		return
 
 	var is_right_click: bool = int(mouse_button.button_index) == MOUSE_BUTTON_RIGHT
 	var is_left_click: bool = int(mouse_button.button_index) == MOUSE_BUTTON_LEFT
@@ -228,6 +286,7 @@ func _toggle_disabled_state() -> void:
 
 	current_skill.is_disabled = not current_skill.is_disabled
 	_apply_disabled_visuals(current_skill.is_disabled)
+	on_tactics_skill_bar_update.emit()
 
 
 func _apply_disabled_visuals(is_now_disabled: bool) -> void:
@@ -286,10 +345,18 @@ func _duplicate_self_below() -> void:
 	var new_bar: TacticsSkillBar = manager._spawn_tactics_bar_for_skill(cloned_skill, parent_vbox)
 	if new_bar == null:
 		return
+	
+	new_bar.set_visible(false)
+	
+	if !new_bar.get_parent_control():
+		parent_vbox.add_child(new_bar)
+	else:
+		new_bar.reparent(parent_vbox)
 
 	# Move just below this one
-	var my_index: int = parent_vbox.get_child_index(self)
+	var my_index: int = parent_vbox.get_index()#get_child_index(self)
 	parent_vbox.move_child(new_bar, my_index + 1)
+	new_bar.set_visible(true)
 
 	manager.reprioritize_skills(parent_vbox)
 
@@ -322,101 +389,78 @@ func _find_parent_manager() -> TacticsManagerUI:
 
 
 func populate_from_skill(in_skill: Skill) -> void:
-	if !in_skill:
+	if in_skill == null:
 		return
-	
 	current_skill = in_skill
-	
 	set_skill_name(in_skill.skill_name)
-	
-	set_skill_conditions_from(in_skill)
-	
-	if in_skill.skill_type == in_skill.SkillCategory.ACTIVE:
+	_set_slots_from_skill_blueprints(in_skill)
+	if in_skill.skill_category == Skill.SkillCategory.ACTIVE:
 		set_self_as_active()
-	elif  in_skill.skill_type == in_skill.SkillCategory.PASSIVE:
+	elif in_skill.skill_category == Skill.SkillCategory.PASSIVE:
 		set_self_as_passive()
-	
 	_apply_disabled_visuals(in_skill.is_disabled)
 
-func set_skill_conditions_from(in_skill: Skill) -> void:
-	# Build default UI order: external conditions first, then preferences.
-	var external_conditions: Array[SkillCondition] = in_skill.get_external_skill_conditions()
-	var target_preferences: Array[TargetPreference] = in_skill.get_target_preferences()
 
-	current_conditions.clear()
-	current_conditions.append_array(external_conditions)
-	current_conditions.append_array(target_preferences)
+func _set_slots_from_skill_blueprints(in_skill: Skill) -> void:
+	var external_bps: Array[ConditionBlueprint] = in_skill.get_external_condition_blueprints()
+	var preference_bps: Array[ConditionBlueprint] = in_skill.get_target_preference_blueprints()
 
-	# Fill any number of Label children under conditions_rhbox.
-	var label_controls: Array[Control] = conditions_rhbox._get_visible_children()
-	var label_count: int = label_controls.size()
-	var fill_count: int = min(current_conditions.size(), label_count)
+	current_condition_blueprints.clear()
+	current_condition_blueprints.append_array(external_bps)
+	current_condition_blueprints.append_array(preference_bps)
 
-	for label_index in range(label_count):
-		var label_node := label_controls[label_index] as Label
-		if label_node == null:
+	var slots_array: Array[Node] = conditions_rhbox.get_children()
+	var fill_index: int = 0
+	for i in range(slots_array.size()):
+		var slot: ConditionSlot = slots_array[i] as ConditionSlot
+		if slot == null:
 			continue
-
-		# Assign condition or leave blank.
-		var cond_at_index: SkillCondition = null
-		if label_index < fill_count:
-			cond_at_index = current_conditions[label_index]
-
-		# Store the object on the node so reordering the nodes reorders the data too.
-		label_node.set_meta("skill_condition", cond_at_index)
-
-		if cond_at_index != null:
-			label_node.set_text(Utilities.get_condition_display_name(cond_at_index))
+		if fill_index < current_condition_blueprints.size():
+			slot._set_blueprint(current_condition_blueprints[fill_index])
+			fill_index += 1
+			slot.on_input_handled.connect(set_input_handled)
 		else:
-			label_node.set_text("Blank")
+			slot._clear_slot()
+			slot.on_input_handled.connect(set_input_handled)
 
 
+func set_is_slot_hovered(in_set: bool) -> void:
+	
+	is_slot_hovered = in_set
+
+func set_input_handled() -> void:
+	input_handled = true
 
 
 func _on_conditions_reordered(_from_index: int, _to_index: int) -> void:
-	# Recompute the unified order from the current node order.
-	var new_order: Array[SkillCondition] = []
-	var label_controls: Array[Control] = conditions_rhbox._get_visible_children()
-
-	for child_control in label_controls:
-		var label_node := child_control as Label
-		if label_node == null:
-			continue
-		if label_node.has_meta("skill_condition"):
-			var cond_obj: SkillCondition = label_node.get_meta("skill_condition") as SkillCondition
-			# We only keep non-null conditions (blank labels are placeholders).
-			if cond_obj is SkillCondition and cond_obj != null:
-				new_order.append(cond_obj)
-
-	current_conditions.assign(new_order)
-
-	# Push the split order back into the Skill so logic respects UI order.
+	_rebuild_blueprint_order_from_slots()
 	_apply_conditions_order_to_skill()
-
-	# Optional: refresh texts (not strictly required because labels keep their own text).
-	#_refresh_condition_labels()
 
 
 func _apply_conditions_order_to_skill() -> void:
 	if current_skill == null:
 		return
 
-	var new_external: Array[SkillCondition] = []
-	var new_preferences: Array[TargetPreference] = []
+	var new_external_bps: Array[ConditionBlueprint] = []
+	var new_preference_bps: Array[ConditionBlueprint] = []
 
-	for cond in current_conditions:
-		if cond == null:
+	for bp in current_condition_blueprints:
+		if bp == null:
 			continue
-		# TargetPreference extends SkillCondition, so check that first.
-		if cond is TargetPreference:
-			new_preferences.append(cond as TargetPreference)
+		if _is_preference_blueprint(bp):
+			new_preference_bps.append(bp)
 		else:
-			new_external.append(cond)
+			new_external_bps.append(bp)
 
-	# Write back to the skill so runtime logic uses the new order.
-	current_skill.external_skill_conditions = new_external
-	current_skill.target_preferences = new_preferences
+	current_skill.external_condition_blueprints = new_external_bps
+	current_skill.target_preference_blueprints = new_preference_bps
+	
+	on_tactics_skill_bar_update.emit()
 
+func _is_preference_blueprint(bp: ConditionBlueprint) -> bool:
+	if bp == null or bp.prototype == null:
+		return false
+	return (bp.prototype as TargetPreference) != null
 
 
 func _ensure_strike_through_node() -> void:
@@ -444,7 +488,7 @@ func _layout_strike_through() -> void:
 	if strike_through_rect == null or skill_name_label == null:
 		return
 
-	var thickness: int = strike_through_thickness_px
+	var thickness: float = float(strike_through_thickness_px)
 	var inset: int = strike_through_inset_px
 	var bias: int = strike_through_vertical_bias_px
 

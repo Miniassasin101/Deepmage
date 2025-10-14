@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" load_steps=2 format=3 uid="uid://l6idr3fqaowe"]
+
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="1_83i07"]
+
+[resource]
+script = ExtResource("1_83i07")
+metadata/_custom_type_script = "uid://c7jeogqcvfh22"

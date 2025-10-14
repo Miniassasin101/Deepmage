@@ -10,7 +10,8 @@ extends PanelContainer
 @export_group("")
 @export var active_skills_rvbox: ReorderableVBox
 @export var passive_skills_rvbox: ReorderableVBox
-@export var library_vbox: VBoxContainer
+@export var skill_library_vbox: VBoxContainer
+@export var conditions_library_ui: ConditionsLibraryUI
 
 
 @export_category("Settings")
@@ -112,11 +113,15 @@ func setup_skills_container(in_unit: Unit, in_skill_cont: ReorderableVBox) -> vo
 		active_skills_rvbox.add_child(new_skillbar)
 		new_skillbar.populate_from_skill(a_skill)
 		new_skillbar.set_priority_num(iteration_num)
+		
+		new_skillbar.on_tactics_skill_bar_update.connect(on_tactics_skill_bar_update)
+		
 		iteration_num += 1
 
 
 
-
+func on_tactics_skill_bar_update() -> void:
+	reprioritize_skills(active_skills_rvbox)
 
 
 func clear_all_skills() -> void:
@@ -134,7 +139,7 @@ func clear_all_skills() -> void:
 
 # Skill Library Functions:
 func _populate_skill_library() -> void:
-	if library_vbox == null:
+	if skill_library_vbox == null:
 		return
 	_clear_library()
 
@@ -150,15 +155,15 @@ func _populate_skill_library() -> void:
 		if lib_skill == null:
 			continue
 		var lib_bar: LibrarySkillBar = library_skill_bar_prefab.instantiate() as LibrarySkillBar
-		library_vbox.add_child(lib_bar)
+		skill_library_vbox.add_child(lib_bar)
 		lib_bar.populate_from_skill(lib_skill)
 		if not lib_bar.on_add_to_tactics.is_connected(_on_library_add_skill):
 			lib_bar.on_add_to_tactics.connect(_on_library_add_skill)
 
 func _clear_library() -> void:
-	if library_vbox == null:
+	if skill_library_vbox == null:
 		return
-	for lib_child in library_vbox.get_children():
+	for lib_child in skill_library_vbox.get_children():
 		lib_child.queue_free()
 
 func _on_library_add_skill(skill_from_library: Skill) -> void:
@@ -202,5 +207,7 @@ func _spawn_tactics_bar_for_skill(in_skill: Skill, target_rvbox: ReorderableVBox
 	# Set priority label immediately (end of list for now)
 	var new_index: int = target_rvbox.get_child_count()
 	new_skillbar.set_priority_num(new_index)
+	
+	new_skillbar.on_tactics_skill_bar_update.connect(on_tactics_skill_bar_update)
 
 	return new_skillbar

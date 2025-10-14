@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://crn3p160ndo4c" path="res://addons/ReorderableContainer/reorderable_hbox.gd" id="1_dmaep"]
 [ext_resource type="Script" uid="uid://dkromkfvkvfgs" path="res://Deepmage/Core/Scripts/UI/TacticsSkillBar.gd" id="1_syp6n"]
+[ext_resource type="PackedScene" uid="uid://42ic7pxe3du5" path="res://Deepmage/Core/Prefabs/UI/ConditionsUIPrefabs/ConditionSlot.tscn" id="3_0kxyp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dmaep"]
 bg_color = Color(0.22, 0.245, 0.25, 0.5411765)
@@ -71,12 +72,8 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 shadow_offset = Vector2(-1, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_syp6n"]
-font_size = 12
-outline_size = 3
-outline_color = Color(0, 0, 0, 1)
-
 [node name="TacticsSkillBar" type="PanelContainer" node_paths=PackedStringArray("priority_number_label", "skill_name_label", "conditions_rhbox")]
+size_flags_horizontal = 0
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_dmaep")
 script = ExtResource("1_syp6n")
@@ -90,11 +87,13 @@ gray_style_box = SubResource("StyleBoxFlat_iylcu")
 [node name="MarginContainer2" type="MarginContainer" parent="."]
 layout_mode = 2
 theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 12
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/HBoxContainer"]
 custom_minimum_size = Vector2(180, 0)
@@ -128,47 +127,19 @@ text_overrun_behavior = 1
 
 [node name="ConditionsRHBox" type="Container" parent="MarginContainer2/HBoxContainer"]
 process_mode = 1
-custom_minimum_size = Vector2(416, 0)
+custom_minimum_size = Vector2(509, 0)
 layout_mode = 2
 mouse_filter = 0
 script = ExtResource("1_dmaep")
-separation = 20
 metadata/_custom_type_script = "uid://crn3p160ndo4c"
 
-[node name="ConditionLabel" type="Label" parent="MarginContainer2/HBoxContainer/ConditionsRHBox"]
-custom_minimum_size = Vector2(89, 0)
+[node name="ConditionSlot" parent="MarginContainer2/HBoxContainer/ConditionsRHBox" instance=ExtResource("3_0kxyp")]
 layout_mode = 2
-text = "Condition 1"
-label_settings = SubResource("LabelSettings_syp6n")
-horizontal_alignment = 1
-vertical_alignment = 1
-text_overrun_behavior = 1
 
-[node name="ConditionLabel2" type="Label" parent="MarginContainer2/HBoxContainer/ConditionsRHBox"]
-custom_minimum_size = Vector2(89, 0)
+[node name="ConditionSlot2" parent="MarginContainer2/HBoxContainer/ConditionsRHBox" instance=ExtResource("3_0kxyp")]
 layout_mode = 2
-text = "Condition 2"
-label_settings = SubResource("LabelSettings_syp6n")
-horizontal_alignment = 1
-vertical_alignment = 1
-text_overrun_behavior = 1
 
-[node name="ConditionLabel3" type="Label" parent="MarginContainer2/HBoxContainer/ConditionsRHBox"]
-custom_minimum_size = Vector2(89, 0)
+[node name="ConditionSlot3" parent="MarginContainer2/HBoxContainer/ConditionsRHBox" instance=ExtResource("3_0kxyp")]
 layout_mode = 2
-text = "Condition 3"
-label_settings = SubResource("LabelSettings_syp6n")
-horizontal_alignment = 1
-vertical_alignment = 1
-text_overrun_behavior = 1
-
-[node name="ConditionLabel4" type="Label" parent="MarginContainer2/HBoxContainer/ConditionsRHBox"]
-custom_minimum_size = Vector2(89, 0)
-layout_mode = 2
-text = "Condition 4"
-label_settings = SubResource("LabelSettings_syp6n")
-horizontal_alignment = 1
-vertical_alignment = 1
-text_overrun_behavior = 1
 
 [connection signal="sort_children" from="MarginContainer2/HBoxContainer/ConditionsRHBox" to="MarginContainer2/HBoxContainer/ConditionsRHBox" method="_on_sort_children"]

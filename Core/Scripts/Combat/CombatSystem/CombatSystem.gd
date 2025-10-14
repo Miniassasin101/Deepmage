@@ -5,7 +5,10 @@ extends Node
 @export var combat_debug_enabled: bool = false
 @export var skill_trigger_system: SkillTriggerSystem = null
 
+@export_category("Libraries")
 @export var skill_library: SkillLibrary = null
+
+@export var condition_library: ConditionLibrary = null
 
 var current_combat_event_data: CombatEventData = null
 
@@ -50,7 +53,7 @@ func declare_attack(action: AttackAction, attacker: Unit, defender: Unit) -> voi
 
 
 	# 2) Resolve using Gubat Banwa steps
-	_resolve_attack_gubat_banwa(action, attacker, defender)
+	await _resolve_attack_gubat_banwa(action, attacker, defender)
 
 	
 	if current_combat_event_data.reaction:
@@ -267,7 +270,7 @@ func _process_single_violence_die(
 
 
 
-func _compute_die_result_modifier(_action: AttackAction, attacker: Unit, defender: Unit) -> int:
+func _compute_die_result_modifier(_action: AttackAction, _attacker: Unit, _defender: Unit) -> int:
 	var net_modifier: int = 0
 
 	# Example toggles:
@@ -375,3 +378,6 @@ func _debug_dump_current_event() -> void:
 
 func get_skill_library() -> SkillLibrary:
 	return skill_library
+
+func get_condition_library() -> ConditionLibrary:
+	return condition_library

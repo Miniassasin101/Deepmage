@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="ConditionLibrary" load_steps=21 format=3 uid="uid://cucaqplnm0re3"]
+
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="1_0vmlo"]
+[ext_resource type="Script" uid="uid://c7oc2x8aqmo4r" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/ConditionLibrary.gd" id="2_3bymk"]
+[ext_resource type="Resource" uid="uid://d2sv84vr8osw2" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/HealthBlueprints/HighestHPPercentPreference.tres" id="2_aog5h"]
+[ext_resource type="Resource" uid="uid://1vvrbfka8foo" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/HealthBlueprints/IsFullHealthConditionBlueprint.tres" id="2_h3vr5"]
+[ext_resource type="Resource" uid="uid://e0ellcnvoih6" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/HealthBlueprints/IsNotFullHealthConditionBlueprint.tres" id="3_xmt6x"]
+[ext_resource type="Resource" uid="uid://bbcrgyyn1a5wf" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/HealthBlueprints/IsSelfFullHealthConditionBlueprint.tres" id="4_aog5h"]
+[ext_resource type="Resource" uid="uid://pra7x3o5wfkj" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/HealthBlueprints/IsSelfNotFullHealthConditionBlueprint.tres" id="5_wns1k"]
+[ext_resource type="Resource" uid="uid://bbq3mnqde65jw" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/HealthBlueprints/LowestHPPreference.tres" id="7_wns1k"]
+[ext_resource type="Resource" uid="uid://c2xjm2t5uhwi7" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/FactionBlueprints/IsAllyConditionBlueprint.tres" id="8_vya38"]
+[ext_resource type="Resource" uid="uid://dhlquh6l821lo" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/FactionBlueprints/IsEnemyConditionBlueprint.tres" id="8_xujlo"]
+[ext_resource type="Resource" uid="uid://bnge3hb1eluew" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/FactionBlueprints/IsNotSelfConditionBlueprint.tres" id="10_8y5fo"]
+[ext_resource type="Resource" uid="uid://r5lprlr10s3s" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/FactionBlueprints/IsSelfConditionBlueprint.tres" id="11_a5fim"]
+[ext_resource type="Resource" uid="uid://b00in3e5co0pj" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/FactionBlueprints/IsSelfOrAllyConditionBlueprint.tres" id="12_eaass"]
+[ext_resource type="Resource" uid="uid://i8sl83myrhfj" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/RangeBlueprints/IsAnyEnemyAdjacentConditionBlueprint.tres" id="13_oh5sb"]
+[ext_resource type="Resource" uid="uid://413acopct387" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/RangeBlueprints/IsUnitInMeleeRangeConditionBlueprint.tres" id="14_lrdjd"]
+[ext_resource type="Resource" uid="uid://0pbr51goj8fi" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/RangeBlueprints/IsUnitInRange4ConditionBlueprint.tres" id="15_2u0af"]
+[ext_resource type="Resource" uid="uid://clw635qo5dybp" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/RangeBlueprints/IsUnitInRange6ConditionBlueprint.tres" id="16_qfa85"]
+[ext_resource type="Resource" uid="uid://capwovi6ciusr" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/RangeBlueprints/IsUnitInRange8ConditionBlueprint.tres" id="17_aeip8"]
+[ext_resource type="Resource" uid="uid://bnd6x4e2l6ddg" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/RangeBlueprints/IsUnitInRange10ConditionBlueprint.tres" id="18_0d1qk"]
+[ext_resource type="Resource" uid="uid://bsf8xg4v5jq0s" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/RangeBlueprints/IsUnitInRange20ConditionBlueprint.tres" id="19_tsgp4"]
+
+[resource]
+script = ExtResource("2_3bymk")
+blueprints = Array[ExtResource("1_0vmlo")]([ExtResource("2_h3vr5"), ExtResource("3_xmt6x"), ExtResource("4_aog5h"), ExtResource("5_wns1k"), ExtResource("2_aog5h"), ExtResource("7_wns1k"), ExtResource("8_xujlo"), ExtResource("8_vya38"), ExtResource("11_a5fim"), ExtResource("12_eaass"), ExtResource("10_8y5fo"), ExtResource("13_oh5sb"), ExtResource("14_lrdjd"), ExtResource("15_2u0af"), ExtResource("16_qfa85"), ExtResource("17_aeip8"), ExtResource("18_0d1qk"), ExtResource("19_tsgp4")])
+metadata/_custom_type_script = "uid://c7oc2x8aqmo4r"

@@ -31,6 +31,20 @@ signal on_add_to_tactics(skill_to_add: Skill)
 @export var hover_in_duration_seconds: float = 0.12
 @export var hover_out_duration_seconds: float = 0.18
 
+@export_category("Highlight Settings")
+@export var highlight_container: PanelContainer
+@export var style_box_unhighlighted_texture: StyleBoxFlat = null
+@export var style_box_highlighted_texture: StyleBoxFlat = null
+@export var style_box_selected_texture: StyleBoxFlat = null
+
+var is_selected: bool = false
+
+var is_highlighted: bool = false
+
+var is_hovered: bool = false
+
+
+
 var current_skill: Skill = null
 
 
@@ -161,3 +175,41 @@ func _get_style_for_category(cat_value: int) -> StyleBoxFlat:
 		return fallback_box
 	else:
 		return picked
+
+
+
+func set_highlight(turn_highlight_on: bool) -> void:
+	if is_selected:
+		return
+	
+	if turn_highlight_on:
+		highlight_container.add_theme_stylebox_override("panel", style_box_highlighted_texture)
+		is_highlighted = true
+	else:
+		highlight_container.add_theme_stylebox_override("panel", style_box_unhighlighted_texture)
+		is_highlighted = false
+
+
+func set_selected(in_is_selected: bool) -> void:
+	if !in_is_selected:
+		is_selected = false
+		set_highlight(is_hovered)
+	else:
+		is_selected = true
+		is_highlighted = false
+		highlight_container.add_theme_stylebox_override("panel", style_box_selected_texture)
+
+
+func _on_mouse_entered() -> void:
+
+	is_hovered = true
+	
+	set_highlight(true)
+
+
+
+
+
+func _on_mouse_exited() -> void:
+	if !is_selected:
+		set_highlight(false)

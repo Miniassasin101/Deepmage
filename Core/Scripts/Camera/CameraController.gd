@@ -62,6 +62,12 @@ func _physics_process(delta: float):
 	if hovered_control != null:
 		if Console.is_visible():
 			return
+		if UnitCharacterSheetUI.instance.is_open:
+			var rect2: Rect2 = UnitCharacterSheetUI.instance.tactics_manager_ui.conditions_library_ui.get_global_rect()
+			var mouse_pos: Vector2 = MouseController.instance.mouse_position
+			if rect2.has_point(mouse_pos):
+				return
+
 		
 
 	

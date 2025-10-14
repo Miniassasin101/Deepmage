@@ -1,0 +1,80 @@
+[gd_resource type="Resource" script_class="Skill" load_steps=23 format=3 uid="uid://ov11t88e15s8"]
+
+[ext_resource type="Resource" uid="uid://uwibxof05smc" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BallThrowPackage.tres" id="1_w5420"]
+[ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="2_2np5c"]
+[ext_resource type="Script" uid="uid://dfqq4lgq8fr27" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="3_xsioy"]
+[ext_resource type="PackedScene" uid="uid://kybquhg07l5i" path="res://Deepmage/Core/Prefabs/VFX/TestBall.tscn" id="4_jaikv"]
+[ext_resource type="Script" uid="uid://nqjg83o6epyn" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/RangedAttackAction.gd" id="5_04rh4"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="6_speyu"]
+[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="7_fptwh"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="8_tuxkn"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="8_w5420"]
+[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="9_4ga0s"]
+[ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="10_abvf0"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="11_hv623"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="12_kqudy"]
+
+[sub_resource type="Resource" id="Resource_gi5u1"]
+script = ExtResource("2_2np5c")
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_n7lae"]
+script = ExtResource("3_xsioy")
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_1qm4u"]
+script = ExtResource("2_2np5c")
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_jyvkj"]
+script = ExtResource("3_xsioy")
+duration = 0.0
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_2qrjt"]
+script = ExtResource("2_2np5c")
+shake_time = 0.3
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_rtscm"]
+script = ExtResource("3_xsioy")
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_05afn"]
+script = ExtResource("5_04rh4")
+projectile_speed = 40.0
+carrier_arc_height = 1.0
+animation_package = ExtResource("1_w5420")
+hit_anim_effect = SubResource("Resource_2qrjt")
+graze_anim_effect = SubResource("Resource_1qm4u")
+block_anim_effect = SubResource("Resource_gi5u1")
+hit_stop_effect = SubResource("Resource_rtscm")
+graze_stop_effect = SubResource("Resource_jyvkj")
+block_stop_effect = SubResource("Resource_n7lae")
+attack_range = 100.0
+prowess_attribute = "martial"
+defense_attribute = "parry"
+base_damage = 6
+action_name = "Throw Ball"
+selection_types = Array[ExtResource("6_speyu")]([ExtResource("7_fptwh")])
+tags = Array[String](["melee", "attack"])
+metadata/_custom_type_script = "uid://nqjg83o6epyn"
+
+[sub_resource type="Resource" id="Resource_nhirw"]
+script = ExtResource("9_4ga0s")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_jvs1f"]
+script = ExtResource("10_abvf0")
+range_var = 10.0
+metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
+
+[resource]
+resource_name = "ThrowSkillResource"
+script = ExtResource("11_hv623")
+skill_name = "Throw"
+action = SubResource("Resource_05afn")
+internal_skill_conditions = Array[ExtResource("8_tuxkn")]([SubResource("Resource_nhirw"), SubResource("Resource_jvs1f")])
+trait_1 = "Ranged (10)"
+tags = Array[String](["ranged"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

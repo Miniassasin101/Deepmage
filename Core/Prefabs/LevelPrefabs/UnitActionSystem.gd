@@ -139,13 +139,18 @@ func try_handle_unit_selection(do_action_check: bool = false) -> bool:
 		if check_can_activate_action_on_unit(unit):
 			return false
 	
-	#if unit.turn_state != Unit.TurnState.TURN_STARTED:
-	#	return false
 	
 	if unit == TurnSystem.instance.selected_unit:
 		return false
 	
 	set_selected_unit(unit)
+	
+	var char_sheet_ui: UnitCharacterSheetUI = UnitCharacterSheetUI.instance
+	
+	
+	if char_sheet_ui.is_open:
+		char_sheet_ui._populate_from_unit(unit)
+		
 	
 	return true
 

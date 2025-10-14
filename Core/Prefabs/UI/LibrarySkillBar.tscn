@@ -1,8 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://d2tvg6j8l70gh"]
+[gd_scene load_steps=13 format=3 uid="uid://d2tvg6j8l70gh"]
 
 [ext_resource type="Script" uid="uid://c3yg3brnykql0" path="res://Deepmage/Core/Scripts/UI/LibrarySkillBar.gd" id="1_c4rvn"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_il0hb"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7l1yy"]
 bg_color = Color(0.16319999, 0.16716667, 0.17, 0.5411765)
 border_width_left = 1
 border_width_top = 1
@@ -77,6 +77,19 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 shadow_offset = Vector2(-1, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jb8bk"]
+bg_color = Color(0.36479998, 0.37366667, 0.38, 0.62352943)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 2
+border_width_bottom = 1
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_size = 1
+shadow_offset = Vector2(-1, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gf4fw"]
 bg_color = Color(0.69, 0.09659999, 0.1262701, 0.8117647)
 border_width_left = 3
@@ -95,17 +108,16 @@ outline_size = 1
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
 
-[node name="LibrarySkillBar" type="PanelContainer" node_paths=PackedStringArray("category_label", "skill_name_label", "type_trait_hbox", "skill_name_panel_container", "type_label", "trait_label_1", "trait_label_2", "trait_label_3")]
+[node name="LibrarySkillBar" type="PanelContainer" node_paths=PackedStringArray("category_label", "skill_name_label", "type_trait_hbox", "skill_name_panel_container", "type_label", "trait_label_1", "trait_label_2", "trait_label_3", "highlight_container")]
 size_flags_horizontal = 0
 mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_il0hb")
+theme_override_styles/panel = SubResource("StyleBoxFlat_7l1yy")
 script = ExtResource("1_c4rvn")
 category_label = NodePath("MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/CategoryLabel")
 skill_name_label = NodePath("MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/SkillNamePanelContainer/SkillNameLabel")
 type_trait_hbox = NodePath("MarginContainer/HBoxContainer/TypeTraitHBox")
 skill_name_panel_container = NodePath("MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/SkillNamePanelContainer")
 type_label = NodePath("MarginContainer/HBoxContainer/TypeTraitHBox/TypeLabel")
-hide_not_filled_traits = false
 trait_label_1 = NodePath("MarginContainer/HBoxContainer/TypeTraitHBox/TraitLabel1")
 trait_label_2 = NodePath("MarginContainer/HBoxContainer/TypeTraitHBox/TraitLabel2")
 trait_label_3 = NodePath("MarginContainer/HBoxContainer/TypeTraitHBox/TraitLabel3")
@@ -116,6 +128,10 @@ gray_label_settings = SubResource("LabelSettings_gf4fw")
 red_style_box = SubResource("StyleBoxFlat_xgimi")
 blue_style_box = SubResource("StyleBoxFlat_c4rvn")
 gray_style_box = SubResource("StyleBoxFlat_7xl6c")
+highlight_container = NodePath(".")
+style_box_unhighlighted_texture = SubResource("StyleBoxFlat_7l1yy")
+style_box_highlighted_texture = SubResource("StyleBoxFlat_jb8bk")
+style_box_selected_texture = SubResource("StyleBoxFlat_7l1yy")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -165,11 +181,11 @@ vertical_alignment = 1
 process_mode = 1
 layout_mode = 2
 size_flags_horizontal = 0
-mouse_filter = 0
 
 [node name="TypeLabel" type="Label" parent="MarginContainer/HBoxContainer/TypeTraitHBox"]
 custom_minimum_size = Vector2(72.275, 0)
 layout_mode = 2
+mouse_filter = 1
 text = "Support"
 label_settings = SubResource("LabelSettings_l7pw0")
 horizontal_alignment = 1
@@ -179,6 +195,7 @@ text_overrun_behavior = 1
 [node name="TraitLabel1" type="Label" parent="MarginContainer/HBoxContainer/TypeTraitHBox"]
 custom_minimum_size = Vector2(105, 0)
 layout_mode = 2
+mouse_filter = 1
 text = "Trait 1"
 label_settings = SubResource("LabelSettings_27dc7")
 horizontal_alignment = 1
@@ -188,6 +205,7 @@ text_overrun_behavior = 1
 [node name="TraitLabel2" type="Label" parent="MarginContainer/HBoxContainer/TypeTraitHBox"]
 custom_minimum_size = Vector2(105, 0)
 layout_mode = 2
+mouse_filter = 1
 text = "Trait 2"
 label_settings = SubResource("LabelSettings_27dc7")
 horizontal_alignment = 1
@@ -197,10 +215,13 @@ text_overrun_behavior = 1
 [node name="TraitLabel3" type="Label" parent="MarginContainer/HBoxContainer/TypeTraitHBox"]
 custom_minimum_size = Vector2(105, 0)
 layout_mode = 2
+mouse_filter = 1
 text = "Trait 3"
 label_settings = SubResource("LabelSettings_27dc7")
 horizontal_alignment = 1
 vertical_alignment = 1
 text_overrun_behavior = 1
 
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="sort_children" from="MarginContainer/HBoxContainer/TypeTraitHBox" to="MarginContainer/HBoxContainer/TypeTraitHBox" method="_on_sort_children"]

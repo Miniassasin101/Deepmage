@@ -54,7 +54,15 @@ extends Control
 var is_open: bool = false
 var last_unit: Unit = null
 
+static var instance: UnitCharacterSheetUI = null
+
+
 func _ready() -> void:
+	if instance != null:
+		push_error("There's more than one UnitCharacterSheetUI! - " + str(instance))
+		queue_free()
+		return
+	instance = self
 	visible = false
 	SignalBus.open_character_sheet.connect(_on_open_character_sheet)
 	close_button.pressed.connect(_on_close_button_pressed)

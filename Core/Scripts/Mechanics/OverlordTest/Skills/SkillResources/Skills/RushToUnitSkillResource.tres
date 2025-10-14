@@ -1,26 +1,28 @@
-[gd_resource type="Resource" script_class="Skill" load_steps=9 format=3 uid="uid://ceu3eynl7qehx"]
+[gd_resource type="Resource" script_class="Skill" load_steps=10 format=3 uid="uid://ceu3eynl7qehx"]
 
 [ext_resource type="Resource" uid="uid://8vem57wbteya" path="res://Deepmage/Core/Resources/ActionResources/RushToUnitActionResource.tres" id="1_qs42l"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="2_7omu2"]
-[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="3_g0jvq"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_qs42l"]
 [ext_resource type="Script" uid="uid://daykqau0okf7v" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitOutsideRangeSkillCondition.gd" id="4_h182v"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="5_j3s1b"]
+[ext_resource type="Script" uid="uid://c6hp21lncudiw" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsNotSelfSkillCondition.gd" id="5_qs42l"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="6_wnjc1"]
-
-[sub_resource type="Resource" id="Resource_bkr81"]
-script = ExtResource("3_g0jvq")
-metadata/_custom_type_script = "uid://2nsctaj2mk50"
 
 [sub_resource type="Resource" id="Resource_sb21c"]
 script = ExtResource("4_h182v")
+range_var = 2.1
 metadata/_custom_type_script = "uid://daykqau0okf7v"
 
+[sub_resource type="Resource" id="Resource_7omu2"]
+script = ExtResource("5_qs42l")
+metadata/_custom_type_script = "uid://c6hp21lncudiw"
+
 [resource]
-resource_name = "RushToEnemySkillResource"
+resource_name = "RushToUnitSkillResource"
 script = ExtResource("5_j3s1b")
-skill_name = "Rush To Enemy"
+skill_name = "Rush To Unit"
 action = ExtResource("1_qs42l")
 skill_type = 1
-internal_skill_conditions = Array[ExtResource("2_7omu2")]([SubResource("Resource_bkr81"), SubResource("Resource_sb21c")])
-is_disabled = null
+internal_skill_conditions = Array[ExtResource("2_7omu2")]([SubResource("Resource_sb21c"), SubResource("Resource_7omu2")])
+trait_1 = "Movement"
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

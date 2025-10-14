@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" load_steps=4 format=3 uid="uid://r5lprlr10s3s"]
+
+[ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="1_llava"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_bqol0"]
+
+[sub_resource type="Resource" id="Resource_bqol0"]
+script = ExtResource("1_llava")
+metadata/_custom_type_script = "uid://clbt58mwsvag8"
+
+[resource]
+script = ExtResource("2_bqol0")
+display_name = "Is Self"
+category_name = "Faction"
+prototype = SubResource("Resource_bqol0")
+metadata/_custom_type_script = "uid://c7jeogqcvfh22"

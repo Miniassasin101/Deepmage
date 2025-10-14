@@ -59,6 +59,8 @@ func get_first_valid_active_skill() -> Skill:
 	
 	var active_skills_list: Array[Skill] = current_tactic.active_skills
 	for candidate_skill in active_skills_list:
+		if candidate_skill.unit == null:
+			candidate_skill.set_unit(unit)
 		priority_num += 1
 		if candidate_skill.can_activate_skill():
 			valid_skill = candidate_skill

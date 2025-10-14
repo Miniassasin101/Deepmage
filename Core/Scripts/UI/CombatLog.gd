@@ -29,12 +29,13 @@ var logs: Array[Label] = []
 var logs_to_add: Array[Label] = []
 var logs_to_clear: Array[Label] = []
 
-static var instance: CombatLog = null
-
 var are_logs_queued_to_add: bool = false
 var are_logs_queued_to_clear: bool = false
 
 var shrunk: bool = false
+
+
+static var instance: CombatLog = null
 
 
 func _ready() -> void:
@@ -101,12 +102,14 @@ func toggle_log() -> void:
 
 func open() -> void:
 	button.toggle_button_selected(false)
+
 	slide_panel_container.open()
 
 
 func close() -> void:
 	button.toggle_button_selected(true)
 	slide_panel_container.close()
+
 
 
 func clear_log(clear_one_only: bool = false) -> void:
