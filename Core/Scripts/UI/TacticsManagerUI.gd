@@ -50,8 +50,8 @@ func reprioritize_skills(skills_rvbox: ReorderableVBox) -> void:
 			if curr_skill:
 				sorted_skills.append(curr_skill)
 	
-	if !sorted_skills.is_empty():
-		populate_unit_from_tactics_ui(sorted_skills)
+	#if !sorted_skills.is_empty():
+	populate_unit_from_tactics_ui(sorted_skills)
 
 
 func populate_unit_from_tactics_ui(resorted_skills: Array[Skill]) -> void:
@@ -70,7 +70,7 @@ func populate_from_unit(in_unit: Unit) -> void:
 	set_tactics_header(in_unit.ui_name)
 	
 	clear_all_skills()
-	
+
 	setup_skills_container(in_unit, active_skills_rvbox)
 	#setup_skills_container(in_unit, passive_skills_rvbox)
 	
@@ -109,7 +109,8 @@ func setup_skills_container(in_unit: Unit, in_skill_cont: ReorderableVBox) -> vo
 		var new_skillbar: TacticsSkillBar = tactics_skill_bar_prefab.instantiate() as TacticsSkillBar
 		
 		new_skillbar.max_conditions_count = max_conditions_count
-		
+		if a_skill.skill_name == "Ball Throw":
+			pass
 		active_skills_rvbox.add_child(new_skillbar)
 		new_skillbar.populate_from_skill(a_skill)
 		new_skillbar.set_priority_num(iteration_num)
@@ -117,6 +118,9 @@ func setup_skills_container(in_unit: Unit, in_skill_cont: ReorderableVBox) -> vo
 		new_skillbar.on_tactics_skill_bar_update.connect(on_tactics_skill_bar_update)
 		
 		iteration_num += 1
+		
+		if iteration_num >= 10:
+			break
 
 
 
@@ -134,6 +138,8 @@ func clear_all_skills() -> void:
 	
 	for child in passive_skills_rvbox.get_children():
 		child.queue_free()
+	
+	
 
 
 

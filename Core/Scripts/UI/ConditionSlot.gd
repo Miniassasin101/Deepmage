@@ -74,13 +74,19 @@ func _set_blueprint(new_blueprint: ConditionBlueprint) -> void:
 	current_blueprint = new_blueprint
 	if title_label != null:
 		title_label.text = new_blueprint.display_name
-	condition_changed.emit(slot_index, new_blueprint)
+	on_condition_changed.call_deferred(new_blueprint)
+	#on_condition_changed(new_blueprint)
 
 func _clear_slot() -> void:
 	current_blueprint = null
 	if title_label != null:
 		title_label.text = "Blank"
-	condition_changed.emit(slot_index, null)
+	on_condition_changed.call_deferred()
+	#on_condition_changed(null)
+
+# NOTE: if not call deferred can lead to changing of values mid setup
+func on_condition_changed(new_blueprint: ConditionBlueprint = null) -> void:
+	condition_changed.emit(slot_index, new_blueprint)
 
 # ----------------------------
 # Context actions

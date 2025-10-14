@@ -84,7 +84,7 @@ func open_character_sheet(in_unit: Unit = null, tab_index: int = 0) -> void:
 	# Grab the unit under the mouse or whichever unit you want
 
 	var hovered_unit: Unit = mouse_controller.get_current_hovered_unit() if !in_unit else in_unit
-		#pathfinding.pathfinding_grid_system.get_grid_position(result)
+
 	if hovered_unit:
 		# Emit your signal passing in the unit reference
 		_on_open_character_sheet(hovered_unit, tab_index)
