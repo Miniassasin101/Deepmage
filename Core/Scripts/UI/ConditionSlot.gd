@@ -36,7 +36,7 @@ func _process(_delta: float) -> void:
 			set_hovered(inside_now)
 
 # ----------------------------
-# Drag & drop (note: exact names!)
+# Drag & drop (note: use "_" or engine wont call!)
 # ----------------------------
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	var dict: Dictionary = data as Dictionary
@@ -82,7 +82,7 @@ func _clear_slot() -> void:
 	if title_label != null:
 		title_label.text = "Blank"
 	on_condition_changed.call_deferred()
-	#on_condition_changed(null)
+
 
 # NOTE: if not call deferred can lead to changing of values mid setup
 func on_condition_changed(new_blueprint: ConditionBlueprint = null) -> void:

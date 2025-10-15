@@ -158,18 +158,7 @@ func _make_or_fetch_projectile() -> Node3D:
 	_owned_projectile = true
 	return n
 
-func _launch_projectile_after_dep(delay_sec: float) -> void:
-	if _carrier == null:
-		return
-	# place at start immediately (carrier handles that), then activate after delay
-	if delay_sec <= 0.0:
-		_carrier.activate()
-	else:
-		var t: SceneTreeTimer = unit.get_tree().create_timer(delay_sec)
-		await t.timeout
-		# if action got canceled and cleaned up meanwhile, guard:
-		if _carrier != null and is_instance_valid(_carrier):
-			_carrier.activate()
+
 
 func _launch_projectile_after(delay_sec: float) -> void:
 	if _carrier == null:

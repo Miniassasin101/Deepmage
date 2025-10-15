@@ -1,6 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://dvy3w41iuhqe1"]
+[gd_scene load_steps=7 format=3 uid="uid://dvy3w41iuhqe1"]
 
 [ext_resource type="Script" uid="uid://cc1h70ulwghaf" path="res://Deepmage/Core/Prefabs/UI/ConditionsUIPrefabs/ConditionCategoryBar.gd" id="1_q55ry"]
+[ext_resource type="StyleBox" uid="uid://bke4dqop88370" path="res://Deepmage/Core/Art/StyleBoxes/CategoryConditionBarUnhighlightedStylebox.tres" id="2_qcynm"]
+[ext_resource type="StyleBox" uid="uid://bd21d1dy13vxc" path="res://Deepmage/Core/Art/StyleBoxes/CategoryConditionBarHighlightedStylebox.tres" id="3_1pcwd"]
+[ext_resource type="StyleBox" uid="uid://dpvcxugkbtqrj" path="res://Deepmage/Core/Art/StyleBoxes/CategoryConditionBarSelectedStylebox.tres" id="4_1r5ce"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lhytx"]
 content_margin_left = 0.0
@@ -14,25 +17,6 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 8
 corner_detail = 5
 
-[sub_resource type="Gradient" id="Gradient_xmfyn"]
-offsets = PackedFloat32Array(0, 0.2, 0.8, 1)
-colors = PackedColorArray(0, 0, 0, 0, 0.9882353, 0.9882353, 0.9882353, 0.92941177, 0.99, 0.99, 0.99, 0.92941177, 0, 0, 0, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_umswr"]
-gradient = SubResource("Gradient_xmfyn")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q55ry"]
-texture = SubResource("GradientTexture2D_umswr")
-modulate_color = Color(0.10240001, 0.59519994, 0.64, 0)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s3vxn"]
-texture = SubResource("GradientTexture2D_umswr")
-modulate_color = Color(0.17359999, 0.5827999, 0.62, 0.6313726)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tqron"]
-texture = SubResource("GradientTexture2D_umswr")
-modulate_color = Color(0.10240001, 0.59519994, 0.64, 1)
-
 [sub_resource type="LabelSettings" id="LabelSettings_srs5m"]
 font_size = 14
 outline_color = Color(0, 0, 0, 1)
@@ -43,15 +27,15 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_lhytx")
 script = ExtResource("1_q55ry")
 category_label = NodePath("PanelContainer/Label")
 highlight_container = NodePath("PanelContainer")
-style_box_unhighlighted_texture = SubResource("StyleBoxTexture_q55ry")
-style_box_highlighted_texture = SubResource("StyleBoxTexture_s3vxn")
-style_box_selected_texture = SubResource("StyleBoxTexture_tqron")
+style_box_unhighlighted_texture = ExtResource("2_qcynm")
+style_box_highlighted_texture = ExtResource("3_1pcwd")
+style_box_selected_texture = ExtResource("4_1r5ce")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 clip_contents = true
 layout_mode = 2
 mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBoxTexture_tqron")
+theme_override_styles/panel = ExtResource("4_1r5ce")
 
 [node name="Label" type="Label" parent="PanelContainer"]
 layout_mode = 2

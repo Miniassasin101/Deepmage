@@ -1,56 +1,82 @@
+## [b]Class:[/b] LibrarySkillBar
+## [i]A row in the Skill Library panel representing a single [Class Skill]. Shows category/type/traits, colors itself by category, and lets the user add the skill to tactics with a right-click.[/i]
+##
+## [b]Responsibilities[/b][br]
+## • Displays a skill’s name, category, type, and up to three trait labels.[br]
+## • Colors the name panel and labels using category/type-themed [Class LabelSettings] and [Class StyleBoxFlat]s.[br]
+## • Emits [signal LibrarySkillBar.on_add_to_tactics] when the user requests to add the skill to the current tactics.[br]
+##
+## [b]Usage[/b][br]
+## • Call [method populate_from_skill] with a [Class Skill] to bind data and update visuals.[br]
+## • Right-click on the row (no modifiers) to emit [signal on_add_to_tactics] with this row’s skill.[br]
+##
+## [b]Notes[/b][br]
+## • Logic unchanged; documentation comments only.[br]
+## • Trait labels can be auto-hidden if they look like placeholders (see [member hide_not_filled_traits]).
+
 class_name LibrarySkillBar
 extends PanelContainer
 
+## Emitted when the user asks to add this skill to the Tactics list (via right-click, no modifiers).
+## Payload: ([param skill_to_add]: [Class Skill])
 signal on_add_to_tactics(skill_to_add: Skill)
 
 @export_category("References")
+## Label showing the skill’s category (e.g., Active/Passive).
 @export var category_label: Label
+## Label showing the skill’s display name.
 @export var skill_name_label: Label
+## Container for type/trait labels.
 @export var type_trait_hbox: HBoxContainer
+## Colored panel behind the skill name (style changes by category).
 @export var skill_name_panel_container: PanelContainer
+## Label showing the skill’s type (e.g., Attack/Support/Sabotage).
 @export var type_label: Label
 
 @export_group("Trait Labels")
+## If [code]true[/code], hides empty/placeholder trait labels automatically.
 @export var hide_not_filled_traits: bool = true
+## Optional trait labels (up to three).
 @export var trait_label_1: Label
 @export var trait_label_2: Label
 @export var trait_label_3: Label
 
 @export_group("LabelSettings")
+## Label settings applied to category/type labels (red/blue/purple/gray themes).
 @export var red_label_settings: LabelSettings
 @export var blue_label_settings: LabelSettings
 @export var purple_label_settings: LabelSettings
 @export var gray_label_settings: LabelSettings
 
 @export_group("Styleboxes")
+## Styleboxes used to color the name panel by category.
 @export var red_style_box: StyleBoxFlat
 @export var blue_style_box: StyleBoxFlat
 @export var gray_style_box: StyleBoxFlat
 
 @export_category("Hover Settings")
+## Hover tween durations (not used directly here; kept for parity with other rows).
 @export var hover_in_duration_seconds: float = 0.12
 @export var hover_out_duration_seconds: float = 0.18
 
 @export_category("Highlight Settings")
+## Optional highlight frame container and its styleboxes for hover/selection feedback.
 @export var highlight_container: PanelContainer
 @export var style_box_unhighlighted_texture: StyleBoxFlat = null
 @export var style_box_highlighted_texture: StyleBoxFlat = null
 @export var style_box_selected_texture: StyleBoxFlat = null
 
+## Selection/hover state flags used by highlight helpers.
 var is_selected: bool = false
-
 var is_highlighted: bool = false
-
 var is_hovered: bool = false
 
-
-
+## The [Class Skill] this row is currently representing (set by [method populate_from_skill]).
 var current_skill: Skill = null
 
 
-
-
 # --- Helpers to turn enum value -> readable text ---
+## Utility: look up the name for [param enum_value] inside [param enum_dict] (like [member Skill.SkillCategory]).
 static func _enum_name_from_dictionary(enum_dict: Dictionary, enum_value: int) -> String:
 	var key_variant: Variant = enum_dict.find_key(enum_value)
 	if key_variant == null:
@@ -59,21 +85,22 @@ static func _enum_name_from_dictionary(enum_dict: Dictionary, enum_value: int) -
 	key_text = key_text.replace("_", " ")
 	return key_text.capitalize()
 
+## Human-readable text for [Class Skill].SkillCategory.
 static func _category_text(cat_value: int) -> String:
 	return _enum_name_from_dictionary(Skill.SkillCategory, cat_value)
 
+## Human-readable text for [Class Skill].SkillType.
 static func _type_text(type_value: int) -> String:
 	return _enum_name_from_dictionary(Skill.SkillType, type_value)
 
 
-
-
-
-
+## [b]Engine callback:[/b] hooks the row-level GUI input for right-click actions.
 func _ready() -> void:
 	if not gui_input.is_connected(_on_library_gui_input):
 		gui_input.connect(_on_library_gui_input)
 
+
+## Populate UI from a [Class Skill]: labels, themed colors, and trait texts.
 func populate_from_skill(in_skill: Skill) -> void:
 	if in_skill == null:
 		return
@@ -125,6 +152,8 @@ func populate_from_skill(in_skill: Skill) -> void:
 	_set_trait_text(trait_label_2, in_skill.trait_2)
 	_set_trait_text(trait_label_3, in_skill.trait_3)
 
+
+## Helper to assign/hide a trait label based on [param trait_value].
 func _set_trait_text(trait_label: Label, trait_value: String) -> void:
 	if trait_label == null:
 		return
@@ -136,6 +165,8 @@ func _set_trait_text(trait_label: Label, trait_value: String) -> void:
 		trait_label.visible = true
 		trait_label.text = cleaned
 
+
+## Row-level input: Right-Click (no Shift/Ctrl) emits [signal on_add_to_tactics] with [member current_skill].
 func _on_library_gui_input(input_event: InputEvent) -> void:
 	var mouse_button: InputEventMouseButton = input_event as InputEventMouseButton
 	if mouse_button == null:
@@ -151,6 +182,8 @@ func _on_library_gui_input(input_event: InputEvent) -> void:
 	if is_right_click and not shift_down and not ctrl_down and current_skill != null:
 		on_add_to_tactics.emit(current_skill)
 
+
+## Picks a category-appropriate [Class StyleBoxFlat] for the name panel. Returns a fallback if none set.
 func _get_style_for_category(cat_value: int) -> StyleBoxFlat:
 	var picked: StyleBoxFlat = null
 	if int(cat_value) == int(Skill.SkillCategory.ACTIVE):
@@ -177,7 +210,7 @@ func _get_style_for_category(cat_value: int) -> StyleBoxFlat:
 		return picked
 
 
-
+## Turns highlight on/off unless the row is currently [member is_selected].
 func set_highlight(turn_highlight_on: bool) -> void:
 	if is_selected:
 		return
@@ -190,6 +223,7 @@ func set_highlight(turn_highlight_on: bool) -> void:
 		is_highlighted = false
 
 
+## Sets this row’s [member is_selected] state and applies the selected highlight stylebox.
 func set_selected(in_is_selected: bool) -> void:
 	if !in_is_selected:
 		is_selected = false
@@ -200,16 +234,13 @@ func set_selected(in_is_selected: bool) -> void:
 		highlight_container.add_theme_stylebox_override("panel", style_box_selected_texture)
 
 
+## Pointer entered: set [member is_hovered] and apply highlight.
 func _on_mouse_entered() -> void:
-
 	is_hovered = true
-	
 	set_highlight(true)
 
 
-
-
-
+## Pointer exited: if not selected, remove highlight.
 func _on_mouse_exited() -> void:
 	if !is_selected:
 		set_highlight(false)
