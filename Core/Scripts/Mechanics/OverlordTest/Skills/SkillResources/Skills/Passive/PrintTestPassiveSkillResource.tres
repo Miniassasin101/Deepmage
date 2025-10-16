@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Skill" load_steps=6 format=3 uid="uid://cjuqlljs4k7uy"]
+
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="1_s0s84"]
+[ext_resource type="Resource" uid="uid://ddqim6sn7cqll" path="res://Deepmage/Core/Resources/ActionResources/SpawnTextOnUnitActionResource.tres" id="1_tu3qw"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="2_tu3qw"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="3_h0qb3"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="4_qrdt5"]
+
+[resource]
+resource_name = "PrintTestSkillResource"
+script = ExtResource("3_h0qb3")
+skill_name = "Print Test"
+action = ExtResource("1_tu3qw")
+skill_category = 1
+skill_type = 1
+skill_trigger = 2
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

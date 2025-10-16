@@ -7,12 +7,14 @@ extends Action
 # (No exported variables yet. Consider exposing a delay, fallback behavior, etc.)
 # TODO: Add configurable post-skill delay, and a toggle to skip delay when no skill.
 
+
 func start_action(target_package: TargetPackage = null) -> void:
 	# Entry point called by the action system.
 	super.start_action(target_package)
 
 	# Ask TacticsController for the first valid skill.
-	var chosen_skill: Skill = unit.tactics_controller.get_first_valid_active_skill()
+	var p_skill: Skill = target_package.get_skill()
+	var chosen_skill: Skill = unit.tactics_controller.get_first_valid_active_skill() if !p_skill else p_skill
 	var prio_num: int = unit.tactics_controller.get_skill_priority_num(chosen_skill)
 	
 	# If no valid skill exists, log and fail gracefully.

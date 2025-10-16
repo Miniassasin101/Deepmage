@@ -257,7 +257,7 @@ func _refresh_hover_targets_from(stylebox_source: StyleBoxFlat) -> void:
 func _ensure_hover_targets_ready() -> void:
 	if current_stylebox == null:
 		# Try to pull whatever is currently overridden on "panel"
-		var stylebox_from_theme := get_theme_stylebox("panel") as StyleBoxFlat
+		var stylebox_from_theme: StyleBoxFlat = get_theme_stylebox("panel") as StyleBoxFlat
 		current_stylebox = stylebox_from_theme
 	if current_stylebox != null and not hover_targets_ready:
 		_refresh_hover_targets_from(current_stylebox)
@@ -406,7 +406,7 @@ func _duplicate_self() -> void:
 	else:
 		new_bar.reparent(parent_vbox)
 
-	manager.reprioritize_skills(parent_vbox)
+	manager.reprioritize_skills()
 
 
 ## Removes this bar from the parent list and asks the manager to refresh priorities.
@@ -419,7 +419,7 @@ func _remove_self_from_tactic() -> void:
 	var manager: TacticsManagerUI = _find_parent_manager()
 	queue_free()
 	if manager != null:
-		manager.reprioritize_skills(parent_vbox)
+		manager.reprioritize_skills()
 
 ## Walks up the tree to find the owning [Class TacticsManagerUI].
 func _find_parent_manager() -> TacticsManagerUI:

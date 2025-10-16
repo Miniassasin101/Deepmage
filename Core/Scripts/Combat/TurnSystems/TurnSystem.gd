@@ -8,6 +8,11 @@ enum RoundPhase { AI_PLANNING, PLAYER_PLANNING, RESOLUTION, CLEANUP }
 @export var leader_system: Node          # optional: apply leader skills during planning
 @export var enemy_ai_system: Node        # optional: your AI planner
 @export var action_resolver: Node        # optional: centralized action execution/reactions
+@export var skill_trigger_system: SkillTriggerSystem
+@export_category("Chaining")
+@export var chain_depth_limit: int = 8
+var chain_group_stack: Array[ChainGroup] = []
+
 
 var round_number: int = 1
 var current_phase: int = RoundPhase.AI_PLANNING
@@ -17,6 +22,14 @@ var initiative_scores: Dictionary[Unit, int] = {}
 ## The tick value of the unit with the lowest score, usually the one up next.
 var lowest_initiative_score: int = 0
 var initiative_queue: Array[Unit] = []
+
+# Contains all the units that can no longer use passive skills until the next unit's turn
+var used_p_skill_this_turn: Array[Unit] = []
+
+# When a unit declares a skill but has not finished it they enter this stack.
+# Last unit in the stack/chain will use their skill before finally making it's way back to the turn unit
+var use_skill_stack: Array[Unit] = []
+
 var cycle_index: int = 0
 
 # Optional helpers to break early
@@ -28,6 +41,30 @@ var selected_unit: Unit = null
 var start_round_button_blocked: bool = false
 
 static var instance: TurnSystem = null
+
+
+
+class ChainGroup:
+	var trigger_phase: int
+	var source_skill: Skill
+	var source_user: Unit
+	var source_target: Unit
+	var reactors_in_order: Array[Unit] = []
+	var next_index: int = 0
+	var depth: int = 0
+
+	func _init(in_phase: int, in_skill: Skill, in_user: Unit, in_target: Unit, in_reactors: Array[Unit], in_depth: int) -> void:
+		trigger_phase = in_phase
+		source_skill = in_skill
+		source_user = in_user
+		source_target = in_target
+		reactors_in_order = in_reactors
+		depth = in_depth
+
+
+
+
+
 
 func _ready() -> void:
 	if instance != null:
@@ -140,7 +177,7 @@ func begin_round_resolution() -> void:
 	_enter_resolution_phase()
 
 
-
+# Round Resolution
 func _enter_resolution_phase() -> void:
 	current_phase = RoundPhase.RESOLUTION
 	cycle_index = 0
@@ -207,6 +244,8 @@ func _run_one_cycle() -> void:
 		if ap_now <= 0:
 			acting_unit.turn_state = Unit.TurnState.TURN_ENDED
 			continue
+		
+		used_p_skill_this_turn.clear()
 
 		# HOOK: turn-start (auras, stances, upkeep)
 		acting_unit.turn_state = Unit.TurnState.TURN_STARTED
@@ -293,6 +332,190 @@ func _resolve_action_and_reactions(user_unit: Unit, use_skill_action: Action, ct
 		# SkillTriggerSystem.instance.fire("BEFORE_HIT", {"user": user_unit, "ctx": ctx})
 		return true
 
+# Called by Skill.activate_skill BEFORE the Action runs.
+func declare_skill(declared_skill: Skill, target_unit: Unit) -> void:
+	
+	if declared_skill == null or target_unit == null:
+		push_error("No skill or target unit in declare_skill")
+		return
+	
+	
+	var user_unit: Unit = declared_skill.unit
+	if user_unit == null:
+		return
+	
+	
+	# Open Chain Group 1: BEFORE_SKILL_USED (i.e., "on declaration")
+	await _open_and_resolve_chain_group(
+		SkillTriggerSystem.TriggerPhase.BEFORE_SKILL_USED,
+		declared_skill, user_unit, target_unit, 0)
+
+
+func after_skill_used(used_skill: Skill, target_unit: Unit) -> void:
+	# Call this IMMEDIATELY AFTER the Action finishes (i.e., when the skill "ends").
+	if used_skill == null or target_unit == null:
+		return
+
+	var user_unit: Unit = used_skill.unit
+	if user_unit == null:
+		return
+
+	# Open another Chain Group 1: AFTER_SKILL_USED (i.e., "on skill end")
+	_open_and_resolve_chain_group(
+		SkillTriggerSystem.TriggerPhase.AFTER_SKILL_USED,
+		used_skill, user_unit, target_unit, 0)
+
+
+func _open_and_resolve_chain_group(trigger_phase: int, source_skill: Skill, source_user: Unit, source_target: Unit, current_depth: int) -> void:
+	if current_depth >= chain_depth_limit:
+		push_warning("Chain depth limit reached; aborting deeper reactions.")
+		return
+
+	# Ask SkillTriggerSystem which units can react and what passive they’ll use.
+	var reaction_context: Dictionary = {
+		"source_skill": source_skill,
+		"source_user": source_user,
+		"source_target": source_target,
+		"trigger_phase": trigger_phase
+	}
+
+	var mapping_units_to_skills: Dictionary = skill_trigger_system.get_chaining_units_with_context(reaction_context)
+	if mapping_units_to_skills.is_empty():
+		return
+
+	# Build initiative-ordered list of reactors.
+	var reactor_units: Array[Unit] = mapping_units_to_skills.keys()
+	reactor_units = _sort_units_by_initiative_desc(reactor_units)
+
+	var new_group: ChainGroup = ChainGroup.new(trigger_phase, source_skill, source_user, source_target, reactor_units, current_depth + 1)
+	chain_group_stack.push_back(new_group)
+	await _resolve_top_chain_group(mapping_units_to_skills)
+	chain_group_stack.pop_back()
+
+
+func _resolve_top_chain_group(mapping_units_to_skills: Dictionary) -> void:
+	if chain_group_stack.is_empty():
+		return
+
+	var active_group: ChainGroup = chain_group_stack[chain_group_stack.size() - 1]
+
+	while active_group.next_index < active_group.reactors_in_order.size():
+		var reactor_unit: Unit = active_group.reactors_in_order[active_group.next_index]
+
+		if !is_instance_valid(reactor_unit) or !reactor_unit.is_alive():
+			active_group.next_index += 1
+			continue
+		if used_p_skill_this_turn.has(reactor_unit):
+			active_group.next_index += 1
+			continue
+
+		var passive_skill: Skill = mapping_units_to_skills.get(reactor_unit, null)
+		if passive_skill == null:
+			active_group.next_index += 1
+			continue
+
+		# DECLARE passive → open nested BEFORE_SKILL_USED for the passive itself
+		await _declare_passive(passive_skill, reactor_unit, active_group)
+
+		# USE passive (spend PP here if your Action doesn’t)
+		await _use_passive(passive_skill, reactor_unit, active_group)
+
+		# END passive → open nested AFTER_SKILL_USED for the passive itself
+		await _end_passive(passive_skill, reactor_unit, active_group)
+
+		# Mark per-turn passive cap
+		#used_p_skill_this_turn.append(reactor_unit)
+
+		active_group.next_index += 1
+
+
+
+func _declare_passive(passive_skill: Skill, reactor_unit: Unit, parent_group: ChainGroup) -> void:
+	CombatLog.instance.add_log(reactor_unit.ui_name + " declares passive: " + passive_skill.skill_name)
+	used_p_skill_this_turn.append(reactor_unit)
+	await _open_and_resolve_chain_group(
+		SkillTriggerSystem.TriggerPhase.BEFORE_SKILL_USED,
+		passive_skill,
+		reactor_unit,
+		parent_group.source_target,
+		parent_group.depth
+	)
+
+func _use_passive(passive_skill: Skill, reactor_unit: Unit, parent_group: ChainGroup) -> void:
+	# Spend PP if not already handled by the Action
+	if passive_skill.skill_category == Skill.SkillCategory.PASSIVE:
+		var pp_attribute: Attribute = reactor_unit.get_attributes_container().get_attribute("passive_points")
+		if pp_attribute != null:
+			reactor_unit.get_attributes_container().change_attribute_current_value_by("passive_points", -passive_skill.skill_cost)
+
+	# Execute the Action behind this passive (if any)
+	if passive_skill.action != null:
+		#var fs_action: UseFirstSkillAction = passive_skill.unit.get_action_container().get_action_by_name("First Skill").duplicate() as UseFirstSkillAction
+		
+		var target_pkg: TargetPackage = TargetPackage.new()
+		var target_unit: Unit = passive_skill.get_random_valid_unit()
+		target_pkg.set_unit_target(target_unit)
+		target_pkg.set_skill(passive_skill)
+		
+		
+		#var temp_action: Action = reactor_unit.character_sheet.action_container.use_action(fs_action, target_pkg, true)
+		#await temp_action.on_action_ended
+
+		var run_action: Action = reactor_unit.character_sheet.action_container.use_action(passive_skill.action, target_pkg, true)
+		await run_action.on_action_ended
+
+	else:
+		await get_tree().create_timer(0.05).timeout
+		push_error("No action set in " + passive_skill.skill_name)
+
+func _end_passive(passive_skill: Skill, reactor_unit: Unit, parent_group: ChainGroup) -> void:
+	CombatLog.instance.add_log(reactor_unit.ui_name + " ends passive: " + passive_skill.skill_name)
+	await _open_and_resolve_chain_group(
+		SkillTriggerSystem.TriggerPhase.AFTER_SKILL_USED,
+		passive_skill,
+		reactor_unit,
+		parent_group.source_target,
+		parent_group.depth
+	)
+
+func _sort_units_by_initiative_desc(units_in: Array[Unit]) -> Array[Unit]:
+	var out_units: Array[Unit] = units_in.duplicate()
+	out_units.sort_custom(func(a: Unit, b: Unit) -> bool:
+		var a_init: int = a.get_attributes_container().get_attribute_current_value("initiative")
+		var b_init: int = b.get_attributes_container().get_attribute_current_value("initiative")
+		if a_init == b_init:
+			# Stable tie-breaker by unique name/id
+			return a.get_instance_id() < b.get_instance_id()
+		else:
+			return a_init > b_init
+	)
+	return out_units
+
+
+
+
+
+"""
+	var all_reactions_resolved: bool = false
+	var iter_num: int = 0
+	var chain_group: ChainGroup = ChainGroup.new()
+
+	while !all_reactions_resolved and iter_num <= 20:
+		iter_num += 1
+		var chaining_units: Dictionary[Unit, Skill] = skill_trigger_system.get_chaining_units(skill, skill_trigger_system.TriggerPhase.BEFORE_SKILL_USED)
+		if chaining_units.is_empty():
+			continue
+		
+		chain_group.chain_depth = iter_num
+		chain_group.s
+		
+		for key in chaining_units.keys():
+			var c_unit: Unit = key
+			var chained_skill: Skill = chaining_units[key]
+		
+
+	pass
+"""
 
 
 # ─────────────────────────────────────────────────────────────────────────────

@@ -49,11 +49,16 @@ func make_actions_unique() -> void:
 
 ## Attempts to use [param in_action] on [param target].[br]
 ## Returns the resolved action instance from this container (or [code]null[/code] if not found/invalid).
-func use_action(in_action: Action, target: Variant) -> Action:
+func use_action(in_action: Action, target: Variant, use_in_action: bool = false) -> Action:
 	if !in_action:
 		return
 	
-	var test_action: Action = get_action_by_name(in_action.action_name)
+	var test_action: Action = get_action_by_name(in_action.action_name) if !use_in_action else in_action#.duplicate(true)
+	
+	if use_in_action:
+		test_action.setup_action(self)
+	
+	
 	
 	if test_action:
 		var targ_pack: TargetPackage = Utilities.make_target_package(target)

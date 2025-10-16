@@ -5,6 +5,11 @@ extends Node
 @export var starting_tactic: Tactic = null
 @export var current_tactic: Tactic
 
+
+
+
+
+
 func _ready() -> void:
 	# Setup on combat start and also initialize locally.
 	SignalBus.on_combat_started.connect(setup)
@@ -72,6 +77,63 @@ func get_first_valid_active_skill() -> Skill:
 	return valid_skill
 	# TODO: Replace linear scan with priority ordering or scoring function.
 	# TODO: Add “selector” strategies (first-valid, best-target, highest-damage, utility).
+
+
+
+func get_first_valid_passive_skill_with_context(ctx: Dictionary) -> Skill:
+	if current_tactic == null:
+		push_error("No Current Tactic In TacticsController")
+		return null
+
+	var trigger_phase: int = ctx.get("trigger_phase", SkillTriggerSystem.TriggerPhase.NONE)
+	var valid_skill: Skill = null
+	var passive_skills_list: Array[Skill] = current_tactic.passive_skills
+	var priority_counter: int = 0
+
+	for candidate_skill in passive_skills_list:
+		if candidate_skill == null:
+			continue
+		if candidate_skill.unit == null:
+			candidate_skill.set_unit(unit)
+		priority_counter += 1
+
+		var can_trigger_now: bool = candidate_skill.can_trigger_passive_skill(trigger_phase, ctx)
+		if can_trigger_now:
+			valid_skill = candidate_skill
+			break
+
+	if valid_skill != null:
+		CombatLog.instance.add_log("Passive Reactor " + unit.ui_name + " → " + valid_skill.skill_name + "  Priority: " + str(priority_counter), true)
+
+	return valid_skill
+
+
+
+
+
+func get_first_valid_passive_skill(trigger_skill: Skill, trigger_phase: SkillTriggerSystem.TriggerPhase) -> Skill:
+	# Returns the first skill whose conditions allow activation.
+	if !current_tactic:
+		push_error("No Current Tactic In TacticsController")
+	var valid_skill: Skill = null
+	
+	var priority_num: int = 0
+	
+	var passive_skills_list: Array[Skill] = current_tactic.passive_skills
+	for candidate_skill in passive_skills_list:
+		if candidate_skill.unit == null:
+			candidate_skill.set_unit(unit)
+		priority_num += 1
+		if candidate_skill.can_activate_skill():
+			valid_skill = candidate_skill
+			break
+	
+	if valid_skill:
+		CombatLog.instance.add_log("Unit: " + unit.ui_name + "  Skill: " + valid_skill.skill_name + "  Priority: " + str(priority_num), true)
+
+	return valid_skill
+
+
 
 func get_skill_priority_num(in_skill: Skill) -> int:
 	var prio_num: int = 0

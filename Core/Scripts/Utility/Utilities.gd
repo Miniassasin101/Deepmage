@@ -7,6 +7,9 @@ const TEST_BALL = preload("res://Deepmage/Core/Prefabs/VFX/TestBall.tscn")
 
 const SKILL_CONDITION_SUFFIX: String = "SkillCondition"
 
+
+
+
 static var nav_y_offset: float = -0.156482
 
 static var nav_vector_offset: Vector3 = Vector3(0.0, -0.156482, 0.0)

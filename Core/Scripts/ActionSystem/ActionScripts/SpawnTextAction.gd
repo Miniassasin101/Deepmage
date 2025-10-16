@@ -13,6 +13,8 @@ extends Action
 func start_action(targ_pack: TargetPackage = null) -> void:
 	super.start_action(targ_pack)
 	Utilities.spawn_text_line(unit, spawn_text, text_color, scale)
+	
+	await unit.get_tree().create_timer(1.5).timeout
 	end_action()
 
 

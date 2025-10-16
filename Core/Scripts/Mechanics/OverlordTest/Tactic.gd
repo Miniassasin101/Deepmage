@@ -54,7 +54,7 @@ func get_valid_active_skills() -> Array[Skill]:
 
 func get_valid_passive_skills() -> Array[Skill]:
 	var ret_skills: Array[Skill] = []
-	for skill in active_skills:
+	for skill in passive_skills:
 		if skill:
 			ret_skills.append(skill)
 	return ret_skills

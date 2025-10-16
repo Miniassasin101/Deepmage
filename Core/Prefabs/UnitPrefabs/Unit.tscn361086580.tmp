@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://2h1a1e1r8hc2"]
+[gd_scene load_steps=41 format=3 uid="uid://2h1a1e1r8hc2"]
 
 [ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
 [ext_resource type="Script" uid="uid://byevnkq30m4mb" path="res://Deepmage/Core/Scripts/Units/Unit.gd" id="1_hq0j0"]
@@ -23,7 +23,6 @@
 [ext_resource type="Script" uid="uid://daykqau0okf7v" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitOutsideRangeSkillCondition.gd" id="11_52ex6"]
 [ext_resource type="Script" uid="uid://c6hp21lncudiw" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsNotSelfSkillCondition.gd" id="12_3f60d"]
 [ext_resource type="Script" uid="uid://bt62wkw6goum8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/TacticsController.gd" id="14_b3sv1"]
-[ext_resource type="Material" uid="uid://caeve0dltuafr" path="res://Deepmage/Core/Art/Materials/WhiteHitFXMaterial.tres" id="14_sne6a"]
 [ext_resource type="Script" uid="uid://bubf25btsnnfv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Tactic.gd" id="17_7o6ql"]
 
 [sub_resource type="Resource" id="Resource_eu7gh"]
@@ -180,34 +179,21 @@ metadata/_custom_type_script = "uid://bubf25btsnnfv"
 script = ExtResource("17_7o6ql")
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
-[node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual", "movement_controller", "animation_controller", "satellite_controller", "token_controller", "tactics_controller", "left_hand_socket", "right_hand_socket")]
+[node name="Unit" type="Node3D"]
 script = ExtResource("1_hq0j0")
-above_head_marker = NodePath("AboveHeadMarker")
-nav_agent = NodePath("NavigationAgent3D")
-capsule_body = NodePath("Rig/CapsuleBodyMeshInstance")
-capsule_visor = NodePath("Rig/CapsuleBodyMeshInstance/MeshInstance3D")
-selection_visual = NodePath("SelectionSquareRoot/GridSystemVisual")
-movement_controller = NodePath("MovementController")
-animation_controller = NodePath("AnimationController")
-satellite_controller = NodePath("SatelliteController")
-token_controller = NodePath("TokenController")
-tactics_controller = NodePath("TacticsController")
-left_hand_socket = NodePath("Rig/LeftHandMesh/LeftHandSocket")
-right_hand_socket = NodePath("Rig/RightHandMesh/RightHandSocket")
 character_sheet_packed_scene = ExtResource("2_sne6a")
 starting_tactic = SubResource("Resource_qyife")
-white_hit_flash_mat = ExtResource("14_sne6a")
 
 [node name="Rig" type="Node3D" parent="."]
 transform = Transform3D(0.852131, 0, 0, 0, 0.852131, 0, 0, 0, 0.852131, 0, 0, 0)
 
-[node name="CapsuleBodyMeshInstance" type="MeshInstance3D" parent="Rig"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Rig"]
 transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 1.014, 0)
 rotation_edit_mode = 1
 mesh = SubResource("CapsuleMesh_ohquw")
 surface_material_override/0 = ExtResource("1_cc6tg")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Rig/CapsuleBodyMeshInstance"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Rig/MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.423313, 0.411077)
 mesh = SubResource("BoxMesh_0qgfu")
 surface_material_override/0 = ExtResource("1_cc6tg")

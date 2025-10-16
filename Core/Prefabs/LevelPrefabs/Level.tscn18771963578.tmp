@@ -1,4 +1,4 @@
-[gd_scene load_steps=121 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=100 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
@@ -17,32 +17,20 @@
 [ext_resource type="Script" uid="uid://dgwgvxp80lmhb" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributesProfile.gd" id="11_6kl6n"]
 [ext_resource type="Script" uid="uid://brh8qmh2c4g8f" path="res://Deepmage/Core/Scripts/Combat/CombatSystem/CombatSystem.gd" id="11_g7q3m"]
 [ext_resource type="Script" uid="uid://1miy676tt71s" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UnitManager.gd" id="11_lf0eb"]
-[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="12_f2qps"]
 [ext_resource type="Script" uid="uid://xwiyhnl8erp1" path="res://Deepmage/Core/Scripts/Pathfinding/PathfindingSystem.gd" id="12_fnj5h"]
 [ext_resource type="PackedScene" uid="uid://2h1a1e1r8hc2" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.tscn" id="12_k2c3k"]
-[ext_resource type="Resource" uid="uid://cuudvrampevcg" path="res://Deepmage/Core/Resources/ActionResources/TestAttackActionResource.tres" id="13_iq36j"]
 [ext_resource type="Script" uid="uid://ian5eam30p0l" path="res://addons/curvemesh3d/curvemesh3d.gd" id="13_wbm0i"]
 [ext_resource type="Curve" uid="uid://b1kq6l63y7lb6" path="res://Deepmage/Core/MathPrefabs/Curves/Level.tres" id="14_calw8"]
 [ext_resource type="Texture2D" uid="uid://duu0wfs3dasnn" path="res://Deepmage/Core/Art/Textures/EnvironmentTextures/GroundTextures/PolygonPrototype_Texture_Grid_08.png" id="14_tflrs"]
-[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="14_v8epg"]
 [ext_resource type="Script" uid="uid://hbm8nks1et3p" path="res://Deepmage/Core/Scripts/UI/TurnSystemUI.gd" id="15_ex7fh"]
 [ext_resource type="Script" uid="uid://cby42fxiu4cv5" path="res://Deepmage/Core/Scripts/UI/ActionSystemUI.gd" id="15_j7436"]
-[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="15_k6sm3"]
 [ext_resource type="Script" uid="uid://dyngi1ipggvgb" path="res://Deepmage/Core/Scripts/UI/InitiativeQueueUI.gd" id="16_2uyvs"]
-[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="16_bvt28"]
 [ext_resource type="Script" uid="uid://cc6pcq4yohj7m" path="res://Deepmage/Core/Scripts/Projectile/PathBuilder3D.gd" id="16_dfmjn"]
 [ext_resource type="PackedScene" uid="uid://3p3xt0lymqsd" path="res://Deepmage/Core/Prefabs/UI/UnitStatsBar.tscn" id="16_ecsph"]
 [ext_resource type="Script" uid="uid://cjhhvf5ub04kj" path="res://Deepmage/Core/Scripts/UI/FPSLabel.gd" id="16_ex7fh"]
 [ext_resource type="PackedScene" uid="uid://psdfsrnutgxe" path="res://Deepmage/Core/Prefabs/UI/ActionButtonUI.tscn" id="16_tko1n"]
-[ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="17_23xud"]
-[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="18_hymmt"]
-[ext_resource type="Resource" uid="uid://8vem57wbteya" path="res://Deepmage/Core/Resources/ActionResources/RushToUnitActionResource.tres" id="19_v4iap"]
-[ext_resource type="Script" uid="uid://daykqau0okf7v" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitOutsideRangeSkillCondition.gd" id="20_8v6vh"]
-[ext_resource type="Script" uid="uid://c6hp21lncudiw" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsNotSelfSkillCondition.gd" id="21_11ubm"]
 [ext_resource type="PackedScene" uid="uid://cdifkxjoiv0eq" path="res://Deepmage/Core/Prefabs/UI/TopHPBar.tscn" id="21_xyav6"]
 [ext_resource type="PackedScene" uid="uid://cqqsm2gpif3dw" path="res://Deepmage/Core/Prefabs/UI/UnitCharacterSheet.tscn" id="22_gh8or"]
-[ext_resource type="Resource" uid="uid://ddqim6sn7cqll" path="res://Deepmage/Core/Resources/ActionResources/SpawnTextOnUnitActionResource.tres" id="22_sgxdm"]
-[ext_resource type="Script" uid="uid://bubf25btsnnfv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Tactic.gd" id="24_5lfvx"]
 [ext_resource type="Script" uid="uid://c1pcudui7e5qp" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillTriggerSystem.gd" id="26_qdwhh"]
 [ext_resource type="PackedScene" uid="uid://bt5idkoxachxk" path="res://Deepmage/Core/Prefabs/UI/CombatLog.tscn" id="27_2gnov"]
 [ext_resource type="Resource" uid="uid://dkeoolmv8jjeq" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/SkillLibraries/SkillLibraryResource.tres" id="42_5lfvx"]
@@ -313,65 +301,6 @@ resource_local_to_scene = true
 script = ExtResource("11_6kl6n")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_f3uqp"), SubResource("Resource_0fvkv"), SubResource("Resource_dpue3"), SubResource("Resource_mpmhl"), SubResource("Resource_yl67w"), SubResource("Resource_6odjx"), SubResource("Resource_lk7si"), SubResource("Resource_73fol"), SubResource("Resource_a4tjr"), SubResource("Resource_pwtg8"), SubResource("Resource_src6p"), SubResource("Resource_o8y13")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
-
-[sub_resource type="Resource" id="Resource_eu7gh"]
-script = ExtResource("16_bvt28")
-metadata/_custom_type_script = "uid://2nsctaj2mk50"
-
-[sub_resource type="Resource" id="Resource_7kb16"]
-script = ExtResource("17_23xud")
-range_var = 3.0
-metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
-
-[sub_resource type="Resource" id="Resource_6g8w4"]
-resource_name = "BashSkillResource"
-script = ExtResource("12_f2qps")
-skill_name = "Bash"
-action = ExtResource("13_iq36j")
-internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
-trait_1 = "Melee"
-description = Array[String](["Moves towards then Bashes a unit in range 5"])
-metadata/_custom_type_script = "uid://kpyou3fdk30c"
-
-[sub_resource type="Resource" id="Resource_ydutk"]
-script = ExtResource("16_bvt28")
-metadata/_custom_type_script = "uid://2nsctaj2mk50"
-
-[sub_resource type="Resource" id="Resource_sb21c"]
-script = ExtResource("20_8v6vh")
-range_var = 2.1
-metadata/_custom_type_script = "uid://daykqau0okf7v"
-
-[sub_resource type="Resource" id="Resource_7omu2"]
-script = ExtResource("21_11ubm")
-metadata/_custom_type_script = "uid://c6hp21lncudiw"
-
-[sub_resource type="Resource" id="Resource_idaqs"]
-resource_name = "RushToUnitSkillResource"
-script = ExtResource("12_f2qps")
-skill_name = "Rush To Unit"
-action = ExtResource("19_v4iap")
-skill_type = 1
-internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_sb21c"), SubResource("Resource_7omu2")])
-external_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_ydutk")])
-trait_1 = "Movement"
-metadata/_custom_type_script = "uid://kpyou3fdk30c"
-
-[sub_resource type="Resource" id="Resource_f2qps"]
-resource_name = "PrintTestSkillResource"
-script = ExtResource("12_f2qps")
-skill_name = "Print Test"
-action = ExtResource("22_sgxdm")
-skill_category = 1
-skill_type = 1
-skill_trigger = 2
-metadata/_custom_type_script = "uid://kpyou3fdk30c"
-
-[sub_resource type="Resource" id="Resource_jiskd"]
-script = ExtResource("24_5lfvx")
-active_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_6g8w4"), SubResource("Resource_idaqs")])
-passive_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_f2qps")])
-metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
 [sub_resource type="Resource" id="Resource_g2rko"]
 resource_local_to_scene = true
@@ -768,9 +697,6 @@ script = ExtResource("11_lf0eb")
 
 [node name="Azure" parent="UnitManager" instance=ExtResource("12_k2c3k")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8, 0, 0)
-ui_name = "Azure"
-is_enemy = true
-visor_color = Color(0, 0.55250007, 0.85, 1)
 
 [node name="CharacterSheet" parent="UnitManager/Azure" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
 unit = NodePath("..")
@@ -778,9 +704,6 @@ attributes_profile = SubResource("Resource_v8epg")
 
 [node name="Verdant" parent="UnitManager" instance=ExtResource("12_k2c3k")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.0376267, 0, 0)
-ui_name = "Verdant"
-is_enemy = true
-visor_color = Color(0, 0.54, 0.261, 1)
 
 [node name="CharacterSheet" parent="UnitManager/Verdant" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
 unit = NodePath("..")
@@ -788,9 +711,6 @@ attributes_profile = SubResource("Resource_rfnuq")
 
 [node name="Marigold" parent="UnitManager" instance=ExtResource("12_k2c3k")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 1.8972347)
-starting_tactic = SubResource("Resource_jiskd")
-ui_name = "Marigold"
-visor_color = Color(0.933872, 0.8713839, 3.85046e-07, 1)
 
 [node name="CharacterSheet" parent="UnitManager/Marigold" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
 unit = NodePath("..")
@@ -798,8 +718,6 @@ attributes_profile = SubResource("Resource_iq36j")
 
 [node name="Ruby" parent="UnitManager" instance=ExtResource("12_k2c3k")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, -2.076848)
-ui_name = "Ruby"
-visor_color = Color(1, 0.120000005, 0.120000005, 1)
 
 [node name="CharacterSheet" parent="UnitManager/Ruby" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
 unit = NodePath("..")

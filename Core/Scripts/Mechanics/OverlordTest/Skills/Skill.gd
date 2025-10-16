@@ -20,6 +20,8 @@ enum SkillType { ATTACK, SUPPORT, SABOTAGE, SPECIAL}
 
 @export var skill_type: SkillType = SkillType.ATTACK
 
+@export var skill_trigger: SkillTriggerSystem.TriggerPhase = SkillTriggerSystem.TriggerPhase.NONE
+
 ## How many active points or passive points need to be spent to activate this skill.
 @export var skill_cost: int = 1 # AP or PP cost
 
@@ -67,22 +69,35 @@ func set_unit(in_unit: Unit) -> void:
 
 
 func activate_skill() -> void:
-	# Acquire a random valid target unit (based on skill_conditions).
-	var random_unit: Unit = get_random_valid_unit()
-	if !random_unit:
-		# If none found, log and bail (keeps behavior unchanged).
-		push_error("No random unit in skills found")
+	var chosen_target: Unit = get_random_valid_unit()
+	if chosen_target == null:
+		# IMPORTANT: always end the skill so awaits can proceed
+		CombatLog.instance.add_log("No valid target for " + skill_name)
+		await unit.get_tree().create_timer(0.5).timeout
+		end_skill()
 		return
 
-	CombatLog.instance.add_log("Random Skill Unit: " + random_unit.ui_name)
+	CombatLog.instance.add_log("Random Skill Unit: " + chosen_target.ui_name)
+	
+	
+	if skill_category == SkillCategory.ACTIVE:
+	# Declare Skill goes here
+		await TurnSystem.instance.declare_skill(self, chosen_target)
+	else:
+		pass
 
 	# If the Skill is bound to an Action, invoke it via the owner's action container.
 	if action:
-		var temp_action: Action = unit.character_sheet.action_container.use_action(action, random_unit)
+		var temp_action: Action = unit.character_sheet.action_container.use_action(action, chosen_target)
 		await temp_action.on_action_ended
-
-	# Finish the skill lifecycle.
-	end_skill()
+	
+	# Declare Skill End goes here
+	if skill_category == SkillCategory.ACTIVE:
+		#pass
+		# Declare Skill goes here
+		await TurnSystem.instance.after_skill_used(self, chosen_target)
+		# Finish the skill lifecycle.
+		end_skill()
 	pass
 
 
@@ -143,11 +158,45 @@ func check_ap_pp() -> bool:
 	return true
 
 
+
+func can_trigger_passive_skill(t_phase: SkillTriggerSystem.TriggerPhase, ctx: Dictionary) -> bool:
+	if skill_category != SkillCategory.PASSIVE:
+		return false
+	if t_phase == SkillTriggerSystem.TriggerPhase.NONE:
+		return false
+	if t_phase != skill_trigger:
+		return false
+
+	# Enough PP?
+	var points_attribute: Attribute = unit.get_attributes_container().get_attribute("passive_points")
+	if points_attribute == null:
+		return false
+	var pp_now: int = points_attribute.get_current_modified_value()
+	if pp_now < skill_cost:
+		return false
+
+	# Optional: validate conditions using context’s source/target, if your conditions support it.
+	# If your conditions only evaluate Unit targets, keep existing check:
+	if !check_conditions_against_units():
+		return false
+
+	# You can also stash ctx on the skill or action if your Action needs it:
+	if action != null:
+		action.set_context(ctx)  # add a no-op setter on Action if needed
+
+	return true
+
+	
+
+
+
 # -----------------------------------------------------------------------------
 # Targeting helpers
 # -----------------------------------------------------------------------------
 ## Returns a random valid unit or null if none are available.
 func get_random_valid_unit() -> Unit:
+	if skill_category == SkillCategory.PASSIVE:
+		pass
 	var chosen_unit: Unit = null
 	var valid_units: Array[Unit] = get_all_valid_units()
 	chosen_unit = select_preferred_target(valid_units)
@@ -166,8 +215,9 @@ func select_preferred_target(valid_units: Array[Unit]) -> Unit:
 
 	var pool: Array[Unit] = valid_units.duplicate()
 
-	if target_preferences.size() > 0:
-		for pref in target_preferences:
+	if target_preference_blueprints.size() > 0:
+		for pref_b in target_preference_blueprints:
+			var pref: TargetPreference = pref_b.prototype
 			# Narrow only if more than one remains.
 			if pool.size() > 1 and pref:
 				var narrowed: Array[Unit] = pref.apply(self, pool)

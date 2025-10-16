@@ -12,6 +12,7 @@ var action_container: ActionContainer = null
 
 var unit: Unit = null
 
+var context: Dictionary = {}
 
 
 func try_activate(targ_pack: TargetPackage = null) -> void:
@@ -49,6 +50,9 @@ func end_reaction() -> void:
 	
 	pass
 
+func set_context(in_ctx: Dictionary) -> void:
+	context = in_ctx
+	
 
 @warning_ignore("unused_parameter")
 func can_activate_on_target(target_pack: TargetPackage) -> bool:

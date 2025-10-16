@@ -67,35 +67,53 @@ func _ready() -> void:
 ## Called when [member active_skills_rvbox] reorders a child; re-number priorities and mirror to the unit.
 ## [param _from_index] and [param _to_index] are provided by [Class ReorderableVBox].
 func on_active_skills_reordered(_from_index: int, _to_index: int) -> void:
-	reprioritize_skills(active_skills_rvbox)
+	reprioritize_skills()
 
 
 ## Walks visible children of a [Class ReorderableVBox], assigns sequential priorities (1..N)
 ## to each [Class TacticsSkillBar], collects their [Class Skill]s, and mirrors the new order to the unit.
 ## Uses project helper [method ReorderableVBox._get_visible_children].
-func reprioritize_skills(skills_rvbox: ReorderableVBox) -> void:
+func reprioritize_skills() -> void:
 	var iter_num: int = 1
-	var sorted_skills: Array[Skill] = []
+	var sorted_active_skills: Array[Skill] = []
+	var sorted_passive_skills: Array[Skill] = []
 	
-	for child in skills_rvbox._get_visible_children():
+	var active_rvbox: ReorderableVBox = active_skills_rvbox
+	var passive_rvbox: ReorderableVBox = passive_skills_rvbox
+	
+	
+	for child in active_rvbox._get_visible_children():
 		if child is TacticsSkillBar:
 			child.set_priority_num(iter_num)
 			iter_num += 1
 			var curr_skill: Skill = child.get_current_skill()
 			if curr_skill:
-				sorted_skills.append(curr_skill)
+				sorted_active_skills.append(curr_skill)
+	
+	# Reset iteration number for passive skills
+	iter_num = 1
+	
+	for child in passive_rvbox._get_visible_children():
+		if child is TacticsSkillBar:
+			child.set_priority_num(iter_num)
+			iter_num += 1
+			var curr_skill: Skill = child.get_current_skill()
+			if curr_skill:
+				sorted_passive_skills.append(curr_skill)
+	
+	
 	
 	#if !sorted_skills.is_empty():
-	populate_unit_from_tactics_ui(sorted_skills)
+	populate_unit_from_tactics_ui(sorted_active_skills, sorted_passive_skills)
 
 
 ## Writes the new prioritized skill array back into the unit’s tactic via [code]TacticsController[/code].
 ## [param resorted_skills] is the new order from the UI.
-func populate_unit_from_tactics_ui(resorted_skills: Array[Skill]) -> void:
+func populate_unit_from_tactics_ui(resorted_active_skills: Array[Skill], resorted_passive_skills: Array[Skill]) -> void:
 	if !current_unit:
 		return
 	
-	current_unit.tactics_controller.set_current_tactic_from_skills(resorted_skills, [])
+	current_unit.tactics_controller.set_current_tactic_from_skills(resorted_active_skills, resorted_passive_skills)
 
 
 ## Populates the entire panel from [param in_unit]: header, clears old bars, spawns bars for active skills.
@@ -109,8 +127,8 @@ func populate_from_unit(in_unit: Unit) -> void:
 	
 	clear_all_skills()
 
-	setup_skills_container(in_unit, active_skills_rvbox)
-	#setup_skills_container(in_unit, passive_skills_rvbox)
+	setup_skills_container(in_unit)
+
 
 
 ## Sets the title label at the top using the unit’s display name.
@@ -132,11 +150,12 @@ func setup_conditions_headers() -> void:
 		var new_header: Label = condition_header_template.duplicate()
 		new_header.set_text("Condition " + str(i + 1))
 		conditions_header_hbox.add_child(new_header)
+		
 
 
 ## Spawns [Class TacticsSkillBar] rows for the unit’s valid active skills into [param in_skill_cont].
 ## Bars are initialized with [member max_conditions_count] and wired for update callbacks.
-func setup_skills_container(in_unit: Unit, in_skill_cont: ReorderableVBox) -> void:
+func setup_skills_container(in_unit: Unit) -> void:
 	var unit_tactic: Tactic = in_unit.tactics_controller.current_tactic
 	var a_skills: Array[Skill] = unit_tactic.get_valid_active_skills()
 	var p_skills: Array[Skill] = unit_tactic.get_valid_passive_skills()
@@ -159,11 +178,34 @@ func setup_skills_container(in_unit: Unit, in_skill_cont: ReorderableVBox) -> vo
 		
 		if iteration_num >= 10:
 			break
+	
+	# Reset the iteration number for passive skills
+	iteration_num = 1
+	
+	for p_skill in p_skills:
+		var new_skillbar: TacticsSkillBar = tactics_skill_bar_prefab.instantiate() as TacticsSkillBar
+		
+		new_skillbar.max_conditions_count = max_conditions_count
+
+		passive_skills_rvbox.add_child(new_skillbar)
+		new_skillbar.populate_from_skill(p_skill)
+		new_skillbar.set_priority_num(iteration_num)
+		
+		new_skillbar.on_tactics_skill_bar_update.connect(on_tactics_skill_bar_update)
+		
+		iteration_num += 1
+		
+		if iteration_num >= 10:
+			break
+
+
+
 
 
 ## Called by child bars when their contents change; re-derives priority and mirrors to the unit.
 func on_tactics_skill_bar_update() -> void:
-	reprioritize_skills(active_skills_rvbox)
+	reprioritize_skills()
+
 
 
 ## Clears both active/passive containers and resets local caches. Removes all bar children.
@@ -236,7 +278,7 @@ func _on_library_add_skill(skill_from_library: Skill) -> void:
 		return
 
 	# Place at end of that container
-	reprioritize_skills(target_container)
+	reprioritize_skills()
 
 
 ## Chooses the correct target container for a given [param in_category].[br]
