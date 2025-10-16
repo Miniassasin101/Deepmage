@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://2krjuvoockbd"]
+
+[ext_resource type="Script" uid="uid://dyd3akl0uv8h2" path="res://Deepmage/Core/Scripts/UI/PassiveSkillActivationBar.gd" id="1_07435"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5w213"]
+bg_color = Color(0.0264, 0.0294, 0.03, 0.945098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.123200014, 0.67298007, 0.77, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_size = 5
+shadow_offset = Vector2(-1, 1)
+
+[node name="PassiveSkillActivationBar" type="PanelContainer" node_paths=PackedStringArray("label_node")]
+custom_minimum_size = Vector2(0, 28.935)
+theme_override_styles/panel = SubResource("StyleBoxFlat_5w213")
+script = ExtResource("1_07435")
+label_node = NodePath("MarginContainer/Label")
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+text = "Passive Skill Name"

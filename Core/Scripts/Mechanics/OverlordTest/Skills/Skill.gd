@@ -166,13 +166,12 @@ func can_trigger_passive_skill(t_phase: SkillTriggerSystem.TriggerPhase, ctx: Di
 		return false
 	if t_phase != skill_trigger:
 		return false
-
-	# Enough PP?
-	var points_attribute: Attribute = unit.get_attributes_container().get_attribute("passive_points")
-	if points_attribute == null:
+	
+	if is_disabled:
 		return false
-	var pp_now: int = points_attribute.get_current_modified_value()
-	if pp_now < skill_cost:
+	
+	# Enough PP?
+	if !check_ap_pp():
 		return false
 
 	# Optional: validate conditions using context’s source/target, if your conditions support it.

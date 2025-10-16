@@ -1,4 +1,4 @@
-[gd_scene load_steps=120 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=121 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
@@ -47,6 +47,7 @@
 [ext_resource type="PackedScene" uid="uid://bt5idkoxachxk" path="res://Deepmage/Core/Prefabs/UI/CombatLog.tscn" id="27_2gnov"]
 [ext_resource type="Resource" uid="uid://dkeoolmv8jjeq" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/SkillLibraries/SkillLibraryResource.tres" id="42_5lfvx"]
 [ext_resource type="Resource" uid="uid://cucaqplnm0re3" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/ConditionLibraries/ConditionLibraryResource.tres" id="43_f0670"]
+[ext_resource type="PackedScene" uid="uid://boy7waxi1xa2y" path="res://Deepmage/Core/Prefabs/UI/SkillActivationUI.tscn" id="48_iq36j"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_lf0eb"]
 vertices = PackedVector3Array(-18.6557, 0.5, -18.6557, -18.6557, 0.5, 44.8443, 18.5943, 0.5, 44.8443, 18.5943, 0.5, -18.6557)
@@ -1082,6 +1083,9 @@ pathfinding = NodePath("../../PathfindingSystem")
 max_logs = 40
 change_amount = 240
 test_num = 40.0
+
+[node name="SkillActivationUI" parent="UILayer" instance=ExtResource("48_iq36j")]
+mouse_filter = 2
 
 [connection signal="pressed" from="UILayer/TurnSystemUI/EndTurnContainer/MarginContainer/EndTurnButton" to="UILayer/TurnSystemUI" method="_on_end_turn_button_pressed"]
 
