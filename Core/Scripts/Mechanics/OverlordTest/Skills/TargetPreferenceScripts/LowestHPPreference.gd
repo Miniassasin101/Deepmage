@@ -11,7 +11,7 @@ func apply(_skill: Skill, candidates: Array[Unit]) -> Array[Unit]:
 	for candidate in candidates:
 		var cur: float = try_get_hp_current(candidate)
 		values[candidate] = cur
-		if cur >= 0.0 and cur < lowest:
+		if cur < lowest:
 			lowest = cur
 
 	if lowest == INF:

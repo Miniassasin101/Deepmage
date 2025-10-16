@@ -361,7 +361,7 @@ func after_skill_used(used_skill: Skill, target_unit: Unit) -> void:
 		return
 
 	# Open another Chain Group 1: AFTER_SKILL_USED (i.e., "on skill end")
-	_open_and_resolve_chain_group(
+	await _open_and_resolve_chain_group(
 		SkillTriggerSystem.TriggerPhase.AFTER_SKILL_USED,
 		used_skill, user_unit, target_unit, 0)
 
@@ -423,8 +423,7 @@ func _resolve_top_chain_group(mapping_units_to_skills: Dictionary) -> void:
 		# END passive → open nested AFTER_SKILL_USED for the passive itself
 		await _end_passive(passive_skill, reactor_unit, active_group)
 
-		# Mark per-turn passive cap
-		#used_p_skill_this_turn.append(reactor_unit)
+
 
 		active_group.next_index += 1
 
@@ -450,16 +449,12 @@ func _use_passive(passive_skill: Skill, reactor_unit: Unit, parent_group: ChainG
 
 	# Execute the Action behind this passive (if any)
 	if passive_skill.action != null:
-		#var fs_action: UseFirstSkillAction = passive_skill.unit.get_action_container().get_action_by_name("First Skill").duplicate() as UseFirstSkillAction
 		
 		var target_pkg: TargetPackage = TargetPackage.new()
 		var target_unit: Unit = passive_skill.get_random_valid_unit()
 		target_pkg.set_unit_target(target_unit)
 		target_pkg.set_skill(passive_skill)
 		
-		
-		#var temp_action: Action = reactor_unit.character_sheet.action_container.use_action(fs_action, target_pkg, true)
-		#await temp_action.on_action_ended
 
 		var run_action: Action = reactor_unit.character_sheet.action_container.use_action(passive_skill.action, target_pkg, true)
 		await run_action.on_action_ended

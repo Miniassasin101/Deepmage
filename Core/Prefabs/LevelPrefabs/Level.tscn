@@ -1,4 +1,4 @@
-[gd_scene load_steps=121 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=120 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
@@ -41,7 +41,7 @@
 [ext_resource type="Script" uid="uid://c6hp21lncudiw" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsNotSelfSkillCondition.gd" id="21_11ubm"]
 [ext_resource type="PackedScene" uid="uid://cdifkxjoiv0eq" path="res://Deepmage/Core/Prefabs/UI/TopHPBar.tscn" id="21_xyav6"]
 [ext_resource type="PackedScene" uid="uid://cqqsm2gpif3dw" path="res://Deepmage/Core/Prefabs/UI/UnitCharacterSheet.tscn" id="22_gh8or"]
-[ext_resource type="Resource" uid="uid://ddqim6sn7cqll" path="res://Deepmage/Core/Resources/ActionResources/SpawnTextOnUnitActionResource.tres" id="22_sgxdm"]
+[ext_resource type="Resource" uid="uid://dh3cjc2xijl6v" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PrintTestPassiveAfterSkillResource.tres" id="22_sgxdm"]
 [ext_resource type="Script" uid="uid://bubf25btsnnfv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Tactic.gd" id="24_5lfvx"]
 [ext_resource type="Script" uid="uid://c1pcudui7e5qp" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillTriggerSystem.gd" id="26_qdwhh"]
 [ext_resource type="PackedScene" uid="uid://bt5idkoxachxk" path="res://Deepmage/Core/Prefabs/UI/CombatLog.tscn" id="27_2gnov"]
@@ -357,20 +357,10 @@ external_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resourc
 trait_1 = "Movement"
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
-[sub_resource type="Resource" id="Resource_f2qps"]
-resource_name = "PrintTestSkillResource"
-script = ExtResource("12_f2qps")
-skill_name = "Print Test"
-action = ExtResource("22_sgxdm")
-skill_category = 1
-skill_type = 1
-skill_trigger = 2
-metadata/_custom_type_script = "uid://kpyou3fdk30c"
-
 [sub_resource type="Resource" id="Resource_jiskd"]
 script = ExtResource("24_5lfvx")
 active_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_6g8w4"), SubResource("Resource_idaqs")])
-passive_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_f2qps")])
+passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("22_sgxdm")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
 [sub_resource type="Resource" id="Resource_g2rko"]

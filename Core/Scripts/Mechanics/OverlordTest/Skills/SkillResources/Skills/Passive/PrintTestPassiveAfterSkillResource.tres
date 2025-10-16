@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="Skill" load_steps=8 format=3 uid="uid://dh3cjc2xijl6v"]
+
+[ext_resource type="Script" uid="uid://doahtvq8r205k" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextOnUnitAction.gd" id="1_n2nme"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_n2nme"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_x1llc"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="3_x1llc"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="4_2ykmg"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="5_u0rcg"]
+
+[sub_resource type="Resource" id="Resource_2ykmg"]
+script = ExtResource("1_n2nme")
+text_color = Color(0.941176, 0.972549, 1, 1)
+action_name = "Unit Text"
+metadata/_custom_type_script = "uid://doahtvq8r205k"
+
+[resource]
+resource_name = "PrintTestAfterSkillResource"
+script = ExtResource("4_2ykmg")
+skill_name = "Print Test After"
+action = SubResource("Resource_2ykmg")
+skill_category = 1
+skill_type = 1
+skill_trigger = 3
+metadata/_custom_type_script = "uid://kpyou3fdk30c"
