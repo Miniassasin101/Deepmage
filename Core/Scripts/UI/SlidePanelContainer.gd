@@ -20,7 +20,6 @@ var base_position: Vector2
 @export var drift_amount: Vector2 = Vector2(0.0, 0.0)
 @export var drift_duration: float = 2.0
 @export var reset_position: bool = false
-@export var parent_container: Control
 
 func _ready() -> void:
 	await get_tree().process_frame
@@ -69,8 +68,9 @@ func slide_out() -> void:
 	modulate = mod
 	mod.a = 1.0
 
-	position = base_position
 	var final_position := base_position + drift_amount
+	if position != final_position:
+		position = base_position
 
 	drift_tween = get_tree().create_tween()
 	drift_tween.tween_property(self, "modulate", mod, drift_duration)

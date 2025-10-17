@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://qv2shi7lqk4j" path="res://Deepmage/Core/Scripts/UI/CombatLog.gd" id="1_8it11"]
 [ext_resource type="Script" uid="uid://dvpjdgtyi23ow" path="res://Deepmage/Core/Scripts/UI/ActionButtonUI.gd" id="2_r0ne0"]
-[ext_resource type="Script" uid="uid://mu1wja7yiy3w" path="res://Deepmage/Core/Scripts/UI/SlideDown.gd" id="2_vileu"]
+[ext_resource type="Script" uid="uid://mu1wja7yiy3w" path="res://Deepmage/Core/Scripts/UI/SlidePanelContainer.gd" id="2_vileu"]
 [ext_resource type="StyleBox" uid="uid://dxf8kqkw1goiw" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarShadowedStyleBox.tres" id="3_vileu"]
 [ext_resource type="StyleBox" uid="uid://n31yek6n5pbc" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarFlatStyleBox.tres" id="4_02qfy"]
 

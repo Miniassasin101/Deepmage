@@ -1085,7 +1085,6 @@ change_amount = 240
 test_num = 40.0
 
 [node name="SkillActivationUI" parent="UILayer" instance=ExtResource("48_iq36j")]
-mouse_filter = 2
 
 [connection signal="pressed" from="UILayer/TurnSystemUI/EndTurnContainer/MarginContainer/EndTurnButton" to="UILayer/TurnSystemUI" method="_on_end_turn_button_pressed"]
 

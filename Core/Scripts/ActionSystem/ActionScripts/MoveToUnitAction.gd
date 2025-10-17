@@ -61,6 +61,9 @@ func _begin_movement(targ_unit: Unit) -> void:
 			curve_length = unit_speed
 		
 			CombatLog.instance.add_log("Movement Cut Short For: " + unit.ui_name + " Due to Speed being: " + str(unit_speed))
+		
+		
+		# User Visual Processing time
 	
 	
 	

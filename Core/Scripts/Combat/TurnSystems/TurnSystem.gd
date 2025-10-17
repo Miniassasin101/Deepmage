@@ -26,6 +26,8 @@ var initiative_queue: Array[Unit] = []
 # Contains all the units that can no longer use passive skills until the next unit's turn
 var used_p_skill_this_turn: Array[Unit] = []
 
+var passive_bars_by_key: Dictionary = {}   # key: String -> Array[PassiveSkillBar]
+
 # When a unit declares a skill but has not finished it they enter this stack.
 # Last unit in the stack/chain will use their skill before finally making it's way back to the turn unit
 var use_skill_stack: Array[Unit] = []
@@ -254,7 +256,6 @@ func _run_one_cycle() -> void:
 		Utilities.spawn_text_line(acting_unit, "Starting Turn")
 		set_selected_unit(acting_unit)
 
-
 		var action_executed: bool = await _try_execute_unit_action(acting_unit)
 
 		# HOOK: turn-end (regen, bleed ticks, stance decay)
@@ -320,6 +321,7 @@ func _try_execute_unit_action(acting_unit: Unit) -> bool:
 
 
 
+
 func _resolve_action_and_reactions(user_unit: Unit, use_skill_action: Action, ctx: Dictionary) -> bool:
 	# Reactions spend PP here (counters, guards, “before ally attacks”, “when targeted”, etc.)
 	# You can route to your CombatSystem or a new ActionResolver.
@@ -344,11 +346,15 @@ func declare_skill(declared_skill: Skill, target_unit: Unit) -> void:
 	if user_unit == null:
 		return
 	
+	# Make the skill activation bar appear
+	SkillActivationUI.instance.on_active_declared(declared_skill.skill_name)
+	
 	
 	# Open Chain Group 1: BEFORE_SKILL_USED (i.e., "on declaration")
 	await _open_and_resolve_chain_group(
 		SkillTriggerSystem.TriggerPhase.BEFORE_SKILL_USED,
 		declared_skill, user_unit, target_unit, 0)
+
 
 
 func after_skill_used(used_skill: Skill, target_unit: Unit) -> void:
@@ -359,11 +365,16 @@ func after_skill_used(used_skill: Skill, target_unit: Unit) -> void:
 	var user_unit: Unit = used_skill.unit
 	if user_unit == null:
 		return
+	
+	if SkillActivationUI.instance != null:
+		SkillActivationUI.instance.schedule_active_end(1.0)
+	
 
 	# Open another Chain Group 1: AFTER_SKILL_USED (i.e., "on skill end")
 	await _open_and_resolve_chain_group(
 		SkillTriggerSystem.TriggerPhase.AFTER_SKILL_USED,
 		used_skill, user_unit, target_unit, 0)
+
 
 
 func _open_and_resolve_chain_group(trigger_phase: int, source_skill: Skill, source_user: Unit, source_target: Unit, current_depth: int) -> void:
@@ -391,6 +402,7 @@ func _open_and_resolve_chain_group(trigger_phase: int, source_skill: Skill, sour
 	chain_group_stack.push_back(new_group)
 	await _resolve_top_chain_group(mapping_units_to_skills)
 	chain_group_stack.pop_back()
+
 
 
 func _resolve_top_chain_group(mapping_units_to_skills: Dictionary) -> void:
@@ -424,7 +436,6 @@ func _resolve_top_chain_group(mapping_units_to_skills: Dictionary) -> void:
 		await _end_passive(passive_skill, reactor_unit, active_group)
 
 
-
 		active_group.next_index += 1
 
 
@@ -432,6 +443,18 @@ func _resolve_top_chain_group(mapping_units_to_skills: Dictionary) -> void:
 func _declare_passive(passive_skill: Skill, reactor_unit: Unit, parent_group: ChainGroup) -> void:
 	CombatLog.instance.add_log(reactor_unit.ui_name + " declares passive: " + passive_skill.skill_name)
 	used_p_skill_this_turn.append(reactor_unit)
+	
+	
+	if SkillActivationUI.instance != null:
+		var new_bar: PassiveSkillBar = await SkillActivationUI.instance.on_passive_declared(passive_skill.skill_name)
+		var key_string: String = _make_passive_key(reactor_unit, passive_skill)
+		if !passive_bars_by_key.has(key_string):
+			passive_bars_by_key[key_string] = []
+		var list_for_key: Array = passive_bars_by_key[key_string]
+		list_for_key.append(new_bar)
+		passive_bars_by_key[key_string] = list_for_key
+	
+	
 	await _open_and_resolve_chain_group(
 		SkillTriggerSystem.TriggerPhase.BEFORE_SKILL_USED,
 		passive_skill,
@@ -440,7 +463,8 @@ func _declare_passive(passive_skill: Skill, reactor_unit: Unit, parent_group: Ch
 		parent_group.depth
 	)
 
-func _use_passive(passive_skill: Skill, reactor_unit: Unit, parent_group: ChainGroup) -> void:
+
+func _use_passive(passive_skill: Skill, reactor_unit: Unit, _parent_group: ChainGroup) -> void:
 	# Spend PP if not already handled by the Action
 	if passive_skill.skill_category == Skill.SkillCategory.PASSIVE:
 		var pp_attribute: Attribute = reactor_unit.get_attributes_container().get_attribute("passive_points")
@@ -463,8 +487,19 @@ func _use_passive(passive_skill: Skill, reactor_unit: Unit, parent_group: ChainG
 		await get_tree().create_timer(0.05).timeout
 		push_error("No action set in " + passive_skill.skill_name)
 
+
 func _end_passive(passive_skill: Skill, reactor_unit: Unit, parent_group: ChainGroup) -> void:
 	CombatLog.instance.add_log(reactor_unit.ui_name + " ends passive: " + passive_skill.skill_name)
+	
+	if SkillActivationUI.instance != null:
+		var key_string: String = _make_passive_key(reactor_unit, passive_skill)
+		if passive_bars_by_key.has(key_string):
+			var list_for_key: Array = passive_bars_by_key[key_string]
+			if list_for_key.size() > 0:
+				var bar: PassiveSkillBar = list_for_key.pop_front()
+				SkillActivationUI.instance.on_passive_ended(bar)
+				passive_bars_by_key[key_string] = list_for_key
+	
 	await _open_and_resolve_chain_group(
 		SkillTriggerSystem.TriggerPhase.AFTER_SKILL_USED,
 		passive_skill,
@@ -472,6 +507,8 @@ func _end_passive(passive_skill: Skill, reactor_unit: Unit, parent_group: ChainG
 		parent_group.source_target,
 		parent_group.depth
 	)
+
+
 
 func _sort_units_by_initiative_desc(units_in: Array[Unit]) -> Array[Unit]:
 	var out_units: Array[Unit] = units_in.duplicate()
@@ -488,6 +525,8 @@ func _sort_units_by_initiative_desc(units_in: Array[Unit]) -> Array[Unit]:
 
 
 
+func _make_passive_key(reactor_unit: Unit, passive_skill: Skill) -> String:
+	return str(reactor_unit.get_instance_id()) + ":" + str(passive_skill.get_instance_id())
 
 
 """

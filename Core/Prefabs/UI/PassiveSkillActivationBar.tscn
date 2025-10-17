@@ -21,6 +21,7 @@ custom_minimum_size = Vector2(0, 28.935)
 theme_override_styles/panel = SubResource("StyleBoxFlat_5w213")
 script = ExtResource("1_07435")
 label_node = NodePath("MarginContainer/Label")
+drift_duration = 0.4
 metadata/_edit_use_anchors_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

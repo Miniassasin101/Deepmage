@@ -83,6 +83,7 @@ func activate_skill() -> void:
 	if skill_category == SkillCategory.ACTIVE:
 	# Declare Skill goes here
 		await TurnSystem.instance.declare_skill(self, chosen_target)
+		await unit.get_tree().create_timer(1.2).timeout # Visual Processing time
 	else:
 		pass
 
