@@ -10,6 +10,10 @@ var passive_skill_bar: PassiveSkillBar = null
 var next_slot: PassiveSkillActivationSlot = null
 
 
+var starting_x_offset: float = 200.0
+
+
+
 func setup(in_slot_num: int) -> void:
 	slot_number = in_slot_num
 	
@@ -26,10 +30,20 @@ func add_skill_bar(in_bar: PassiveSkillBar, is_passed_up: bool = false) -> void:
 		in_bar.reparent(self, false)
 	
 	passive_skill_bar = in_bar
+	passive_skill_bar.set_position(passive_skill_bar.start_offset)
+	passive_skill_bar.open()
+
+	
 	
 
 	
+	
+	
 	pass
+
+
+
+
 
 func remove_skill_bar(in_bar: PassiveSkillBar) -> void:
 	if in_bar == passive_skill_bar:

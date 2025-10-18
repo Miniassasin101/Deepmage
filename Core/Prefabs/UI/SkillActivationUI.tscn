@@ -87,8 +87,8 @@ alignment = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="PassiveSkillActivationSlot" type="PanelContainer" parent="PassiveSkillActivationVbox"]
-self_modulate = Color(1, 1, 1, 0.25882354)
-custom_minimum_size = Vector2(199, 32.333336)
+self_modulate = Color(1, 1, 1, 0.007843138)
+custom_minimum_size = Vector2(199, 36.333336)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_lrl7t")
@@ -96,8 +96,8 @@ script = ExtResource("4_sr50n")
 metadata/_edit_use_anchors_ = true
 
 [node name="PassiveSkillActivationSlot2" type="PanelContainer" parent="PassiveSkillActivationVbox"]
-self_modulate = Color(1, 1, 1, 0.25882354)
-custom_minimum_size = Vector2(199, 32.333336)
+self_modulate = Color(1, 1, 1, 0.007843138)
+custom_minimum_size = Vector2(199, 36.333336)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_lrl7t")
@@ -105,8 +105,8 @@ script = ExtResource("4_sr50n")
 metadata/_edit_use_anchors_ = true
 
 [node name="PassiveSkillActivationSlot3" type="PanelContainer" parent="PassiveSkillActivationVbox"]
-self_modulate = Color(1, 1, 1, 0.25882354)
-custom_minimum_size = Vector2(199, 32.333336)
+self_modulate = Color(1, 1, 1, 0.007843138)
+custom_minimum_size = Vector2(199, 36.333336)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_lrl7t")
@@ -114,8 +114,8 @@ script = ExtResource("4_sr50n")
 metadata/_edit_use_anchors_ = true
 
 [node name="PassiveSkillActivationSlot4" type="PanelContainer" parent="PassiveSkillActivationVbox"]
-self_modulate = Color(1, 1, 1, 0.25882354)
-custom_minimum_size = Vector2(199, 32.333336)
+self_modulate = Color(1, 1, 1, 0.007843138)
+custom_minimum_size = Vector2(199, 36.333336)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_lrl7t")
@@ -123,8 +123,8 @@ script = ExtResource("4_sr50n")
 metadata/_edit_use_anchors_ = true
 
 [node name="PassiveSkillActivationSlot5" type="PanelContainer" parent="PassiveSkillActivationVbox"]
-self_modulate = Color(1, 1, 1, 0.25882354)
-custom_minimum_size = Vector2(199, 32.333336)
+self_modulate = Color(1, 1, 1, 0.007843138)
+custom_minimum_size = Vector2(199, 36.333336)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_lrl7t")
@@ -132,8 +132,8 @@ script = ExtResource("4_sr50n")
 metadata/_edit_use_anchors_ = true
 
 [node name="PassiveSkillActivationSlot6" type="PanelContainer" parent="PassiveSkillActivationVbox"]
-self_modulate = Color(1, 1, 1, 0.25882354)
-custom_minimum_size = Vector2(199, 32.333336)
+self_modulate = Color(1, 1, 1, 0.007843138)
+custom_minimum_size = Vector2(199, 36.333336)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_lrl7t")

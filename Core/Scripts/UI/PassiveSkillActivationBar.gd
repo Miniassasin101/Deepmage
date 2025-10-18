@@ -49,14 +49,14 @@ func slide_out() -> void:
 	mod.a = 0.0
 	modulate = mod
 	mod.a = 1.0
+	#top_level = true
 
-	var final_position := base_position + drift_amount
-	if position != final_position:
-		position = base_position
+
+	position = start_offset
 
 	drift_tween = get_tree().create_tween()
 	drift_tween.tween_property(self, "modulate", mod, drift_duration)
-	drift_tween.parallel().tween_property(self, "position", final_position, drift_duration)\
+	drift_tween.parallel().tween_property(self, "position:x", 0.0, drift_duration)\
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 func slide_up_out() -> void:
@@ -69,11 +69,12 @@ func slide_up_out() -> void:
 	
 	
 
-		
+	#var 
+	z_index -= 1
 
 	drift_tween = get_tree().create_tween()
 	drift_tween.tween_property(self, "modulate", mod, drift_duration)
-	drift_tween.parallel().tween_property(self, "position", base_position, drift_duration)
+	drift_tween.parallel().tween_property(self, "position:y", -30.0 , drift_duration)
 	await drift_tween.finished
 
 func abort_tween() -> bool:

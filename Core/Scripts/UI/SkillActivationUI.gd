@@ -118,7 +118,7 @@ func on_passive_declared(skill_name: String) -> PassiveSkillBar:
 	new_bar_node.set_text(skill_name)
 	first_passive_slot.add_skill_bar(new_bar_node)
 	await get_tree().process_frame
-	new_bar_node.open()
+	
 	# Track then reposition all bars (newest stacks *above* previous)
 	passive_bars.append(new_bar_node)
 	#_update_passive_positions()

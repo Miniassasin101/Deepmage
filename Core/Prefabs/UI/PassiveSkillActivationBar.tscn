@@ -21,6 +21,7 @@ custom_minimum_size = Vector2(0, 28.935)
 theme_override_styles/panel = SubResource("StyleBoxFlat_5w213")
 script = ExtResource("1_07435")
 label_node = NodePath("MarginContainer/Label")
+start_offset = Vector2(200, 0)
 drift_duration = 0.4
 metadata/_edit_use_anchors_ = true
 
@@ -34,3 +35,4 @@ theme_override_constants/margin_bottom = 3
 [node name="Label" type="Label" parent="MarginContainer"]
 layout_mode = 2
 text = "Passive Skill Name"
+horizontal_alignment = 1
