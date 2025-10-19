@@ -23,11 +23,11 @@ var base_position: Vector2
 
 
 func _ready() -> void:
-	
 	base_position = position
-	
-	modulate.a = 0.0
-	set_visible(false)
+	var mod: Color = modulate
+	mod.a = 0.0
+	modulate = mod
+	visible = true  # alpha drives visibility
 
 
 
@@ -44,41 +44,48 @@ func close() -> void:
 
 func slide_out() -> void:
 	abort_tween()
-
-	var mod := modulate
+	var mod: Color = modulate
 	mod.a = 0.0
 	modulate = mod
-	mod.a = 1.0
-	#top_level = true
+	var parent: Control = get_parent_control()
+	global_position = parent.global_position  # single authoritative placement before tween
+	global_position.x += start_offset.x
 
-
-	position = start_offset
-
+	var target_mod: Color = modulate
+	target_mod.a = 1.0
 	drift_tween = get_tree().create_tween()
-	drift_tween.tween_property(self, "modulate", mod, drift_duration)
-	drift_tween.parallel().tween_property(self, "position:x", 0.0, drift_duration)\
+	drift_tween.tween_property(self, "modulate", target_mod, drift_duration)
+	drift_tween.parallel().tween_property(self, "global_position:x", parent.global_position.x, drift_duration)\
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
 
 func slide_up_out() -> void:
 	abort_tween()
 
-	var mod := modulate
-	mod.a = 1.0
-	modulate = mod
-	mod.a = 0.0
-	
-	
+	var fade: Color = modulate
+	fade.a = 0.0
 
-	#var 
-	z_index -= 1
-
+	# Drift upward a bit while fading
+	var target_y: float = global_position.y - 30.0
 	drift_tween = get_tree().create_tween()
-	drift_tween.tween_property(self, "modulate", mod, drift_duration)
-	drift_tween.parallel().tween_property(self, "position:y", -30.0 , drift_duration)
+	drift_tween.tween_property(self, "modulate", fade, drift_duration)
+	drift_tween.parallel().tween_property(self, "global_position:y", target_y, drift_duration)
 	await drift_tween.finished
 
+
+func slide_up_to() -> void:
+	abort_tween()
+	var parent_ctrl: Control = get_parent_control()
+	var target_y: float = parent_ctrl.global_position.y
+	drift_tween = get_tree().create_tween()
+	drift_tween.tween_property(self, "global_position:y", target_y, drift_duration)
+	await drift_tween.finished
+
+
+
 func abort_tween() -> bool:
-	if drift_tween:
+	if drift_tween != null:
+
 		drift_tween.kill()
 		drift_tween = null
 		return true

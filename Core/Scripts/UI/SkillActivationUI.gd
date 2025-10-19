@@ -113,41 +113,30 @@ func on_passive_declared(skill_name: String) -> PassiveSkillBar:
 
 	var new_bar_node: PassiveSkillBar = passive_bar_scene.instantiate() as PassiveSkillBar
 	
-	#await get_tree().process_frame  # ensure size is valid
-
+	await get_tree().create_timer(0.3).timeout
 	new_bar_node.set_text(skill_name)
 	first_passive_slot.add_skill_bar(new_bar_node)
-	await get_tree().process_frame
+
 	
 	# Track then reposition all bars (newest stacks *above* previous)
 	passive_bars.append(new_bar_node)
-	#_update_passive_positions()
+
 	return new_bar_node
 
 func on_passive_ended(bar_to_remove: PassiveSkillBar) -> void:
 	if bar_to_remove == null:
 		return
-	# Remove from list immediately so a new one can take "its place" while it fades.
+
 	for idx in passive_bars.size():
-		var candidate: PassiveSkillBar = passive_bars[idx]
-		if candidate == bar_to_remove:
+		if passive_bars[idx] == bar_to_remove:
 			passive_bars.remove_at(idx)
 			break
-	
-	first_passive_slot.remove_skill_bar(bar_to_remove)
 
-func _update_passive_positions() -> void:
-	if passive_layer == null:
-		return
-	var viewport_size: Vector2 = get_viewport_rect().size
-	var base_x: float = viewport_size.x - passive_right_margin
-	var base_bottom: float = viewport_size.y - passive_bottom_margin
+	for slot in passive_slots:
+		if slot.passive_skill_bar == bar_to_remove:
+			await slot.remove_skill_bar(bar_to_remove)  # ← pass the target
+			return
 
-	# Oldest gets lowest y, newest stacks above it (like your CharacterLogQueue)
-	var count: int = passive_bars.size()
-	for index in count:
-		var bar_node: PassiveSkillBar = passive_bars[index]
-		var bar_size: Vector2 = bar_node.size
-		var y_final: float = base_bottom - float(index + 1) * (bar_size.y + passive_spacing)
-		var x_final: float = base_x - bar_size.x
-		bar_node.play_in_from_right(Vector2(x_final, y_final))
+	# If it’s no longer the slot’s current bar, still hunt it down up the chain.
+	for slot in passive_slots:
+		await slot.remove_skill_bar(bar_to_remove)

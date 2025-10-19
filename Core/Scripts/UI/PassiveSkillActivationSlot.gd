@@ -22,45 +22,54 @@ func setup(in_slot_num: int) -> void:
 
 func add_skill_bar(in_bar: PassiveSkillBar, is_passed_up: bool = false) -> void:
 	if passive_skill_bar != null:
-		pass_bar_up()
-	
+		await pass_bar_up()  # ← ensure this slot is free first
+
 	if !is_passed_up:
 		add_child(in_bar)
+		passive_skill_bar = in_bar
+		passive_skill_bar.global_position = global_position
+		passive_skill_bar.open()
 	else:
-		in_bar.reparent(self, false)
-	
-	passive_skill_bar = in_bar
-	passive_skill_bar.set_position(passive_skill_bar.start_offset)
-	passive_skill_bar.open()
+		in_bar.abort_tween()
+		in_bar.reparent(self, true)
+		passive_skill_bar = in_bar
+		await in_bar.slide_up_to()
 
-	
-	
-
-	
-	
-	
-	pass
 
 
 
 
 
 func remove_skill_bar(in_bar: PassiveSkillBar) -> void:
+	# If this slot owns the bar, close *that exact bar*, not whatever is current.
 	if in_bar == passive_skill_bar:
-		await get_tree().create_timer(2.0).timeout
-		if in_bar:
-			await in_bar.close()
-		
+		# Detach our reference first so a new incoming bar won't get closed by mistake.
 		passive_skill_bar = null
-	elif next_slot:
-		next_slot.remove_skill_bar(in_bar)
+		if is_instance_valid(in_bar):
+			await in_bar.close()
+	elif next_slot != null:
+		await next_slot.remove_skill_bar(in_bar)
+
 
 
 func pass_bar_up() -> void:
-	if next_slot == null:
-		passive_skill_bar.queue_free()
-		passive_skill_bar = null
+	if passive_skill_bar == null:
 		return
-	next_slot.add_skill_bar(passive_skill_bar, true)
+
+	if next_slot == null:
+		var old_bar: PassiveSkillBar = passive_skill_bar
+		passive_skill_bar = null
+		if is_instance_valid(old_bar):
+			await old_bar.close()  # ← wait for its exit; no ghost nodes
+		return
+
+	var bar_to_bubble: PassiveSkillBar = passive_skill_bar
+	passive_skill_bar = null
+
+	# Ensure the bar stops its current tween before we reuse it
+	bar_to_bubble.abort_tween()
+	# Keep global when reparenting because we animate using global_position
+	bar_to_bubble.reparent(next_slot, true)
+	await next_slot.add_skill_bar(bar_to_bubble, true)
 	
 	

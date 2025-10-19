@@ -17,6 +17,7 @@ shadow_size = 5
 shadow_offset = Vector2(-1, 1)
 
 [node name="PassiveSkillActivationBar" type="PanelContainer" node_paths=PackedStringArray("label_node")]
+top_level = true
 custom_minimum_size = Vector2(0, 28.935)
 theme_override_styles/panel = SubResource("StyleBoxFlat_5w213")
 script = ExtResource("1_07435")

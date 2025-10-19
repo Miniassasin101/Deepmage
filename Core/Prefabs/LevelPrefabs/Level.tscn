@@ -1,4 +1,4 @@
-[gd_scene load_steps=121 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=131 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
@@ -58,6 +58,55 @@ geometry_source_geometry_mode = 2
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_avqdt"]
 data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="Resource" id="Resource_eu7gh"]
+script = ExtResource("16_bvt28")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_7kb16"]
+script = ExtResource("17_23xud")
+range_var = 3.0
+metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
+
+[sub_resource type="Resource" id="Resource_6g8w4"]
+resource_name = "BashSkillResource"
+script = ExtResource("12_f2qps")
+skill_name = "Bash"
+action = ExtResource("13_iq36j")
+internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
+trait_1 = "Melee"
+description = Array[String](["Moves towards then Bashes a unit in range 5"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"
+
+[sub_resource type="Resource" id="Resource_ydutk"]
+script = ExtResource("16_bvt28")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_sb21c"]
+script = ExtResource("20_8v6vh")
+range_var = 2.1
+metadata/_custom_type_script = "uid://daykqau0okf7v"
+
+[sub_resource type="Resource" id="Resource_7omu2"]
+script = ExtResource("21_11ubm")
+metadata/_custom_type_script = "uid://c6hp21lncudiw"
+
+[sub_resource type="Resource" id="Resource_idaqs"]
+resource_name = "RushToUnitSkillResource"
+script = ExtResource("12_f2qps")
+skill_name = "Rush To Unit"
+action = ExtResource("19_v4iap")
+skill_type = 1
+internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_sb21c"), SubResource("Resource_7omu2")])
+external_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_ydutk")])
+trait_1 = "Movement"
+metadata/_custom_type_script = "uid://kpyou3fdk30c"
+
+[sub_resource type="Resource" id="Resource_f2qps"]
+script = ExtResource("24_5lfvx")
+active_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_6g8w4"), SubResource("Resource_idaqs")])
+passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("22_sgxdm")])
+metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
 [sub_resource type="Resource" id="Resource_8v6vh"]
 resource_local_to_scene = true
@@ -187,6 +236,12 @@ script = ExtResource("11_6kl6n")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_8v6vh"), SubResource("Resource_11ubm"), SubResource("Resource_w01yd"), SubResource("Resource_00nvd"), SubResource("Resource_5lfvx"), SubResource("Resource_f0670"), SubResource("Resource_ebomw"), SubResource("Resource_04ue1"), SubResource("Resource_cb3j6"), SubResource("Resource_e15dp"), SubResource("Resource_c2k8n"), SubResource("Resource_hja2s")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
 
+[sub_resource type="Resource" id="Resource_k6sm3"]
+script = ExtResource("24_5lfvx")
+active_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_6g8w4"), SubResource("Resource_idaqs")])
+passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("22_sgxdm")])
+metadata/_custom_type_script = "uid://bubf25btsnnfv"
+
 [sub_resource type="Resource" id="Resource_f3uqp"]
 resource_local_to_scene = true
 resource_name = "Posture"
@@ -315,52 +370,52 @@ script = ExtResource("11_6kl6n")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_f3uqp"), SubResource("Resource_0fvkv"), SubResource("Resource_dpue3"), SubResource("Resource_mpmhl"), SubResource("Resource_yl67w"), SubResource("Resource_6odjx"), SubResource("Resource_lk7si"), SubResource("Resource_73fol"), SubResource("Resource_a4tjr"), SubResource("Resource_pwtg8"), SubResource("Resource_src6p"), SubResource("Resource_o8y13")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
 
-[sub_resource type="Resource" id="Resource_eu7gh"]
+[sub_resource type="Resource" id="Resource_bvt28"]
 script = ExtResource("16_bvt28")
 metadata/_custom_type_script = "uid://2nsctaj2mk50"
 
-[sub_resource type="Resource" id="Resource_7kb16"]
+[sub_resource type="Resource" id="Resource_23xud"]
 script = ExtResource("17_23xud")
 range_var = 3.0
 metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
 
-[sub_resource type="Resource" id="Resource_6g8w4"]
+[sub_resource type="Resource" id="Resource_hymmt"]
 resource_name = "BashSkillResource"
 script = ExtResource("12_f2qps")
 skill_name = "Bash"
 action = ExtResource("13_iq36j")
-internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
+internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_bvt28"), SubResource("Resource_23xud")])
 trait_1 = "Melee"
 description = Array[String](["Moves towards then Bashes a unit in range 5"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
-[sub_resource type="Resource" id="Resource_ydutk"]
+[sub_resource type="Resource" id="Resource_v4iap"]
 script = ExtResource("16_bvt28")
 metadata/_custom_type_script = "uid://2nsctaj2mk50"
 
-[sub_resource type="Resource" id="Resource_sb21c"]
+[sub_resource type="Resource" id="Resource_8hoel"]
 script = ExtResource("20_8v6vh")
 range_var = 2.1
 metadata/_custom_type_script = "uid://daykqau0okf7v"
 
-[sub_resource type="Resource" id="Resource_7omu2"]
+[sub_resource type="Resource" id="Resource_rx2vc"]
 script = ExtResource("21_11ubm")
 metadata/_custom_type_script = "uid://c6hp21lncudiw"
 
-[sub_resource type="Resource" id="Resource_idaqs"]
+[sub_resource type="Resource" id="Resource_gam6i"]
 resource_name = "RushToUnitSkillResource"
 script = ExtResource("12_f2qps")
 skill_name = "Rush To Unit"
 action = ExtResource("19_v4iap")
 skill_type = 1
-internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_sb21c"), SubResource("Resource_7omu2")])
-external_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_ydutk")])
+internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_8hoel"), SubResource("Resource_rx2vc")])
+external_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_v4iap")])
 trait_1 = "Movement"
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_jiskd"]
 script = ExtResource("24_5lfvx")
-active_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_6g8w4"), SubResource("Resource_idaqs")])
+active_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_hymmt"), SubResource("Resource_gam6i")])
 passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("22_sgxdm")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
@@ -491,6 +546,12 @@ resource_local_to_scene = true
 script = ExtResource("11_6kl6n")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_g2rko"), SubResource("Resource_su0wa"), SubResource("Resource_lwd1i"), SubResource("Resource_4dv0c"), SubResource("Resource_ub3kf"), SubResource("Resource_p6sl4"), SubResource("Resource_j6cut"), SubResource("Resource_qtrpl"), SubResource("Resource_8wfs1"), SubResource("Resource_wan3k"), SubResource("Resource_ol02q"), SubResource("Resource_avl6w")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
+
+[sub_resource type="Resource" id="Resource_7g53y"]
+script = ExtResource("24_5lfvx")
+active_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_6g8w4"), SubResource("Resource_idaqs")])
+passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("22_sgxdm")])
+metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
 [sub_resource type="Resource" id="Resource_3ixwr"]
 resource_local_to_scene = true
@@ -759,6 +820,7 @@ script = ExtResource("11_lf0eb")
 
 [node name="Azure" parent="UnitManager" instance=ExtResource("12_k2c3k")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8, 0, 0)
+starting_tactic = SubResource("Resource_f2qps")
 ui_name = "Azure"
 is_enemy = true
 visor_color = Color(0, 0.55250007, 0.85, 1)
@@ -769,6 +831,7 @@ attributes_profile = SubResource("Resource_v8epg")
 
 [node name="Verdant" parent="UnitManager" instance=ExtResource("12_k2c3k")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.0376267, 0, 0)
+starting_tactic = SubResource("Resource_k6sm3")
 ui_name = "Verdant"
 is_enemy = true
 visor_color = Color(0, 0.54, 0.261, 1)
@@ -789,6 +852,7 @@ attributes_profile = SubResource("Resource_iq36j")
 
 [node name="Ruby" parent="UnitManager" instance=ExtResource("12_k2c3k")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, -2.076848)
+starting_tactic = SubResource("Resource_7g53y")
 ui_name = "Ruby"
 visor_color = Color(1, 0.120000005, 0.120000005, 1)
 
