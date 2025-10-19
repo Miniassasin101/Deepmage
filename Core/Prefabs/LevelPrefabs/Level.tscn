@@ -36,12 +36,12 @@
 [ext_resource type="PackedScene" uid="uid://psdfsrnutgxe" path="res://Deepmage/Core/Prefabs/UI/ActionButtonUI.tscn" id="16_tko1n"]
 [ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="17_23xud"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="18_hymmt"]
+[ext_resource type="Resource" uid="uid://cjuqlljs4k7uy" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PrintTestPassiveSkillResource.tres" id="19_f2qps"]
 [ext_resource type="Resource" uid="uid://8vem57wbteya" path="res://Deepmage/Core/Resources/ActionResources/RushToUnitActionResource.tres" id="19_v4iap"]
 [ext_resource type="Script" uid="uid://daykqau0okf7v" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitOutsideRangeSkillCondition.gd" id="20_8v6vh"]
 [ext_resource type="Script" uid="uid://c6hp21lncudiw" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsNotSelfSkillCondition.gd" id="21_11ubm"]
 [ext_resource type="PackedScene" uid="uid://cdifkxjoiv0eq" path="res://Deepmage/Core/Prefabs/UI/TopHPBar.tscn" id="21_xyav6"]
 [ext_resource type="PackedScene" uid="uid://cqqsm2gpif3dw" path="res://Deepmage/Core/Prefabs/UI/UnitCharacterSheet.tscn" id="22_gh8or"]
-[ext_resource type="Resource" uid="uid://dh3cjc2xijl6v" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PrintTestPassiveAfterSkillResource.tres" id="22_sgxdm"]
 [ext_resource type="Script" uid="uid://bubf25btsnnfv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Tactic.gd" id="24_5lfvx"]
 [ext_resource type="Script" uid="uid://c1pcudui7e5qp" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillTriggerSystem.gd" id="26_qdwhh"]
 [ext_resource type="PackedScene" uid="uid://bt5idkoxachxk" path="res://Deepmage/Core/Prefabs/UI/CombatLog.tscn" id="27_2gnov"]
@@ -105,7 +105,7 @@ metadata/_custom_type_script = "uid://kpyou3fdk30c"
 [sub_resource type="Resource" id="Resource_f2qps"]
 script = ExtResource("24_5lfvx")
 active_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_6g8w4"), SubResource("Resource_idaqs")])
-passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("22_sgxdm")])
+passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("19_f2qps")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
 [sub_resource type="Resource" id="Resource_8v6vh"]
@@ -239,7 +239,7 @@ metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
 [sub_resource type="Resource" id="Resource_k6sm3"]
 script = ExtResource("24_5lfvx")
 active_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_6g8w4"), SubResource("Resource_idaqs")])
-passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("22_sgxdm")])
+passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("19_f2qps")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
 [sub_resource type="Resource" id="Resource_f3uqp"]
@@ -416,7 +416,7 @@ metadata/_custom_type_script = "uid://kpyou3fdk30c"
 [sub_resource type="Resource" id="Resource_jiskd"]
 script = ExtResource("24_5lfvx")
 active_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_hymmt"), SubResource("Resource_gam6i")])
-passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("22_sgxdm")])
+passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("19_f2qps")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
 [sub_resource type="Resource" id="Resource_g2rko"]
@@ -550,7 +550,7 @@ metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
 [sub_resource type="Resource" id="Resource_7g53y"]
 script = ExtResource("24_5lfvx")
 active_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_6g8w4"), SubResource("Resource_idaqs")])
-passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("22_sgxdm")])
+passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("19_f2qps")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
 [sub_resource type="Resource" id="Resource_3ixwr"]

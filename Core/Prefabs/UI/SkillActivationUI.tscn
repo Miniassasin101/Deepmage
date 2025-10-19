@@ -1,9 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://boy7waxi1xa2y"]
+[gd_scene load_steps=6 format=3 uid="uid://boy7waxi1xa2y"]
 
 [ext_resource type="Script" uid="uid://xg5f181qv48j" path="res://Deepmage/Core/Scripts/UI/SkillActivationUI.gd" id="1_rssh0"]
 [ext_resource type="Script" uid="uid://bxdbtvdj45xxp" path="res://Deepmage/Core/Scripts/UI/ActiveSkillBar.gd" id="2_lrl7t"]
-[ext_resource type="PackedScene" uid="uid://2krjuvoockbd" path="res://Deepmage/Core/Prefabs/UI/PassiveSkillActivationBar.tscn" id="3_sr50n"]
-[ext_resource type="Script" uid="uid://da538jfwhuobr" path="res://Deepmage/Core/Scripts/UI/PassiveSkillActivationSlot.gd" id="4_sr50n"]
+[ext_resource type="PackedScene" uid="uid://2krjuvoockbd" path="res://Deepmage/Core/Prefabs/UI/PassiveBarItem.tscn" id="2_sr50n"]
+[ext_resource type="Script" uid="uid://bqvxbu4uu4cq8" path="res://Deepmage/Core/Prefabs/UI/PassiveBarManager.gd" id="4_sr50n"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rssh0"]
 bg_color = Color(0.07, 0.036399998, 0.03695999, 0.8039216)
@@ -19,19 +19,7 @@ corner_radius_bottom_left = 3
 shadow_size = 5
 shadow_offset = Vector2(-1, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lrl7t"]
-bg_color = Color(0.0264, 0.0294, 0.03, 0.945098)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.123200014, 0.67298007, 0.77, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-
-[node name="SkillActivationUI" type="Control" node_paths=PackedStringArray("active_skill_bar", "active_end_timer", "passive_layer", "passive_vbox")]
+[node name="SkillActivationUI" type="Control" node_paths=PackedStringArray("active_skill_bar", "active_end_timer", "passive_manager", "passive_layer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -42,9 +30,9 @@ mouse_filter = 2
 script = ExtResource("1_rssh0")
 active_skill_bar = NodePath("ActiveSkillBar")
 active_end_timer = NodePath("ActiveEndTimer")
+passive_manager = NodePath("PassiveManager")
 passive_layer = NodePath("PassiveLayer")
-passive_bar_scene = ExtResource("3_sr50n")
-passive_vbox = NodePath("PassiveSkillActivationVbox")
+passive_bar_scene = ExtResource("2_sr50n")
 
 [node name="ActiveSkillBar" type="PanelContainer" parent="." node_paths=PackedStringArray("label_node")]
 layout_mode = 1
@@ -73,84 +61,22 @@ layout_mode = 2
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PassiveSkillActivationVbox" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.8246528
-anchor_top = 0.3132716
-anchor_right = 0.9973958
-anchor_bottom = 0.6635802
-offset_bottom = 3.0517578e-05
-grow_vertical = 0
-mouse_filter = 2
-alignment = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="PassiveSkillActivationSlot" type="PanelContainer" parent="PassiveSkillActivationVbox"]
-self_modulate = Color(1, 1, 1, 0.007843138)
-custom_minimum_size = Vector2(199, 36.333336)
-layout_mode = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_lrl7t")
-script = ExtResource("4_sr50n")
-metadata/_edit_use_anchors_ = true
-
-[node name="PassiveSkillActivationSlot2" type="PanelContainer" parent="PassiveSkillActivationVbox"]
-self_modulate = Color(1, 1, 1, 0.007843138)
-custom_minimum_size = Vector2(199, 36.333336)
-layout_mode = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_lrl7t")
-script = ExtResource("4_sr50n")
-metadata/_edit_use_anchors_ = true
-
-[node name="PassiveSkillActivationSlot3" type="PanelContainer" parent="PassiveSkillActivationVbox"]
-self_modulate = Color(1, 1, 1, 0.007843138)
-custom_minimum_size = Vector2(199, 36.333336)
-layout_mode = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_lrl7t")
-script = ExtResource("4_sr50n")
-metadata/_edit_use_anchors_ = true
-
-[node name="PassiveSkillActivationSlot4" type="PanelContainer" parent="PassiveSkillActivationVbox"]
-self_modulate = Color(1, 1, 1, 0.007843138)
-custom_minimum_size = Vector2(199, 36.333336)
-layout_mode = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_lrl7t")
-script = ExtResource("4_sr50n")
-metadata/_edit_use_anchors_ = true
-
-[node name="PassiveSkillActivationSlot5" type="PanelContainer" parent="PassiveSkillActivationVbox"]
-self_modulate = Color(1, 1, 1, 0.007843138)
-custom_minimum_size = Vector2(199, 36.333336)
-layout_mode = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_lrl7t")
-script = ExtResource("4_sr50n")
-metadata/_edit_use_anchors_ = true
-
-[node name="PassiveSkillActivationSlot6" type="PanelContainer" parent="PassiveSkillActivationVbox"]
-self_modulate = Color(1, 1, 1, 0.007843138)
-custom_minimum_size = Vector2(199, 36.333336)
-layout_mode = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_lrl7t")
-script = ExtResource("4_sr50n")
-metadata/_edit_use_anchors_ = true
-
 [node name="ActiveEndTimer" type="Timer" parent="."]
 
 [node name="PassiveLayer" type="Control" parent="."]
-custom_minimum_size = Vector2(203, 276)
+custom_minimum_size = Vector2(150, 170)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 949.0
-offset_top = 156.0
+offset_left = 976.0
+offset_top = 262.0
 offset_bottom = -216.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="PassiveManager" type="CanvasLayer" parent="." node_paths=PackedStringArray("bar_parent")]
+script = ExtResource("4_sr50n")
+bar_scene = ExtResource("2_sr50n")
+bar_parent = NodePath("../PassiveLayer")

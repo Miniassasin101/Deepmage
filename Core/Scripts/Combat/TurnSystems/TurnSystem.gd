@@ -26,7 +26,7 @@ var initiative_queue: Array[Unit] = []
 # Contains all the units that can no longer use passive skills until the next unit's turn
 var used_p_skill_this_turn: Array[Unit] = []
 
-var passive_bars_by_key: Dictionary = {}   # key: String -> Array[PassiveSkillBar]
+
 
 # When a unit declares a skill but has not finished it they enter this stack.
 # Last unit in the stack/chain will use their skill before finally making it's way back to the turn unit
@@ -346,8 +346,10 @@ func declare_skill(declared_skill: Skill, target_unit: Unit) -> void:
 	if user_unit == null:
 		return
 	
+	var prio_num: int = user_unit.tactics_controller.get_skill_priority_num(declared_skill)
+	
 	# Make the skill activation bar appear
-	SkillActivationUI.instance.on_active_declared(declared_skill.skill_name)
+	SkillActivationUI.instance.on_active_declared(declared_skill.skill_name, prio_num)
 	
 	
 	# Open Chain Group 1: BEFORE_SKILL_USED (i.e., "on declaration")
@@ -443,18 +445,13 @@ func _resolve_top_chain_group(mapping_units_to_skills: Dictionary) -> void:
 func _declare_passive(passive_skill: Skill, reactor_unit: Unit, parent_group: ChainGroup) -> void:
 	CombatLog.instance.add_log(reactor_unit.ui_name + " declares passive: " + passive_skill.skill_name)
 	used_p_skill_this_turn.append(reactor_unit)
-	
-	
-	if SkillActivationUI.instance != null:
-		var new_bar: PassiveSkillBar = await SkillActivationUI.instance.on_passive_declared(passive_skill.skill_name)
-		var key_string: String = _make_passive_key(reactor_unit, passive_skill)
-		if !passive_bars_by_key.has(key_string):
-			passive_bars_by_key[key_string] = []
-		var list_for_key: Array = passive_bars_by_key[key_string]
-		list_for_key.append(new_bar)
-		passive_bars_by_key[key_string] = list_for_key
-	
-	
+
+	var manager_ref: PassiveBarManager = _get_passive_manager()
+	if manager_ref != null:
+		var passive_key: String = _make_passive_key(reactor_unit, passive_skill)
+		# Newest-at-top insert; returns immediately (no await)
+		manager_ref.add_passive(passive_skill.skill_name, passive_key)
+
 	await _open_and_resolve_chain_group(
 		SkillTriggerSystem.TriggerPhase.BEFORE_SKILL_USED,
 		passive_skill,
@@ -490,16 +487,13 @@ func _use_passive(passive_skill: Skill, reactor_unit: Unit, _parent_group: Chain
 
 func _end_passive(passive_skill: Skill, reactor_unit: Unit, parent_group: ChainGroup) -> void:
 	CombatLog.instance.add_log(reactor_unit.ui_name + " ends passive: " + passive_skill.skill_name)
-	
-	if SkillActivationUI.instance != null:
-		var key_string: String = _make_passive_key(reactor_unit, passive_skill)
-		if passive_bars_by_key.has(key_string):
-			var list_for_key: Array = passive_bars_by_key[key_string]
-			if list_for_key.size() > 0:
-				var bar: PassiveSkillBar = list_for_key.pop_front()
-				SkillActivationUI.instance.on_passive_ended(bar)
-				passive_bars_by_key[key_string] = list_for_key
-	
+
+	var manager_ref: PassiveBarManager = _get_passive_manager()
+	if manager_ref != null:
+		var passive_key: String = _make_passive_key(reactor_unit, passive_skill)
+		# Manager keeps its own per-key queue; no local bookkeeping needed.
+		await manager_ref.end_oldest_for_key(passive_key)
+
 	await _open_and_resolve_chain_group(
 		SkillTriggerSystem.TriggerPhase.AFTER_SKILL_USED,
 		passive_skill,
@@ -605,6 +599,10 @@ func _is_combat_over() -> bool:
 	return false
 
 
+func _get_passive_manager() -> PassiveBarManager:
+	if SkillActivationUI.instance != null:
+		return SkillActivationUI.instance.passive_manager
+	return null
 
 
 func set_selected_unit(in_unit: Unit) -> void:

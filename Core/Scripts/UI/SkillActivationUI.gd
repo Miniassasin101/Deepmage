@@ -5,9 +5,10 @@ extends Control
 @export_category("References")
 @export var active_skill_bar: ActiveSkillBar
 @export var active_end_timer: Timer
+@export var passive_manager: PassiveBarManager
 @export var passive_layer: Control
 @export var passive_bar_scene: PackedScene
-@export var passive_vbox: VBoxContainer
+
 
 @export_category("Layout")
 @export var passive_spacing: float = 8.0
@@ -17,9 +18,7 @@ extends Control
 static var instance: SkillActivationUI = null
 
 # Runtime
-var passive_slots: Array[PassiveSkillActivationSlot] = []
-var first_passive_slot: PassiveSkillActivationSlot = null
-var passive_bars: Array[PassiveSkillBar] = []
+
 var active_is_showing: bool = false
 var active_is_fading: bool = false
 
@@ -37,7 +36,7 @@ func _ready() -> void:
 
 	active_end_timer.timeout.connect(_on_active_timeout)
 	
-	SignalBus.on_combat_started.connect(setup_passive_slots)
+
 
 
 
@@ -45,11 +44,14 @@ func _ready() -> void:
 # ─────────────────────────────────────────────────────────────────────────────
 # ACTIVE (red bar)
 # ─────────────────────────────────────────────────────────────────────────────
-func on_active_declared(skill_name: String) -> void:
+func on_active_declared(skill_name: String, priority_number: int = -1) -> void:
 	if active_skill_bar == null:
 		return
 	
-	active_skill_bar.set_text(skill_name)
+	if priority_number == -1:
+		active_skill_bar.set_text(skill_name)
+	else:
+		active_skill_bar.set_text(skill_name + " (" + str(priority_number) + ")")
 
 	# If a fade-out is pending, cancel it and flash+swap instead
 	if active_end_timer.time_left > 0.0 or active_is_fading:
@@ -66,7 +68,7 @@ func schedule_active_end(delay_seconds: float) -> void:
 	if !active_is_showing:
 		return
 	active_is_fading = true
-	active_end_timer.start(1.0)
+	active_end_timer.start(delay_seconds)
 
 func _on_active_timeout() -> void:
 	if active_skill_bar == null:
@@ -78,65 +80,19 @@ func _on_active_timeout() -> void:
 # ─────────────────────────────────────────────────────────────────────────────
 # PASSIVE (blue stack on the right)
 # ─────────────────────────────────────────────────────────────────────────────
-func setup_passive_slots() -> void:
-	if !passive_vbox:
-		return
-	
-	var p_slots: Array[PassiveSkillActivationSlot] = []
-	
-	p_slots.assign(passive_vbox.get_children())
-	
-	if p_slots.is_empty():
-		return
-	
-	p_slots.reverse()
-	var p_size: int = p_slots.size()
-	var prev_slot: PassiveSkillActivationSlot = null
-	for i in range(p_size):
-		var curr_slot: PassiveSkillActivationSlot = p_slots.get(i)
-		if prev_slot:
-			prev_slot.next_slot = curr_slot
-		curr_slot.setup(i)
-		prev_slot = curr_slot
-	
-	passive_slots = p_slots
-	first_passive_slot = p_slots.front()
 
 
 
 
 
 
-func on_passive_declared(skill_name: String) -> PassiveSkillBar:
-	if passive_bar_scene == null or first_passive_slot == null:
+func on_passive_declared(skill_name: String, key: String) -> PassiveBarItem:
+	if passive_manager == null:
 		return null
+	var bar_item: PassiveBarItem = passive_manager.add_passive(skill_name, key)
+	return bar_item
 
-	var new_bar_node: PassiveSkillBar = passive_bar_scene.instantiate() as PassiveSkillBar
-	
-	await get_tree().create_timer(0.3).timeout
-	new_bar_node.set_text(skill_name)
-	first_passive_slot.add_skill_bar(new_bar_node)
-
-	
-	# Track then reposition all bars (newest stacks *above* previous)
-	passive_bars.append(new_bar_node)
-
-	return new_bar_node
-
-func on_passive_ended(bar_to_remove: PassiveSkillBar) -> void:
-	if bar_to_remove == null:
+func on_passive_ended(bar_item: PassiveBarItem) -> void:
+	if passive_manager == null or bar_item == null:
 		return
-
-	for idx in passive_bars.size():
-		if passive_bars[idx] == bar_to_remove:
-			passive_bars.remove_at(idx)
-			break
-
-	for slot in passive_slots:
-		if slot.passive_skill_bar == bar_to_remove:
-			await slot.remove_skill_bar(bar_to_remove)  # ← pass the target
-			return
-
-	# If it’s no longer the slot’s current bar, still hunt it down up the chain.
-	for slot in passive_slots:
-		await slot.remove_skill_bar(bar_to_remove)
+	await passive_manager.end_passive(bar_item)

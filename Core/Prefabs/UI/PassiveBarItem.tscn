@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://2krjuvoockbd"]
 
-[ext_resource type="Script" uid="uid://dyd3akl0uv8h2" path="res://Deepmage/Core/Scripts/UI/PassiveSkillActivationBar.gd" id="1_07435"]
+[ext_resource type="Script" uid="uid://dyd3akl0uv8h2" path="res://Deepmage/Core/Scripts/UI/PassiveSkillBarItem.gd" id="1_g5qk7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5w213"]
 bg_color = Color(0.0264, 0.0294, 0.03, 0.945098)
@@ -16,14 +16,11 @@ corner_radius_bottom_left = 3
 shadow_size = 5
 shadow_offset = Vector2(-1, 1)
 
-[node name="PassiveSkillActivationBar" type="PanelContainer" node_paths=PackedStringArray("label_node")]
-top_level = true
+[node name="PassiveBarItem" type="PanelContainer" node_paths=PackedStringArray("label_node")]
 custom_minimum_size = Vector2(0, 28.935)
 theme_override_styles/panel = SubResource("StyleBoxFlat_5w213")
-script = ExtResource("1_07435")
+script = ExtResource("1_g5qk7")
 label_node = NodePath("MarginContainer/Label")
-start_offset = Vector2(200, 0)
-drift_duration = 0.4
 metadata/_edit_use_anchors_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

@@ -22,7 +22,7 @@ func start_action(target_package: TargetPackage = null) -> void:
 		on_tactic_failed()
 	else:
 		# Activate the chosen skill and wait until it finishes.
-		Utilities.spawn_text_line(unit, "Skill: " + chosen_skill.skill_name + " (" + str(prio_num) + ")")
+		#Utilities.spawn_text_line(unit, "Skill: " + chosen_skill.skill_name + " (" + str(prio_num) + ")")
 		chosen_skill.activate_skill()
 		await chosen_skill.on_skill_ended
 
