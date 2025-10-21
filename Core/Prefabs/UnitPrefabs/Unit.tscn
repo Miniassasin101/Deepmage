@@ -180,7 +180,7 @@ metadata/_custom_type_script = "uid://bubf25btsnnfv"
 script = ExtResource("17_7o6ql")
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
-[node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual", "movement_controller", "animation_controller", "satellite_controller", "token_controller", "tactics_controller", "left_hand_socket", "right_hand_socket")]
+[node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual", "movement_controller", "animation_controller", "satellite_controller", "tactics_controller", "left_hand_socket", "right_hand_socket")]
 script = ExtResource("1_hq0j0")
 above_head_marker = NodePath("AboveHeadMarker")
 nav_agent = NodePath("NavigationAgent3D")
@@ -190,7 +190,6 @@ selection_visual = NodePath("SelectionSquareRoot/GridSystemVisual")
 movement_controller = NodePath("MovementController")
 animation_controller = NodePath("AnimationController")
 satellite_controller = NodePath("SatelliteController")
-token_controller = NodePath("TokenController")
 tactics_controller = NodePath("TacticsController")
 left_hand_socket = NodePath("Rig/LeftHandMesh/LeftHandSocket")
 right_hand_socket = NodePath("Rig/RightHandMesh/RightHandSocket")
@@ -304,7 +303,7 @@ remote_path = NodePath("../GridSystemVisual")
 update_rotation = false
 update_scale = false
 
-[node name="TokenController" type="Node" parent="." node_paths=PackedStringArray("unit")]
+[node name="StatusController" type="Node" parent="." node_paths=PackedStringArray("unit")]
 script = ExtResource("11_1um36")
 unit = NodePath("..")
 metadata/_custom_type_script = "uid://ck2buvlnnr6il"
