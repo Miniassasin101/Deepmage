@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SkillLibrary" load_steps=10 format=3 uid="uid://dkeoolmv8jjeq"]
+[gd_resource type="Resource" script_class="SkillLibrary" load_steps=12 format=3 uid="uid://dkeoolmv8jjeq"]
 
 [ext_resource type="Script" uid="uid://cqsj2o45u3w7q" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillLibrary.gd" id="1_07uae"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="2_pntk6"]
@@ -8,9 +8,11 @@
 [ext_resource type="Resource" uid="uid://ov11t88e15s8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestProjectileThrow.tres" id="7_k1hhk"]
 [ext_resource type="Resource" uid="uid://cjuqlljs4k7uy" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PrintTestPassiveSkillResource.tres" id="8_k1hhk"]
 [ext_resource type="Resource" uid="uid://dh3cjc2xijl6v" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PrintTestPassiveAfterSkillResource.tres" id="9_lwyov"]
+[ext_resource type="Resource" uid="uid://caeygn6gmknml" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/ActiveBlockSkillResource.tres" id="10_466c2"]
+[ext_resource type="Resource" uid="uid://q7sv630uw87g" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PassiveBlockSkillResource.tres" id="11_i8y8y"]
 [ext_resource type="Resource" uid="uid://cdo13j8uua6g3" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/RushToSafetySkill.tres" id="13_kmtet"]
 
 [resource]
 script = ExtResource("1_07uae")
-skills = Array[ExtResource("2_pntk6")]([ExtResource("3_ccdkf"), ExtResource("13_kmtet"), ExtResource("4_us4l0"), ExtResource("5_23st6"), ExtResource("7_k1hhk"), ExtResource("8_k1hhk"), ExtResource("9_lwyov")])
+skills = Array[ExtResource("2_pntk6")]([ExtResource("3_ccdkf"), ExtResource("13_kmtet"), ExtResource("4_us4l0"), ExtResource("5_23st6"), ExtResource("7_k1hhk"), ExtResource("8_k1hhk"), ExtResource("9_lwyov"), ExtResource("10_466c2"), ExtResource("11_i8y8y")])
 metadata/_custom_type_script = "uid://cqsj2o45u3w7q"

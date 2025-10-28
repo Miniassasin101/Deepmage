@@ -11,8 +11,8 @@ func _ready() -> void:
 
 func get_accuracy_attributes() -> Array[String]:
 	if spell and spell.compiled_plan:
-		return [spell.compiled_plan.accuracy_attribute_1, spell.compiled_plan.accuracy_attribute_2]
-	return [accuracy_attribute1, accuracy_attribute2]
+		return [""]
+	return [""]
 
 
 

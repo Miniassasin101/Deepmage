@@ -1,0 +1,45 @@
+[gd_resource type="Resource" script_class="InflictEffectAction" load_steps=13 format=3 uid="uid://btrredbp8en14"]
+
+[ext_resource type="Animation" uid="uid://bolvfij56gevt" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/UnarmedBlockAnim.res" id="1_68d5o"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="1_iyp7c"]
+[ext_resource type="Script" uid="uid://b3xoc4esw8i4s" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/InflictEffectAction.gd" id="2_h5yt5"]
+[ext_resource type="Script" uid="uid://13akgn3nuj34" path="res://Deepmage/Core/Scripts/Mechanics/Effects/GrantBlockEffect.gd" id="2_pmg8i"]
+[ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="2_ujava"]
+[ext_resource type="Script" uid="uid://brutb7o0hj6td" path="res://Deepmage/Core/Scripts/Animation/AnimationPackage.gd" id="3_gvhvq"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="3_pmg8i"]
+[ext_resource type="Script" uid="uid://bf2hv6d83v6fv" path="res://Deepmage/Core/Resources/DataStructures/AnimationSyncProfile.gd" id="4_fju1f"]
+[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="5_pmg8i"]
+
+[sub_resource type="Resource" id="Resource_wdfje"]
+script = ExtResource("4_fju1f")
+markers = Dictionary[String, float]({
+"HIT_END": 0.4,
+"HIT_START": 0.27,
+"REACT_OFF": 0.4,
+"REACT_ON": 0.27
+})
+metadata/_custom_type_script = "uid://bf2hv6d83v6fv"
+
+[sub_resource type="Resource" id="Resource_3dyvf"]
+script = ExtResource("3_gvhvq")
+name = "UnarmedBlock"
+animation = ExtResource("1_68d5o")
+sync_profile = SubResource("Resource_wdfje")
+metadata/_custom_type_script = "uid://brutb7o0hj6td"
+
+[sub_resource type="Resource" id="Resource_ckhw7"]
+script = ExtResource("2_pmg8i")
+use_expire_rule = 2
+ui_name = &"Grant Block"
+metadata/_custom_type_script = "uid://13akgn3nuj34"
+
+[resource]
+script = ExtResource("2_h5yt5")
+effects = Array[ExtResource("1_iyp7c")]([SubResource("Resource_ckhw7")])
+animation_package = SubResource("Resource_3dyvf")
+is_attack = false
+hit_delay = 0.0
+use_hit_delay = true
+action_name = "Grant Block"
+selection_types = Array[ExtResource("3_pmg8i")]([ExtResource("5_pmg8i")])
+metadata/_custom_type_script = "uid://b3xoc4esw8i4s"

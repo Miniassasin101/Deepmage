@@ -13,6 +13,7 @@ extends Action
 
 @export_category("Action Variables")
 @export var animation_package: AnimationPackage
+@export var is_attack: bool = true
 
 @export_group("Camera Shake Effects")
 @export var hit_anim_effect: CameraShakeAnimationEffect
@@ -36,14 +37,6 @@ extends Action
 @export var defense_attribute: String = "endurance"
 @export var uses_area_pattern: bool = false
 
-
-
-@export_group("Pokerole Attack Data")
-@export var accuracy_attribute1: String = "agility"
-@export var accuracy_attribute2: String = "martial"
-@export var damage_attribute: String = "might"
-@export var base_damage: int = 3
-@export var base_target_number: int = 1
 
 
 
@@ -214,6 +207,14 @@ func do_resolve() -> void:
 		Utilities.spawn_text_line(defender, "EVADE", Color.AQUA)
 		CombatLog.instance.add_log("Result: Evaded")
 		return
+
+
+	# === NEW: let statuses (e.g., Block) modify the damage at the precise step ===
+	var defender_statuses: StatusController = defender.get_status_controller()
+	if defender_statuses != null:
+		defender_statuses.before_damage_applied(cd)
+	# === END NEW ===
+
 
 	# OPTIONAL: switch to Posture track later.
 	# For now, keep your health to minimize refactor:
@@ -390,14 +391,10 @@ func spawn_action_name_text() -> void:
 
 ## Returns the attribute used for damage rolls (for UI or rule queries).
 func get_stat_name() -> String:
-	return damage_attribute
+	return prowess_attribute
 
-func get_damage_attribute() -> String:
-	return damage_attribute
 
-func get_accuracy_attributes() -> Array[String]:
-	var accuracy_attributes: Array[String] = [accuracy_attribute1, accuracy_attribute2]
-	return accuracy_attributes
+
 
 
 ## Checks if this action can be used on the given target pack (range, self-target, and pathing).

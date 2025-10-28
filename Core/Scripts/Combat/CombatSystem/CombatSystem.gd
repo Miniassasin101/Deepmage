@@ -80,6 +80,8 @@ func declare_attack(action: AttackAction, attacker: Unit, defender: Unit) -> voi
 		pass
 
 	# 2) Resolve using Gubat Banwa steps
+	if action.is_attack == false:
+		return
 	await _resolve_attack_gubat_banwa(action, attacker, defender)
 
 	# Execute a queued Reaction (if any)

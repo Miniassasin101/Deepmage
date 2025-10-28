@@ -23,7 +23,7 @@ enum TurnState {
 @export var movement_controller: MovementController
 @export var animation_controller: AnimationController
 @export var satellite_controller: SatelliteController
-@export var token_controller: TokenController
+@export var status_controller: StatusController
 @export var tactics_controller: TacticsController
 @export_group("Sockets")
 @export var left_hand_socket: Marker3D
@@ -154,3 +154,6 @@ func get_action_container() -> ActionContainer:
 
 func get_attributes_container() -> AttributesContainer:
 	return character_sheet.get_attributes_container()
+
+func get_status_controller() -> StatusController:
+	return status_controller

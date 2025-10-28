@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" load_steps=4 format=3 uid="uid://dmminl40ork1w"]
+
+[ext_resource type="Script" uid="uid://cyoko7ka4x3xi" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/StatusBasedSkillConditions/HasStatusSkillCondition.gd" id="1_fg1h3"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_mj1ly"]
+
+[sub_resource type="Resource" id="Resource_mj1ly"]
+script = ExtResource("1_fg1h3")
+metadata/_custom_type_script = "uid://cyoko7ka4x3xi"
+
+[resource]
+script = ExtResource("2_mj1ly")
+display_name = "Has Block Status"
+category_name = "Status"
+prototype = SubResource("Resource_mj1ly")
+metadata/_custom_type_script = "uid://c7jeogqcvfh22"

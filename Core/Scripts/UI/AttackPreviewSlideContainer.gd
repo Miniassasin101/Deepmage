@@ -26,7 +26,7 @@ func get_damage_preview(attack: AttackAction, attacker: Unit, target: Unit) -> D
 		dmg_attr = att.get_attribute_current_value(attack.damage_attribute)
 
 	var defense := tgt.get_defence() if tgt != null else 0
-	var base := attack.base_damage
+	var base := 0#attack.base_damage
 
 	var max_dmg := maxi(0, base + dmg_attr - defense)
 	var min_dmg := 1  # adjust if/when you add true spread
@@ -42,7 +42,7 @@ func fill_from_attack(attack: AttackAction, attacker: Unit, target: Unit) -> voi
 	if attack_name_label: attack_name_label.text = attack.action_name
 
 	var att := attacker.get_attributes_container()
-	var acc_names := attack.get_accuracy_attributes()
+	var acc_names: Array[String] = [""]#attack.get_accuracy_attributes()
 	var acc_attr := acc_names[0] if acc_names.size() >= 1 else ""
 	var acc_skill := acc_names[acc_names.size()-1] if acc_names.size() >= 2 else ""
 	var acc_val := 0

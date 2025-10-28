@@ -59,7 +59,6 @@ block_stop_effect = SubResource("Resource_n7lae")
 attack_range = 100.0
 prowess_attribute = "martial"
 defense_attribute = "parry"
-base_damage = 6
 action_name = "Throw Ball"
 selection_types = Array[ExtResource("6_0ta4n")]([ExtResource("7_q720e")])
 tags = Array[String](["melee", "attack"])

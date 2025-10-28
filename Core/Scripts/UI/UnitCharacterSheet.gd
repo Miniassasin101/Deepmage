@@ -43,7 +43,7 @@ extends Control
 @export var will_label: Label
 
 @export_category("Containers")
-@export var conditions_container: VBoxContainer
+@export var status_container: VBoxContainer
 @export var weapons_container: WeaponsContainer
 @export var items_container: HBoxContainer
 @export var tab_container: TabContainer
@@ -117,8 +117,8 @@ func _on_open_character_sheet(unit: Unit, tab_index: int = 0) -> void:
 		
 		# Update labels
 		_populate_from_unit(unit)
-		# Update conditions list.
-		#_populate_conditions(unit)
+		# Update statuses list.
+		#_populate_statuses(unit)
 		#populate_weapons_from_unit(unit)
 		show()
 		is_open = true
@@ -184,6 +184,8 @@ func _populate_from_unit(unit: Unit) -> void:
 	# Triggers the tactics manager to populate itself from the new unit
 	if tactics_manager_ui:
 		tactics_manager_ui.populate_from_unit(unit)
+	
+	_populate_statuses(unit)
 
 
 #func populate_weapons_from_unit(unit: Unit) -> void:
@@ -209,48 +211,49 @@ func _get_attribute_or_na(unit: Unit, attribute_name: String) -> String:
 
 	return str(int(attribute.get_current_modified_value()))
 
-""" Status Conditions and Weapons
 
-func _populate_conditions(unit: Unit) -> void:
-	# Clear the conditions container first.
-	for child in conditions_container.get_children():
+func _populate_statuses(unit: Unit) -> void:
+	# Clear the status container first.
+	for child in status_container.get_children():
 		child.queue_free()
 
-	if not is_instance_valid(unit) or not is_instance_valid(unit.conditions_manager):
+	if not is_instance_valid(unit) or not is_instance_valid(unit.status_controller):
 		return
 
-	var all_conditions: Array[Condition] = unit.conditions_manager.get_all_conditions()
+	var all_statuses: Array[Status] = unit.status_controller.statuses
 	
-	for condition in all_conditions:
-		var hbox = HBoxContainer.new()
-		conditions_container.add_child(hbox)
+	for status in all_statuses:
 
-		# Base text is the condition's name.
-		var text = condition.ui_name
+		# Base text is the status's name.
+		var text = status.ui_name
 		
+		if status.status_level >= 2:
+			text += " " + str(status.status_level)
+			
 		# Optionally display extra details such as rounds left.
-		if condition.has_method("get_remaining_rounds"):
-			var rounds_left = condition.call("get_remaining_rounds")
+		if status.has_method("get_remaining_rounds"):
+			var rounds_left = status.call("get_remaining_rounds")
 			text += " (%d rounds left)" % int(rounds_left)
 
-		# If the condition offers details, make it clickable.
-		if condition.has_method("get_details_text"):
+		# If the status offers details, make it clickable.
+		if status.has_method("get_details_text"):
 			var detail_button = Button.new()
 			detail_button.text = text
-			detail_button.pressed.connect(_on_condition_details_pressed.bind(condition))
-			hbox.add_child(detail_button)
+			detail_button.pressed.connect(_on_status_details_pressed.bind(status))
+			status_container.add_child(detail_button)
 		else:
 			var label = Label.new()
 			label.text = text
-			hbox.add_child(label)
+			status_container.add_child(label)
+			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
-func _on_condition_details_pressed(condition: Condition) -> void:
+func _on_status_details_pressed(status: Status) -> void:
 	var popup = AcceptDialog.new()
-	popup.title = condition.ui_name
+	popup.title = status.ui_name
 	
-	var info_str = "Condition: %s" % condition.ui_name
-	if condition.has_method("get_details_text"):
-		info_str += "\n" + condition.get_details_text()
+	var info_str = "Status: %s" % status.ui_name
+	if status.has_method("get_details_text"):
+		info_str += "\n" + status.get_details_text()
 	else:
 		info_str += "\n(No extra information available.)"
 		
@@ -258,6 +261,8 @@ func _on_condition_details_pressed(condition: Condition) -> void:
 	UILayer.instance.add_child(popup)
 	popup.popup_centered()
 
+
+""" Weapon Details
 func show_weapon_details_popup(weapon: Weapon) -> void:
 	# Shows a popup with detailed weapon information.
 	assert(weapon is Weapon)
@@ -271,8 +276,6 @@ func show_weapon_details_popup(weapon: Weapon) -> void:
 	var category_label = Label.new()
 	category_label.text = "Category: %s" % weapon.category
 	weapon_info_container.add_child(category_label)
-
-
 
 
 	if weapon.traits.size() > 0:

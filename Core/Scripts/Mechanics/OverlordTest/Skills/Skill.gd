@@ -31,8 +31,17 @@ enum SkillType { ATTACK, SUPPORT, SABOTAGE, SPECIAL}
 ## Skill conditions that are fully editable by players.
 @export var external_skill_conditions: Array[SkillCondition] = []
 
-@export var external_condition_blueprints: Array[ConditionBlueprint] = []
-@export var target_preference_blueprints: Array[ConditionBlueprint] = []
+@export var external_condition_blueprints: Array[ConditionBlueprint] = []:
+	set(value):
+		external_condition_blueprints = value
+		_invalidate_condition_caches()
+		_setup_blueprint_listeners()
+
+@export var target_preference_blueprints: Array[ConditionBlueprint] = []:
+	set(value):
+		target_preference_blueprints = value
+		_invalidate_condition_caches()
+		_setup_blueprint_listeners()
 
 ## Type of lighter skill condition that will narrow down the pool of unit targets, but never to zero.
 @export var target_preferences: Array[TargetPreference] = []
@@ -52,6 +61,12 @@ enum SkillType { ATTACK, SUPPORT, SABOTAGE, SPECIAL}
 @export var tags: Array[String] = []
 
 
+# --- in Skill.gd (private runtime caches) ---
+var _external_conditions_cache: Array[SkillCondition] = []
+var _target_preferences_cache: Array[TargetPreference] = []
+var _condition_caches_built: bool = false
+
+
 
 ## Unit that owns the skill (set by Tactic when duplicating/assigning).
 var unit: Unit = null
@@ -65,7 +80,7 @@ func _init() -> void:
 # -----------------------------------------------------------------------------
 func set_unit(in_unit: Unit) -> void:
 	unit = in_unit
-	# TODO: Consider asserting non-null in release builds to catch setup bugs.
+	_setup_blueprint_listeners()
 
 
 func activate_skill() -> void:
@@ -167,9 +182,11 @@ func can_trigger_passive_skill(t_phase: SkillTriggerSystem.TriggerPhase, ctx: Di
 		return false
 	if t_phase != skill_trigger:
 		return false
-	
 	if is_disabled:
 		return false
+	
+	# NEW: give conditions the triggering context
+	_apply_context_to_all_conditions(ctx)
 	
 	# Enough PP?
 	if !check_ap_pp():
@@ -186,7 +203,17 @@ func can_trigger_passive_skill(t_phase: SkillTriggerSystem.TriggerPhase, ctx: Di
 
 	return true
 
-	
+func _apply_context_to_all_conditions(ctx: Dictionary) -> void:
+	_ensure_condition_caches_built()
+
+	for internal_condition in internal_skill_conditions:
+		if internal_condition != null:
+			internal_condition.set_context(ctx)
+
+	for cached_condition in _external_conditions_cache:
+		if cached_condition != null:
+			cached_condition.set_context(ctx)
+
 
 
 
@@ -209,24 +236,21 @@ func get_random_valid_unit() -> Unit:
 func select_preferred_target(valid_units: Array[Unit]) -> Unit:
 	if valid_units.is_empty():
 		return null
-
 	if valid_units.size() == 1:
 		return valid_units[0]
 
-	var pool: Array[Unit] = valid_units.duplicate()
+	var candidate_pool: Array[Unit] = valid_units.duplicate()
+	var preferences: Array[TargetPreference] = get_target_preferences()
 
-	if target_preference_blueprints.size() > 0:
-		for pref_b in target_preference_blueprints:
-			var pref: TargetPreference = pref_b.prototype
-			# Narrow only if more than one remains.
-			if pool.size() > 1 and pref:
-				var narrowed: Array[Unit] = pref.apply(self, pool)
-				# Safety: Do not accept an empty result; keep prior pool if so.
-				if narrowed.size() > 0:
-					pool = narrowed
+	if preferences.size() > 0:
+		for preference_rule in preferences:
+			if candidate_pool.size() > 1 and preference_rule != null:
+				var narrowed_pool: Array[Unit] = preference_rule.apply(self, candidate_pool)
+				if narrowed_pool.size() > 0:
+					candidate_pool = narrowed_pool
 
-	# If we still have more than one, choose randomly (predictable with seeded RNG if desired).
-	return pool.pick_random()
+	return candidate_pool.pick_random()
+
 
 
 ## Builds a list of all units that pass every condition in get_all_skill_conditions.
@@ -258,36 +282,66 @@ func check_conditions_against_units() -> bool:
 	return !valid_units.is_empty()
 
 
+func _invalidate_condition_caches() -> void:
+	_external_conditions_cache.clear()
+	_target_preferences_cache.clear()
+	_condition_caches_built = false
+
+func _ensure_condition_caches_built() -> void:
+	if _condition_caches_built:
+		return
+
+	# Build external conditions once
+	for blueprint_item in external_condition_blueprints:
+		if blueprint_item != null:
+			var instance_condition: SkillCondition = blueprint_item.instantiate_condition()
+			if instance_condition != null:
+				_external_conditions_cache.append(instance_condition)
+
+	# Build target preferences once
+	for blueprint_item in target_preference_blueprints:
+		if blueprint_item != null:
+			var condition_instance: SkillCondition = blueprint_item.instantiate_condition()
+			var preference_instance: TargetPreference = condition_instance as TargetPreference
+			if preference_instance != null:
+				_target_preferences_cache.append(preference_instance)
+
+	_condition_caches_built = true
+
+
+func _setup_blueprint_listeners() -> void:
+	# Rebuild caches whenever authoring changes at edit/runtime.
+	for blueprint_item in external_condition_blueprints:
+		if blueprint_item != null and !blueprint_item.changed.is_connected(_on_blueprint_changed):
+			blueprint_item.changed.connect(_on_blueprint_changed)
+	for blueprint_item in target_preference_blueprints:
+		if blueprint_item != null and !blueprint_item.changed.is_connected(_on_blueprint_changed):
+			blueprint_item.changed.connect(_on_blueprint_changed)
+
+
+func _on_blueprint_changed() -> void:
+	_invalidate_condition_caches()
+
+
+
 ## Returns a combination of the internal and external skill conditions.
 func get_all_skill_conditions() -> Array[SkillCondition]:
-	var all_skill_cond: Array[SkillCondition] = []
-	# Internal (live, non-editable)
-	all_skill_cond.append_array(internal_skill_conditions)
-	# External from blueprints
-	all_skill_cond.append_array(get_external_skill_conditions())
-	return all_skill_cond
+	_ensure_condition_caches_built()
+	var all_conditions: Array[SkillCondition] = []
+	all_conditions.append_array(internal_skill_conditions)
+	all_conditions.append_array(_external_conditions_cache)
+	return all_conditions
 
 
 func get_external_skill_conditions() -> Array[SkillCondition]:
-	var out_list: Array[SkillCondition] = []
-	for bp in external_condition_blueprints:
-		if bp != null:
-			var inst: SkillCondition = bp.instantiate_condition()
-			if inst != null:
-				out_list.append(inst)
-	return out_list
+	_ensure_condition_caches_built()
+	return _external_conditions_cache
 
 
 
 func get_target_preferences() -> Array[TargetPreference]:
-	var out_list: Array[TargetPreference] = []
-	for bp in target_preference_blueprints:
-		if bp != null:
-			var inst: SkillCondition = bp.instantiate_condition()
-			var pref: TargetPreference = inst as TargetPreference
-			if pref != null:
-				out_list.append(pref)
-	return out_list
+	_ensure_condition_caches_built()
+	return _target_preferences_cache
 
 
 func get_external_condition_blueprints() -> Array[ConditionBlueprint]:

@@ -36,7 +36,7 @@ gradient = SubResource("Gradient_sbgmx")
 
 [sub_resource type="Theme" id="Theme_32rw0"]
 
-[node name="UnitCharacterSheetUI" type="Control" node_paths=PackedStringArray("tactics_manager_ui", "unit_name_label", "speed_label", "jump_label", "posture_points_label", "experience_rolls_label", "movement_rate_label", "unused_label_1", "might_label", "endurance_label", "agility_label", "sense_label", "mind_label", "presence_label", "martial_label", "channel_label", "parry_label", "resist_label", "clash_label", "evade_label", "will_label", "conditions_container", "tab_container", "close_button")]
+[node name="UnitCharacterSheetUI" type="Control" node_paths=PackedStringArray("tactics_manager_ui", "unit_name_label", "speed_label", "jump_label", "posture_points_label", "experience_rolls_label", "movement_rate_label", "unused_label_1", "might_label", "endurance_label", "agility_label", "sense_label", "mind_label", "presence_label", "martial_label", "channel_label", "parry_label", "resist_label", "clash_label", "evade_label", "will_label", "status_container", "tab_container", "close_button")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 2.0
@@ -66,7 +66,7 @@ resist_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/Lo
 clash_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer4/VBoxContainer/PanelContainer3/UnusedLabel1")
 evade_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer2/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer/EvadeLabel")
 will_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/FightSkillsMarginContainer2/PanelContainer/VBoxContainer/GridContainer/MarginContainer6/PanelContainer/MarginContainer/VBoxContainer/WillLabel")
-conditions_container = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer3/PanelContainer/VboxContainer")
+status_container = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer5/PanelContainer/VboxContainer/StatusContainer")
 tab_container = NodePath("MarginContainer/TabContainer")
 close_button = NodePath("MarginContainer/CloseButton")
 
@@ -311,9 +311,9 @@ layout_mode = 2
 [node name="VboxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer5/PanelContainer"]
 layout_mode = 2
 
-[node name="ConditionLabel" type="Label" parent="MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer5/PanelContainer/VboxContainer"]
+[node name="StatusLabel" type="Label" parent="MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer5/PanelContainer/VboxContainer"]
 layout_mode = 2
-text = "Conditions"
+text = "Statuses"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -322,7 +322,7 @@ layout_mode = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_5lmja")
 
-[node name="ConditionsContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer5/PanelContainer/VboxContainer"]
+[node name="StatusContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer5/PanelContainer/VboxContainer"]
 layout_mode = 2
 
 [node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer"]

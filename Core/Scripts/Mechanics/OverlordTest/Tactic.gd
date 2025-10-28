@@ -5,23 +5,25 @@ extends Resource
 @export var passive_skills: Array[Skill] = []
 
 func make_skills_unique(owning_unit: Unit) -> void:
-	# Deep-duplicate active skills and bind their owning unit.
 	var new_actives: Array[Skill] = []
 	for original_skill in active_skills:
-		if !original_skill:
+		if original_skill == null:
 			continue
 		var duplicated_skill: Skill = original_skill.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
 		duplicated_skill.unit = owning_unit
+		duplicated_skill._invalidate_condition_caches()    # <-- add this
 		new_actives.append(duplicated_skill)
 	active_skills.assign(new_actives)
 
-	# Deep-duplicate passive skills and bind their owning unit.
-	new_actives = []
+	var new_passives: Array[Skill] = []
 	for original_passive in passive_skills:
+		if original_passive == null:
+			continue
 		var duplicated_passive: Skill = original_passive.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
 		duplicated_passive.unit = owning_unit
-		new_actives.append(duplicated_passive)
-	passive_skills.assign(new_actives)
+		duplicated_passive._invalidate_condition_caches()  # <-- add this
+		new_passives.append(duplicated_passive)
+	passive_skills.assign(new_passives)
 
 	# TODO: Consider a shared pool with reference counting if many units reuse identical skills.
 	# TODO: Validate tags/conditions on duplication and log authoring errors once.

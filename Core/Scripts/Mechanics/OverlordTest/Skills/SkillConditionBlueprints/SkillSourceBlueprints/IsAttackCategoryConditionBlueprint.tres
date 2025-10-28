@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" load_steps=4 format=3 uid="uid://5pamydsyd6mu"]
+
+[ext_resource type="Script" uid="uid://mvqtctoapw5t" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SkillSourceBasedSkillConditions/IsSourceSkillCategory.gd" id="1_tdxhe"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="1_ti1pl"]
+
+[sub_resource type="Resource" id="Resource_7indb"]
+script = ExtResource("1_tdxhe")
+metadata/_custom_type_script = "uid://mvqtctoapw5t"
+
+[resource]
+script = ExtResource("1_ti1pl")
+display_name = "Is Active"
+category_name = "Skill Use"
+prototype = SubResource("Resource_7indb")
+metadata/_custom_type_script = "uid://c7jeogqcvfh22"
