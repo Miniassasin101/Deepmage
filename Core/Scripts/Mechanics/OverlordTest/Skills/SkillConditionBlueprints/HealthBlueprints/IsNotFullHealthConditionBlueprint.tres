@@ -9,7 +9,7 @@ metadata/_custom_type_script = "uid://8h8ohogtwias"
 
 [resource]
 script = ExtResource("1_lxs4r")
-display_name = "HP <= 100%"
+display_name = "HP < 100%"
 category_name = "Health"
 prototype = SubResource("Resource_6u0g5")
 metadata/_custom_type_script = "uid://c7jeogqcvfh22"

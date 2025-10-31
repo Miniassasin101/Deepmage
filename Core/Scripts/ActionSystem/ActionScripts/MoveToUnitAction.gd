@@ -40,7 +40,7 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 
 
 
-func _begin_movement(targ_unit: Unit) -> void:
+func _begin_movement_dep(targ_unit: Unit) -> void:
 
 	# Target position is target unit
 	var path_pack: PathPackage = get_path_pack_to_unit(targ_unit)
@@ -77,6 +77,49 @@ func _begin_movement(targ_unit: Unit) -> void:
 	
 	_end_movement()
 	
+
+func _begin_movement(targ_unit: Unit) -> void:
+	# First, compute raw path to the target unit (we may replace it if needed).
+	var target_position: Vector3 = targ_unit.get_global_position()
+	var initial_pack: PathPackage = PathfindingSystem.instance.get_path_package(target_position, unit, true)
+	movement_curve = initial_pack.get_curve_3d_from_path()
+	curve_length = movement_curve.get_baked_length()
+
+	var max_travel_distance: float = curve_length
+
+	if limit_by_speed:
+		var attribute_speed: float = float(unit.get_attributes_container().get_attribute_current_value("speed"))
+		var world_units_per_turn: float = attribute_speed * 2.0  # your note about distance units
+		max_travel_distance = minf(max_travel_distance, world_units_per_turn)
+
+		# If the speed cap would land us inside someone, pick a safe alternate endpoint.
+		var _chosen_pack: PathPackage = _pick_safe_speed_limited_endpoint_for_unit(
+			targ_unit,
+			target_position,
+			max_travel_distance
+		)
+
+		# movement_curve and curve_length were set in the helper.
+		# If we didn’t collide, curve_length == clamped distance along 'movement_curve'.
+	else:
+		# When not limited by speed, still avoid overshooting directly into the target by a small margin if desired.
+		# (Optional) Keep your prior unit_avoid_radius trim if you like:
+		if unit_avoid_radius > 0.0:
+			curve_length = maxf(0.0, curve_length - unit_avoid_radius)
+
+	var move_controller: MovementController = unit.movement_controller
+	move_controller.animate_movement_along_curve(
+		move_speed,
+		movement_curve,
+		curve_length,
+		acceleration_timer,
+		rotation_acceleration_timer,   
+		stopping_distance,
+		rotate_speed
+	)
+
+	await move_controller.movement_complete
+	_end_movement()
 
 
 
@@ -168,4 +211,86 @@ func _is_too_close_to_any_unit(target_pos: Vector3, target_unit: Unit) -> bool:
 		if other.global_transform.origin.distance_to(target_pos) < unit_avoid_radius:
 			return true
 	return false
-#
+
+
+# Returns the unit that would overlap this position, or null if none.
+func _get_blocking_unit_at_position(test_position: Vector3) -> Unit:
+	var nearest_blocker: Unit = null
+	var nearest_dist_sq: float = INF
+	for other_unit in UnitManager.instance.get_all_units():
+		if other_unit == unit:
+			continue
+		var dist_sq: float = other_unit.global_transform.origin.distance_squared_to(test_position)
+		if dist_sq < unit_avoid_radius * unit_avoid_radius:
+			if dist_sq < nearest_dist_sq:
+				nearest_dist_sq = dist_sq
+				nearest_blocker = other_unit
+	return nearest_blocker
+
+
+# Returns true if a point is reachable within max_distance along nav path from the mover's current position.
+func _is_point_reachable_within(point_world: Vector3, max_distance: float) -> bool:
+	var path_pack: PathPackage = PathfindingSystem.instance.get_path_package(point_world, unit, true)
+	var path_length: float = path_pack.get_curve_3d_from_path().get_baked_length()
+	return path_length <= max_distance + 0.01  # tiny epsilon
+
+
+# Picks a safe endpoint if the speed-limited endpoint overlaps someone.
+# Prefers candidates closest to the original target position.
+func _pick_safe_speed_limited_endpoint_for_unit(target_unit: Unit, original_target_position: Vector3, max_distance: float) -> PathPackage:
+	var path_to_original: PathPackage = PathfindingSystem.instance.get_path_package(original_target_position, unit, true)
+	var original_curve: Curve3D = path_to_original.get_curve_3d_from_path()
+	var clamped_travel: float = minf(max_distance, original_curve.get_baked_length() - unit_avoid_radius)
+	var tentative_end: Vector3 = original_curve.sample_baked(maxf(clamped_travel, 0.0))
+
+	# If we don't collide at the end, just go there (truncate by speed).
+	var blocker: Unit = _get_blocking_unit_at_position(tentative_end)
+	if blocker == null or blocker == target_unit:
+		# Keep the original path, we will just animate with clamped length.
+		movement_curve = original_curve
+		curve_length = clamped_travel
+		return path_to_original
+
+	# We collide: sample radial points around the *blocking* unit, not necessarily the target.
+	var pf: PathfindingSystem = PathfindingSystem.instance
+	var ring_points: Array[Vector3] = pf.get_radial_points_surrounding_unit(
+		blocker, unit_avoid_radius, unit_avoid_sample_number
+	)
+
+	# Sort by closeness to the true target (so behavior feels intentional).
+	pf.sort_positions_by_distance_inplace(ring_points, original_target_position)
+
+	# Choose the first candidate that: (1) is not inside any unit, and (2) is reachable within max_distance.
+	for candidate in ring_points:
+		if !_is_too_close_to_any_unit_general(candidate):
+			if _is_point_reachable_within(candidate, max_distance):
+				var path_to_candidate: PathPackage = pf.get_path_package(candidate, unit, true)
+				movement_curve = path_to_candidate.get_curve_3d_from_path()
+				curve_length = movement_curve.get_baked_length()  # <= max_distance by construction
+				return path_to_candidate
+
+	# Fallback: walk back along the original path until we are clear (small step).
+	var backoff_step: float = 0.15
+	var backoff: float = clamped_travel
+	while backoff > 0.0:
+		var test_point: Vector3 = original_curve.sample_baked(backoff)
+		if _get_blocking_unit_at_position(test_point) == null:
+			movement_curve = original_curve
+			curve_length = backoff
+			return path_to_original
+		backoff -= backoff_step
+
+	# Last resort: stand still (should be extremely rare).
+	movement_curve = original_curve
+	curve_length = 0.0
+	return path_to_original
+
+
+# General collision check against all units (including the target unit).
+func _is_too_close_to_any_unit_general(test_position: Vector3) -> bool:
+	for other_unit in UnitManager.instance.get_all_units():
+		if other_unit == unit:
+			continue
+		if other_unit.global_transform.origin.distance_to(test_position) < unit_avoid_radius:
+			return true
+	return false
