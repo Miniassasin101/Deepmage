@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" load_steps=4 format=3 uid="uid://dwei3honii5dx"]
+
+[ext_resource type="Script" uid="uid://dl0qwxeagj5e2" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/HealthBasedSkillConditions/Thresholds/HPPercentAboveSkillCondition.gd" id="1_yscwh"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_g6jeq"]
+
+[sub_resource type="Resource" id="Resource_4fygd"]
+script = ExtResource("1_yscwh")
+threshold_01 = 0.5
+metadata/_custom_type_script = "uid://dl0qwxeagj5e2"
+
+[resource]
+script = ExtResource("2_g6jeq")
+display_name = "Is HP > 50%"
+category_name = "Health"
+prototype = SubResource("Resource_4fygd")
+metadata/_custom_type_script = "uid://c7jeogqcvfh22"

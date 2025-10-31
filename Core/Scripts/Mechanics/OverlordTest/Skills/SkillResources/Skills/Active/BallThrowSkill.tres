@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Skill" load_steps=31 format=3 uid="uid://daqruigl8pvlm"]
+[gd_resource type="Resource" script_class="Skill" load_steps=23 format=3 uid="uid://daqruigl8pvlm"]
 
 [ext_resource type="Resource" uid="uid://uwibxof05smc" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BallThrowPackage.tres" id="1_v103h"]
 [ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="2_0jww2"]
@@ -13,11 +13,6 @@
 [ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="10_wjstr"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="11_op8wp"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="12_gs1dv"]
-[ext_resource type="Script" uid="uid://csqgchb51x8ra" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreferenceScripts/HighestHPPercentPreference.gd" id="13_pmqhb"]
-[ext_resource type="Resource" uid="uid://d2sv84vr8osw2" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/HealthBlueprints/HighestHPPercentPreference.tres" id="13_uf3lu"]
-[ext_resource type="Script" uid="uid://brdj6bm0hkeej" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreferenceScripts/LowestHPPreference.gd" id="14_m0uwh"]
-[ext_resource type="Resource" uid="uid://bbq3mnqde65jw" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/HealthBlueprints/LowestHPPreference.tres" id="14_uf3lu"]
-[ext_resource type="Script" uid="uid://c2plcxqa66u67" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreferenceScripts/UnitTagPreference.gd" id="15_ydhnp"]
 
 [sub_resource type="Resource" id="Resource_gi5u1"]
 script = ExtResource("2_0jww2")
@@ -73,27 +68,12 @@ script = ExtResource("10_wjstr")
 range_var = 10.0
 metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
 
-[sub_resource type="Resource" id="Resource_7g53y"]
-script = ExtResource("13_pmqhb")
-metadata/_custom_type_script = "uid://csqgchb51x8ra"
-
-[sub_resource type="Resource" id="Resource_k8h5i"]
-script = ExtResource("14_m0uwh")
-metadata/_custom_type_script = "uid://brdj6bm0hkeej"
-
-[sub_resource type="Resource" id="Resource_o7bkt"]
-script = ExtResource("15_ydhnp")
-tag_to_prefer = "golden"
-metadata/_custom_type_script = "uid://c2plcxqa66u67"
-
 [resource]
 resource_name = "BallThrowSkillResource"
 script = ExtResource("11_op8wp")
 skill_name = "Ball Throw"
 action = SubResource("Resource_05afn")
 internal_skill_conditions = Array[ExtResource("8_pue87")]([SubResource("Resource_nhirw"), SubResource("Resource_jvs1f")])
-target_preference_blueprints = Array[ExtResource("8_rn01h")]([ExtResource("13_uf3lu"), ExtResource("14_uf3lu")])
-target_preferences = Array[ExtResource("12_gs1dv")]([SubResource("Resource_7g53y"), SubResource("Resource_k8h5i"), SubResource("Resource_o7bkt")])
 trait_1 = "Ranged 10"
 tags = Array[String](["ranged"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

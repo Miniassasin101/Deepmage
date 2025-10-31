@@ -1,6 +1,8 @@
 class_name IsSourceUserFactionSkillCondition
 extends SkillCondition
 
+# Checks to see if the user of the skill is a given faction
+
 enum FactionRelation { SELF, ALLY, ENEMY, ANY_NON_SELF }
 @export var relation: FactionRelation = FactionRelation.ENEMY
 
