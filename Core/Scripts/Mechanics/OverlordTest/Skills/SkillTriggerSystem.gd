@@ -21,21 +21,7 @@ func fire(_trigger_name: String, _context: Dictionary) -> void:
 	pass
 
 
-func get_chaining_units(trig_skill: Skill, trigger_phase: TriggerPhase) -> Dictionary[Unit, Skill]:
-	var units: Dictionary[Unit, Skill] = {}
-	
-	
-	for unit in TurnSystem.instance.initiative_queue:
-		if unit in TurnSystem.instance.used_p_skill_this_turn:
-			continue
-		var passive_skill: Skill = unit.tactics_controller.get_first_valid_passive_skill(trig_skill, trigger_phase)
-		if passive_skill:
-			units[unit] = passive_skill
-		
-		
-	
-	
-	return units
+
 
 
 func get_chaining_units_with_context(ctx: Dictionary) -> Dictionary[Unit, Skill]:

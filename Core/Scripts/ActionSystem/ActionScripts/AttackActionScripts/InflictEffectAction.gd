@@ -1,9 +1,11 @@
 class_name InflictEffectAction
 extends AttackAction
 
-
+# Effects that occur on the target unit
 @export var effects: Array[Effect] = []
 
+# Effects that occur on the user, separate from the target
+@export var self_effects: Array[Effect] = []
 
 
 
@@ -42,12 +44,15 @@ func do_resolve() -> void:
 	if cd.reaction and cd.reaction.has_method("on_impact"):
 		cd.reaction.on_impact()
 
-
+# Applies effects to their repsective targets.
 func apply_effects(user: Unit, target: Unit) -> void:
 	for effect in effects:
 		effect.set_context({"user": user, "target_unit": target})
 		effect.apply()
-		pass
+
+	for effect in self_effects:
+		effect.set_context({"user": user, "target_unit": user})
+		effect.apply()
 
 
 

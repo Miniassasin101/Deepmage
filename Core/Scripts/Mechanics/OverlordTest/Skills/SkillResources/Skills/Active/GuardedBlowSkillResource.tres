@@ -1,0 +1,79 @@
+[gd_resource type="Resource" script_class="Skill" load_steps=23 format=3 uid="uid://c06kje7dtwmgj"]
+
+[ext_resource type="Resource" uid="uid://8mq08eqitt0g" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/CapsuleBashPackage.tres" id="1_80chc"]
+[ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="2_q7dxf"]
+[ext_resource type="Script" uid="uid://dfqq4lgq8fr27" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="3_k7c11"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_dvqai"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="5_7vvxu"]
+[ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestAttackSkillResource.tres" id="5_w6fhd"]
+[ext_resource type="Script" uid="uid://b3xoc4esw8i4s" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/InflictEffectAction.gd" id="6_vf1dt"]
+[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="6_w6fhd"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="7_vf1dt"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="8_vfbb8"]
+[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="9_sr3vx"]
+[ext_resource type="Script" uid="uid://13akgn3nuj34" path="res://Deepmage/Core/Scripts/Mechanics/Effects/GrantBlockEffect.gd" id="9_vfbb8"]
+[ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="10_kinu8"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="11_fwyt4"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="12_wv3ex"]
+
+[sub_resource type="Resource" id="Resource_i7mlr"]
+script = ExtResource("2_q7dxf")
+strength = 0.12
+shake_time = 0.25
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_qr07x"]
+script = ExtResource("3_k7c11")
+duration = 0.108
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_cl0pr"]
+script = ExtResource("3_k7c11")
+duration = 0.211
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_sr3vx"]
+script = ExtResource("9_vfbb8")
+block_value = 20
+ui_name = &"Grant Block"
+metadata/_custom_type_script = "uid://13akgn3nuj34"
+
+[sub_resource type="Resource" id="Resource_kinu8"]
+script = ExtResource("6_vf1dt")
+self_effects = Array[ExtResource("4_dvqai")]([SubResource("Resource_sr3vx")])
+animation_package = ExtResource("1_80chc")
+fallback_skill = ExtResource("5_w6fhd")
+hit_anim_effect = SubResource("Resource_i7mlr")
+graze_anim_effect = SubResource("Resource_i7mlr")
+block_anim_effect = SubResource("Resource_i7mlr")
+hit_stop_effect = SubResource("Resource_cl0pr")
+graze_stop_effect = SubResource("Resource_qr07x")
+block_stop_effect = SubResource("Resource_qr07x")
+prowess_attribute = "martial"
+defense_attribute = "parry"
+action_name = "Effect Attack"
+selection_types = Array[ExtResource("5_7vvxu")]([ExtResource("6_w6fhd")])
+metadata/_custom_type_script = "uid://b3xoc4esw8i4s"
+
+[sub_resource type="Resource" id="Resource_eu7gh"]
+script = ExtResource("9_sr3vx")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_7kb16"]
+script = ExtResource("10_kinu8")
+range_var = 3.0
+metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
+
+[resource]
+resource_name = "GuardedBlowSkillResource"
+script = ExtResource("11_fwyt4")
+skill_name = "Guarded Blow"
+action = SubResource("Resource_kinu8")
+internal_skill_conditions = Array[ExtResource("8_vfbb8")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
+base_power = 50
+base_accuracy = 90
+crit_mod = -3
+trait_1 = "Melee"
+trait_2 = "Block"
+description = Array[String](["Attacks while granting self block."])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

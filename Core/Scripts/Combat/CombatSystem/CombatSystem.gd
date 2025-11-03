@@ -77,6 +77,7 @@ func declare_attack(action: AttackAction, attacker: Unit, defender: Unit, skill:
 	
 	# Set Skill
 	current_combat_event_data.skill = skill if skill != null else action.fallback_skill
+	
 
 	# High-level log of the attempt
 	CombatLog.instance.add_log()
@@ -138,6 +139,7 @@ func _resolve_attack_darkest_dungeon(action: Action, attacker: Unit, defender: U
 	
 	var is_crit: bool = roll_crit(crit_value)
 	
+	# roll damage floors the low and high damage, always rounding down if a decimal
 	var dmg_roll: int = roll_damage(modded_low_dmg, modded_high_dmg, is_crit)
 	
 	var is_hit: bool = roll_hit(acc_value)

@@ -7,7 +7,6 @@ enum RoundPhase { AI_PLANNING, PLAYER_PLANNING, RESOLUTION, CLEANUP }
 @export var unit_manager: UnitManager
 @export var leader_system: Node          # optional: apply leader skills during planning
 @export var enemy_ai_system: Node        # optional: your AI planner
-@export var action_resolver: Node        # optional: centralized action execution/reactions
 @export var skill_trigger_system: SkillTriggerSystem
 @export_category("Chaining")
 @export var chain_depth_limit: int = 8
@@ -184,6 +183,7 @@ func _enter_resolution_phase() -> void:
 	current_phase = RoundPhase.RESOLUTION
 	cycle_index = 0
 
+	CombatLog.instance.add_log("Resolution Phase")
 	# Repeat passes while any side has AP and actions available
 	while _has_viable_actions_remaining():
 		await _run_one_cycle()
@@ -194,7 +194,6 @@ func _enter_resolution_phase() -> void:
 			break
 		#await get_tree().create_timer(0.5).timeout
 
-	CombatLog.instance.add_log("Resolution Phase")
 	
 	# Round ends: cleanup → next round or combat end
 	_enter_cleanup_phase()
@@ -289,7 +288,7 @@ func _try_execute_unit_action(acting_unit: Unit) -> bool:
 	var chosen_context: Dictionary = {}
 	var use_skill_action: Action = null
 
-	var tactics_controller: Node = acting_unit.tactics_controller
+	var tactics_controller: TacticsController = acting_unit.tactics_controller
 	if tactics_controller:
 		use_skill_action = acting_unit.get_action_container().get_action_by_name("First Skill")
 
@@ -302,13 +301,9 @@ func _try_execute_unit_action(acting_unit: Unit) -> bool:
 	SkillTriggerSystem.instance.fire("BEFORE_ACTION", chosen_context)
 
 	# Execute (centralize damage, healing, status, multi-hit, etc.)
-	var ap_cost: int = 1
-	if chosen_context.has("ap_cost"):
-		ap_cost = int(chosen_context["ap_cost"])
 
 	var executed_ok: bool = await _resolve_action_and_reactions(acting_unit, use_skill_action, chosen_context)
-	if executed_ok:
-		acting_unit.get_attributes_container().change_attribute_current_value_by("active_points", -ap_cost)
+
 
 	# HOOK: after-action (follow-ups, procs, on-hit riders)
 	SignalBus.on_after_action.emit(acting_unit, chosen_action_id, chosen_context)
@@ -322,17 +317,94 @@ func _try_execute_unit_action(acting_unit: Unit) -> bool:
 
 
 
-func _resolve_action_and_reactions(user_unit: Unit, use_skill_action: Action, ctx: Dictionary) -> bool:
+func _resolve_action_and_reactions(user_unit: Unit, use_skill_action: Action, _ctx: Dictionary) -> bool:
 	# Reactions spend PP here (counters, guards, “before ally attacks”, “when targeted”, etc.)
 	# You can route to your CombatSystem or a new ActionResolver.
-	if action_resolver:
-		return action_resolver.call("resolve", user_unit, use_skill_action, ctx)
-	else:
-		user_unit.get_action_container().use_action(use_skill_action, user_unit)
-		await use_skill_action.on_action_ended
-		# HOOK example for a specific reaction:
-		# SkillTriggerSystem.instance.fire("BEFORE_HIT", {"user": user_unit, "ctx": ctx})
-		return true
+
+	var run_action: Action = user_unit.get_action_container().use_action(use_skill_action, user_unit)
+	await run_action.on_action_ended
+	# HOOK example for a specific reaction:
+	# SkillTriggerSystem.instance.fire("BEFORE_HIT", {"user": user_unit, "ctx": ctx})
+	return true
+
+
+
+
+func execute_active_skill_for_unit(acting_unit: Unit, explicit_skill: Skill = null) -> bool:
+	if acting_unit == null:
+		return false
+	if !acting_unit.is_alive():
+		return false
+
+	var chosen_skill: Skill = explicit_skill
+	if chosen_skill == null:
+		if acting_unit.tactics_controller == null:
+			return false
+		chosen_skill = acting_unit.tactics_controller.get_first_valid_active_skill()
+
+	if chosen_skill == null:
+		return false
+
+	if chosen_skill.unit == null:
+		chosen_skill.set_unit(acting_unit)
+
+	var target_unit: Unit = chosen_skill.get_random_valid_unit()
+	if target_unit == null:
+		CombatLog.instance.add_log("No valid target for " + chosen_skill.skill_name)
+		return false
+
+	var context: Dictionary = {
+		"skill": chosen_skill,
+		"target": target_unit
+	}
+
+	# BEFORE action hooks
+	SignalBus.on_before_action.emit(acting_unit, chosen_skill.skill_name, context)
+	SkillTriggerSystem.instance.fire("BEFORE_ACTION", context)
+
+	# BEFORE_SKILL_USED chain
+	await declare_skill(chosen_skill, target_unit)
+
+	# Run the skill's action (through resolver if present)
+	var did_resolve: bool = await _run_skill_action_core(acting_unit, chosen_skill, target_unit)
+
+	# AFTER_SKILL_USED chain
+	await after_skill_used(chosen_skill, target_unit)
+
+	# Ensure anyone awaiting the skill can continue
+	chosen_skill.end_skill()
+
+	# Spend AP only if it actually resolved
+	if did_resolve:
+		var ap_spend: int = chosen_skill.skill_cost
+		acting_unit.get_attributes_container().change_attribute_current_value_by("active_points", -ap_spend)
+
+	# AFTER action hooks
+	SignalBus.on_after_action.emit(acting_unit, chosen_skill.skill_name, context)
+	SkillTriggerSystem.instance.fire("AFTER_ACTION", {"user": acting_unit, "skill": chosen_skill, "ctx": context})
+
+	SignalBus.update_stat_bars.emit()
+	return did_resolve
+
+
+func _run_skill_action_core(user_unit: Unit, skill: Skill, target_unit: Unit) -> bool:
+	if user_unit == null:
+		return false
+	if skill == null:
+		return false
+	if target_unit == null:
+		return false
+	
+	var target_package: TargetPackage = Utilities.make_target_package(target_unit)
+	target_package.set_skill(skill)
+
+	var run_action: Action = user_unit.character_sheet.action_container.use_action(skill.action, target_package, true)
+	await run_action.on_action_ended
+	return true
+
+
+
+
 
 # Called by Skill.activate_skill BEFORE the Action runs.
 func declare_skill(declared_skill: Skill, target_unit: Unit) -> void:
@@ -523,27 +595,7 @@ func _make_passive_key(reactor_unit: Unit, passive_skill: Skill) -> String:
 	return str(reactor_unit.get_instance_id()) + ":" + str(passive_skill.get_instance_id())
 
 
-"""
-	var all_reactions_resolved: bool = false
-	var iter_num: int = 0
-	var chain_group: ChainGroup = ChainGroup.new()
 
-	while !all_reactions_resolved and iter_num <= 20:
-		iter_num += 1
-		var chaining_units: Dictionary[Unit, Skill] = skill_trigger_system.get_chaining_units(skill, skill_trigger_system.TriggerPhase.BEFORE_SKILL_USED)
-		if chaining_units.is_empty():
-			continue
-		
-		chain_group.chain_depth = iter_num
-		chain_group.s
-		
-		for key in chaining_units.keys():
-			var c_unit: Unit = key
-			var chained_skill: Skill = chaining_units[key]
-		
-
-	pass
-"""
 
 
 # ─────────────────────────────────────────────────────────────────────────────

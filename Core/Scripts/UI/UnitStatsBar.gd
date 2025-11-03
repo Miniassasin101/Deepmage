@@ -21,6 +21,7 @@ extends MarginContainer
 # Drift tweakable properties:
 @export var drift_amount: float = 20.0   # Pixels to drift right.
 @export var drift_duration: float = 2.0    # Duration (in seconds) for one half of the drift.
+@export var return_drift_duration: float = 0.4
 
 # Pulse tweakable properties:
 @export var pulse_amount: float = 0.8
@@ -145,7 +146,16 @@ func start_drift() -> void:
 # Call this function to stop the drift and reset the position.
 func stop_drift() -> void:
 	if abort_tween():
-		unit_stats_bar_content.set_position(base_position)
+		await drift_back()
+		abort_tween()
+		#unit_stats_bar_content.set_position(base_position)
+
+func drift_back() -> void:
+	drift_tween = get_tree().create_tween()
+	drift_tween.tween_property(unit_stats_bar_content, "position", base_position, return_drift_duration) \
+			   .set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	await drift_tween.finished
+
 
 func abort_tween() -> bool:
 	if drift_tween:

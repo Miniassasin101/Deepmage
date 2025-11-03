@@ -18,10 +18,12 @@ font_color = Color(1, 0.90999997, 0.90999997, 1)
 font_color = Color(0.84000003, 0.90133333, 1, 1)
 
 [node name="UnitStatsBar" type="MarginContainer" node_paths=PackedStringArray("unit_stats_bar_content", "unit_name_label", "initiative_score_label", "active_points_label", "passive_points_label", "mana_points_label", "health_text_label", "health_bar")]
-offset_left = 2.0
-offset_top = 2.0
-offset_right = 157.0
-offset_bottom = 69.0
+custom_minimum_size = Vector2(0, 123)
+anchors_preset = -1
+anchor_left = 0.0017361111
+anchor_top = 0.0030864198
+anchor_right = 0.13628472
+anchor_bottom = 0.19290124
 script = ExtResource("1_73dlo")
 unit_stats_bar_content = NodePath("UnitStatsBarContent")
 unit_name_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/UnitNameLabel")
@@ -36,6 +38,7 @@ red_shadowed_stylebox = ExtResource("3_ee32f")
 blue_shadowed_stylebox = ExtResource("4_mx6qg")
 red_flat_stylebox = ExtResource("5_afvsy")
 blue_flat_stylebox = ExtResource("3_cydlx")
+metadata/_edit_use_anchors_ = true
 
 [node name="UnitStatsBarContent" type="PanelContainer" parent="."]
 layout_mode = 2
@@ -50,6 +53,7 @@ theme_override_constants/margin_bottom = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UnitStatsBarContent/MarginContainer"]
 layout_mode = 2
+alignment = 1
 
 [node name="UnitNameLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer"]
 layout_mode = 2

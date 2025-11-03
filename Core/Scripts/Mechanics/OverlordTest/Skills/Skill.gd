@@ -108,10 +108,13 @@ func activate_skill() -> void:
 		await unit.get_tree().create_timer(1.2).timeout # Visual Processing time
 	else:
 		pass
+	
+	var t_pack: TargetPackage = Utilities.make_target_package(chosen_target)
+	t_pack.set_skill(self)
 
 	# If the Skill is bound to an Action, invoke it via the owner's action container.
 	if action:
-		var temp_action: Action = unit.character_sheet.action_container.use_action(action, chosen_target, true)
+		var temp_action: Action = unit.character_sheet.action_container.use_action(action, t_pack, true)
 		await temp_action.on_action_ended
 	
 	# Declare Skill End goes here
