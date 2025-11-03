@@ -24,6 +24,6 @@ func apply() -> void:
 	controller.add_status(block_status)
 
 	if show_text:
-		Utilities.spawn_text_line(target_unit, "Gained Block", Color.CORNFLOWER_BLUE)
+		Utilities.spawn_text_line(target_unit, "Gained Block", Color.AQUA)
 
 	emit_signal("effect_finished")

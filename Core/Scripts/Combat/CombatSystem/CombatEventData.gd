@@ -6,6 +6,8 @@ var attacker: Unit = null
 
 var defender: Unit = null
 
+# Skill
+var skill: Skill = null
 
 # Actions/Reactions
 var action: AttackAction = null
@@ -24,6 +26,10 @@ var is_graze: bool = false
 var is_hit: bool = true
 
 var net_hits: int = 0
+
+
+var initial_low_damage: int = 0
+var initial_high_damage: int = 0
 
 var effective_damage: int = 0
 

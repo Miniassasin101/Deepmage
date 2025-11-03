@@ -1,12 +1,68 @@
-[gd_resource type="Resource" script_class="Skill" load_steps=10 format=3 uid="uid://c74afabw0rnw0"]
+[gd_resource type="Resource" script_class="Skill" load_steps=22 format=3 uid="uid://c74afabw0rnw0"]
 
-[ext_resource type="Resource" uid="uid://cuudvrampevcg" path="res://Deepmage/Core/Resources/ActionResources/TestAttackActionResource.tres" id="1_bn8j8"]
+[ext_resource type="Resource" uid="uid://8mq08eqitt0g" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/CapsuleBashPackage.tres" id="1_8xw5c"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_jmca0"]
+[ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="2_othq3"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="2_r8df1"]
+[ext_resource type="Script" uid="uid://dfqq4lgq8fr27" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="3_injnt"]
+[ext_resource type="Script" uid="uid://caggmbav8c0ky" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/AttackAction.gd" id="4_drn3v"]
 [ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="4_fjrh5"]
 [ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="5_slhqu"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="5_vus8r"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="6_bthyw"]
+[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="6_qhete"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="7_rv018"]
+
+[sub_resource type="Resource" id="Resource_2me7b"]
+script = ExtResource("2_othq3")
+timing = 0.55
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_6kg6w"]
+script = ExtResource("3_injnt")
+duration = 0.217
+timing = 0.6
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_vavmt"]
+script = ExtResource("2_othq3")
+strength = 0.1
+shake_time = 0.3
+timing = 0.55
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_52xn1"]
+script = ExtResource("3_injnt")
+duration = 0.138
+timing = 0.6
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_g1p88"]
+script = ExtResource("2_othq3")
+timing = 0.55
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_jfhli"]
+script = ExtResource("3_injnt")
+duration = 0.349
+timing = 0.6
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_nmg0e"]
+script = ExtResource("4_drn3v")
+animation_package = ExtResource("1_8xw5c")
+hit_anim_effect = SubResource("Resource_g1p88")
+graze_anim_effect = SubResource("Resource_vavmt")
+block_anim_effect = SubResource("Resource_2me7b")
+hit_stop_effect = SubResource("Resource_jfhli")
+graze_stop_effect = SubResource("Resource_52xn1")
+block_stop_effect = SubResource("Resource_6kg6w")
+prowess_attribute = "martial"
+defense_attribute = "parry"
+action_name = "Test Bash"
+selection_types = Array[ExtResource("5_vus8r")]([ExtResource("6_qhete")])
+tags = Array[String](["melee", "attack"])
+metadata/_custom_type_script = "uid://caggmbav8c0ky"
 
 [sub_resource type="Resource" id="Resource_eu7gh"]
 script = ExtResource("4_fjrh5")
@@ -21,7 +77,7 @@ metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
 resource_name = "BashSkillResource"
 script = ExtResource("6_bthyw")
 skill_name = "Bash"
-action = ExtResource("1_bn8j8")
+action = SubResource("Resource_nmg0e")
 internal_skill_conditions = Array[ExtResource("2_r8df1")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
 trait_1 = "Melee"
 description = Array[String](["Moves towards then Bashes a unit in range 5"])

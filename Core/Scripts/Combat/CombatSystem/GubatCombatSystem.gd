@@ -1,4 +1,4 @@
-## [b]Class:[/b] CombatSystem
+## [b]Class:[/b] GubatCombatSystem
 ## [i]Central coordinator for resolving combat actions using a Gubat Banwa–style flow.[/i]
 ## 
 ## [b]Responsibilities[/b][br]
@@ -8,20 +8,18 @@
 ## • Emits detailed logs when [member combat_debug_enabled] is [code]true[/code].
 ##
 ## [b]Design Notes[/b][br]
-## • Singleton-like: first instance sets [code]CombatSystem.instance[/code]; later instances self-remove in [method Node._ready].[br]
+## • Singleton-like: first instance sets [code]GubatCombatSystem.instance[/code]; later instances self-remove in [method Node._ready].[br]
 ## • Core resolution lives in [method _resolve_attack_gubat_banwa]. Per-die meta is handled by [method _roll_single_die_meta].[br]
 ## • A legacy single-die helper exists as [method _process_single_violence_die] (kept for reference/tests).[br]
 ## • Inline comments explain the sequence; documentation comments use BBCode so tooltips render nicely in the Inspector and class reference.
-class_name CombatSystem
+class_name GubatCombatSystem
 extends Node
-
 
 ## If [code]true[/code], emit a step-by-step debug dump to [code]CombatLog[/code] during resolution.
 @export var combat_debug_enabled: bool = false
 
 ## Optional reference to a system that handles skill-related triggers, hooks, and events.
 @export var skill_trigger_system: SkillTriggerSystem = null
-@export var fallback_skill: Skill = null
 
 @export_category("Libraries")
 ## Reference to the global [Class SkillLibrary] used for skill lookups and shared data.
@@ -30,24 +28,18 @@ extends Node
 ## Reference to the global [Class ConditionLibrary] used for condition lookups and shared data.
 @export var condition_library: ConditionLibrary = null
 
-@export_category("Constants")
-@export var crit_dmg_multiplier: float = 1.5
-
-
 ## The working record for the currently executing combat event; populated throughout resolution.
 var current_combat_event_data: CombatEventData = null
 
-
-
-## Singleton-style static pointer to the active [Class CombatSystem] instance.
-static var instance: CombatSystem = null
+## Singleton-style static pointer to the active [Class GubatCombatSystem] instance.
+static var instance: GubatCombatSystem = null
 
 
 ## [b]Engine callback:[/b] sets the singleton [member instance] and guards against duplicates.
 ## If another instance exists, logs an error via [method Object.push_error] and frees this node with [method Node.queue_free].
 func _ready() -> void:
 	if instance != null:
-		push_error("There's more than one CombatSystem! - " + str(instance))
+		push_error("There's more than one GubatCombatSystem! - " + str(instance))
 		queue_free()
 		return
 	instance = self
@@ -66,7 +58,7 @@ func _ready() -> void:
 ## • May spawn floating text via [code]Utilities.spawn_text_line[/code].[br]
 ## • May enqueue/resolve a Reaction on the defender via their [code]ActionContainer[/code].
 func declare_attack(action: AttackAction, attacker: Unit, defender: Unit, skill: Skill = null) -> void:
-	current_combat_event_data = CombatEventData.new()
+	current_combat_event_data = CombatEventData.new()#
 
 	# Set combat event participants 
 	current_combat_event_data.attacker = attacker
@@ -74,149 +66,27 @@ func declare_attack(action: AttackAction, attacker: Unit, defender: Unit, skill:
 
 	# Set Combat Event Action
 	current_combat_event_data.action = action
-	
-	# Set Skill
-	current_combat_event_data.skill = skill if skill != null else action.fallback_skill
 
 	# High-level log of the attempt
 	CombatLog.instance.add_log()
-	CombatLog.instance.add_log(attacker.ui_name + " attacks " + defender.ui_name + " with " + current_combat_event_data.skill.skill_name)
+	CombatLog.instance.add_log(attacker.ui_name + " attacks " + defender.ui_name + " with " + action.action_name)
 
 	# Hook point: “ally attacked”, “enemy attacked”, etc. (left as a placeholder)
 	
+	# Optional: prompt target’s reaction animation if this is an [i]attack[/i]-tagged action
+	if action.tags.has("attack"):
+		#await prompt_player_reaction(defender)
+		pass
 
 	# 2) Resolve using Gubat Banwa steps
 	if action.is_attack == false:
 		return
-	#await _resolve_attack_gubat_banwa(action, attacker, defender, skill)
-	_resolve_attack_darkest_dungeon(action, attacker, defender, current_combat_event_data.skill)
-	
-	await determine_reaction(current_combat_event_data)
-	
-	_debug_dump_current_event()
-	
+	await _resolve_attack_gubat_banwa(action, attacker, defender)
+
 	# Execute a queued Reaction (if any)
 	if current_combat_event_data.reaction:
 	
 		current_combat_event_data.reaction.resolve_reaction()
-
-
-func _resolve_attack_darkest_dungeon(action: Action, attacker: Unit, defender: Unit, skill: Skill) -> void:
-	var cd: CombatEventData = current_combat_event_data
-	
-	# Reset
-	cd.per_die_results.clear()
-	cd.total_initial_damage = 0
-	cd.total_after_defense = 0
-	cd.any_die_hit = false
-	cd.was_crit_any = false
-	cd.chained_count = 0
-	
-	var attacker_attrs := attacker.get_attributes_container()
-	var defender_attrs := defender.get_attributes_container()
-	
-	var might_value: int = attacker_attrs.get_attribute_current_value(action.prowess_attribute)
-	var defense_value: int = 0#defender_attrs.get_attribute_current_value(action.defense_attribute)   # PAR/RES
-	var acc_value: int = attacker_attrs.get_attribute_current_value("accuracy")
-	var evd_value: int = defender_attrs.get_attribute_current_value("evade")                    # EVD
-	var crit_value: int = 10 + skill.crit_mod
-	
-	acc_value += skill.base_accuracy + 5
-	acc_value -= evd_value
-	
-	var weapon_low_dmg: int = 1
-	var weapon_high_dmg: int = 3
-	
-	var min_base_dmg: int = weapon_low_dmg + might_value
-	var max_base_dmg: int = weapon_high_dmg + might_value
-	
-	var base_power: float = float(skill.base_power)
-	var damage_multiplier: float = base_power/100
-	
-	var modded_low_dmg: float = min_base_dmg * damage_multiplier
-	var modded_high_dmg: float = max_base_dmg * damage_multiplier
-	
-	var is_crit: bool = roll_crit(crit_value)
-	
-	var dmg_roll: int = roll_damage(modded_low_dmg, modded_high_dmg, is_crit)
-	
-	var is_hit: bool = roll_hit(acc_value)
-	
-	
-	
-	cd.is_hit = is_hit
-	cd.was_crit_any = is_crit
-	cd.is_success = is_hit
-	cd.is_critical_success = is_crit
-	cd.is_graze = false
-	cd.initial_low_damage = int(modded_low_dmg)
-	cd.initial_high_damage = int(modded_high_dmg)
-	cd.total_initial_damage = dmg_roll
-	
-	
-	# Combat Logs
-	if not is_hit:
-		CombatLog.instance.add_log("Evaded")
-	else:
-		if is_crit:
-			CombatLog.instance.add_log("Critical Hit!")
-		CombatLog.instance.add_log("Initial Damage: %d" % cd.total_initial_damage)
-		
-	
-	# NOTE: condition and effect Damage modifiers here (ex: +50% dmg vs Soaked targets)
-	
-	# NOTE: Protection and defense calculations here
-	cd.effective_damage = dmg_roll
-	
-	# === NEW: let statuses (e.g., Block) modify the damage at the precise step ===
-	var defender_statuses: StatusController = defender.get_status_controller()
-	if defender_statuses != null:
-		defender_statuses.before_damage_applied(cd)
-	
-
-
-
-
-func roll_crit(crit_chance: int) -> bool:
-	if crit_chance <= 0:
-		return false
-	
-	if crit_chance >= 100:
-		return true
-	
-	var random_num: int = randi_range(1, 100)
-	
-	if random_num <= crit_chance:
-		return true
-	
-	return false
-
-
-# Roll Under hit chance function
-func roll_hit(hit_chance: int) -> bool:
-	if hit_chance >= 100:
-		return true
-	if hit_chance <= 0:
-		return false
-	
-	var rolled_num: int = randi_range(1, 100)
-	
-	if rolled_num <= hit_chance:
-		return true
-	
-	return false
-
-
-func roll_damage(low_dmg: float, high_dmg: float, is_crit: bool) -> int:
-	
-	if is_crit:
-		return int(high_dmg * crit_dmg_multiplier)
-	
-	var rolled_num: int = randi_range(int(low_dmg), int(high_dmg))
-	
-	return rolled_num
-	
-	
 
 
 ## [b]Core GB-style resolution[/b]: multi-die roll with EVD gate, melee chain on top-or-higher,
@@ -498,62 +368,6 @@ func determine_reaction(cd: CombatEventData) -> void:
 ## Emit a multi-section debug dump to [code]CombatLog[/code]: header, core stats, gates snapshot,
 ## per-die lines, totals/flags, and the chosen Reaction (if any). Only runs if [member combat_debug_enabled] is true.
 func _debug_dump_current_event() -> void:
-	if not combat_debug_enabled:
-		return
-	var cd := current_combat_event_data
-	if cd == null:
-		return
-
-	var attacker_name := cd.attacker.ui_name if cd.attacker else "<none>"
-	var defender_name := cd.defender.ui_name if cd.defender else "<none>"
-	var action_name := cd.action.action_name if cd.action else "<none>"
-	var skill_name := cd.skill.skill_name if cd.skill else "<none>"
-
-	# Header
-	var header := "[DEBUG] %s -> %s  (%s)" % [attacker_name, defender_name, skill_name]
-	CombatLog.instance.add_log(header)
-
-	# Core stats
-	var core := (
-		"  Type: %s | Base DMG: %d - %d | Skill: %s | DEF: %s | Melee: %s"
-		% [
-			cd.action.get_class(),
-			cd.initial_low_damage,
-			cd.initial_high_damage,
-			cd.action.prowess_attribute,
-			cd.action.defense_attribute,
-			str(cd.action.is_melee_attack)
-		]
-	)
-	CombatLog.instance.add_log(core)
-
-
-	# Gates snapshot (at resolution)
-	var attacker_attrs := cd.attacker.get_attributes_container()
-	var defender_attrs := cd.defender.get_attributes_container()
-	var prowess_val := attacker_attrs.get_attribute_current_value(cd.action.prowess_attribute)
-	var defense_val := defender_attrs.get_attribute_current_value(cd.action.defense_attribute)
-	var evd_val := defender_attrs.get_attribute_current_value("evade")
-
-	var gates := "  Gates: %s=%d | %s=%d | EVD=%d" % [cd.action.prowess_attribute.to_pascal_case(), prowess_val, cd.action.defense_attribute.to_pascal_case(), defense_val, evd_val]
-	CombatLog.instance.add_log(gates)
-
-
-	var flags := "  Flags: is_hit=%s | is_success=%s | is_crit=%s | is_graze=%s | dmg=%d" % [
-		str(cd.is_hit), str(cd.is_success), str(cd.is_critical_success), str(cd.is_graze), cd.effective_damage
-	]
-	CombatLog.instance.add_log(flags)
-
-
-	# Reaction (if any)
-	if cd.reaction != null:
-		var react_line: String = "  Reaction: %s" % [cd.reaction.action_name]
-		CombatLog.instance.add_log(react_line)
-
-
-## Emit a multi-section debug dump to [code]CombatLog[/code]: header, core stats, gates snapshot,
-## per-die lines, totals/flags, and the chosen Reaction (if any). Only runs if [member combat_debug_enabled] is true.
-func _debug_dump_current_event_dep() -> void:
 	if not combat_debug_enabled:
 		return
 	var cd := current_combat_event_data

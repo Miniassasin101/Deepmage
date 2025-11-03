@@ -1,7 +1,8 @@
-[gd_scene load_steps=73 format=3 uid="uid://14nkak1a1qkg"]
+[gd_scene load_steps=60 format=3 uid="uid://14nkak1a1qkg"]
 
 [ext_resource type="Script" uid="uid://ceujy1qm0i6o6" path="res://Deepmage/Core/Scripts/Units/CharacterSheet.gd" id="1_rgld4"]
 [ext_resource type="Script" uid="uid://cusgogua72ojh" path="res://Deepmage/Core/Scripts/ActionSystem/ActionContainer.gd" id="2_o1iyq"]
+[ext_resource type="Resource" uid="uid://cdkwk7budcsou" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/AttributesProfiles/BaseDarkestAttributesProfile.tres" id="2_semri"]
 [ext_resource type="Script" uid="uid://cvislitkwpg12" path="res://Deepmage/Core/Scripts/ActionSystem/Action.gd" id="3_qntpm"]
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="5_p3ymn"]
 [ext_resource type="Script" uid="uid://doahtvq8r205k" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextOnUnitAction.gd" id="6_p3uej"]
@@ -28,141 +29,12 @@
 [ext_resource type="Script" uid="uid://caggmbav8c0ky" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/AttackAction.gd" id="23_qnrxa"]
 [ext_resource type="Resource" uid="uid://dci1vghxdl7pd" path="res://Deepmage/Core/Resources/ActionResources/TestRangedAttackActionResource.tres" id="24_2en3j"]
 [ext_resource type="Script" uid="uid://p4bb1ulowyag" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributesContainer.gd" id="25_ui78x"]
+[ext_resource type="Resource" uid="uid://ov11t88e15s8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestProjectileThrow.tres" id="28_dpcrq"]
 [ext_resource type="Script" uid="uid://cpj8k2txj2cww" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/UseSkillAction.gd" id="28_vcafi"]
 [ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestAttackSkillResource.tres" id="29_ucxv2"]
 [ext_resource type="Resource" uid="uid://ceu3eynl7qehx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/RushToUnitSkillResource.tres" id="30_ucxv2"]
 [ext_resource type="Script" uid="uid://dka6hmfmjlgvl" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/UseFirstSkillAction.gd" id="31_xyrbs"]
-[ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="33_rmt2h"]
-[ext_resource type="Script" uid="uid://dgwgvxp80lmhb" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributesProfile.gd" id="34_hd7qr"]
 [ext_resource type="Resource" uid="uid://btrredbp8en14" path="res://Deepmage/Core/Resources/ActionResources/InflictEffectActionResources/BraceSelfActionResource.tres" id="34_semri"]
-
-[sub_resource type="Resource" id="Resource_336d5"]
-resource_local_to_scene = true
-resource_name = "Posture"
-script = ExtResource("33_rmt2h")
-attribute_name = "posture"
-attribute_type = 2
-current_value = 18
-maximum_value = 20
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_x4bhx"]
-resource_local_to_scene = true
-resource_name = "Speed"
-script = ExtResource("33_rmt2h")
-attribute_name = "speed"
-attribute_type = 2
-current_value = 4
-maximum_value = 4
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_m1qim"]
-resource_local_to_scene = true
-resource_name = "Jump"
-script = ExtResource("33_rmt2h")
-attribute_name = "jump"
-attribute_type = 2
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_p6f6u"]
-resource_local_to_scene = true
-resource_name = "Evade"
-script = ExtResource("33_rmt2h")
-attribute_name = "evade"
-attribute_type = 2
-current_value = 1
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_51q8q"]
-resource_local_to_scene = true
-resource_name = "Martial"
-script = ExtResource("33_rmt2h")
-attribute_name = "martial"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_allnq"]
-resource_local_to_scene = true
-resource_name = "Channel"
-script = ExtResource("33_rmt2h")
-attribute_name = "channel"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_qdwhh"]
-resource_local_to_scene = true
-resource_name = "Parry"
-script = ExtResource("33_rmt2h")
-attribute_name = "parry"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_862d3"]
-resource_local_to_scene = true
-resource_name = "Resist"
-script = ExtResource("33_rmt2h")
-attribute_name = "resist"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_22ak0"]
-resource_local_to_scene = true
-resource_name = "Mana"
-script = ExtResource("33_rmt2h")
-attribute_name = "mana"
-attribute_type = 2
-current_value = 10
-maximum_value = 10
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_cel8m"]
-resource_local_to_scene = true
-resource_name = "ActivePoints"
-script = ExtResource("33_rmt2h")
-attribute_name = "active_points"
-attribute_type = 2
-current_value = 2
-base_value = 2
-maximum_value = 4
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_sgxdm"]
-resource_local_to_scene = true
-resource_name = "PassivePoints"
-script = ExtResource("33_rmt2h")
-attribute_name = "passive_points"
-attribute_type = 2
-current_value = 2
-base_value = 2
-maximum_value = 4
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_f2qps"]
-resource_local_to_scene = true
-resource_name = "Initiative"
-script = ExtResource("33_rmt2h")
-attribute_name = "initiative"
-attribute_type = 2
-current_value = 15
-maximum_value = 15
-minimum_value = -100
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_0fy5k"]
-resource_local_to_scene = true
-script = ExtResource("34_hd7qr")
-attributes = Array[ExtResource("33_rmt2h")]([SubResource("Resource_336d5"), SubResource("Resource_x4bhx"), SubResource("Resource_m1qim"), SubResource("Resource_p6f6u"), SubResource("Resource_51q8q"), SubResource("Resource_allnq"), SubResource("Resource_qdwhh"), SubResource("Resource_862d3"), SubResource("Resource_22ak0"), SubResource("Resource_cel8m"), SubResource("Resource_sgxdm"), SubResource("Resource_f2qps")])
-metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
 
 [sub_resource type="Resource" id="Resource_bbcsa"]
 script = ExtResource("5_p3ymn")
@@ -311,6 +183,7 @@ metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 [sub_resource type="Resource" id="Resource_bqf7c"]
 script = ExtResource("23_qnrxa")
 animation_package = SubResource("Resource_30gbb")
+fallback_skill = ExtResource("28_dpcrq")
 hit_anim_effect = SubResource("Resource_yf7ro")
 graze_anim_effect = SubResource("Resource_pkdr8")
 block_anim_effect = SubResource("Resource_pcmaa")
@@ -328,7 +201,7 @@ metadata/_custom_type_script = "uid://caggmbav8c0ky"
 [sub_resource type="Resource" id="Resource_lqkdn"]
 script = ExtResource("28_vcafi")
 skill = ExtResource("29_ucxv2")
-action_name = "Test Skill"
+action_name = "Bash Skill"
 selection_types = Array[ExtResource("5_p3ymn")]([ExtResource("7_0fy5k")])
 metadata/_custom_type_script = "uid://cpj8k2txj2cww"
 
@@ -349,7 +222,7 @@ metadata/_custom_type_script = "uid://dka6hmfmjlgvl"
 script = ExtResource("1_rgld4")
 action_container = NodePath("ActionContainer")
 attributes_container = NodePath("AttributesContainer")
-attributes_profile = SubResource("Resource_0fy5k")
+attributes_profile = ExtResource("2_semri")
 
 [node name="ActionContainer" type="Node" parent="."]
 script = ExtResource("2_o1iyq")

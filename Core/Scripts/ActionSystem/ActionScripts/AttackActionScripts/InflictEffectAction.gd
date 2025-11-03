@@ -25,12 +25,6 @@ func do_resolve() -> void:
 		return
 	
 	
-	
-	# === NEW: let statuses (e.g., Block) modify the damage at the precise step ===
-	var target_statuses: StatusController = target_unit.get_status_controller()
-	if target_statuses != null:
-		target_statuses.before_damage_applied(cd)
-	# === END NEW ===
 
 	
 	# OPTIONAL: switch to Posture track later.

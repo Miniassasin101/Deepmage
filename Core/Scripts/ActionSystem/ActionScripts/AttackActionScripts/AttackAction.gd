@@ -14,6 +14,7 @@ extends Action
 @export_category("Action Variables")
 @export var animation_package: AnimationPackage
 @export var is_attack: bool = true
+@export var fallback_skill: Skill = null
 
 @export_group("Camera Shake Effects")
 @export var hit_anim_effect: CameraShakeAnimationEffect
@@ -36,6 +37,8 @@ extends Action
 @export var prowess_attribute: String = "might"
 @export var defense_attribute: String = "endurance"
 @export var uses_area_pattern: bool = false
+
+
 
 
 
@@ -73,6 +76,7 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 		return
 
 	var target_unit: Unit = targ_pack.get_unit()
+	var skill: Skill = targ_pack.get_skill()
 
 	# 1) Move into range if needed
 	await move_to_target_unit(target_unit)
@@ -83,7 +87,7 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	await rotate_towards_target(target_unit)
 
 	# 3) Declare attack (triggers reaction prompt + tests)
-	await declare_attack(target_unit)
+	await declare_attack(target_unit, skill)
 
 	# 5) Build sync with chosen reaction (if any)
 	var reaction_anim_pack: AnimationPackage = get_reaction_anim_pack()
@@ -124,8 +128,8 @@ func move_to_target_unit(targ_unit: Unit) -> void:
 	return
 
 ## Declares the attack to the combat system (prompts for defender reactions & runs hit tests).
-func declare_attack(target_unit: Unit) -> void:
-	await CombatSystem.instance.declare_attack(self, unit, target_unit)
+func declare_attack(target_unit: Unit, skill: Skill = null) -> void:
+	await CombatSystem.instance.declare_attack(self, unit, target_unit, skill)
 
 ## Rotates the unit to face the target position, then waits for pre-rotation completion.
 func rotate_towards_target(target: Unit) -> void:
@@ -209,11 +213,7 @@ func do_resolve() -> void:
 		return
 
 
-	# === NEW: let statuses (e.g., Block) modify the damage at the precise step ===
-	var defender_statuses: StatusController = defender.get_status_controller()
-	if defender_statuses != null:
-		defender_statuses.before_damage_applied(cd)
-	# === END NEW ===
+
 
 
 	# OPTIONAL: switch to Posture track later.

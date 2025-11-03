@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="AttackAction" load_steps=13 format=3 uid="uid://dccj02olf2ba7"]
+[gd_resource type="Resource" script_class="AttackAction" load_steps=14 format=3 uid="uid://dccj02olf2ba7"]
 
 [ext_resource type="Resource" uid="uid://dq74fk7miqg1w" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/LongCapsuleBashPackage.tres" id="1_silip"]
 [ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="2_rkfpy"]
 [ext_resource type="Script" uid="uid://dfqq4lgq8fr27" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="3_cugow"]
 [ext_resource type="Script" uid="uid://caggmbav8c0ky" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/AttackAction.gd" id="4_8fqro"]
+[ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestAttackSkillResource.tres" id="4_rkfpy"]
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="5_dqh0h"]
 [ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="6_wt0sl"]
 
@@ -46,6 +47,7 @@ metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 [resource]
 script = ExtResource("4_8fqro")
 animation_package = ExtResource("1_silip")
+fallback_skill = ExtResource("4_rkfpy")
 hit_anim_effect = SubResource("Resource_g1p88")
 graze_anim_effect = SubResource("Resource_vavmt")
 block_anim_effect = SubResource("Resource_2me7b")

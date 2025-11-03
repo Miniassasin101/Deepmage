@@ -123,6 +123,8 @@ func set_movement_target(movement_target: Vector3):
 	
 
 func flash_white(flash_time: float = hit_flash_time) -> void:
+	if flash_time <= 0.1:
+		flash_time = 0.1
 	var unit_meshes: Array[MeshInstance3D] = get_all_unit_meshes()
 	var saved_mat_overrides: Array[StandardMaterial3D] = []
 	for mesh in unit_meshes:

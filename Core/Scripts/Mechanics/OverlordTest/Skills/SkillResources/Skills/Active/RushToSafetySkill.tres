@@ -27,4 +27,5 @@ action = ExtResource("1_fxho1")
 skill_type = 1
 trait_1 = "Movement"
 trait_2 = "Retreat"
+trait_3 = "Trait 1"
 metadata/_custom_type_script = "uid://c57p01pt3qmue"

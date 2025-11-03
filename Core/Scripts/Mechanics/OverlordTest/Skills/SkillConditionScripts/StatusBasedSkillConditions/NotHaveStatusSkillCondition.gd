@@ -1,4 +1,4 @@
-class_name HasStatusSkillCondition
+class_name NotHaveStatusSkillCondition
 extends SkillCondition
 
 # Checks to see if the target candidate has a status with the same name
@@ -21,9 +21,9 @@ func check_condition(_skill: Skill, target: Unit) -> bool:
 
 	var status_inst: Status = controller.get_status_by_name(status_name_snake)
 	if status_inst == null:
-		return false
+		return true
 
 	if status_inst.status_level >= min_level:
-		return true
-	else:
 		return false
+	else:
+		return true

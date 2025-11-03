@@ -16,13 +16,16 @@ extends Control
 @export_group("Labels")
 @export var unit_name_label: Label
 #@export var armor_points_label: Label
-@export var speed_label: Label
-@export var jump_label: Label
+@export var accuracy_label: Label
+@export var critical_chance_label: Label
+@export var martial_damage_label: Label
+@export var channel_damage_label: Label
 #@export var health_points_label: Label
 @export var posture_points_label: Label
 
 @export var experience_rolls_label: Label
-@export var movement_rate_label: Label
+@export var initiative_label: Label
+@export var speed_label: Label
 @export var unused_label_1: Label
 
 # Attribute Labels
@@ -158,10 +161,13 @@ func _populate_from_unit(unit: Unit) -> void:
 	# + "/" + str(unit.get_attributes_container().get_attribute("health").maximum_value)
 	posture_points_label.text = _get_attribute_or_na(unit, "posture")\
 	 + "/" + str(unit.get_attributes_container().get_attribute("posture").maximum_value)
-	speed_label.set_text(_get_attribute_or_na(unit, "speed"))
-	jump_label.text = _get_attribute_or_na(unit, "jump")
+	martial_damage_label.set_text(get_min_max_martial_dmg(unit))
+	channel_damage_label.set_text(get_min_max_channel_dmg(unit))
+	accuracy_label.text = "+" + _get_attribute_or_na(unit, "accuracy")
+	critical_chance_label.set_text("+" + _get_attribute_or_na(unit, "critical"))
 	experience_rolls_label.text = "EXP: " + _get_attribute_or_na(unit, "experience_rolls")
-	movement_rate_label.text = "MOV: " + _get_attribute_or_na(unit, "movement_rate")
+	initiative_label.text = "INIT: " + _get_attribute_or_na(unit, "initiative")
+	speed_label.set_text("SPD: " + _get_attribute_or_na(unit, "speed"))
 	unused_label_1.text = ""
 
 
@@ -186,6 +192,35 @@ func _populate_from_unit(unit: Unit) -> void:
 		tactics_manager_ui.populate_from_unit(unit)
 	
 	_populate_statuses(unit)
+
+
+func get_min_max_martial_dmg(unit: Unit) -> String:
+	var weapon_min: int = 1 # Note Get weapon damages here
+	var weapon_max: int = 3
+	
+	var martial_val: int = int(_get_attribute_or_na(unit, "martial"))
+	
+	weapon_min += martial_val
+	weapon_max += martial_val
+	
+	var string: String = str(weapon_min) + " - " + str(weapon_max)
+	
+	return string
+
+
+func get_min_max_channel_dmg(unit: Unit) -> String:
+	var focus_min: int = 1 # Note Get focus damages here
+	var focus_max: int = 2
+	
+	var channel_val: int = int(_get_attribute_or_na(unit, "channel"))
+	
+	focus_min += channel_val
+	focus_max += channel_val
+	
+	var string: String = str(focus_min) + " - " + str(focus_max)
+	
+	return string
+
 
 
 #func populate_weapons_from_unit(unit: Unit) -> void:

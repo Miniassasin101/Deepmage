@@ -48,6 +48,13 @@ enum SkillType { ATTACK, SUPPORT, SABOTAGE, SPECIAL}
 
 @export var is_disabled: bool = false
 
+@export_group("Skill Attributes")
+@export var base_power: int = 100
+@export var base_accuracy: int = 95
+@export var crit_mod: int = 0
+
+
+
 @export_group("Description")
 @export var trait_1: String = "Trait 1"
 @export var trait_2: String = "Trait 2"
@@ -104,7 +111,7 @@ func activate_skill() -> void:
 
 	# If the Skill is bound to an Action, invoke it via the owner's action container.
 	if action:
-		var temp_action: Action = unit.character_sheet.action_container.use_action(action, chosen_target)
+		var temp_action: Action = unit.character_sheet.action_container.use_action(action, chosen_target, true)
 		await temp_action.on_action_ended
 	
 	# Declare Skill End goes here
