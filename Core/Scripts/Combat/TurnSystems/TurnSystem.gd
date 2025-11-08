@@ -41,6 +41,8 @@ var selected_unit: Unit = null
 
 var start_round_button_blocked: bool = false
 
+var is_paused: bool = false
+
 static var instance: TurnSystem = null
 
 
@@ -81,6 +83,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 	if !is_combat_started:
 		if Input.is_action_just_pressed("testkey_n"):
 			start_combat()
+
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -616,6 +619,27 @@ func _roll_initiative_for_all_living() -> void:
 		if unit.is_alive():
 			var result: int = unit.get_attributes_container().get_attribute_current_value("initiative")
 			initiative_scores[unit] = result
+
+
+func resort_initiative_mid_round(preserve_current_turn: bool = true) -> void:
+	# Optional: keep current acting unit at front to avoid skipping them
+	var current_unit: Unit = selected_unit
+	var current_has_turn: bool = false
+	if current_unit != null:
+		current_has_turn = current_unit.turn_state == Unit.TurnState.TURN_STARTED
+	
+	# Rebuild scores from current modified attribute values
+	_roll_initiative_for_all_living()
+	_sort_initiative_queue()
+	
+	# Optionally pin the current acting unit at index 0 so we do not reorder them out mid-action
+	if preserve_current_turn and current_has_turn:
+		if initiative_queue.has(current_unit):
+			initiative_queue.erase(current_unit)
+			initiative_queue.push_front(current_unit)
+	
+	SignalBus.instantiate_initiative_queue.emit()
+
 
 func _sort_initiative_queue() -> void:
 	initiative_queue.assign(initiative_scores.keys())

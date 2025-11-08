@@ -19,7 +19,7 @@ func _make_position_target_package(target_pos: Vector3) -> TargetPackage:
 	return pkg
 
 # Override activation to target a position instead of a unit.
-func activate_skill() -> void:
+func activate_skill(bypass: bool = false) -> void:
 	if unit == null:
 		push_error("MoveToSafetySkill: unit is null")
 		return
@@ -60,12 +60,30 @@ func activate_skill() -> void:
 
 	# 4) Choose one (random among equals), package it, and run the MoveAction.
 	var chosen_pos: Vector3 = pool.pick_random()
+	
+	if skill_category == SkillCategory.ACTIVE and !bypass:
+	# Declare Skill goes here
+		await TurnSystem.instance.declare_skill(self, unit)
+		await unit.get_tree().create_timer(1.2).timeout # Visual Processing time
+	else:
+		pass
+	
 	var target_pkg: TargetPackage = _make_position_target_package(chosen_pos)
+	target_pkg.set_skill(self)
 
 	var temp_action: Action = unit.character_sheet.action_container.use_action(action, target_pkg)
 	await temp_action.on_action_ended
-
+	
+		# Declare Skill End goes here
+	if skill_category == SkillCategory.ACTIVE and !bypass:
+		#pass
+		# Declare Skill goes here
+		await TurnSystem.instance.after_skill_used(self, unit)
+		# Finish the skill lifecycle.
+		end_skill()
+		return
 	end_skill()
+
 
 
 func _is_point_safe_from_enemies(point: Vector3, owner: Unit, min_distance: float) -> bool:

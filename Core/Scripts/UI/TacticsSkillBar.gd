@@ -454,6 +454,9 @@ func _set_slots_from_skill_blueprints(in_skill: Skill) -> void:
 	current_condition_blueprints.clear()
 	current_condition_blueprints.append_array(external_bps)
 	current_condition_blueprints.append_array(preference_bps)
+	for c in current_condition_blueprints:
+		if c == null:
+			current_condition_blueprints.erase(c)
 	
 	if in_skill.skill_name == "Ball Throw":
 		pass
@@ -464,7 +467,7 @@ func _set_slots_from_skill_blueprints(in_skill: Skill) -> void:
 		var slot: ConditionSlot = slots_array[i] as ConditionSlot
 		if slot == null:
 			continue
-		if fill_index < current_condition_blueprints.size():
+		if fill_index < current_condition_blueprints.size() and !current_condition_blueprints.is_empty():
 			slot._set_blueprint(current_condition_blueprints[fill_index]) # Note: FIXHERE
 			fill_index += 1
 			slot.on_input_handled.connect(set_input_handled)

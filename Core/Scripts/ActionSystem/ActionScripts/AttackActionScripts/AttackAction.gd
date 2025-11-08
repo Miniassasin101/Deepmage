@@ -179,13 +179,13 @@ func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
 
 	# Prefer: wait for HitMomentAnimationEffect fired by the attack animation
 	var used_signal := false
-	if ctrl != null and !use_hit_delay:
+	#if ctrl != null and !use_hit_delay:
 
-		await ctrl.effects_controller.on_hit_moment
-		#print_debug("Signal Recieved")
-		do_resolve()
-		used_signal = true
-		return
+	#	await ctrl.effects_controller.on_hit_moment
+	#	#print_debug("Signal Recieved")
+	#	do_resolve()
+	#	used_signal = true
+	#	return
 
 	# Fallback: timer to hit-center (attack_delay + center of window)
 	if !used_signal:

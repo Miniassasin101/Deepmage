@@ -87,7 +87,7 @@ func declare_attack(action: AttackAction, attacker: Unit, defender: Unit, skill:
 	
 
 	# 2) Resolve using Gubat Banwa steps
-	if action.is_attack == false:
+	if skill.skill_type != Skill.SkillType.ATTACK:
 		return
 	#await _resolve_attack_gubat_banwa(action, attacker, defender, skill)
 	_resolve_attack_darkest_dungeon(action, attacker, defender, current_combat_event_data.skill)
@@ -120,7 +120,11 @@ func _resolve_attack_darkest_dungeon(action: Action, attacker: Unit, defender: U
 	var defense_value: int = 0#defender_attrs.get_attribute_current_value(action.defense_attribute)   # PAR/RES
 	var acc_value: int = attacker_attrs.get_attribute_current_value("accuracy")
 	var evd_value: int = defender_attrs.get_attribute_current_value("evade")                    # EVD
-	var crit_value: int = 10 + skill.crit_mod
+
+	# NEW: allow a crit chance attribute; still honors skill.crit_mod
+	var base_crit_chance: int =  attacker_attrs.get_attribute_current_value("crit_chance")
+	var crit_value: int = base_crit_chance + skill.crit_mod
+
 	
 	acc_value += skill.base_accuracy + 5
 	acc_value -= evd_value
@@ -154,8 +158,37 @@ func _resolve_attack_darkest_dungeon(action: Action, attacker: Unit, defender: U
 	cd.initial_low_damage = int(modded_low_dmg)
 	cd.initial_high_damage = int(modded_high_dmg)
 	cd.total_initial_damage = dmg_roll
+	# NOTE: Protection and defense calculations here
+	cd.effective_damage = dmg_roll
 	
 	
+
+	
+	# NOTE: condition and effect Damage modifiers here (ex: +50% dmg vs Soaked targets)
+	
+	
+	# === let ATTACKER statuses modify the pending result (e.g., Blind, PotencyUp) ===
+	var attacker_statuses: StatusController = attacker.get_status_controller()
+	if attacker_statuses != null:
+		attacker_statuses.before_damage_applied(cd)
+	# === DEFENDER statuses (e.g., Block, CritSealIncoming, PotencyDown) ===
+	var defender_statuses: StatusController = defender.get_status_controller()
+	if defender_statuses != null:
+		defender_statuses.before_damage_applied(cd)
+	
+	var final_damage_multiplier: float = cd.damage_multiplier/100.0
+	
+	var curr_eff_dmg: float = cd.effective_damage
+	curr_eff_dmg *= final_damage_multiplier
+	
+	cd.effective_damage = int(curr_eff_dmg) # rounds down
+	
+	
+		# Clamp after status math
+	if cd.effective_damage < 0:
+		cd.effective_damage = 0
+
+
 	# Combat Logs
 	if not is_hit:
 		CombatLog.instance.add_log("Evaded")
@@ -164,17 +197,6 @@ func _resolve_attack_darkest_dungeon(action: Action, attacker: Unit, defender: U
 			CombatLog.instance.add_log("Critical Hit!")
 		CombatLog.instance.add_log("Initial Damage: %d" % cd.total_initial_damage)
 		
-	
-	# NOTE: condition and effect Damage modifiers here (ex: +50% dmg vs Soaked targets)
-	
-	# NOTE: Protection and defense calculations here
-	cd.effective_damage = dmg_roll
-	
-	# === NEW: let statuses (e.g., Block) modify the damage at the precise step ===
-	var defender_statuses: StatusController = defender.get_status_controller()
-	if defender_statuses != null:
-		defender_statuses.before_damage_applied(cd)
-	
 
 
 
@@ -539,6 +561,8 @@ func _debug_dump_current_event() -> void:
 
 	var gates := "  Gates: %s=%d | %s=%d | EVD=%d" % [cd.action.prowess_attribute.to_pascal_case(), prowess_val, cd.action.defense_attribute.to_pascal_case(), defense_val, evd_val]
 	CombatLog.instance.add_log(gates)
+	
+	CombatLog.instance.add_log("  Damage Multiplier: " + str(cd.damage_multiplier / 100.0))
 
 
 	var flags := "  Flags: is_hit=%s | is_success=%s | is_crit=%s | is_graze=%s | dmg=%d" % [

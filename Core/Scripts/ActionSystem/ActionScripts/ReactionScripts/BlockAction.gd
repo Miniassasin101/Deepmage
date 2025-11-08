@@ -31,27 +31,29 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	end_action()
 
 
+# Only used for reaction animation now.
 func resolve_reaction() -> void:
-	var cbd: CombatEventData = CombatSystem.instance.current_combat_event_data
-	if cbd.is_success:
-		print_debug("Block Failed")
-		CombatLog.instance.add_log(unit.ui_name + " Block Failed")
-		return
+	return
+	#var cbd: CombatEventData = CombatSystem.instance.current_combat_event_data
+	#if cbd.is_success:
+	#	print_debug("Block Failed")
+	#	CombatLog.instance.add_log(unit.ui_name + " Block Failed")
+	#	return
 	
-	var block_value: int = 0
+	#var block_value: int = 0
 
 	
-	block_value += base_defend_value
+	#block_value += base_defend_value
 	
-	block_value += maxi(cbd.defender_hits - cbd.defender_hits, 0)
+	#block_value += maxi(cbd.defender_hits - cbd.defender_hits, 0)
 	
-	cbd.defense_bonus = block_value
+	#cbd.defense_bonus = block_value
 	
-	CombatLog.instance.add_log(unit.ui_name + " Blocked " + str(block_value))
+	#CombatLog.instance.add_log(unit.ui_name + " Blocked " + str(block_value))
 	
 	
 	
-	print_debug("Blocked " + str(block_value))
+	#print_debug("Blocked " + str(block_value))
 #	Utilities.spawn_text_line(unit, "Blocked " + str(block_value), text_color, scale)
 	
 

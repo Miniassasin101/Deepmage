@@ -1,4 +1,4 @@
-[gd_scene load_steps=158 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=159 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bf575s2vrxvov" path="res://Deepmage/Core/Prefabs/UI/TextController.tscn" id="9_ccwc0"]
 [ext_resource type="Script" uid="uid://brupu7akvtuia" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UnitActionSystem.gd" id="9_lf0eb"]
 [ext_resource type="PackedScene" uid="uid://14nkak1a1qkg" path="res://Deepmage/Core/Prefabs/Mechanics/CharacterSheet.tscn" id="9_srkvl"]
+[ext_resource type="Resource" uid="uid://c54g6d3vtonf2" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/PotencyBlessingSkillResource.tres" id="10_f0670"]
 [ext_resource type="Script" uid="uid://b3vsba7uy6t7o" path="res://Deepmage/Core/Scripts/Combat/TurnSystems/TurnSystem.gd" id="10_k2c3k"]
 [ext_resource type="PackedScene" uid="uid://8oord2o1icck" path="res://Deepmage/Core/Prefabs/UI/CharacterLogQueue.tscn" id="10_lf0eb"]
 [ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="10_p6f6u"]
@@ -70,51 +71,6 @@ geometry_source_geometry_mode = 2
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_avqdt"]
 data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
-
-[sub_resource type="Resource" id="Resource_eu7gh"]
-script = ExtResource("16_bvt28")
-metadata/_custom_type_script = "uid://2nsctaj2mk50"
-
-[sub_resource type="Resource" id="Resource_7kb16"]
-script = ExtResource("17_23xud")
-range_var = 3.0
-metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
-
-[sub_resource type="Resource" id="Resource_6g8w4"]
-resource_name = "BashSkillResource"
-script = ExtResource("12_f2qps")
-skill_name = "Bash"
-action = ExtResource("13_iq36j")
-internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
-is_disabled = true
-trait_1 = "Melee"
-description = Array[String](["Moves towards then Bashes a unit in range 5"])
-metadata/_custom_type_script = "uid://kpyou3fdk30c"
-
-[sub_resource type="Resource" id="Resource_ydutk"]
-script = ExtResource("16_bvt28")
-metadata/_custom_type_script = "uid://2nsctaj2mk50"
-
-[sub_resource type="Resource" id="Resource_sb21c"]
-script = ExtResource("20_8v6vh")
-range_var = 2.1
-metadata/_custom_type_script = "uid://daykqau0okf7v"
-
-[sub_resource type="Resource" id="Resource_7omu2"]
-script = ExtResource("21_11ubm")
-metadata/_custom_type_script = "uid://c6hp21lncudiw"
-
-[sub_resource type="Resource" id="Resource_idaqs"]
-resource_name = "RushToUnitSkillResource"
-script = ExtResource("12_f2qps")
-skill_name = "Rush To Unit"
-action = ExtResource("19_v4iap")
-skill_type = 1
-internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_sb21c"), SubResource("Resource_7omu2")])
-external_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_ydutk")])
-is_disabled = true
-trait_1 = "Movement"
-metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_wdfje"]
 script = ExtResource("22_ebomw")
@@ -177,9 +133,9 @@ trait_1 = "Block"
 description = Array[String](["Activates when targeted by an attack to grant self block."])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
-[sub_resource type="Resource" id="Resource_f2qps"]
+[sub_resource type="Resource" id="Resource_tkd6a"]
 script = ExtResource("24_5lfvx")
-active_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_6g8w4"), SubResource("Resource_idaqs")])
+active_skills = Array[ExtResource("12_f2qps")]([ExtResource("10_f0670")])
 passive_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_05afn")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
@@ -317,6 +273,51 @@ resource_local_to_scene = true
 script = ExtResource("11_6kl6n")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_5lfvx"), SubResource("Resource_f0670"), SubResource("Resource_ebomw"), SubResource("Resource_04ue1"), SubResource("Resource_cb3j6"), SubResource("Resource_e15dp"), SubResource("Resource_c2k8n"), SubResource("Resource_hja2s"), SubResource("Resource_f3uqp"), SubResource("Resource_0fvkv"), SubResource("Resource_dpue3"), SubResource("Resource_mpmhl"), SubResource("Resource_yl67w")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
+
+[sub_resource type="Resource" id="Resource_eu7gh"]
+script = ExtResource("16_bvt28")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_7kb16"]
+script = ExtResource("17_23xud")
+range_var = 3.0
+metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
+
+[sub_resource type="Resource" id="Resource_6g8w4"]
+resource_name = "BashSkillResource"
+script = ExtResource("12_f2qps")
+skill_name = "Bash"
+action = ExtResource("13_iq36j")
+internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
+is_disabled = true
+trait_1 = "Melee"
+description = Array[String](["Moves towards then Bashes a unit in range 5"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"
+
+[sub_resource type="Resource" id="Resource_ydutk"]
+script = ExtResource("16_bvt28")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_sb21c"]
+script = ExtResource("20_8v6vh")
+range_var = 2.1
+metadata/_custom_type_script = "uid://daykqau0okf7v"
+
+[sub_resource type="Resource" id="Resource_7omu2"]
+script = ExtResource("21_11ubm")
+metadata/_custom_type_script = "uid://c6hp21lncudiw"
+
+[sub_resource type="Resource" id="Resource_idaqs"]
+resource_name = "RushToUnitSkillResource"
+script = ExtResource("12_f2qps")
+skill_name = "Rush To Unit"
+action = ExtResource("19_v4iap")
+skill_type = 1
+internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_sb21c"), SubResource("Resource_7omu2")])
+external_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_ydutk")])
+is_disabled = true
+trait_1 = "Movement"
+metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_ufsey"]
 resource_name = "PassiveBlockSkillResource"
@@ -968,7 +969,7 @@ script = ExtResource("11_lf0eb")
 
 [node name="Azure" parent="UnitManager" instance=ExtResource("12_k2c3k")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8, 0, 0)
-starting_tactic = SubResource("Resource_f2qps")
+starting_tactic = SubResource("Resource_tkd6a")
 ui_name = "Azure"
 is_enemy = true
 visor_color = Color(0, 0.55250007, 0.85, 1)

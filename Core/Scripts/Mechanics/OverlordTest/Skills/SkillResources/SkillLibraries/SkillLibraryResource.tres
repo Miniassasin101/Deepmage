@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SkillLibrary" load_steps=14 format=3 uid="uid://dkeoolmv8jjeq"]
+[gd_resource type="Resource" script_class="SkillLibrary" load_steps=17 format=3 uid="uid://dkeoolmv8jjeq"]
 
 [ext_resource type="Script" uid="uid://cqsj2o45u3w7q" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillLibrary.gd" id="1_07uae"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="2_pntk6"]
@@ -12,9 +12,12 @@
 [ext_resource type="Resource" uid="uid://dh3cjc2xijl6v" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PrintTestPassiveAfterSkillResource.tres" id="9_lwyov"]
 [ext_resource type="Resource" uid="uid://caeygn6gmknml" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/ActiveBlockSkillResource.tres" id="10_466c2"]
 [ext_resource type="Resource" uid="uid://q7sv630uw87g" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PassiveBlockSkillResource.tres" id="11_i8y8y"]
+[ext_resource type="Resource" uid="uid://c54g6d3vtonf2" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/PotencyBlessingSkillResource.tres" id="12_ytjxn"]
+[ext_resource type="Resource" uid="uid://c5np6f0dokpy1" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/PotencyAfflictionSkillResource.tres" id="13_6gr05"]
 [ext_resource type="Resource" uid="uid://cdo13j8uua6g3" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/RushToSafetySkill.tres" id="13_kmtet"]
+[ext_resource type="Resource" uid="uid://cs2c272bpyv80" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/InitiativeAfflictionSkillResource.tres" id="16_rua0b"]
 
 [resource]
 script = ExtResource("1_07uae")
-skills = Array[ExtResource("2_pntk6")]([ExtResource("3_ccdkf"), ExtResource("7_k1hhk"), ExtResource("5_23st6"), ExtResource("7_6amf8"), ExtResource("7_dvx14"), ExtResource("4_us4l0"), ExtResource("13_kmtet"), ExtResource("8_k1hhk"), ExtResource("9_lwyov"), ExtResource("10_466c2"), ExtResource("11_i8y8y")])
+skills = Array[ExtResource("2_pntk6")]([ExtResource("3_ccdkf"), ExtResource("7_k1hhk"), ExtResource("5_23st6"), ExtResource("7_6amf8"), ExtResource("7_dvx14"), ExtResource("4_us4l0"), ExtResource("13_kmtet"), ExtResource("8_k1hhk"), ExtResource("9_lwyov"), ExtResource("12_ytjxn"), ExtResource("13_6gr05"), ExtResource("10_466c2"), ExtResource("11_i8y8y"), ExtResource("16_rua0b")])
 metadata/_custom_type_script = "uid://cqsj2o45u3w7q"

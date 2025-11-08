@@ -54,6 +54,8 @@ var required_successes: int = 1
 # Modifiers
 var accuracy_mod: int = 0
 
+var damage_multiplier: int = 100
+
 var crit_bonus_damage_pool: int = 2
 
 # Text lines

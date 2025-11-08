@@ -21,7 +21,7 @@ extends MarginContainer
 # Drift tweakable properties:
 @export var drift_amount: float = 20.0   # Pixels to drift right.
 @export var drift_duration: float = 2.0    # Duration (in seconds) for one half of the drift.
-@export var return_drift_duration: float = 0.4
+@export var return_drift_duration: float = 0.3
 
 # Pulse tweakable properties:
 @export var pulse_amount: float = 0.8

@@ -90,7 +90,7 @@ func set_unit(in_unit: Unit) -> void:
 	_setup_blueprint_listeners()
 
 
-func activate_skill() -> void:
+func activate_skill(bypass_declare: bool = false) -> void:
 	var chosen_target: Unit = get_random_valid_unit()
 	if chosen_target == null:
 		# IMPORTANT: always end the skill so awaits can proceed
@@ -102,7 +102,7 @@ func activate_skill() -> void:
 	CombatLog.instance.add_log("Random Skill Unit: " + chosen_target.ui_name)
 	
 	
-	if skill_category == SkillCategory.ACTIVE:
+	if skill_category == SkillCategory.ACTIVE and !bypass_declare:
 	# Declare Skill goes here
 		await TurnSystem.instance.declare_skill(self, chosen_target)
 		await unit.get_tree().create_timer(1.2).timeout # Visual Processing time
@@ -118,12 +118,14 @@ func activate_skill() -> void:
 		await temp_action.on_action_ended
 	
 	# Declare Skill End goes here
-	if skill_category == SkillCategory.ACTIVE:
+	if skill_category == SkillCategory.ACTIVE and !bypass_declare:
 		#pass
 		# Declare Skill goes here
 		await TurnSystem.instance.after_skill_used(self, chosen_target)
 		# Finish the skill lifecycle.
 		end_skill()
+		return
+	end_skill()
 	pass
 
 

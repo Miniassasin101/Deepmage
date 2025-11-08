@@ -25,7 +25,7 @@ func start_action(target_package: TargetPackage = null) -> void:
 			chosen_skill = unit.tactics_controller.get_first_valid_active_skill()
 
 		if chosen_skill != null:
-			chosen_skill.activate_skill()
+			chosen_skill.activate_skill(true)
 			await chosen_skill.on_skill_ended
 		else:
 			on_tactic_failed()

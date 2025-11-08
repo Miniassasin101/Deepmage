@@ -5,9 +5,11 @@
 [ext_resource type="Script" uid="uid://brutb7o0hj6td" path="res://Deepmage/Core/Scripts/Animation/AnimationPackage.gd" id="3_g3uxd"]
 [ext_resource type="Script" uid="uid://bf2hv6d83v6fv" path="res://Deepmage/Core/Resources/DataStructures/AnimationSyncProfile.gd" id="4_e1hji"]
 
-[sub_resource type="Resource" id="Resource_40fny"]
+[sub_resource type="Resource" id="Resource_a7lng"]
 script = ExtResource("4_e1hji")
 markers = Dictionary[String, float]({
+"HIT_END": 0.4,
+"HIT_START": 0.27,
 "REACT_OFF": 0.4,
 "REACT_ON": 0.27
 })
@@ -17,5 +19,5 @@ metadata/_custom_type_script = "uid://bf2hv6d83v6fv"
 script = ExtResource("3_g3uxd")
 name = "UnarmedBlock"
 animation = ExtResource("1_a7lng")
-sync_profile = SubResource("Resource_40fny")
+sync_profile = SubResource("Resource_a7lng")
 metadata/_custom_type_script = "uid://brutb7o0hj6td"
