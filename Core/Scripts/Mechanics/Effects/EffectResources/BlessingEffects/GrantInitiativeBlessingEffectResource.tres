@@ -7,6 +7,7 @@
 script = ExtResource("2_n4o5l")
 ui_name = "Init Up"
 status_category = 1
+status_level = 5
 expire_timing = 2
 metadata/_custom_type_script = "uid://dv1f2nsskgphy"
 

@@ -10,4 +10,8 @@ func on_added(unit: Unit) -> void:
 	var container: AttributesContainer = unit.get_attributes_container()
 	container.change_attribute_current_value_by("active_points", -delta_total)
 	_spawn_float(unit, "-%d AP" % delta_total)
-	
+	remove_self.call_deferred(unit)
+
+
+func merge_with(_other_status: Status) -> void:
+	return

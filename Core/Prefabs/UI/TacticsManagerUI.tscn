@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bdohbmjso32gu"]
+[gd_scene load_steps=15 format=3 uid="uid://bdohbmjso32gu"]
 
 [ext_resource type="Script" uid="uid://jnvq5p6s7a2f" path="res://Deepmage/Core/Scripts/UI/TacticsManagerUI.gd" id="1_27dc7"]
 [ext_resource type="Script" uid="uid://nhsyq3d75icn" path="res://addons/ReorderableContainer/reorderable_vbox.gd" id="1_qrecu"]
@@ -102,7 +102,21 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
-[node name="TacticsManagerUI" type="PanelContainer" node_paths=PackedStringArray("tactics_header_label", "conditions_header_hbox", "active_skills_rvbox", "passive_skills_rvbox", "skill_library_vbox", "conditions_library_ui")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l7pw0"]
+bg_color = Color(0.2112, 0.2352, 0.24, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_color = Color(0, 0, 0, 0)
+shadow_offset = Vector2(-1, 1)
+
+[node name="TacticsManagerUI" type="PanelContainer" node_paths=PackedStringArray("tactics_header_label", "conditions_header_hbox", "active_skills_rvbox", "passive_skills_rvbox", "skill_library_vbox", "conditions_library_ui", "skill_lib_scroll_container")]
 custom_minimum_size = Vector2(727.3884, 446)
 anchors_preset = -1
 anchor_left = 0.00086805556
@@ -120,8 +134,9 @@ tactics_header_label = NodePath("MarginContainer/VBoxContainer2/HeaderVBoxContai
 conditions_header_hbox = NodePath("MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer/ConditionsHeaderHBoxContainer")
 active_skills_rvbox = NodePath("MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox")
 passive_skills_rvbox = NodePath("MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/PassiveSkillsReorderableVBox")
-skill_library_vbox = NodePath("MarginContainer/VBoxContainer2/SkillsStylizedPanel/MarginContainer/FoldableContainer/SkillLibraryVBox")
+skill_library_vbox = NodePath("MarginContainer/VBoxContainer2/SkillsStylizedPanel/MarginContainer/FoldableContainer/SkillsLibraryUI/MarginContainer/SkillLibraryScrollContainer/SkillLibraryVBox")
 conditions_library_ui = NodePath("MarginContainer/VBoxContainer2/SkillsStylizedPanel2/MarginContainer/FoldableContainer/ConditionsLibraryUI")
+skill_lib_scroll_container = NodePath("MarginContainer/VBoxContainer2/SkillsStylizedPanel/MarginContainer/FoldableContainer/SkillsLibraryUI/MarginContainer/SkillLibraryScrollContainer")
 tactics_skill_bar_prefab = ExtResource("2_vnc2f")
 library_skill_bar_prefab = ExtResource("4_msis2")
 metadata/_edit_use_anchors_ = true
@@ -284,15 +299,29 @@ theme_override_colors/font_color = Color(0.99, 0.99, 0.99, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 1
 theme_override_styles/focus = SubResource("StyleBoxFlat_il0hb")
-folded = true
 title = "Skills Library"
 
-[node name="SkillLibraryVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel/MarginContainer/FoldableContainer"]
-visible = false
+[node name="SkillsLibraryUI" type="PanelContainer" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel/MarginContainer/FoldableContainer"]
+custom_minimum_size = Vector2(617, 200)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_l7pw0")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel/MarginContainer/FoldableContainer/SkillsLibraryUI"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 5
+
+[node name="SkillLibraryScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel/MarginContainer/FoldableContainer/SkillsLibraryUI/MarginContainer"]
+layout_mode = 2
+
+[node name="SkillLibraryVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel/MarginContainer/FoldableContainer/SkillsLibraryUI/MarginContainer/SkillLibraryScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 7
 
-[node name="LibrarySkillBar" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel/MarginContainer/FoldableContainer/SkillLibraryVBox" instance=ExtResource("4_msis2")]
+[node name="LibrarySkillBar" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel/MarginContainer/FoldableContainer/SkillsLibraryUI/MarginContainer/SkillLibraryScrollContainer/SkillLibraryVBox" instance=ExtResource("4_msis2")]
 layout_mode = 2
 
 [node name="SkillsStylizedPanel2" type="PanelContainer" parent="MarginContainer/VBoxContainer2"]
@@ -310,11 +339,9 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_styles/focus = SubResource("StyleBoxFlat_il0hb")
-folded = true
 title = "Conditions Library"
 
 [node name="ConditionsLibraryUI" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel2/MarginContainer/FoldableContainer" instance=ExtResource("5_il0hb")]
-visible = false
 layout_mode = 2
 
 [connection signal="sort_children" from="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox" to="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox" method="_on_sort_children"]

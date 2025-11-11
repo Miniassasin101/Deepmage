@@ -85,9 +85,9 @@ func declare_attack(action: AttackAction, attacker: Unit, defender: Unit, skill:
 
 	# Hook point: “ally attacked”, “enemy attacked”, etc. (left as a placeholder)
 	
-
+	
 	# 2) Resolve using Gubat Banwa steps
-	if skill.skill_type != Skill.SkillType.ATTACK:
+	if skill == null or skill.skill_type != Skill.SkillType.ATTACK:
 		return
 	#await _resolve_attack_gubat_banwa(action, attacker, defender, skill)
 	_resolve_attack_darkest_dungeon(action, attacker, defender, current_combat_event_data.skill)
@@ -122,7 +122,7 @@ func _resolve_attack_darkest_dungeon(action: Action, attacker: Unit, defender: U
 	var evd_value: int = defender_attrs.get_attribute_current_value("evade")                    # EVD
 
 	# NEW: allow a crit chance attribute; still honors skill.crit_mod
-	var base_crit_chance: int =  attacker_attrs.get_attribute_current_value("crit_chance")
+	var base_crit_chance: int =  attacker_attrs.get_attribute_current_value("critical")
 	var crit_value: int = base_crit_chance + skill.crit_mod
 
 	
@@ -151,6 +151,7 @@ func _resolve_attack_darkest_dungeon(action: Action, attacker: Unit, defender: U
 	
 	
 	cd.is_hit = is_hit
+	cd.accuracy = acc_value
 	cd.was_crit_any = is_crit
 	cd.is_success = is_hit
 	cd.is_critical_success = is_crit
@@ -181,7 +182,10 @@ func _resolve_attack_darkest_dungeon(action: Action, attacker: Unit, defender: U
 	var curr_eff_dmg: float = cd.effective_damage
 	curr_eff_dmg *= final_damage_multiplier
 	
+	
+	
 	cd.effective_damage = int(curr_eff_dmg) # rounds down
+	
 	
 	
 		# Clamp after status math
@@ -558,16 +562,16 @@ func _debug_dump_current_event() -> void:
 	var prowess_val := attacker_attrs.get_attribute_current_value(cd.action.prowess_attribute)
 	var defense_val := defender_attrs.get_attribute_current_value(cd.action.defense_attribute)
 	var evd_val := defender_attrs.get_attribute_current_value("evade")
+	var acc_val := cd.accuracy
 
-	var gates := "  Gates: %s=%d | %s=%d | EVD=%d" % [cd.action.prowess_attribute.to_pascal_case(), prowess_val, cd.action.defense_attribute.to_pascal_case(), defense_val, evd_val]
+	var gates := "  Gates: %s=%d | %s=%d | EVD=%d | ACCU=%d" % [cd.action.prowess_attribute.to_pascal_case(), prowess_val, cd.action.defense_attribute.to_pascal_case(), defense_val, evd_val, acc_val]
 	CombatLog.instance.add_log(gates)
 	
 	CombatLog.instance.add_log("  Damage Multiplier: " + str(cd.damage_multiplier / 100.0))
 
 
 	var flags := "  Flags: is_hit=%s | is_success=%s | is_crit=%s | is_graze=%s | dmg=%d" % [
-		str(cd.is_hit), str(cd.is_success), str(cd.is_critical_success), str(cd.is_graze), cd.effective_damage
-	]
+		str(cd.is_hit), str(cd.is_success), str(cd.is_critical_success), str(cd.is_graze), cd.effective_damage]
 	CombatLog.instance.add_log(flags)
 
 

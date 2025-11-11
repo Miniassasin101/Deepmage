@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bf575s2vrxvov" path="res://Deepmage/Core/Prefabs/UI/TextController.tscn" id="9_ccwc0"]
 [ext_resource type="Script" uid="uid://brupu7akvtuia" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UnitActionSystem.gd" id="9_lf0eb"]
 [ext_resource type="PackedScene" uid="uid://14nkak1a1qkg" path="res://Deepmage/Core/Prefabs/Mechanics/CharacterSheet.tscn" id="9_srkvl"]
-[ext_resource type="Resource" uid="uid://c54g6d3vtonf2" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/PotencyBlessingSkillResource.tres" id="10_f0670"]
+[ext_resource type="Resource" uid="uid://c54g6d3vtonf2" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/BlessingSkills/PotencyBlessingSkillResource.tres" id="10_f0670"]
 [ext_resource type="Script" uid="uid://b3vsba7uy6t7o" path="res://Deepmage/Core/Scripts/Combat/TurnSystems/TurnSystem.gd" id="10_k2c3k"]
 [ext_resource type="PackedScene" uid="uid://8oord2o1icck" path="res://Deepmage/Core/Prefabs/UI/CharacterLogQueue.tscn" id="10_lf0eb"]
 [ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="10_p6f6u"]
@@ -979,7 +979,7 @@ unit = NodePath("..")
 attributes_profile = SubResource("Resource_6odjx")
 
 [node name="Verdant" parent="UnitManager" instance=ExtResource("12_k2c3k")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.0376267, 0, 0)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.037626, 0, 4)
 starting_tactic = SubResource("Resource_k6sm3")
 ui_name = "Verdant"
 is_enemy = true
@@ -990,7 +990,7 @@ unit = NodePath("..")
 attributes_profile = SubResource("Resource_lwd1i")
 
 [node name="Marigold" parent="UnitManager" instance=ExtResource("12_k2c3k")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 1.8972347)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6, 0, 3.8972347)
 starting_tactic = SubResource("Resource_jiskd")
 ui_name = "Marigold"
 visor_color = Color(0.933872, 0.8713839, 3.85046e-07, 1)
@@ -1000,7 +1000,7 @@ unit = NodePath("..")
 attributes_profile = SubResource("Resource_knq6r")
 
 [node name="Ruby" parent="UnitManager" instance=ExtResource("12_k2c3k")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, -2.076848)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6, 0, 1.923152)
 starting_tactic = SubResource("Resource_7g53y")
 ui_name = "Ruby"
 visor_color = Color(1, 0.120000005, 0.120000005, 1)

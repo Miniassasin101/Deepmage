@@ -13,7 +13,6 @@ extends Node
 @export var attributes_profile: AttributesProfile   # <- Pick a profile here per Unit
 
 func _ready() -> void:
-
 	if !unit:
 		unit = get_parent() if get_parent() is Unit else null
 	if unit and !unit.character_sheet:
@@ -23,6 +22,7 @@ func _ready() -> void:
 		action_container.unit = unit
 	if attributes_container:
 		attributes_container.unit = unit
+
 
 
 func get_action_container() -> ActionContainer:

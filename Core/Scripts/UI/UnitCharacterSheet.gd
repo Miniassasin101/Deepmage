@@ -68,6 +68,7 @@ func _ready() -> void:
 	instance = self
 	visible = false
 	SignalBus.open_character_sheet.connect(_on_open_character_sheet)
+	SignalBus.update_character_sheet.connect(update_character_sheet)
 	close_button.pressed.connect(_on_close_button_pressed)
 
 
@@ -80,7 +81,12 @@ func _input(_event: InputEvent) -> void:
 		open_character_sheet(null, 1)
 
 
-
+func update_character_sheet() -> void:
+	if !is_open:
+		return
+	if !last_unit:
+		return
+	_populate_from_unit(last_unit)
 
 ## Uses the tab index to open the character sheet at that tab through code.
 func open_character_sheet(in_unit: Unit = null, tab_index: int = 0) -> void:

@@ -1,6 +1,7 @@
 class_name PassiveBarManager
 extends CanvasLayer   # or Control; both work with this logic
 
+
 @export_category("References")
 @export var bar_scene: PackedScene
 @export var bar_parent: Control  # assign a right-anchored container in the Inspector

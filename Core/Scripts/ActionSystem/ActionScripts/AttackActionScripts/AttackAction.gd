@@ -175,7 +175,7 @@ func modify_shake_and_hitstop() -> void:
 
 ## Resolves rules/effects at the correct hit moment: prefer signal from animation, otherwise uses a timer fallback.
 func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
-	var ctrl := unit.animation_controller
+	#var ctrl := unit.animation_controller
 
 	# Prefer: wait for HitMomentAnimationEffect fired by the attack animation
 	var used_signal := false
@@ -211,9 +211,10 @@ func do_resolve() -> void:
 		Utilities.spawn_text_line(defender, "EVADE", Color.AQUA)
 		CombatLog.instance.add_log("Result: Evaded")
 		return
-
-
-
+	
+	elif cd.skill.skill_type != Skill.SkillType.ATTACK:
+		# Only a debuff, no damage numbers needed
+		return
 
 
 	# OPTIONAL: switch to Posture track later.

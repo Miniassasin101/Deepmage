@@ -97,6 +97,7 @@ func set_attribute_current_value(in_name: String, value: int) -> bool:
 	if att:
 		att.current_value = value
 		attribute_changed.emit()
+		SignalBus.update_character_sheet.emit()
 		return true
 	return false
 
@@ -109,6 +110,7 @@ func change_attribute_current_value_by(in_name: String, value: int) -> bool:
 		att.current_value += value
 		attribute_changed.emit()
 		SignalBus.update_stat_bars.emit()
+		SignalBus.update_character_sheet.emit()
 		return true
 	return false
 
@@ -121,6 +123,7 @@ func add_attribute_modifier(in_name: String, modifier_value: int) -> bool:
 		att.add_modifier(modifier_value)
 		attribute_changed.emit()
 		SignalBus.update_stat_bars.emit()
+		SignalBus.update_character_sheet.emit()
 		return true
 	return false
 
@@ -133,6 +136,7 @@ func remove_attribute_modifier(in_name: String, modifier_value: int) -> bool:
 		att.remove_modifier(modifier_value)
 		attribute_changed.emit()
 		SignalBus.update_stat_bars.emit()
+		SignalBus.update_character_sheet.emit()
 		return true
 	return false
 

@@ -20,8 +20,19 @@ func apply() -> void:
 		push_error("No Status Resource in: " + self.to_string())
 
 	controller.add_status(status)
-
+	
+	var color: Color = Color.WHITE
+	
+	match status.status_category:
+		Status.StatusCategory.SPECIAL:
+			color = Color.ALICE_BLUE
+		Status.StatusCategory.BLESSING:
+			color = Color.SPRING_GREEN
+		Status.StatusCategory.AFFLICTION:
+			color = Color.WEB_PURPLE
+	
 	if show_text:
-		Utilities.spawn_text_line(target_unit, "Gained " + status.ui_name.to_pascal_case(), Color.AQUA)
+		Utilities.spawn_text_line(target_unit, status.ui_name, color)
 
 	emit_signal("effect_finished")
+	

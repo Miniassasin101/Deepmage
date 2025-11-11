@@ -26,6 +26,9 @@ func do_resolve() -> void:
 	if target_is_self:
 		return
 	
+	elif cd.skill.skill_type != Skill.SkillType.ATTACK:
+		# Only a debuff, no damage numbers needed
+		return
 	
 
 	

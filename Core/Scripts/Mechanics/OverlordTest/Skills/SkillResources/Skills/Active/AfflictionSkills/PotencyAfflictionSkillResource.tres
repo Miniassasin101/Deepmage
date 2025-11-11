@@ -4,8 +4,8 @@
 [ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="2_7peu1"]
 [ext_resource type="Script" uid="uid://dfqq4lgq8fr27" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="3_sjlct"]
 [ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_eiayq"]
-[ext_resource type="Resource" uid="uid://tr41qw80tt6u" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/GrantPotencyAfflictionEffectResource.tres" id="5_k6x3n"]
-[ext_resource type="Resource" uid="uid://caeygn6gmknml" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/ActiveBlockSkillResource.tres" id="7_0cf48"]
+[ext_resource type="Resource" uid="uid://tr41qw80tt6u" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/AfflictionEffects/GrantPotencyAfflictionEffectResource.tres" id="5_kkqdb"]
+[ext_resource type="Resource" uid="uid://caeygn6gmknml" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/BlessingSkills/ActiveBlockSkillResource.tres" id="7_0cf48"]
 [ext_resource type="Script" uid="uid://b3xoc4esw8i4s" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/InflictEffectAction.gd" id="8_nu76h"]
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="9_56vqd"]
 [ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="10_pucgs"]
@@ -32,7 +32,7 @@ metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 
 [sub_resource type="Resource" id="Resource_3m3oo"]
 script = ExtResource("8_nu76h")
-effects = Array[ExtResource("4_eiayq")]([ExtResource("5_k6x3n")])
+effects = Array[ExtResource("4_eiayq")]([ExtResource("5_kkqdb")])
 animation_package = ExtResource("1_subkq")
 is_attack = false
 fallback_skill = ExtResource("7_0cf48")

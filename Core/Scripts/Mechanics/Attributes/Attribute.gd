@@ -67,8 +67,7 @@ func add_modifier(in_modifier: int) -> void:
 	modifiers.append(in_modifier)
 
 func remove_modifier(in_modifier: int) -> void:
-	if modifiers.has(in_modifier):
-		modifiers.erase(in_modifier)
+	modifiers.erase(in_modifier)
 
 
 # Functions for tag management

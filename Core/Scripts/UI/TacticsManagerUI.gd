@@ -36,6 +36,7 @@ extends PanelContainer
 ## Reference to the conditions library pane/widget for browsing/adding conditions.
 @export var conditions_library_ui: ConditionsLibraryUI
 
+@export var skill_lib_scroll_container: ScrollContainer
 
 @export_category("Settings")
 ## Maximum number of per-skill condition columns to show (visual + bar capacity).
@@ -62,6 +63,9 @@ var passive_skills: Array[Skill] = []
 func _ready() -> void:
 	active_skills_rvbox.reordered.connect(on_active_skills_reordered)
 	_populate_skill_library()
+	if skill_lib_scroll_container:
+		var v_bar: VScrollBar = skill_lib_scroll_container.get_v_scroll_bar()
+		v_bar.set_step(30.0)
 
 
 ## Called when [member active_skills_rvbox] reorders a child; re-number priorities and mirror to the unit.

@@ -27,6 +27,8 @@ var is_hit: bool = true
 
 var net_hits: int = 0
 
+var accuracy: int = 0
+
 
 var initial_low_damage: int = 0
 var initial_high_damage: int = 0
