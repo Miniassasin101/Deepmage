@@ -9,7 +9,7 @@ func apply() -> void:
 	var target_unit: Unit = _resolve_target_unit()
 	if target_unit == null:
 		emit_signal("effect_finished")
-		return
+		return 
 
 	var controller: StatusController = target_unit.get_status_controller()
 	if controller == null:
