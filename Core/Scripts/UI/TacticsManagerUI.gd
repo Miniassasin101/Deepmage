@@ -31,12 +31,14 @@ extends PanelContainer
 @export var active_skills_rvbox: ReorderableVBox
 ## Reorderable list for [b]passive[/b] skills currently on the unit (optional use in this UI).
 @export var passive_skills_rvbox: ReorderableVBox
+
 ## Vertical list of addable skills coming from the global [Class SkillLibrary].
 @export var skill_library_vbox: VBoxContainer
 ## Reference to the conditions library pane/widget for browsing/adding conditions.
 @export var conditions_library_ui: ConditionsLibraryUI
 
 @export var skill_lib_scroll_container: ScrollContainer
+@export var skills_library_ui: SkillsLibraryUI   # <— new
 
 @export_category("Settings")
 ## Maximum number of per-skill condition columns to show (visual + bar capacity).
@@ -62,10 +64,11 @@ var passive_skills: Array[Skill] = []
 ## [b]Engine callback:[/b] wires signals and populates the skill library once.
 func _ready() -> void:
 	active_skills_rvbox.reordered.connect(on_active_skills_reordered)
-	_populate_skill_library()
-	if skill_lib_scroll_container:
-		var v_bar: VScrollBar = skill_lib_scroll_container.get_v_scroll_bar()
-		v_bar.set_step(30.0)
+	
+	if skills_library_ui != null and not skills_library_ui.on_add_to_tactics.is_connected(_on_library_add_skill):
+		skills_library_ui.on_add_to_tactics.connect(_on_library_add_skill)
+	
+
 
 
 ## Called when [member active_skills_rvbox] reorders a child; re-number priorities and mirror to the unit.
@@ -229,37 +232,7 @@ func clear_all_skills() -> void:
 # Skill Library Functions
 # --------------------------------------------------------------------------------------
 
-## Populates the library panel from [Class CombatSystem] → [method CombatSystem.get_skill_library].[br]
-## Creates a [Class LibrarySkillBar] for each library skill and connects its “add” signal.
-func _populate_skill_library() -> void:
-	if skill_library_vbox == null:
-		return
-	_clear_library()
 
-	var combat_system: CombatSystem = CombatSystem.instance
-	if combat_system == null:
-		return
-	var library: SkillLibrary = combat_system.get_skill_library()
-	if library == null:
-		return
-
-	var sorted_skills: Array[Skill] = library.get_skills_sorted_by_category_type_name()
-	for lib_skill in sorted_skills:
-		if lib_skill == null:
-			continue
-		var lib_bar: LibrarySkillBar = library_skill_bar_prefab.instantiate() as LibrarySkillBar
-		skill_library_vbox.add_child(lib_bar)
-		lib_bar.populate_from_skill(lib_skill)
-		if not lib_bar.on_add_to_tactics.is_connected(_on_library_add_skill):
-			lib_bar.on_add_to_tactics.connect(_on_library_add_skill)
-
-
-## Removes all existing children from the library panel before repopulation.
-func _clear_library() -> void:
-	if skill_library_vbox == null:
-		return
-	for lib_child in skill_library_vbox.get_children():
-		lib_child.queue_free()
 
 
 ## Handles “Add to Tactics” from a library row: duplicates the skill, clears external conditions/preferences,
