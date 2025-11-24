@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" load_steps=4 format=3 uid="uid://cnntsefbrprns"]
+
+[ext_resource type="Script" uid="uid://d2hgtnub31gt6" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreferenceScripts/AttributeTargetPreferences/LowestAttributeValuePreference.gd" id="1_txp8b"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_4rvjt"]
+
+[sub_resource type="Resource" id="Resource_lu2b5"]
+script = ExtResource("1_txp8b")
+attribute_name = "critical"
+metadata/_custom_type_script = "uid://d2hgtnub31gt6"
+
+[resource]
+script = ExtResource("2_4rvjt")
+display_name = "Prefer Lowest Critical"
+category_name = "Attribute Preference"
+prototype = SubResource("Resource_lu2b5")
+metadata/_custom_type_script = "uid://c7jeogqcvfh22"

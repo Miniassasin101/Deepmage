@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://14nkak1a1qkg"]
+[gd_scene load_steps=59 format=3 uid="uid://14nkak1a1qkg"]
 
 [ext_resource type="Script" uid="uid://ceujy1qm0i6o6" path="res://Deepmage/Core/Scripts/Units/CharacterSheet.gd" id="1_rgld4"]
 [ext_resource type="Script" uid="uid://cusgogua72ojh" path="res://Deepmage/Core/Scripts/ActionSystem/ActionContainer.gd" id="2_o1iyq"]
@@ -34,7 +34,6 @@
 [ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestAttackSkillResource.tres" id="29_ucxv2"]
 [ext_resource type="Resource" uid="uid://ceu3eynl7qehx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/RushToUnitSkillResource.tres" id="30_ucxv2"]
 [ext_resource type="Script" uid="uid://dka6hmfmjlgvl" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/UseFirstSkillAction.gd" id="31_xyrbs"]
-[ext_resource type="Resource" uid="uid://btrredbp8en14" path="res://Deepmage/Core/Resources/ActionResources/InflictEffectActionResources/BraceSelfActionResource.tres" id="34_semri"]
 
 [sub_resource type="Resource" id="Resource_bbcsa"]
 script = ExtResource("5_p3ymn")
@@ -226,7 +225,7 @@ attributes_profile = ExtResource("2_semri")
 
 [node name="ActionContainer" type="Node" parent="."]
 script = ExtResource("2_o1iyq")
-actions = Array[ExtResource("3_qntpm")]([ExtResource("6_semri"), ExtResource("7_dpcrq"), SubResource("Resource_semri"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("10_wrqbw"), ExtResource("11_t0b1j"), ExtResource("15_m2aod"), ExtResource("12_x34uj"), ExtResource("13_704ky"), ExtResource("14_6wat7"), ExtResource("15_8ookq"), ExtResource("16_fpm4q"), SubResource("Resource_bqf7c"), ExtResource("24_2en3j"), SubResource("Resource_lqkdn"), SubResource("Resource_p3ymn"), SubResource("Resource_t600r"), ExtResource("34_semri")])
+actions = Array[ExtResource("3_qntpm")]([ExtResource("6_semri"), ExtResource("7_dpcrq"), SubResource("Resource_semri"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("10_wrqbw"), ExtResource("11_t0b1j"), ExtResource("15_m2aod"), ExtResource("12_x34uj"), ExtResource("13_704ky"), ExtResource("14_6wat7"), ExtResource("15_8ookq"), ExtResource("16_fpm4q"), SubResource("Resource_bqf7c"), ExtResource("24_2en3j"), SubResource("Resource_lqkdn"), SubResource("Resource_p3ymn"), SubResource("Resource_t600r")])
 
 [node name="AttributesContainer" type="Node" parent="." node_paths=PackedStringArray("character_sheet")]
 script = ExtResource("25_ui78x")

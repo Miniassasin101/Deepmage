@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" load_steps=4 format=3 uid="uid://eyqsubx5tw4m"]
+
+[ext_resource type="Script" uid="uid://1e0vvjn7te7n" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreferenceScripts/AttributeTargetPreferences/HighestAttributeValuePreference.gd" id="1_2c4my"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_la4be"]
+
+[sub_resource type="Resource" id="Resource_8gjgg"]
+script = ExtResource("1_2c4my")
+attribute_name = "speed"
+metadata/_custom_type_script = "uid://1e0vvjn7te7n"
+
+[resource]
+script = ExtResource("2_la4be")
+display_name = "Prefer Highest Speed"
+category_name = "Attribute Preference"
+prototype = SubResource("Resource_8gjgg")
+metadata/_custom_type_script = "uid://c7jeogqcvfh22"

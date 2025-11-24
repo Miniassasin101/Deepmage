@@ -70,8 +70,6 @@ func _physics_process(delta: float):
 				return
 
 
-		
-
 	
 	# Handle player movement
 	handle_movement()
