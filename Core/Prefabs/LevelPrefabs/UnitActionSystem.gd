@@ -32,7 +32,6 @@ signal reaction_confirmed(reaction: Action)
 ## Local counter used by legacy/testing code paths.
 var d_count: int = 0
 
-#@export var diego_n_array: Array[String] = []
 
 ## The currently highlighted/armed action (normal or reaction). May be [code]null[/code] if none is selected.
 var selected_action: Action = null
@@ -394,18 +393,3 @@ func check_if_movement_preview() -> bool:
 ## Convenience: returns [code]TurnSystem.instance.selected_unit[/code].
 func get_selected_unit() -> Unit:
 	return TurnSystem.instance.selected_unit
-
-
-""" Call Diego the N word
-func call_diego_the_n_word() -> void:
-	if d_count >= 3:
-		d_count = 0
-	
-	var curr_string: String = diego_n_array[d_count]
-	label.set_text(curr_string)
-	if d_count == 2:
-		label.label_settings.font_color = Color.RED
-	else:
-		label.label_settings.font_color = Color.WHITE
-	d_count += 1
-"""

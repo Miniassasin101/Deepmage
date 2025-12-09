@@ -1107,6 +1107,19 @@ layout_mode = 2
 [node name="TopHPBar" parent="UILayer/ActionSystemUI" instance=ExtResource("21_xyav6")]
 layout_mode = 1
 
+[node name="ControlsLabel" type="Label" parent="UILayer/ActionSystemUI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.035
+anchor_bottom = 0.043
+offset_left = 323.0
+offset_top = 592.0
+offset_right = 927.68
+offset_bottom = 592.136
+scale = Vector2(0.74275184, 0.74275184)
+text = "Start game: \"N\" | Character Sheet: Hover Unit + \"C\" | Tactics Menu: Hover Unit + \"T\""
+horizontal_alignment = 1
+
 [node name="TurnSystemUI" type="Control" parent="UILayer" node_paths=PackedStringArray("turn_system", "combat_system", "end_turn_container", "end_turn_button", "turn_phase_label", "round_counter_label", "cycle_counter_label", "movement_gait_label")]
 layout_mode = 3
 anchors_preset = 15
@@ -1148,7 +1161,7 @@ theme_override_constants/margin_bottom = 2
 
 [node name="EndTurnButton" type="Button" parent="UILayer/TurnSystemUI/EndTurnContainer/MarginContainer"]
 layout_mode = 2
-text = "END TURN"
+text = "START TURN"
 
 [node name="TurnCountContainer" type="PanelContainer" parent="UILayer/TurnSystemUI"]
 visible = false

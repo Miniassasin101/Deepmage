@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://14nkak1a1qkg"]
+[gd_scene load_steps=60 format=3 uid="uid://14nkak1a1qkg"]
 
 [ext_resource type="Script" uid="uid://ceujy1qm0i6o6" path="res://Deepmage/Core/Scripts/Units/CharacterSheet.gd" id="1_rgld4"]
 [ext_resource type="Script" uid="uid://cusgogua72ojh" path="res://Deepmage/Core/Scripts/ActionSystem/ActionContainer.gd" id="2_o1iyq"]
@@ -34,6 +34,7 @@
 [ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestAttackSkillResource.tres" id="29_ucxv2"]
 [ext_resource type="Resource" uid="uid://ceu3eynl7qehx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/RushToUnitSkillResource.tres" id="30_ucxv2"]
 [ext_resource type="Script" uid="uid://dka6hmfmjlgvl" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/UseFirstSkillAction.gd" id="31_xyrbs"]
+[ext_resource type="Script" uid="uid://wnokk4hycw83" path="res://Deepmage/Core/Scripts/Mechanics/Classes/ClassManager.gd" id="35_semri"]
 
 [sub_resource type="Resource" id="Resource_bbcsa"]
 script = ExtResource("5_p3ymn")
@@ -230,3 +231,6 @@ actions = Array[ExtResource("3_qntpm")]([ExtResource("6_semri"), ExtResource("7_
 [node name="AttributesContainer" type="Node" parent="." node_paths=PackedStringArray("character_sheet")]
 script = ExtResource("25_ui78x")
 character_sheet = NodePath("..")
+
+[node name="ClassManager" type="Node" parent="."]
+script = ExtResource("35_semri")

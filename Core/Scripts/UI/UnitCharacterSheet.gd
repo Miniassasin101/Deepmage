@@ -57,6 +57,10 @@ extends Control
 var is_open: bool = false
 var last_unit: Unit = null
 
+
+static var tactic_presets: Array[Tactic] = []
+static var copied_tactic_blueprint: Tactic = null
+
 static var instance: UnitCharacterSheetUI = null
 
 
@@ -67,6 +71,12 @@ func _ready() -> void:
 		return
 	instance = self
 	visible = false
+
+	# Ensure we always have 9 preset slots [0..8] for keys 1..9
+	if tactic_presets.is_empty():
+		var preset_slots_count: int = 9
+		tactic_presets.resize(preset_slots_count)
+
 	SignalBus.open_character_sheet.connect(_on_open_character_sheet)
 	SignalBus.update_character_sheet.connect(update_character_sheet)
 	close_button.pressed.connect(_on_close_button_pressed)
@@ -76,9 +86,11 @@ func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("testkey_c"):
 		open_character_sheet(null, 0)
 
-
 	elif Input.is_action_just_pressed("t_key"):
 		open_character_sheet(null, 1)
+	
+
+	_handle_tactics_preset_input(_event)
 
 
 func update_character_sheet() -> void:
@@ -198,6 +210,8 @@ func _populate_from_unit(unit: Unit) -> void:
 		tactics_manager_ui.populate_from_unit(unit)
 	
 	_populate_statuses(unit)
+	
+	last_unit = unit
 
 
 func get_min_max_martial_dmg(unit: Unit) -> String:
@@ -303,37 +317,178 @@ func _on_status_details_pressed(status: Status) -> void:
 	popup.popup_centered()
 
 
-""" Weapon Details
-func show_weapon_details_popup(weapon: Weapon) -> void:
-	# Shows a popup with detailed weapon information.
-	assert(weapon is Weapon)
-	var popup = ConfirmationDialog.new()
-	popup.name = "WeaponDetailsPopup"
-	popup.title = weapon.name
-	popup.min_size = Vector2(400, 300)
 
-	var weapon_info_container = VBoxContainer.new()
+# Tactics Preset Functions - - - - - - - - - - - - - - - 
+func _handle_tactics_preset_input(input_event: InputEvent) -> void:
+	var key_event: InputEventKey = input_event as InputEventKey
+	if key_event == null:
+		return
+	if key_event.pressed == false or key_event.echo:
+		return
 
-	var category_label = Label.new()
-	category_label.text = "Category: %s" % weapon.category
-	weapon_info_container.add_child(category_label)
+	# Only allow presets while the sheet is open
+	if is_open == false:
+		return
+	if tab_container == null:
+		return
+	# Assuming tab 1 is your Tactics tab
+	if tab_container.get_current_tab() != 1:
+		return
+
+	# Only during player planning
+	if TurnSystem.instance != null:
+		if TurnSystem.instance.current_phase != TurnSystem.RoundPhase.PLAYER_PLANNING:
+			return
+
+	# Ctrl+C / Ctrl+V for copy / paste
+	if key_event.ctrl_pressed:
+		if key_event.keycode == KEY_C:
+			_copy_current_tactic_to_clipboard()
+			return
+		if key_event.keycode == KEY_V:
+			_paste_clipboard_to_current_unit()
+			return
+
+	# Number keys 1..9 for presets
+	var preset_index: int = _get_preset_index_from_keycode(key_event.keycode)
+	if preset_index == -1:
+		return
+
+	# Shift + [num] → save; [num] → load
+	if key_event.shift_pressed:
+		_save_preset_from_current_unit(preset_index)
+	else:
+		_apply_preset_to_current_unit(preset_index)
+
+func _get_preset_index_from_keycode(keycode_value: int) -> int:
+	match keycode_value:
+		KEY_1:
+			return 0
+		KEY_2:
+			return 1
+		KEY_3:
+			return 2
+		KEY_4:
+			return 3
+		KEY_5:
+			return 4
+		KEY_6:
+			return 5
+		KEY_7:
+			return 6
+		KEY_8:
+			return 7
+		KEY_9:
+			return 8
+		_:
+			return -1
 
 
-	if weapon.traits.size() > 0:
-		var traits_label = Label.new()
-		traits_label.text = "Traits: %s" % ", ".join(weapon.traits)
-		weapon_info_container.add_child(traits_label)
+func _build_blueprint_from_tactic(source_tactic: Tactic) -> Tactic:
+	if source_tactic == null:
+		return null
 
-	if weapon.combat_effects.size() > 0:
-		var effects_label = Label.new()
-		effects_label.text = "Combat Effects: %s" % ", ".join(weapon.combat_effects)
-		weapon_info_container.add_child(effects_label)
+	var blueprint_tactic: Tactic = Tactic.new()
 
-	var hands_label = Label.new()
-	hands_label.text = "Hands Required: %s" % weapon.hands
-	weapon_info_container.add_child(hands_label)
+	var source_active_skills: Array[Skill] = source_tactic.get_valid_active_skills()
+	for source_active_skill in source_active_skills:
+		if source_active_skill == null:
+			continue
+		var duplicated_active_skill: Skill = source_active_skill.duplicate(true)
+		duplicated_active_skill.unit = null
+		duplicated_active_skill._invalidate_condition_caches()
+		blueprint_tactic.active_skills.append(duplicated_active_skill)
 
-	popup.add_child(weapon_info_container)
-	get_tree().root.add_child(popup)
-	popup.popup_centered()
-"""
+	var source_passive_skills: Array[Skill] = source_tactic.get_valid_passive_skills()
+	for source_passive_skill in source_passive_skills:
+		if source_passive_skill == null:
+			continue
+		var duplicated_passive_skill: Skill = source_passive_skill.duplicate(true)
+		duplicated_passive_skill.unit = null
+		duplicated_passive_skill._invalidate_condition_caches()
+		blueprint_tactic.passive_skills.append(duplicated_passive_skill)
+
+	return blueprint_tactic
+
+
+func _save_preset_from_current_unit(preset_index: int) -> void:
+	if last_unit == null:
+		return
+	if last_unit.tactics_controller == null:
+		return
+
+	var source_tactic: Tactic = last_unit.tactics_controller.current_tactic
+	if source_tactic == null:
+		return
+
+	var blueprint_tactic: Tactic = _build_blueprint_from_tactic(source_tactic)
+	if blueprint_tactic == null:
+		return
+
+	if preset_index < 0:
+		return
+
+	if preset_index >= tactic_presets.size():
+		tactic_presets.resize(preset_index + 1)
+
+	tactic_presets[preset_index] = blueprint_tactic
+	CombatLog.instance.add_log("Saved tactics preset " + str(preset_index + 1) + " for " + last_unit.ui_name)
+
+
+func _apply_preset_to_current_unit(preset_index: int) -> void:
+	if last_unit == null:
+		return
+	if last_unit.tactics_controller == null:
+		return
+	if preset_index < 0 or preset_index >= tactic_presets.size():
+		return
+
+	var preset_tactic: Tactic = tactic_presets[preset_index]
+	if preset_tactic == null:
+		CombatLog.instance.add_log("No tactics preset in slot " + str(preset_index + 1))
+		return
+
+	# Duplicate and bind to this unit so skills are unique
+	var duplicated_tactic_for_unit: Tactic = preset_tactic.duplicate(true)
+	duplicated_tactic_for_unit.make_skills_unique(last_unit)
+	last_unit.tactics_controller.current_tactic = duplicated_tactic_for_unit
+
+	# Refresh the tactics UI so rows/conditions match the new tactic
+	if tactics_manager_ui != null:
+		tactics_manager_ui.populate_from_unit(last_unit)
+
+	CombatLog.instance.add_log("Loaded tactics preset " + str(preset_index + 1) + " onto " + last_unit.ui_name)
+
+
+
+func _copy_current_tactic_to_clipboard() -> void:
+	if last_unit == null:
+		return
+	if last_unit.tactics_controller == null:
+		return
+
+	var source_tactic: Tactic = last_unit.tactics_controller.current_tactic
+	if source_tactic == null:
+		return
+
+	copied_tactic_blueprint = _build_blueprint_from_tactic(source_tactic)
+	if copied_tactic_blueprint != null:
+		CombatLog.instance.add_log("Copied tactics from " + last_unit.ui_name)
+
+func _paste_clipboard_to_current_unit() -> void:
+	if last_unit == null:
+		return
+	if last_unit.tactics_controller == null:
+		return
+	if copied_tactic_blueprint == null:
+		CombatLog.instance.add_log("No tactics copied to paste")
+		return
+
+	var duplicated_tactic_for_unit: Tactic = copied_tactic_blueprint.duplicate(true)
+	duplicated_tactic_for_unit.make_skills_unique(last_unit)
+	last_unit.tactics_controller.current_tactic = duplicated_tactic_for_unit
+
+	if tactics_manager_ui != null:
+		tactics_manager_ui.populate_from_unit(last_unit)
+
+	CombatLog.instance.add_log("Pasted tactics onto " + last_unit.ui_name)
