@@ -264,6 +264,7 @@ libraries = {
 
 [node name="SatelliteController" type="Node3D" parent="." node_paths=PackedStringArray("spawn_markers")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.283377, 0)
+visible = false
 script = ExtResource("9_aemtr")
 satellite_prefab = ExtResource("10_lsp3f")
 spawn_markers = [NodePath("SpawnMarker1"), NodePath("SpawnMarker2"), NodePath("SpawnMarker3"), NodePath("SpawnMarker4"), NodePath("SpawnMarker5"), NodePath("SpawnMarker6")]

@@ -40,6 +40,8 @@ extends PanelContainer
 @export var skill_lib_scroll_container: ScrollContainer
 @export var skills_library_ui: SkillsLibraryUI   # <— new
 
+@export var help_button: Button
+
 @export_category("Settings")
 ## Maximum number of per-skill condition columns to show (visual + bar capacity).
 @export_range(1, 6) var max_conditions_count: int = 4
@@ -288,3 +290,37 @@ func _spawn_tactics_bar_for_skill(in_skill: Skill, target_rvbox: ReorderableVBox
 	new_skillbar.on_tactics_skill_bar_update.connect(on_tactics_skill_bar_update)
 
 	return new_skillbar
+
+# --------------------------------------------------------------------------------------
+# Help Button Functions
+# --------------------------------------------------------------------------------------
+
+@export var help_window_scene: PackedScene = null
+
+var help_window: PopupPanel = null
+var is_window_open: bool = false
+
+
+func on_help_button_pressed() -> void:
+	
+	if !help_window_scene:
+		return
+	if !help_window:
+		help_window = help_window_scene.instantiate() as PopupPanel
+		add_child(help_window)
+	if help_window.visible:
+		close_controls_popup()
+	else:
+		open_controls_popup()
+	pass
+
+
+func open_controls_popup() -> void:
+	help_window.visible = true
+	is_window_open = true
+	pass
+
+func close_controls_popup() -> void:
+	help_window.visible = false
+	is_window_open = false
+	pass

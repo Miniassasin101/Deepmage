@@ -128,7 +128,7 @@ func _end_movement() -> void:
 	var rounded_curve_length: float = snappedf(curve_length, 0.01)
 	Utilities.spawn_text_line(unit, "Moved: " + str(rounded_curve_length), Color.ALICE_BLUE)
 	CombatLog.instance.add_log(unit.ui_name + " Moved: " + str(rounded_curve_length))
-	
+	UnitActionSystem.instance.show_unit_move_ranges(unit)
 	
 	
 	#end_action()

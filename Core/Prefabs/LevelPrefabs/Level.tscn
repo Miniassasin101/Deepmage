@@ -1,4 +1,4 @@
-[gd_scene load_steps=159 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=163 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
@@ -61,16 +61,21 @@
 [ext_resource type="Resource" uid="uid://dkeoolmv8jjeq" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/SkillLibraries/SkillLibraryResource.tres" id="42_5lfvx"]
 [ext_resource type="Resource" uid="uid://cucaqplnm0re3" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/ConditionLibraries/ConditionLibraryResource.tres" id="43_f0670"]
 [ext_resource type="PackedScene" uid="uid://boy7waxi1xa2y" path="res://Deepmage/Core/Prefabs/UI/SkillActivationUI.tscn" id="48_iq36j"]
+[ext_resource type="Script" uid="uid://dr67xmhcxhifl" path="res://Deepmage/Core/Scripts/Navigation/MoveRangeRingRenderer.gd" id="49_ebomw"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_lf0eb"]
-vertices = PackedVector3Array(-18.6557, 0.5, -18.6557, -18.6557, 0.5, 44.8443, 18.5943, 0.5, 44.8443, 18.5943, 0.5, -18.6557)
-polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+vertices = PackedVector3Array(-2.4057007, 0.6026907, -7.6557007, -0.6557007, 0.6026907, -7.6557007, -0.6557007, 0.6026907, -18.6557, -18.6557, 0.6026907, -18.6557, -18.6557, 0.6026907, -7.9057007, 1.3442993, 0.6026907, -7.6557007, 1.5942993, 0.6026907, -5.4057007, 18.5943, 0.6026907, -5.4057007, 18.5943, 0.6026907, -18.6557, -0.6557007, 0.6026907, 2.3442993, -0.6557007, 0.6026907, -3.1557007, -2.9057007, 0.6026907, -3.4057007, -4.1557007, 0.6026907, 2.3442993, -2.9057007, 0.6026907, -7.4057007, -4.4057007, 0.6026907, 2.8442993, -18.6557, 0.6026907, 2.8442993, 1.3442993, 0.6026907, -3.1557007, 2.8442993, 0.6026907, 2.3442993, 3.0942993, 0.6026907, 2.8442993, 18.5943, 0.6026907, 2.8442993, -3.4057007, 0.6026907, 7.0942993, 0.8442993, 0.6026907, 7.0942993, 0.8442993, 0.6026907, 3.5942993, -4.1557007, 0.6026907, 3.5942993, -18.6557, 0.6026907, 7.8442993, -3.6557007, 0.6026907, 7.8442993, 2.8442993, 0.6026907, 3.5942993, 3.5942993, 0.6026907, 7.0942993, 3.8442993, 0.6026907, 7.8442993, 18.5943, 0.6026907, 7.8442993, 3.5942993, 0.6026907, 8.344299, 18.5943, 0.6026907, 44.8443, -3.4057007, 0.6026907, 8.344299, -18.6557, 0.6026907, 44.8443)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 4), PackedInt32Array(2, 4, 3), PackedInt32Array(5, 1, 2), PackedInt32Array(7, 6, 5), PackedInt32Array(2, 8, 5), PackedInt32Array(5, 8, 7), PackedInt32Array(10, 9, 11), PackedInt32Array(11, 9, 12), PackedInt32Array(4, 0, 13), PackedInt32Array(12, 14, 11), PackedInt32Array(11, 14, 13), PackedInt32Array(13, 14, 15), PackedInt32Array(13, 15, 4), PackedInt32Array(10, 16, 9), PackedInt32Array(9, 16, 17), PackedInt32Array(17, 16, 18), PackedInt32Array(18, 16, 6), PackedInt32Array(18, 6, 19), PackedInt32Array(19, 6, 7), PackedInt32Array(21, 20, 22), PackedInt32Array(22, 20, 23), PackedInt32Array(20, 25, 23), PackedInt32Array(23, 25, 14), PackedInt32Array(14, 25, 15), PackedInt32Array(15, 25, 24), PackedInt32Array(22, 26, 21), PackedInt32Array(21, 26, 27), PackedInt32Array(26, 18, 27), PackedInt32Array(27, 18, 28), PackedInt32Array(28, 18, 29), PackedInt32Array(29, 18, 19), PackedInt32Array(28, 29, 30), PackedInt32Array(30, 29, 31), PackedInt32Array(25, 32, 24), PackedInt32Array(24, 32, 33), PackedInt32Array(30, 31, 32), PackedInt32Array(32, 31, 33)]
 geometry_source_geometry_mode = 2
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_rcno3"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_avqdt"]
 data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f0670"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ebomw"]
 
 [sub_resource type="Resource" id="Resource_wdfje"]
 script = ExtResource("22_ebomw")
@@ -139,7 +144,7 @@ active_skills = Array[ExtResource("12_f2qps")]([ExtResource("10_f0670")])
 passive_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_05afn")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
-[sub_resource type="Resource" id="Resource_5lfvx"]
+[sub_resource type="Resource" id="Resource_f0670"]
 resource_local_to_scene = true
 resource_name = "Posture"
 script = ExtResource("10_p6f6u")
@@ -149,17 +154,17 @@ current_value = 20
 maximum_value = 20
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_f0670"]
+[sub_resource type="Resource" id="Resource_ebomw"]
 resource_local_to_scene = true
 resource_name = "Speed"
 script = ExtResource("10_p6f6u")
 attribute_name = "speed"
 attribute_type = 2
-current_value = 4
-maximum_value = 4
+current_value = 9
+maximum_value = 9
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_ebomw"]
+[sub_resource type="Resource" id="Resource_04ue1"]
 resource_local_to_scene = true
 resource_name = "Evade"
 script = ExtResource("10_p6f6u")
@@ -168,7 +173,7 @@ attribute_type = 2
 maximum_value = 0
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_04ue1"]
+[sub_resource type="Resource" id="Resource_cb3j6"]
 resource_local_to_scene = true
 resource_name = "Martial"
 script = ExtResource("10_p6f6u")
@@ -178,7 +183,7 @@ current_value = 2
 maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_cb3j6"]
+[sub_resource type="Resource" id="Resource_e15dp"]
 resource_local_to_scene = true
 resource_name = "Channel"
 script = ExtResource("10_p6f6u")
@@ -187,7 +192,7 @@ attribute_type = 1
 current_value = 1
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_e15dp"]
+[sub_resource type="Resource" id="Resource_c2k8n"]
 resource_local_to_scene = true
 resource_name = "Parry"
 script = ExtResource("10_p6f6u")
@@ -197,7 +202,7 @@ current_value = 2
 maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_c2k8n"]
+[sub_resource type="Resource" id="Resource_hja2s"]
 resource_local_to_scene = true
 resource_name = "Resist"
 script = ExtResource("10_p6f6u")
@@ -207,7 +212,7 @@ current_value = 2
 maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_hja2s"]
+[sub_resource type="Resource" id="Resource_f3uqp"]
 resource_local_to_scene = true
 resource_name = "Mana"
 script = ExtResource("10_p6f6u")
@@ -217,7 +222,7 @@ current_value = 10
 maximum_value = 10
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_f3uqp"]
+[sub_resource type="Resource" id="Resource_0fvkv"]
 resource_local_to_scene = true
 resource_name = "ActivePoints"
 script = ExtResource("10_p6f6u")
@@ -228,7 +233,7 @@ base_value = 2
 maximum_value = 4
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_0fvkv"]
+[sub_resource type="Resource" id="Resource_dpue3"]
 resource_local_to_scene = true
 resource_name = "PassivePoints"
 script = ExtResource("10_p6f6u")
@@ -239,7 +244,7 @@ base_value = 2
 maximum_value = 4
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_dpue3"]
+[sub_resource type="Resource" id="Resource_mpmhl"]
 resource_local_to_scene = true
 resource_name = "Initiative"
 script = ExtResource("10_p6f6u")
@@ -250,7 +255,7 @@ maximum_value = 17
 minimum_value = -100
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_mpmhl"]
+[sub_resource type="Resource" id="Resource_yl67w"]
 resource_local_to_scene = true
 resource_name = "Accuracy"
 script = ExtResource("10_p6f6u")
@@ -259,7 +264,7 @@ attribute_type = 2
 maximum_value = 0
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_yl67w"]
+[sub_resource type="Resource" id="Resource_0who7"]
 resource_local_to_scene = true
 resource_name = "Critical"
 script = ExtResource("10_p6f6u")
@@ -271,7 +276,7 @@ metadata/_custom_type_script = "uid://7vw8btajjq0q"
 [sub_resource type="Resource" id="Resource_6odjx"]
 resource_local_to_scene = true
 script = ExtResource("11_6kl6n")
-attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_5lfvx"), SubResource("Resource_f0670"), SubResource("Resource_ebomw"), SubResource("Resource_04ue1"), SubResource("Resource_cb3j6"), SubResource("Resource_e15dp"), SubResource("Resource_c2k8n"), SubResource("Resource_hja2s"), SubResource("Resource_f3uqp"), SubResource("Resource_0fvkv"), SubResource("Resource_dpue3"), SubResource("Resource_mpmhl"), SubResource("Resource_yl67w")])
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_f0670"), SubResource("Resource_ebomw"), SubResource("Resource_04ue1"), SubResource("Resource_cb3j6"), SubResource("Resource_e15dp"), SubResource("Resource_c2k8n"), SubResource("Resource_hja2s"), SubResource("Resource_f3uqp"), SubResource("Resource_0fvkv"), SubResource("Resource_dpue3"), SubResource("Resource_mpmhl"), SubResource("Resource_yl67w"), SubResource("Resource_0who7")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
 
 [sub_resource type="Resource" id="Resource_eu7gh"]
@@ -847,6 +852,8 @@ point_count = 2
 albedo_color = Color(0, 0.615686, 0.882353, 1)
 roughness = 0.5
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_04ue1"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gh8or"]
 bg_color = Color(0.0264, 0.0294, 0.03, 0.945098)
 border_width_left = 2
@@ -906,6 +913,11 @@ grow_end = 0.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
 navigation_mesh = SubResource("NavigationMesh_lf0eb")
 
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="NavigationRegion3D" groups=["navigation_mesh_source_group"]]
+height = 2.23
+vertices = PackedVector3Array(1.0616996, 0, -3.8036938, 0.97278094, 0, -7.0195866, -2.3320305, 0, -7.064046, -2.2134717, 0, -3.848153)
+affect_navigation_mesh = true
+
 [node name="DebugSettings" type="Node" parent="."]
 script = ExtResource("1_uoqcs")
 
@@ -961,6 +973,51 @@ collision_mask = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor2/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_avqdt")
 
+[node name="Floor3" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
+transform = Transform3D(3.1501377, 0, 0, 0, -0.13345206, 3.1473093, 0, -3.1473093, -0.13345206, 0, 0, 7.8511486)
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("PlaneMesh_rcno3")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_mu4i6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor3"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor3/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_avqdt")
+
+[node name="Floor4" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
+transform = Transform3D(3.1501377, 0, 0, 0, -0.13345206, 3.1473093, 0, -3.1473093, -0.13345206, -0.61448956, 0, 2.9558797)
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("PlaneMesh_rcno3")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_mu4i6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor4"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor4/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_avqdt")
+
+[node name="Floor5" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
+transform = Transform3D(3.1501377, 0, 0, 0, -0.13345206, 3.1473093, 0, -3.1473093, -0.13345206, -0.61448956, 0, -5.455774)
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("BoxMesh_f0670")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_mu4i6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor5"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor5/StaticBody3D"]
+shape = SubResource("BoxShape3D_ebomw")
+
 [node name="Camera" parent="." instance=ExtResource("3_wbgr3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.735, 1.03, 0.84)
 
@@ -1000,7 +1057,7 @@ unit = NodePath("..")
 attributes_profile = SubResource("Resource_knq6r")
 
 [node name="Ruby" parent="UnitManager" instance=ExtResource("12_k2c3k")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6, 0, 1.923152)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6, 0, -1.9571767)
 starting_tactic = SubResource("Resource_7g53y")
 ui_name = "Ruby"
 visor_color = Color(1, 0.120000005, 0.120000005, 1)
@@ -1038,11 +1095,14 @@ script = ExtResource("26_qdwhh")
 combat_system = NodePath("..")
 metadata/_custom_type_script = "uid://c1pcudui7e5qp"
 
-[node name="PathfindingSystem" type="Node" parent="." node_paths=PackedStringArray("nav_region_3d")]
+[node name="PathfindingSystem" type="Node" parent="." node_paths=PackedStringArray("nav_region_3d", "curvemesh")]
 script = ExtResource("12_fnj5h")
 nav_region_3d = NodePath("../NavigationRegion3D")
+curvemesh = NodePath("CurveMesh3D")
 radius_curve = ExtResource("14_calw8")
 debug_curve_material = SubResource("StandardMaterial3D_xyav6")
+move_range_cell_size = 0.21000000000000002
+move_range_snap_threshold = 0.13
 
 [node name="CurveMesh3D" type="Path3D" parent="PathfindingSystem"]
 visible = false
@@ -1055,6 +1115,13 @@ metadata/_custom_type_script = "uid://ian5eam30p0l"
 [node name="PathBuilder3D" type="Node" parent="PathfindingSystem"]
 script = ExtResource("16_dfmjn")
 metadata/_custom_type_script = "uid://cc6pcq4yohj7m"
+
+[node name="MoveRangeRingRenderer" type="Node3D" parent="PathfindingSystem"]
+visible = false
+script = ExtResource("49_ebomw")
+radius_profile = ExtResource("14_calw8")
+material = SubResource("StandardMaterial3D_04ue1")
+metadata/_custom_type_script = "uid://dr67xmhcxhifl"
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 script = ExtResource("5_jtghi")

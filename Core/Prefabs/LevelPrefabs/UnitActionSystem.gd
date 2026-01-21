@@ -187,6 +187,11 @@ func try_handle_unit_selection(do_action_check: bool = false) -> bool:
 # Selection Mechanics
 # --------------------------------------------------------------------------------------
 
+
+
+
+
+
 ## Returns [code]true[/code] if the selected action can be used on [param in_unit]; uses it immediately if so.
 func check_can_activate_action_on_unit(in_unit: Unit) -> bool:
 	var a_container: ActionContainer = TurnSystem.instance.selected_unit.get_action_container()
@@ -311,8 +316,16 @@ func set_selected_action(in_action: Action) -> void:
 ## Updates the globally selected unit via [code]TurnSystem[/code].
 func set_selected_unit(in_selected_unit: Unit) -> void:
 	TurnSystem.instance.set_selected_unit(in_selected_unit)
+	show_unit_move_ranges(in_selected_unit)
 	pass
 
+
+func show_unit_move_ranges(in_unit: Unit) -> void:
+	if in_unit == null:
+		return
+	var speed_val: float = float(in_unit.get_attributes_container().get_attribute_current_value("speed"))
+	var budget: float = speed_val * 2.0
+	PathfindingSystem.instance.show_move_range_for_unit(in_unit, budget)
 
 
 

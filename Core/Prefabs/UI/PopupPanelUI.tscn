@@ -1,0 +1,80 @@
+[gd_scene load_steps=6 format=3 uid="uid://b5llnjbns47vs"]
+
+[ext_resource type="Script" uid="uid://d3vak5l7lt4w7" path="res://Deepmage/Core/Scripts/UI/SkillsLibraryUI.gd" id="1_es68r"]
+[ext_resource type="PackedScene" uid="uid://d2tvg6j8l70gh" path="res://Deepmage/Core/Prefabs/UI/LibrarySkillBar.tscn" id="2_xictd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_es68r"]
+bg_color = Color(0.1, 0.1, 0.1, 0.67058825)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l7pw0"]
+bg_color = Color(0.2112, 0.2352, 0.24, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_color = Color(0, 0, 0, 0)
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xictd"]
+font_size = 20
+
+[node name="PopupPanel" type="PopupPanel"]
+oversampling_override = 1.0
+title = "TacticsControlsPopup"
+position = Vector2i(455, 0)
+size = Vector2i(482, 240)
+visible = true
+theme_override_styles/panel = SubResource("StyleBoxFlat_es68r")
+
+[node name="SkillsLibraryUI" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(400, 200)
+offset_right = 482.0
+offset_bottom = 240.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_l7pw0")
+script = ExtResource("1_es68r")
+library_skill_bar_prefab = ExtResource("2_xictd")
+
+[node name="MarginContainer" type="MarginContainer" parent="SkillsLibraryUI"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SkillsLibraryUI/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SkillsLibraryUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Controls"
+label_settings = SubResource("LabelSettings_xictd")
+
+[node name="HSeparator" type="HSeparator" parent="SkillsLibraryUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="SkillsLibraryUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SkillsLibraryUI/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "C -  Open character sheet
+T -  Open Tactics
+
+Left Mouse - drag to reorder skills and conditions or drag from conditions library
+Ctrl + Shift + left mouse - Duplicate skill or condition
+
+Right Mouse - click to enable/disable skills
+
+Shift + Right Mouse - click to remove skills/conditions or add from skill library
+
+Ctrl + C -  Copy current Unit's tactic to clipboard
+Ctrl + V -  Paste clipboard tactic to current Unit
+
+Shift + num 1-9 -  Save current unit tactic to slot number
+num 1-9 -  load slot number tactic to current unit"
