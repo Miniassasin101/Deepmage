@@ -1,4 +1,3 @@
-# MoveRangeRingRenderer.gd
 class_name MoveRangeRingRenderer
 extends Node3D
 
@@ -6,8 +5,7 @@ extends Node3D
 @export_category("Rendering")
 @export var radius_profile: Curve
 @export var material: Material
-@export var bake_interval: float = 0.1
-
+@export var bake_interval: float = 0.12
 
 var _mesh: CurveMesh3D = null
 
@@ -32,12 +30,12 @@ func set_ring_world_points(points_world: PackedVector3Array) -> void:
 	curve.closed = true
 	curve.bake_interval = bake_interval
 
-	var point_index: int = 0
-	while point_index < points_world.size():
-		var world_point: Vector3 = points_world[point_index]
+	var index: int = 0
+	while index < points_world.size():
+		var world_point: Vector3 = points_world[index]
 		var local_point: Vector3 = to_local(world_point)
 		curve.add_point(local_point)
-		point_index += 1
+		index += 1
 
 	_mesh.cm_clear()
 	_mesh.curve = curve

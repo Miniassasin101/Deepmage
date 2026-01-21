@@ -26,6 +26,83 @@ const MAX_SNAP: float = 10.0
 
 var _microgrid: MoveRangeMicroGrid = MoveRangeMicroGrid.new()
 
+class MoveRangeCacheEntry:
+	var navmap: RID = RID()
+	var origin_on_nav: Vector3 = Vector3.ZERO
+	var budget_key: int = 0
+	var config_key: int = 0
+	var height_offset_key: int = 0
+	var ring_points: PackedVector3Array = PackedVector3Array()
+	var microgrid: MoveRangeMicroGrid = null
+
+
+var _move_range_cache_by_unit_id: Dictionary = {} # int -> MoveRangeCacheEntry
+@export var move_range_cache_max_entries: int = 64
+
+
+func _quantize_key(value: float, step: float) -> int:
+	if step <= 0.0:
+		return int(round(value * 1000.0))
+	return int(round(value / step))
+
+
+func _hash_combine_int(hash_value: int, next_value: int) -> int:
+	# Simple 32-bit-ish mix (fast, stable enough for config keys)
+	var mixed: int = hash_value
+	mixed = mixed ^ next_value
+	mixed = int(mixed * 16777619)
+	return mixed
+
+
+func _move_range_config_key() -> int:
+	var hash_value: int = 2166136261
+
+	hash_value = _hash_combine_int(hash_value, _quantize_key(move_range_cell_size, 0.001))
+	hash_value = _hash_combine_int(hash_value, _quantize_key(move_range_snap_threshold, 0.001))
+	hash_value = _hash_combine_int(hash_value, _quantize_key(move_range_max_step_height, 0.001))
+
+	# Include any MoveRangeMicroGrid settings you expose/tune:
+	hash_value = _hash_combine_int(hash_value, int(_microgrid.neighbor_radius_cells))
+	hash_value = _hash_combine_int(hash_value, int(_microgrid.use_marching_squares))
+	hash_value = _hash_combine_int(hash_value, int(_microgrid.prevent_skipping_through_obstacles))
+
+	hash_value = _hash_combine_int(hash_value, _quantize_key(_microgrid.resample_spacing_world, 0.001))
+	hash_value = _hash_combine_int(hash_value, int(_microgrid.average_window_radius))
+	hash_value = _hash_combine_int(hash_value, int(_microgrid.average_passes))
+	hash_value = _hash_combine_int(hash_value, int(_microgrid.chaikin_iterations))
+	hash_value = _hash_combine_int(hash_value, _quantize_key(_microgrid.simplify_epsilon_world, 0.001))
+
+	return hash_value
+
+
+func invalidate_move_range_cache_for_unit(in_unit: Unit) -> void:
+	if in_unit == null:
+		return
+	var unit_id: int = in_unit.get_instance_id()
+	if _move_range_cache_by_unit_id.has(unit_id):
+		_move_range_cache_by_unit_id.erase(unit_id)
+
+
+func clear_move_range_cache() -> void:
+	_move_range_cache_by_unit_id.clear()
+
+
+func _evict_cache_if_needed() -> void:
+	if move_range_cache_max_entries <= 0:
+		return
+	if _move_range_cache_by_unit_id.size() <= move_range_cache_max_entries:
+		return
+
+	# Cheap eviction: remove arbitrary keys until under limit.
+	# (If you want true LRU, we can add timestamps.)
+	var keys: Array = _move_range_cache_by_unit_id.keys()
+	while _move_range_cache_by_unit_id.size() > move_range_cache_max_entries and keys.size() > 0:
+		var key_to_remove: Variant = keys.pop_back()
+		_move_range_cache_by_unit_id.erase(key_to_remove)
+
+
+
+
 
 func _ready() -> void:
 	if instance != null:
@@ -160,14 +237,59 @@ func show_move_range_for_unit(in_unit: Unit, budget_distance: float) -> void:
 		return
 	if not navmap.is_valid():
 		return
+	if move_range_renderer == null or not is_instance_valid(move_range_renderer):
+		return
 
+	# Snap start to nav (this is the “did the unit move?” test anchor)
+	var unit_world_position: Vector3 = in_unit.global_position
+	var origin_on_nav: Vector3 = NavigationServer3D.map_get_closest_point(navmap, unit_world_position)
+
+	var unit_id: int = in_unit.get_instance_id()
+
+	# Quantize budget & height offset to avoid float jitter causing unnecessary rebuilds
+	var budget_key: int = _quantize_key(budget_distance, 0.01)
+	var height_offset_key: int = _quantize_key(move_range_height_offset, 0.001)
+
+	# Build config key (includes microgrid settings too)
+	var config_key: int = _move_range_config_key()
+
+	# Movement tolerance: if snapped origin changes less than this, treat as “not moved”
+	var movement_epsilon: float = move_range_cell_size * 0.20
+	var movement_epsilon_sq: float = movement_epsilon * movement_epsilon
+
+	if _move_range_cache_by_unit_id.has(unit_id):
+		var existing_entry: MoveRangeCacheEntry = _move_range_cache_by_unit_id[unit_id]
+
+		var same_navmap: bool = existing_entry.navmap == navmap
+		var same_budget: bool = existing_entry.budget_key == budget_key
+		var same_config: bool = existing_entry.config_key == config_key
+		var same_height: bool = existing_entry.height_offset_key == height_offset_key
+		var same_origin: bool = existing_entry.origin_on_nav.distance_squared_to(origin_on_nav) <= movement_epsilon_sq
+
+		if same_navmap and same_budget and same_config and same_height and same_origin:
+			# ✅ Reuse last generation
+			move_range_renderer.set_ring_world_points(existing_entry.ring_points)
+			return
+
+	# Cache miss or invalidated → rebuild
 	_microgrid.cell_size = move_range_cell_size
 	_microgrid.snap_threshold = move_range_snap_threshold
 	_microgrid.max_step_height = move_range_max_step_height
-	_microgrid.smoothing_iterations = move_range_smoothing_iterations
 
-	_microgrid.build(navmap, in_unit.global_position, budget_distance)
+	_microgrid.build(navmap, unit_world_position, budget_distance)
 	var ring_points: PackedVector3Array = _microgrid.get_best_boundary_world(move_range_height_offset)
 
-	if move_range_renderer and is_instance_valid(move_range_renderer):
-		move_range_renderer.set_ring_world_points(ring_points)
+	move_range_renderer.set_ring_world_points(ring_points)
+
+	# Store/refresh cache
+	var new_entry: MoveRangeCacheEntry = MoveRangeCacheEntry.new()
+	new_entry.navmap = navmap
+	new_entry.origin_on_nav = origin_on_nav
+	new_entry.budget_key = budget_key
+	new_entry.config_key = config_key
+	new_entry.height_offset_key = height_offset_key
+	new_entry.ring_points = ring_points
+	new_entry.microgrid = _microgrid # optional: store if you want to reuse queries too
+
+	_move_range_cache_by_unit_id[unit_id] = new_entry
+	_evict_cache_if_needed()

@@ -4,7 +4,12 @@ extends Node
 @export var control_enemy_debug: bool = true
 
 
-
+# Render smoothing (post-processing of the contour)
+var render_resample_spacing: float = 0.20			# world meters between points after resample
+var render_smooth_window_radius: int =1			# 2 => averages 5 points (i-2..i+2)
+var render_smooth_passes: int = 14					# how many times to apply moving average
+var render_reproject_to_navmesh: bool = true
+var render_reproject_max_snap: float = 0.55			# limit sideways snapping (meters)
 static var instance: DebugSettings = null
 
 
