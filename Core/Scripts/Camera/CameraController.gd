@@ -1,4 +1,4 @@
-class_name PlayerController
+class_name CameraController
 
 extends CharacterBody3D
 # Camera script that provides smooth camera movement through interpolation.
@@ -48,7 +48,7 @@ func shortest_angle_between(current_angle: float, target_angle: float) -> float:
 	return current_angle + difference
 
 # Main camera update function
-func _physics_process(delta: float):
+func _process(delta: float):
 	# Handle zoom (SpringArm Length interpolation)
 	update_zoom(delta)
 	

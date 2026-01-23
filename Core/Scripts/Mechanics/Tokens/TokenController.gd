@@ -7,12 +7,15 @@ signal status_check_complete
 
 @export var starting_statuses: Array[Status] = []
 
+@export var unit_vfx_manager: UnitVFXManager
+
 var statuses: Array[Status] = []
 
 
 func _ready() -> void:
 	if unit == null:
 		unit = get_parent() as Unit
+		
 	make_statuses_unique()
 	# Listen to global phases (uses your SignalBus already fired in TurnSystem)
 	if SignalBus.on_turn_start.is_connected(_on_turn_start) == false:
@@ -23,7 +26,28 @@ func _ready() -> void:
 		SignalBus.on_round_start.connect(_on_round_start)
 	if SignalBus.on_round_end.is_connected(_on_round_end) == false:
 		SignalBus.on_round_end.connect(_on_round_end)
+	
+	_sync_status_vfx()
 
+func _sync_status_vfx() -> void:
+	if unit_vfx_manager == null:
+		return
+
+	var has_blessing: bool = false
+	var has_affliction: bool = false
+
+	for s in statuses:
+		if s == null:
+			continue
+		if s.status_category == Status.StatusCategory.BLESSING:
+			has_blessing = true
+		elif s.status_category == Status.StatusCategory.AFFLICTION:
+			has_affliction = true
+
+		if has_blessing and has_affliction:
+			break
+
+	unit_vfx_manager.set_status_category_active(has_blessing, has_affliction)
 
 
 func make_statuses_unique() -> void:
@@ -108,6 +132,7 @@ func add_status(in_status: Status) -> bool:
 		existing.merge_with(in_status)
 		return true
 	statuses.append(in_status)
+	_sync_status_vfx()
 	in_status.on_added(unit)
 	return true
 
@@ -117,6 +142,7 @@ func remove_status(in_status: Status) -> void:
 	if statuses.has(in_status):
 		in_status.on_removed(unit)
 		statuses.erase(in_status)
+		_sync_status_vfx()
 
 func get_status_by_name(in_name: String) -> Status:
 	var needle: String = in_name.to_snake_case()

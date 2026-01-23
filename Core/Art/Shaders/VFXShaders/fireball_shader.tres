@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=13 format=3 uid="uid://cidqowq247x00"]
+[gd_resource type="VisualShader" load_steps=14 format=3 uid="uid://cidqowq247x00"]
 
 [ext_resource type="Texture2D" uid="uid://kkxuxknmyt21" path="res://Deepmage/Core/Art/Textures/Noise/T_VFX_Noi55.png" id="1_5yxmy"]
 
@@ -38,6 +38,10 @@ default_input_values = [0, Vector2(0, 0), 1, Vector2(0.5, 2)]
 op_type = 0
 operator = 2
 
+[sub_resource type="VisualShaderNodeBillboard" id="VisualShaderNodeBillboard_kj5f4"]
+billboard_type = 2
+keep_scale = true
+
 [resource]
 code = "shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_disabled, diffuse_lambert, specular_schlick_ggx, unshaded, shadows_disabled, ambient_light_disabled, particle_trails, fog_disabled;
@@ -48,6 +52,22 @@ uniform sampler2D tex_frg_3 : source_color;
 uniform sampler2D tex_frg_4;
 
 
+
+void vertex() {
+	mat4 n_out2p0;
+// GetBillboardMatrix:2
+	{
+		mat4 __mvm = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0], MODEL_MATRIX[1], vec4(normalize(cross(INV_VIEW_MATRIX[0].xyz, MODEL_MATRIX[1].xyz)), 0.0), MODEL_MATRIX[3]);
+		__mvm = __mvm * mat4(vec4(length(MODEL_MATRIX[0].xyz), 0.0, 0.0, 0.0), vec4(0.0, 1.0, 0.0, 0.0), vec4(0.0, 0.0, length(MODEL_MATRIX[2].xyz), 0.0), vec4(0.0, 0.0, 0.0, 1.0));
+		n_out2p0 = __mvm;
+	}
+
+
+// Output:0
+	MODELVIEW_MATRIX = n_out2p0;
+
+
+}
 
 void fragment() {
 // ColorParameter:2
@@ -104,6 +124,9 @@ flags/shadows_disabled = true
 flags/ambient_light_disabled = true
 flags/particle_trails = true
 flags/fog_disabled = true
+nodes/vertex/2/node = SubResource("VisualShaderNodeBillboard_kj5f4")
+nodes/vertex/2/position = Vector2(0, 460)
+nodes/vertex/connections = PackedInt32Array(2, 0, 0, 10)
 nodes/fragment/0/position = Vector2(560, 140)
 nodes/fragment/2/node = SubResource("VisualShaderNodeColorParameter_3k6pp")
 nodes/fragment/2/position = Vector2(-340, 40)

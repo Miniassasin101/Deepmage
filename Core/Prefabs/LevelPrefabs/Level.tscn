@@ -1,7 +1,8 @@
-[gd_scene load_steps=163 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=158 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
+[ext_resource type="Script" uid="uid://dlggn8t3b5dp3" path="res://Deepmage/Core/Scripts/Utility/PauseManager.gd" id="2_04ue1"]
 [ext_resource type="Script" uid="uid://d00flrde4n8v4" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugConsoleController.gd" id="2_swo3b"]
 [ext_resource type="Environment" uid="uid://c7cx2thxig2w6" path="res://Deepmage/Core/Resources/Environment/Lighting/TestEnvironment1.tres" id="3_gh8or"]
 [ext_resource type="Script" uid="uid://csywy3ienecb4" path="res://Deepmage/Core/Prefabs/LevelPrefabs/ProjectileConsole.gd" id="3_s0dbn"]
@@ -11,7 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://bf575s2vrxvov" path="res://Deepmage/Core/Prefabs/UI/TextController.tscn" id="9_ccwc0"]
 [ext_resource type="Script" uid="uid://brupu7akvtuia" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UnitActionSystem.gd" id="9_lf0eb"]
 [ext_resource type="PackedScene" uid="uid://14nkak1a1qkg" path="res://Deepmage/Core/Prefabs/Mechanics/CharacterSheet.tscn" id="9_srkvl"]
-[ext_resource type="Resource" uid="uid://c54g6d3vtonf2" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/BlessingSkills/PotencyBlessingSkillResource.tres" id="10_f0670"]
 [ext_resource type="Script" uid="uid://b3vsba7uy6t7o" path="res://Deepmage/Core/Scripts/Combat/TurnSystems/TurnSystem.gd" id="10_k2c3k"]
 [ext_resource type="PackedScene" uid="uid://8oord2o1icck" path="res://Deepmage/Core/Prefabs/UI/CharacterLogQueue.tscn" id="10_lf0eb"]
 [ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="10_p6f6u"]
@@ -36,6 +36,7 @@
 [ext_resource type="Script" uid="uid://cjhhvf5ub04kj" path="res://Deepmage/Core/Scripts/UI/FPSLabel.gd" id="16_ex7fh"]
 [ext_resource type="PackedScene" uid="uid://psdfsrnutgxe" path="res://Deepmage/Core/Prefabs/UI/ActionButtonUI.tscn" id="16_tko1n"]
 [ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="17_23xud"]
+[ext_resource type="Resource" uid="uid://dhlquh6l821lo" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/FactionBlueprints/IsEnemyConditionBlueprint.tres" id="17_ebomw"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="18_hymmt"]
 [ext_resource type="Animation" uid="uid://bolvfij56gevt" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/UnarmedBlockAnim.res" id="19_00nvd"]
 [ext_resource type="Resource" uid="uid://8vem57wbteya" path="res://Deepmage/Core/Resources/ActionResources/RushToUnitActionResource.tres" id="19_v4iap"]
@@ -64,8 +65,8 @@
 [ext_resource type="Script" uid="uid://dr67xmhcxhifl" path="res://Deepmage/Core/Scripts/Navigation/MoveRangeRingRenderer.gd" id="49_ebomw"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_lf0eb"]
-vertices = PackedVector3Array(-2.6557007, 0.6026907, -7.6557007, -0.6557007, 0.6026907, -7.6557007, -0.6557007, 0.6026907, -18.6557, -18.6557, 0.6026907, -6.1557007, -2.9057007, 0.6026907, -5.9057007, -18.6557, 0.6026907, -18.6557, 1.3442993, 0.6026907, -7.6557007, 1.5942993, 0.6026907, -7.1557007, 18.5943, 0.6026907, -7.1557007, 18.5943, 0.6026907, -18.6557, 1.5942993, 0.6026907, -3.4057007, -0.40570068, 0.6026907, -3.1557007, -0.15570068, 0.6026907, 1.5942993, 3.5942993, 0.6026907, 1.8442993, 18.5943, 0.6026907, 1.8442993, -2.9057007, 0.6026907, -3.4057007, -5.1557007, 0.6026907, 1.8442993, -18.6557, 0.6026907, 2.8442993, -5.4057007, 0.6026907, 2.8442993, 3.3442993, 0.6026907, 4.0942993, 1.3442993, 0.6026907, 4.0942993, 1.3442993, 0.6026907, 6.5942993, 3.8442993, 0.6026907, 6.5942993, 3.8442993, 0.6026907, 3.5942993, 4.3442993, 0.6026907, 8.094299, 18.5943, 0.6026907, 8.094299, -3.9057007, 0.6026907, 6.3442993, -4.6557007, 0.6026907, 4.0942993, -5.4057007, 0.6026907, 3.5942993, -18.6557, 0.6026907, 9.344299, -4.4057007, 0.6026907, 8.844299, -4.4057007, 0.6026907, 7.3442993, -3.9057007, 0.6026907, 9.094299, 4.0942993, 0.6026907, 9.094299, 18.5943, 0.6026907, 44.8443, -18.6557, 0.6026907, 44.8443)
-polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(0, 4, 3), PackedInt32Array(3, 5, 0), PackedInt32Array(0, 5, 2), PackedInt32Array(6, 1, 2), PackedInt32Array(6, 2, 7), PackedInt32Array(7, 2, 8), PackedInt32Array(8, 2, 9), PackedInt32Array(11, 10, 12), PackedInt32Array(12, 10, 13), PackedInt32Array(10, 7, 13), PackedInt32Array(13, 7, 14), PackedInt32Array(14, 7, 8), PackedInt32Array(11, 12, 15), PackedInt32Array(15, 12, 16), PackedInt32Array(16, 18, 17), PackedInt32Array(15, 16, 4), PackedInt32Array(4, 16, 3), PackedInt32Array(3, 16, 17), PackedInt32Array(20, 19, 21), PackedInt32Array(21, 19, 22), PackedInt32Array(23, 13, 14), PackedInt32Array(19, 23, 22), PackedInt32Array(22, 23, 24), PackedInt32Array(24, 23, 25), PackedInt32Array(25, 23, 14), PackedInt32Array(21, 26, 20), PackedInt32Array(20, 26, 27), PackedInt32Array(31, 30, 28), PackedInt32Array(28, 30, 29), PackedInt32Array(28, 29, 17), PackedInt32Array(27, 26, 28), PackedInt32Array(28, 26, 31), PackedInt32Array(17, 18, 28), PackedInt32Array(30, 32, 29), PackedInt32Array(24, 25, 33), PackedInt32Array(33, 25, 34), PackedInt32Array(32, 33, 29), PackedInt32Array(29, 33, 35), PackedInt32Array(35, 33, 34)]
+vertices = PackedVector3Array(-2.6557007, 0.3526907, -7.6557007, -0.6557007, 0.3526907, -7.6557007, -0.6557007, 0.3526907, -18.6557, -18.6557, 0.3526907, -6.1557007, -2.9057007, 0.3526907, -5.9057007, -18.6557, 0.3526907, -18.6557, 1.3442993, 0.3526907, -7.6557007, 1.5942993, 0.3526907, -5.4057007, 18.5943, 0.3526907, -5.4057007, 18.5943, 0.3526907, -18.6557, -3.9057007, 0.3526907, 6.3442993, 0.09429932, 0.3526907, 6.5942993, -0.15570068, 0.3526907, -3.1557007, -2.9057007, 0.3526907, -3.4057007, -4.4057007, 0.3526907, 8.094299, -18.6557, 0.3526907, 8.094299, 1.5942993, 0.3526907, -3.4057007, 3.8442993, 0.3526907, 6.5942993, 4.3442993, 0.3526907, 8.094299, 18.5943, 0.3526907, 8.094299, 4.0942993, 0.3526907, 9.094299, 18.5943, 0.3526907, 44.8443, -4.1557007, 0.3526907, 9.094299, -18.6557, 0.3526907, 44.8443)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(0, 4, 3), PackedInt32Array(3, 5, 0), PackedInt32Array(0, 5, 2), PackedInt32Array(6, 1, 2), PackedInt32Array(8, 7, 6), PackedInt32Array(2, 9, 6), PackedInt32Array(6, 9, 8), PackedInt32Array(13, 12, 10), PackedInt32Array(10, 12, 11), PackedInt32Array(10, 14, 13), PackedInt32Array(13, 14, 4), PackedInt32Array(4, 14, 15), PackedInt32Array(4, 15, 3), PackedInt32Array(12, 16, 11), PackedInt32Array(11, 16, 17), PackedInt32Array(17, 16, 18), PackedInt32Array(18, 16, 7), PackedInt32Array(18, 7, 19), PackedInt32Array(19, 7, 8), PackedInt32Array(18, 19, 20), PackedInt32Array(20, 19, 21), PackedInt32Array(14, 22, 15), PackedInt32Array(15, 22, 23), PackedInt32Array(20, 21, 22), PackedInt32Array(22, 21, 23)]
 geometry_source_geometry_mode = 2
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_rcno3"]
@@ -76,6 +77,50 @@ data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0
 [sub_resource type="BoxMesh" id="BoxMesh_f0670"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ebomw"]
+
+[sub_resource type="Resource" id="Resource_eu7gh"]
+script = ExtResource("16_bvt28")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_7kb16"]
+script = ExtResource("17_23xud")
+range_var = 3.0
+metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
+
+[sub_resource type="Resource" id="Resource_6g8w4"]
+resource_name = "BashSkillResource"
+script = ExtResource("12_f2qps")
+skill_name = "Bash"
+action = ExtResource("13_iq36j")
+internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
+trait_1 = "Melee"
+description = Array[String](["Moves towards then Bashes a unit in range 5"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"
+
+[sub_resource type="Resource" id="Resource_ydutk"]
+script = ExtResource("16_bvt28")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_sb21c"]
+script = ExtResource("20_8v6vh")
+range_var = 2.1
+metadata/_custom_type_script = "uid://daykqau0okf7v"
+
+[sub_resource type="Resource" id="Resource_7omu2"]
+script = ExtResource("21_11ubm")
+metadata/_custom_type_script = "uid://c6hp21lncudiw"
+
+[sub_resource type="Resource" id="Resource_idaqs"]
+resource_name = "RushToUnitSkillResource"
+script = ExtResource("12_f2qps")
+skill_name = "Rush To Unit"
+action = ExtResource("19_v4iap")
+skill_type = 1
+internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_sb21c"), SubResource("Resource_7omu2")])
+external_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_ydutk")])
+external_condition_blueprints = Array[ExtResource("14_v8epg")]([ExtResource("17_ebomw")])
+trait_1 = "Movement"
+metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_wdfje"]
 script = ExtResource("22_ebomw")
@@ -140,7 +185,7 @@ metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_tkd6a"]
 script = ExtResource("24_5lfvx")
-active_skills = Array[ExtResource("12_f2qps")]([ExtResource("10_f0670")])
+active_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_6g8w4"), SubResource("Resource_idaqs")])
 passive_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_05afn")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
@@ -160,8 +205,8 @@ resource_name = "Speed"
 script = ExtResource("10_p6f6u")
 attribute_name = "speed"
 attribute_type = 2
-current_value = 9
-maximum_value = 9
+current_value = 4
+maximum_value = 4
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_04ue1"]
@@ -278,51 +323,6 @@ resource_local_to_scene = true
 script = ExtResource("11_6kl6n")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_f0670"), SubResource("Resource_ebomw"), SubResource("Resource_04ue1"), SubResource("Resource_cb3j6"), SubResource("Resource_e15dp"), SubResource("Resource_c2k8n"), SubResource("Resource_hja2s"), SubResource("Resource_f3uqp"), SubResource("Resource_0fvkv"), SubResource("Resource_dpue3"), SubResource("Resource_mpmhl"), SubResource("Resource_yl67w"), SubResource("Resource_0who7")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
-
-[sub_resource type="Resource" id="Resource_eu7gh"]
-script = ExtResource("16_bvt28")
-metadata/_custom_type_script = "uid://2nsctaj2mk50"
-
-[sub_resource type="Resource" id="Resource_7kb16"]
-script = ExtResource("17_23xud")
-range_var = 3.0
-metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
-
-[sub_resource type="Resource" id="Resource_6g8w4"]
-resource_name = "BashSkillResource"
-script = ExtResource("12_f2qps")
-skill_name = "Bash"
-action = ExtResource("13_iq36j")
-internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
-is_disabled = true
-trait_1 = "Melee"
-description = Array[String](["Moves towards then Bashes a unit in range 5"])
-metadata/_custom_type_script = "uid://kpyou3fdk30c"
-
-[sub_resource type="Resource" id="Resource_ydutk"]
-script = ExtResource("16_bvt28")
-metadata/_custom_type_script = "uid://2nsctaj2mk50"
-
-[sub_resource type="Resource" id="Resource_sb21c"]
-script = ExtResource("20_8v6vh")
-range_var = 2.1
-metadata/_custom_type_script = "uid://daykqau0okf7v"
-
-[sub_resource type="Resource" id="Resource_7omu2"]
-script = ExtResource("21_11ubm")
-metadata/_custom_type_script = "uid://c6hp21lncudiw"
-
-[sub_resource type="Resource" id="Resource_idaqs"]
-resource_name = "RushToUnitSkillResource"
-script = ExtResource("12_f2qps")
-skill_name = "Rush To Unit"
-action = ExtResource("19_v4iap")
-skill_type = 1
-internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_sb21c"), SubResource("Resource_7omu2")])
-external_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_ydutk")])
-is_disabled = true
-trait_1 = "Movement"
-metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_ufsey"]
 resource_name = "PassiveBlockSkillResource"
@@ -480,49 +480,6 @@ script = ExtResource("11_6kl6n")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_lk7si"), SubResource("Resource_8pahp"), SubResource("Resource_rfnuq"), SubResource("Resource_73fol"), SubResource("Resource_q6bko"), SubResource("Resource_a4tjr"), SubResource("Resource_pwtg8"), SubResource("Resource_dydjx"), SubResource("Resource_2gvhv"), SubResource("Resource_src6p"), SubResource("Resource_o8y13"), SubResource("Resource_g2rko"), SubResource("Resource_su0wa")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
 
-[sub_resource type="Resource" id="Resource_bvt28"]
-script = ExtResource("16_bvt28")
-metadata/_custom_type_script = "uid://2nsctaj2mk50"
-
-[sub_resource type="Resource" id="Resource_23xud"]
-script = ExtResource("17_23xud")
-range_var = 3.0
-metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
-
-[sub_resource type="Resource" id="Resource_hymmt"]
-resource_name = "BashSkillResource"
-script = ExtResource("12_f2qps")
-skill_name = "Bash"
-action = ExtResource("13_iq36j")
-internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_bvt28"), SubResource("Resource_23xud")])
-trait_1 = "Melee"
-description = Array[String](["Moves towards then Bashes a unit in range 5"])
-metadata/_custom_type_script = "uid://kpyou3fdk30c"
-
-[sub_resource type="Resource" id="Resource_v4iap"]
-script = ExtResource("16_bvt28")
-metadata/_custom_type_script = "uid://2nsctaj2mk50"
-
-[sub_resource type="Resource" id="Resource_8hoel"]
-script = ExtResource("20_8v6vh")
-range_var = 2.1
-metadata/_custom_type_script = "uid://daykqau0okf7v"
-
-[sub_resource type="Resource" id="Resource_rx2vc"]
-script = ExtResource("21_11ubm")
-metadata/_custom_type_script = "uid://c6hp21lncudiw"
-
-[sub_resource type="Resource" id="Resource_gam6i"]
-resource_name = "RushToUnitSkillResource"
-script = ExtResource("12_f2qps")
-skill_name = "Rush To Unit"
-action = ExtResource("19_v4iap")
-skill_type = 1
-internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_8hoel"), SubResource("Resource_rx2vc")])
-external_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_v4iap")])
-trait_1 = "Movement"
-metadata/_custom_type_script = "uid://kpyou3fdk30c"
-
 [sub_resource type="Resource" id="Resource_o24kd"]
 resource_name = "PassiveBlockSkillResource"
 script = ExtResource("12_f2qps")
@@ -539,7 +496,7 @@ metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_jiskd"]
 script = ExtResource("24_5lfvx")
-active_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_hymmt"), SubResource("Resource_gam6i")])
+active_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_6g8w4"), SubResource("Resource_idaqs")])
 passive_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_o24kd")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
@@ -867,6 +824,20 @@ corner_radius_bottom_left = 3
 shadow_size = 5
 shadow_offset = Vector2(-1, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_04ue1"]
+bg_color = Color(0.0264, 0.0294, 0.03, 0.945098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_color = Color(0, 0, 0, 0.498039)
+shadow_size = 2
+shadow_offset = Vector2(-1, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5ega"]
 bg_color = Color(0.15, 0.15, 0.15, 1)
 border_width_left = 1
@@ -910,7 +881,7 @@ grow_end = 0.0
 [node name="Level" type="Node3D"]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.19, 0)
 navigation_mesh = SubResource("NavigationMesh_lf0eb")
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="NavigationRegion3D" groups=["navigation_mesh_source_group"]]
@@ -918,18 +889,12 @@ height = 2.23
 vertices = PackedVector3Array(1.0616996, 0, -3.8036938, 0.97278094, 0, -7.0195866, -2.3320305, 0, -7.064046, -2.2134717, 0, -3.848153)
 affect_navigation_mesh = true
 
-[node name="NavigationObstacle3D2" type="NavigationObstacle3D" parent="NavigationRegion3D" groups=["navigation_mesh_source_group"]]
-height = 2.23
-vertices = PackedVector3Array(-4.32146, 0, 3.6380289, 2.971694, 0, 3.6942067, 3.4864573, 0, 3.0619626, 3.0610952, 0, 2.1581674, -4.729394, 0, 2.262173, -4.987274, 0, 3.0754433)
-affect_navigation_mesh = true
-
-[node name="NavigationObstacle3D3" type="NavigationObstacle3D" parent="NavigationRegion3D" groups=["navigation_mesh_source_group"]]
-height = 2.23
-vertices = PackedVector3Array(-3.885778, 0, 8.529309, -3.7026505, 0, 6.8787813, 3.9610548, 0, 7.2396, 3.8099241, 0, 8.573453)
-affect_navigation_mesh = true
-
 [node name="DebugSettings" type="Node" parent="."]
 script = ExtResource("1_uoqcs")
+
+[node name="PauseManager" type="Node" parent="."]
+script = ExtResource("2_04ue1")
+metadata/_custom_type_script = "uid://dlggn8t3b5dp3"
 
 [node name="DebugConsoleController" type="Node" parent="."]
 script = ExtResource("2_swo3b")
@@ -983,38 +948,8 @@ collision_mask = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor2/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_avqdt")
 
-[node name="Floor3" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
-transform = Transform3D(3.1501377, 0, 0, 0, -0.13345206, 3.1473093, 0, -3.1473093, -0.13345206, 0, 0, 7.8511486)
-cast_shadow = 0
-gi_mode = 0
-mesh = SubResource("PlaneMesh_rcno3")
-skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("1_mu4i6")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor3"]
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor3/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_avqdt")
-
-[node name="Floor4" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
-transform = Transform3D(3.1501377, 0, 0, 0, -0.13345206, 3.1473093, 0, -3.1473093, -0.13345206, -0.61448956, 0, 2.9558797)
-cast_shadow = 0
-gi_mode = 0
-mesh = SubResource("PlaneMesh_rcno3")
-skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("1_mu4i6")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor4"]
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor4/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_avqdt")
-
 [node name="Floor5" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
-transform = Transform3D(3.1501377, 0, 0, 0, -0.13345206, 3.1473093, 0, -3.1473093, -0.13345206, -0.61448956, 0, -5.455774)
+transform = Transform3D(3.1501377, 0, 0, 0, 3.1501374, 0, 0, 0, 3.1501374, -0.61448956, 0, -5.455774)
 cast_shadow = 0
 gi_mode = 0
 mesh = SubResource("BoxMesh_f0670")
@@ -1028,7 +963,23 @@ collision_mask = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor5/StaticBody3D"]
 shape = SubResource("BoxShape3D_ebomw")
 
-[node name="Camera" parent="." instance=ExtResource("3_wbgr3")]
+[node name="Floor6" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
+transform = Transform3D(5.8820868, 0, 0, 0, -7.314209e-08, -2.5884905, 0, 1.6732959, -1.13146505e-07, 0.2025876, 0.6306863, 7.751465)
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("BoxMesh_f0670")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_mu4i6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor6"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor6/StaticBody3D"]
+shape = SubResource("BoxShape3D_ebomw")
+
+[node name="CameraController" parent="." instance=ExtResource("3_wbgr3")]
+process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.735, 1.03, 0.84)
 
 [node name="UnitManager" type="Node" parent="."]
@@ -1077,7 +1028,8 @@ unit = NodePath("..")
 attributes_profile = SubResource("Resource_4uu1a")
 
 [node name="MouseController" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_avqdt")]
-camera = NodePath("../Camera/CamOrigin/SpringArm3D/fCamera")
+process_mode = 3
+camera = NodePath("../CameraController/CamOrigin/SpringArm3D/fCamera")
 
 [node name="Label3D" type="Label3D" parent="MouseController/MouseVisual" index="0"]
 
@@ -1085,6 +1037,7 @@ camera = NodePath("../Camera/CamOrigin/SpringArm3D/fCamera")
 collision_mask = 2
 
 [node name="UnitActionSystem" type="Node" parent="."]
+process_mode = 3
 script = ExtResource("9_lf0eb")
 
 [node name="TurnSystem" type="Node" parent="." node_paths=PackedStringArray("unit_manager", "skill_trigger_system")]
@@ -1134,11 +1087,12 @@ material = SubResource("StandardMaterial3D_04ue1")
 metadata/_custom_type_script = "uid://dr67xmhcxhifl"
 
 [node name="UILayer" type="CanvasLayer" parent="."]
+process_mode = 3
 script = ExtResource("5_jtghi")
 text_controller_scene = ExtResource("9_ccwc0")
 character_log_queue_scene = ExtResource("10_lf0eb")
 
-[node name="ActionSystemUI" type="Control" parent="UILayer" node_paths=PackedStringArray("turn_system_ui", "initiative_queue_ui", "top_hp_bar", "action_button_hbox")]
+[node name="ActionSystemUI" type="Control" parent="UILayer" node_paths=PackedStringArray("turn_system_ui", "initiative_queue_ui", "top_hp_bar", "paused_label", "action_button_hbox")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -1152,6 +1106,7 @@ script = ExtResource("15_j7436")
 turn_system_ui = NodePath("../TurnSystemUI")
 initiative_queue_ui = NodePath("../InitiativeQueueUI")
 top_hp_bar = NodePath("TopHPBar")
+paused_label = NodePath("PausedLabel")
 action_button_hbox = NodePath("PanelContainer/MarginContainer/ActionButtonHbox")
 action_button_prefab = ExtResource("16_tko1n")
 
@@ -1195,6 +1150,33 @@ offset_right = 927.68
 offset_bottom = 592.136
 scale = Vector2(0.74275184, 0.74275184)
 text = "Start game: \"N\" | Character Sheet: Hover Unit + \"C\" | Tactics Menu: Hover Unit + \"T\""
+horizontal_alignment = 1
+
+[node name="PausedLabel" type="PanelContainer" parent="UILayer/ActionSystemUI"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5989583
+anchor_top = 0.037037037
+anchor_right = 0.7036025
+anchor_bottom = 0.099000014
+offset_right = -0.5500488
+offset_bottom = 0.18132782
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_04ue1")
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/ActionSystemUI/PausedLabel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 7
+
+[node name="AttackNameLabel" type="Label" parent="UILayer/ActionSystemUI/PausedLabel/MarginContainer"]
+layout_mode = 2
+text = "Paused"
 horizontal_alignment = 1
 
 [node name="TurnSystemUI" type="Control" parent="UILayer" node_paths=PackedStringArray("turn_system", "combat_system", "end_turn_container", "end_turn_button", "turn_phase_label", "round_counter_label", "cycle_counter_label", "movement_gait_label")]
@@ -1376,6 +1358,7 @@ offset_bottom = 23.0
 script = ExtResource("16_ex7fh")
 
 [node name="UnitCharacterSheetUI" parent="UILayer" node_paths=PackedStringArray("mouse_controller", "pathfinding") instance=ExtResource("22_gh8or")]
+process_mode = 3
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 684.0

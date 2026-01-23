@@ -69,7 +69,7 @@ resist_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/Lo
 clash_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer4/VBoxContainer/PanelContainer3/UnusedLabel1")
 evade_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer6/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer/EvadeLabel")
 will_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/FightSkillsMarginContainer2/PanelContainer/VBoxContainer/GridContainer/MarginContainer6/PanelContainer/MarginContainer/VBoxContainer/WillLabel")
-status_container = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer5/PanelContainer/VboxContainer/StatusContainer")
+status_container = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer5/PanelContainer/VboxContainer/MarginContainer/StatusContainer")
 tab_container = NodePath("MarginContainer/TabContainer")
 close_button = NodePath("MarginContainer/CloseButton")
 
@@ -83,10 +83,9 @@ metadata/_edit_use_anchors_ = true
 
 [node name="TabContainer" type="TabContainer" parent="MarginContainer"]
 layout_mode = 2
-current_tab = 1
+current_tab = 0
 
 [node name="Character" type="PanelContainer" parent="MarginContainer/TabContainer"]
-visible = false
 custom_minimum_size = Vector2(502, 370)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_wvosu")
@@ -403,7 +402,12 @@ layout_mode = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_5lmja")
 
-[node name="StatusContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer5/PanelContainer/VboxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer5/PanelContainer/VboxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+
+[node name="StatusContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer5/PanelContainer/VboxContainer/MarginContainer"]
 layout_mode = 2
 
 [node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer"]
@@ -1061,6 +1065,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Tactics" type="PanelContainer" parent="MarginContainer/TabContainer"]
+visible = false
 custom_minimum_size = Vector2(502, 370)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_wvosu")
@@ -1070,6 +1075,7 @@ metadata/_tab_index = 1
 layout_mode = 2
 
 [node name="CloseButton" type="Button" parent="MarginContainer"]
+process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0

@@ -126,7 +126,6 @@ horizontal_alignment = 1
 text_overrun_behavior = 1
 
 [node name="ConditionsRHBox" type="Container" parent="MarginContainer2/HBoxContainer"]
-process_mode = 1
 custom_minimum_size = Vector2(509, 0)
 layout_mode = 2
 mouse_filter = 0

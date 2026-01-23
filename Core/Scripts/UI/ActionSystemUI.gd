@@ -8,6 +8,7 @@ extends Control
 @export var turn_system_ui: TurnSystemUI
 @export var initiative_queue_ui: InitiativeQueueUI
 @export var top_hp_bar: TopHPBar
+@export var paused_label: PanelContainer
 @export_group("")
 @export var action_button_hbox: HBoxContainer
 @export var action_button_prefab: PackedScene = null
@@ -98,3 +99,9 @@ func get_action_button_by_action(in_action: Action) -> ActionButtonUI:
 		if btn.action == in_action:
 			return btn
 	return null
+
+func show_paused_label() -> void:
+	paused_label.set_visible(true)
+
+func hide_paused_label() -> void:
+	paused_label.set_visible(false)

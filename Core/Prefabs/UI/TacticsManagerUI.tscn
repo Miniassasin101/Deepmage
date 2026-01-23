@@ -239,6 +239,7 @@ label_settings = SubResource("LabelSettings_dmaep")
 horizontal_alignment = 1
 
 [node name="SkillsStylizedPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer"]
+process_mode = 3
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vnc2f")
 
@@ -254,7 +255,7 @@ layout_mode = 2
 theme_override_constants/separation = 7
 
 [node name="ActiveSkillsReorderableVBox" type="Container" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer"]
-process_mode = 1
+process_mode = 3
 custom_minimum_size = Vector2(0, 116)
 layout_mode = 2
 script = ExtResource("1_qrecu")
@@ -279,7 +280,7 @@ theme_override_constants/separation = -1
 theme_override_styles/separator = SubResource("StyleBoxLine_vnc2f")
 
 [node name="PassiveSkillsReorderableVBox" type="Container" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer"]
-process_mode = 1
+process_mode = 3
 custom_minimum_size = Vector2(0, 116)
 layout_mode = 2
 script = ExtResource("1_qrecu")

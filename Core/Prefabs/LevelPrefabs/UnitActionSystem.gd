@@ -88,26 +88,35 @@ func _process(_delta: float) -> void:
 ## [b]Note:[/b] As written, if a [Class ScrollContainer] is hovered, input is [i]not[/i] blocked here.
 ## For other controls, input is ignored to avoid interacting through UI.
 func _unhandled_input(event: InputEvent) -> void:
-	if !is_enabled:
+	var paused := _is_game_paused()
+
+	# If not enabled AND not paused, ignore completely.
+	# If paused, we allow selection-only.
+	if !is_enabled and !paused:
 		return
-	
-	# If user is on UI, ignore (except when the hovered control is a ScrollContainer).
+
 	var hovered_control: Control = get_viewport().gui_get_hovered_control()
 	if hovered_control != null:
 		if !hovered_control.is_class("ScrollContainer"):
 			return
-	
-	# Mouse buttons
+
+	# PAUSED: selection-only (no use_action, no right-click actions, no hotkeys)
+	if paused:
+		if event.is_action_pressed("left_mouse") or event.is_action_pressed("right_mouse"):
+			try_handle_unit_selection(true)
+		return
+
+	# Normal gameplay
 	if Input.is_action_just_pressed("left_mouse"):
 		if !is_busy:
 			on_left_mouse_clicked()
 	if Input.is_action_just_pressed("right_mouse"):
 		on_right_mouse_clicked()
-	
-	# Numeric shortcuts (1–9) mapped to action bar buttons
+
 	var num_pressed: int = get_pressed_num_shortcut(event)
 	if num_pressed != -1:
 		ActionSystemUI.instance.try_press_button_by_number(num_pressed)
+
 
 
 ## Returns the pressed numeric shortcut (1–9) or -1 if none matched.
@@ -141,12 +150,15 @@ func action_input_process() -> void:
 
 ## Handles left-click behavior: try unit-selection first; otherwise attempts to use the selected action.
 func on_left_mouse_clicked() -> void:
-	#call_diego_the_n_word()
-	
+	if _is_game_paused():
+		try_handle_unit_selection(true)
+		return
+
 	if try_handle_unit_selection():
 		return
-	
+
 	use_action(TurnSystem.instance.selected_unit, selected_action)
+
 
 
 ## Handles right-click behavior: attempts alternate unit selection (no auto-use).
@@ -327,11 +339,13 @@ func show_unit_move_ranges(in_unit: Unit) -> void:
 	var budget: float = speed_val * 2.0
 	PathfindingSystem.instance.show_move_range_for_unit(in_unit, budget)
 
+func _is_game_paused() -> bool:
+	return TurnSystem.instance != null and TurnSystem.instance.is_paused
 
 
 ## Primary hover handler. Manages hover/selection visuals and updates the top HP bar.
 func on_hovered_unit_changed(in_unit: Unit) -> void:
-	if !is_enabled:
+	if !is_enabled and !_is_game_paused():
 		return
 	
 	var selected_unit: Unit = get_selected_unit()
