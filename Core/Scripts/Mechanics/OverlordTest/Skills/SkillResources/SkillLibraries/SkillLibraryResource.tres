@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SkillLibrary" load_steps=36 format=3 uid="uid://dkeoolmv8jjeq"]
+[gd_resource type="Resource" script_class="SkillLibrary" load_steps=37 format=3 uid="uid://dkeoolmv8jjeq"]
 
 [ext_resource type="Script" uid="uid://cqsj2o45u3w7q" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillLibrary.gd" id="1_07uae"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="2_pntk6"]
@@ -35,8 +35,9 @@
 [ext_resource type="Resource" uid="uid://bl1m4mqnvktcq" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/BlessingSkills/ParryBlessingSkillResource.tres" id="32_fnwvo"]
 [ext_resource type="Resource" uid="uid://hqjf6ds4pefd" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/AfflictionSkills/ParryAfflictionSkillResource.tres" id="33_3scwc"]
 [ext_resource type="Resource" uid="uid://c8fhtx0galhvd" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/BlessingSkills/ResistBlessingSkillResource.tres" id="34_8e41t"]
+[ext_resource type="Resource" uid="uid://cb88hwdib4xj" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PassiveBlockPPUpSkillResource.tres" id="36_ohgb7"]
 
 [resource]
 script = ExtResource("1_07uae")
-skills = Array[ExtResource("2_pntk6")]([ExtResource("3_ccdkf"), ExtResource("7_k1hhk"), ExtResource("5_23st6"), ExtResource("7_6amf8"), ExtResource("7_dvx14"), ExtResource("4_us4l0"), ExtResource("13_kmtet"), ExtResource("8_k1hhk"), ExtResource("9_lwyov"), ExtResource("12_ytjxn"), ExtResource("13_6gr05"), ExtResource("14_k7yd5"), ExtResource("15_p6o5h"), ExtResource("10_466c2"), ExtResource("11_i8y8y"), ExtResource("18_qcaf6"), ExtResource("18_ne1am"), ExtResource("16_rua0b"), ExtResource("20_yyc06"), ExtResource("21_ehcg5"), ExtResource("22_ddbkg"), ExtResource("23_sgms2"), ExtResource("22_kmtet"), ExtResource("23_ca0a7"), ExtResource("24_0iu18"), ExtResource("25_rrlfd"), ExtResource("28_5fmir"), ExtResource("29_qcaf6"), ExtResource("30_ohgb7"), ExtResource("31_qryrk"), ExtResource("32_fnwvo"), ExtResource("33_3scwc"), ExtResource("34_8e41t")])
+skills = Array[ExtResource("2_pntk6")]([ExtResource("3_ccdkf"), ExtResource("7_k1hhk"), ExtResource("5_23st6"), ExtResource("7_6amf8"), ExtResource("7_dvx14"), ExtResource("4_us4l0"), ExtResource("13_kmtet"), ExtResource("8_k1hhk"), ExtResource("9_lwyov"), ExtResource("12_ytjxn"), ExtResource("13_6gr05"), ExtResource("14_k7yd5"), ExtResource("15_p6o5h"), ExtResource("10_466c2"), ExtResource("11_i8y8y"), ExtResource("18_qcaf6"), ExtResource("18_ne1am"), ExtResource("16_rua0b"), ExtResource("20_yyc06"), ExtResource("21_ehcg5"), ExtResource("22_ddbkg"), ExtResource("23_sgms2"), ExtResource("22_kmtet"), ExtResource("23_ca0a7"), ExtResource("24_0iu18"), ExtResource("25_rrlfd"), ExtResource("28_5fmir"), ExtResource("29_qcaf6"), ExtResource("30_ohgb7"), ExtResource("31_qryrk"), ExtResource("32_fnwvo"), ExtResource("33_3scwc"), ExtResource("34_8e41t"), ExtResource("36_ohgb7")])
 metadata/_custom_type_script = "uid://cqsj2o45u3w7q"

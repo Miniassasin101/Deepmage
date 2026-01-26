@@ -2,14 +2,9 @@ class_name DebugSettings
 extends Node
 
 @export var control_enemy_debug: bool = true
+@export var allow_all_skills_in_tactics: bool = false
 
 
-# Render smoothing (post-processing of the contour)
-var render_resample_spacing: float = 0.20			# world meters between points after resample
-var render_smooth_window_radius: int =1			# 2 => averages 5 points (i-2..i+2)
-var render_smooth_passes: int = 14					# how many times to apply moving average
-var render_reproject_to_navmesh: bool = true
-var render_reproject_max_snap: float = 0.55			# limit sideways snapping (meters)
 static var instance: DebugSettings = null
 
 
@@ -21,34 +16,3 @@ func _ready() -> void:
 		queue_free()
 		return
 	instance = self
-
-
-func _unhandled_input(_event: InputEvent) -> void:
-	if !(Input.is_action_just_pressed("testkey_n") and Input.is_action_pressed("testkey_c")):
-		return
-	
-	#log_positions()
-	add_satellite()
-
-func log_positions() -> void:
-	var unit: Unit = UnitManager.instance.get_first_unit()
-	if !unit:
-		return
-	var positions: Array[Vector3] = \
-	PathfindingSystem.instance.get_radial_points_surrounding_unit(unit, 1.6, 10)
-	var string: String = "Radial Positions: "
-	for pos in positions:
-		string += str(pos)
-		string += ", "
-		Utilities.create_debug_sphere(pos, 6.0)
-		
-	Console.print_line(string, true)
-
-func add_satellite() -> void:
-	var unit: Unit = TurnSystem.instance.selected_unit
-	if !unit:
-		return
-	
-	var sphere: TestBall = Utilities.create_debug_sphere(unit.get_global_position(), 25.0)
-	
-	unit.satellite_controller.spawn_satellite(sphere)

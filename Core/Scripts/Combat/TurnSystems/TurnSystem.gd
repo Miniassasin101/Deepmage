@@ -426,6 +426,8 @@ func declare_skill(declared_skill: Skill, target_unit: Unit) -> void:
 	# Make the skill activation bar appear
 	SkillActivationUI.instance.on_active_declared(declared_skill.skill_name, prio_num)
 	
+	UnitActionSystem.instance.show_unit_move_ranges(user_unit)
+	
 	
 	# Open Chain Group 1: BEFORE_SKILL_USED (i.e., "on declaration")
 	await _open_and_resolve_chain_group(

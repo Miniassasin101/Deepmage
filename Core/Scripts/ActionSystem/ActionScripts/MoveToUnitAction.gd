@@ -79,6 +79,9 @@ func _begin_movement_dep(targ_unit: Unit) -> void:
 	
 
 func _begin_movement(targ_unit: Unit) -> void:
+	
+	UnitActionSystem.instance.show_unit_move_ranges(unit)
+	
 	# First, compute raw path to the target unit (we may replace it if needed).
 	var target_position: Vector3 = targ_unit.get_global_position()
 	var initial_pack: PathPackage = PathfindingSystem.instance.get_path_package(target_position, unit, true)
@@ -128,7 +131,7 @@ func _end_movement() -> void:
 	var rounded_curve_length: float = snappedf(curve_length, 0.01)
 	Utilities.spawn_text_line(unit, "Moved: " + str(rounded_curve_length), Color.ALICE_BLUE)
 	CombatLog.instance.add_log(unit.ui_name + " Moved: " + str(rounded_curve_length))
-	UnitActionSystem.instance.show_unit_move_ranges(unit)
+	
 	
 	
 	#end_action()

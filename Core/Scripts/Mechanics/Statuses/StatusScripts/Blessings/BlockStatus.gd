@@ -24,10 +24,17 @@ func on_before_damage_applied(_unit: Unit, cd: CombatEventData) -> void:
 		return
 	if status_level <= 0:
 		return
-
+	
+	if cd.skill.has_tag("pierce"):
+		Utilities.spawn_text_line(_unit, "PIERCED!", Color.ALICE_BLUE)
+		remove_self(_unit)
+		return
+	
 	var absorb_amount: int = cd.effective_damage
 	if absorb_amount > status_level:
 		absorb_amount = status_level
+	
+	
 
 	cd.effective_damage -= absorb_amount
 	status_level -= absorb_amount

@@ -30,4 +30,5 @@ crit_mod = 5
 trait_1 = "Melee"
 trait_2 = "Heavy"
 description = Array[String](["Moves towards then Bashes a unit in range 5", "Deals Heavy Damage"])
+tags = Array[String](["pierce"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

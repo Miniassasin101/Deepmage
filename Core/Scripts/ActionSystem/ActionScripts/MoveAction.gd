@@ -109,15 +109,15 @@ func _end_movement() -> void:
 	Utilities.spawn_text_line(unit, "Moved: " + str(rounded_curve_length), Color.ALICE_BLUE)
 	
 	
-	show_unit_move_ranges(unit)
+	#show_unit_move_ranges(unit)
 	#end_action()
 
 func show_unit_move_ranges(in_unit: Unit) -> void:
 	if in_unit == null:
 		return
-	var speed_val: float = float(in_unit.get_attributes_container().get_attribute_current_value("speed"))
-	var budget: float = speed_val * 2.0
-	PathfindingSystem.instance.show_move_range_for_unit(in_unit, budget)
+	#var speed_val: float = float(in_unit.get_attributes_container().get_attribute_current_value("speed"))
+	#var budget: float = speed_val * 2.0
+
 
 
 
