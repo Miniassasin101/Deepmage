@@ -51,6 +51,10 @@ func can_modify_status(_status: Status) -> bool:
 func modify_status(_status: Status) -> void:
 	pass  # Override in specific statuses.
 
+func modify_mana_cost(_unit: Unit, _skill: Skill, cost: int) -> int:
+	return cost
+
+
 
 func increase_level(by_amount: int = 1) -> void:
 	status_level += by_amount

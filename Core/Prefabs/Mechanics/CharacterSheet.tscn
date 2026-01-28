@@ -1,8 +1,9 @@
-[gd_scene load_steps=60 format=3 uid="uid://14nkak1a1qkg"]
+[gd_scene load_steps=71 format=3 uid="uid://14nkak1a1qkg"]
 
 [ext_resource type="Script" uid="uid://ceujy1qm0i6o6" path="res://Deepmage/Core/Scripts/Units/CharacterSheet.gd" id="1_rgld4"]
 [ext_resource type="Script" uid="uid://cusgogua72ojh" path="res://Deepmage/Core/Scripts/ActionSystem/ActionContainer.gd" id="2_o1iyq"]
 [ext_resource type="Resource" uid="uid://cdkwk7budcsou" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/AttributesProfiles/BaseDarkestAttributesProfile.tres" id="2_semri"]
+[ext_resource type="Resource" uid="uid://cruv3h07wplnu" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildProfileResources/MercenaryBuildProfile.tres" id="3_p3uej"]
 [ext_resource type="Script" uid="uid://cvislitkwpg12" path="res://Deepmage/Core/Scripts/ActionSystem/Action.gd" id="3_qntpm"]
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="5_p3ymn"]
 [ext_resource type="Script" uid="uid://doahtvq8r205k" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextOnUnitAction.gd" id="6_p3uej"]
@@ -35,6 +36,16 @@
 [ext_resource type="Resource" uid="uid://ceu3eynl7qehx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/RushToUnitSkillResource.tres" id="30_ucxv2"]
 [ext_resource type="Script" uid="uid://dka6hmfmjlgvl" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/UseFirstSkillAction.gd" id="31_xyrbs"]
 [ext_resource type="Script" uid="uid://wnokk4hycw83" path="res://Deepmage/Core/Scripts/Mechanics/Classes/ClassManager.gd" id="35_semri"]
+[ext_resource type="Script" uid="uid://d3crcpqyvdwur" path="res://Deepmage/Core/Scripts/Mechanics/Magic/MagicController.gd" id="36_dpcrq"]
+[ext_resource type="Resource" uid="uid://r1voosghl6ll" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Ancestries/HumanAncestry.tres" id="36_lqkdn"]
+[ext_resource type="Resource" uid="uid://7yrn2ntt7uqi" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Backgrounds/FarmerBackground.tres" id="37_p3ymn"]
+[ext_resource type="Resource" uid="uid://k7d8t137f3gh" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/MartialClasses/MercenaryClass.tres" id="38_p3uej"]
+[ext_resource type="Resource" uid="uid://bq1qqcyxh3qbv" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/MagicClasses/ElementalistClass.tres" id="39_0fy5k"]
+[ext_resource type="Script" uid="uid://rwvfoi4t15v8" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSource.gd" id="40_txd4g"]
+[ext_resource type="Resource" uid="uid://dukkccof7qwkn" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Feats/ToughFeat.tres" id="41_e2vah"]
+[ext_resource type="Resource" uid="uid://d2ndq1y5okkfk" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Gear/HeadbandGear.tres" id="42_wrqbw"]
+[ext_resource type="Resource" uid="uid://dcmueyhnuimld" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Gear/BracersGear.tres" id="43_t0b1j"]
+[ext_resource type="Resource" uid="uid://bbh5ijxuf1wuf" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Rank/Rank.tres" id="44_p3ymn"]
 
 [sub_resource type="Resource" id="Resource_bbcsa"]
 script = ExtResource("5_p3ymn")
@@ -218,11 +229,13 @@ action_name = "First Skill"
 selection_types = Array[ExtResource("5_p3ymn")]([ExtResource("7_0fy5k")])
 metadata/_custom_type_script = "uid://dka6hmfmjlgvl"
 
-[node name="CharacterSheet" type="Node" node_paths=PackedStringArray("action_container", "attributes_container")]
+[node name="CharacterSheet" type="Node" node_paths=PackedStringArray("action_container", "attributes_container", "magic_controller")]
 script = ExtResource("1_rgld4")
 action_container = NodePath("ActionContainer")
 attributes_container = NodePath("AttributesContainer")
+magic_controller = NodePath("MagicController")
 attributes_profile = ExtResource("2_semri")
+build_profile = ExtResource("3_p3uej")
 
 [node name="ActionContainer" type="Node" parent="."]
 script = ExtResource("2_o1iyq")
@@ -232,5 +245,17 @@ actions = Array[ExtResource("3_qntpm")]([ExtResource("6_semri"), ExtResource("7_
 script = ExtResource("25_ui78x")
 character_sheet = NodePath("..")
 
-[node name="ClassManager" type="Node" parent="."]
+[node name="ClassManager" type="Node" parent="." node_paths=PackedStringArray("character_sheet", "magic_controller")]
 script = ExtResource("35_semri")
+character_sheet = NodePath("..")
+magic_controller = NodePath("../MagicController")
+race = ExtResource("36_lqkdn")
+background = ExtResource("37_p3ymn")
+martial_class = ExtResource("38_p3uej")
+magic_class = ExtResource("39_0fy5k")
+feats = Array[ExtResource("40_txd4g")]([ExtResource("41_e2vah")])
+gear_sources = Array[ExtResource("40_txd4g")]([ExtResource("42_wrqbw"), ExtResource("43_t0b1j")])
+progression = ExtResource("44_p3ymn")
+
+[node name="MagicController" type="Node" parent="."]
+script = ExtResource("36_dpcrq")

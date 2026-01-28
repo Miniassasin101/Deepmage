@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="BuildSource" load_steps=6 format=3 uid="uid://dukkccof7qwkn"]
+
+[ext_resource type="Script" uid="uid://da5ua2vuwghvh" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeMod.gd" id="1_q5m1p"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="2_fqlrm"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="5_e41a0"]
+[ext_resource type="Script" uid="uid://rwvfoi4t15v8" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSource.gd" id="6_2vd2r"]
+
+[sub_resource type="Resource" id="Resource_hw2fm"]
+resource_name = "PostureUp3"
+script = ExtResource("1_q5m1p")
+attribute_name = &"posture"
+flat = 3
+metadata/_custom_type_script = "uid://da5ua2vuwghvh"
+
+[resource]
+script = ExtResource("6_2vd2r")
+ui_name = "Tough"
+tags = ["tough", "feat"]
+attribute_mods = Array[ExtResource("1_q5m1p")]([SubResource("Resource_hw2fm")])
+metadata/_custom_type_script = "uid://rwvfoi4t15v8"

@@ -36,6 +36,11 @@ signal on_after_action(user: Unit, action_id: String, ctx: Dictionary)    # HOOK
 signal on_reaction(user: Unit, reaction_id: String, ctx: Dictionary)      # HOOK: counters/guards
 signal on_turn_end(unit: Unit)                               # HOOK: regen, end-of-turn ticks
 
+signal on_skill_declared(user: Unit, ctx: Dictionary)
+signal on_skill_end(user: Unit, ctx: Dictionary)
+
+
+
 signal on_unit_defeated(unit: Unit)                          # HOOK: on death
 signal on_team_wiped(is_enemy_team: bool)
 

@@ -29,6 +29,7 @@ extends Resource
 
 @export var tags: Array[String] = []
 
+var _mods_by_source: Dictionary = {}
 
 var is_initiated: bool = false
 
@@ -60,7 +61,9 @@ func get_min_value() -> int:
 func get_current_modifier() -> int:
 	var current_modifier: int = 0
 	for mod in modifiers:
-		current_modifier += mod
+		current_modifier += int(mod)
+	for v in _mods_by_source.values():
+		current_modifier += int(v)
 	return current_modifier
 
 func add_modifier(in_modifier: int) -> void:
@@ -68,6 +71,12 @@ func add_modifier(in_modifier: int) -> void:
 
 func remove_modifier(in_modifier: int) -> void:
 	modifiers.erase(in_modifier)
+
+func set_modifier(source_id: StringName, value: int) -> void:
+	_mods_by_source[source_id] = value
+
+func clear_modifier(source_id: StringName) -> void:
+	_mods_by_source.erase(source_id)
 
 
 # Functions for tag management
@@ -77,6 +86,4 @@ func add_tag(tag: String) -> void:
 
 
 func has_tag(in_tag: String) -> bool:
-	if tags.has(in_tag):
-		return true
-	return false
+	return tags.has(in_tag)

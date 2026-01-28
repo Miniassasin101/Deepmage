@@ -26,7 +26,13 @@ func _ready() -> void:
 		SignalBus.on_round_start.connect(_on_round_start)
 	if SignalBus.on_round_end.is_connected(_on_round_end) == false:
 		SignalBus.on_round_end.connect(_on_round_end)
-	
+
+	if SignalBus.on_skill_declared.is_connected(_on_skill_declared) == false:
+		SignalBus.on_skill_declared.connect(_on_skill_declared)
+	if SignalBus.on_skill_end.is_connected(_on_skill_end) == false:
+		SignalBus.on_skill_end.connect(_on_skill_end)
+
+
 	_sync_status_vfx()
 
 func _sync_status_vfx() -> void:
@@ -102,6 +108,35 @@ func _prune_by_expire_rule(target_rule: int) -> void:
 			to_remove.append(s)
 	for srm in to_remove:
 		remove_status(srm)
+
+
+func _on_skill_declared(user: Unit, ctx: Dictionary) -> void:
+	if user != unit:
+		return
+	for status_ref: Status in statuses:
+		if status_ref != null:
+			status_ref.on_skill_declared(unit, ctx)
+
+func _on_skill_end(user: Unit, ctx: Dictionary) -> void:
+	if user != unit:
+		return
+	for status_ref: Status in statuses:
+		if status_ref != null:
+			status_ref.on_skill_end(unit, ctx)
+	_prune_by_expire_rule(Status.ExpireTiming.OnUse)
+
+
+
+func modify_mana_cost(skill: Skill, base_cost: int) -> int:
+	var cost: int = base_cost
+	for status_ref: Status in statuses:
+		if status_ref != null:
+			cost = int(status_ref.modify_mana_cost(unit, skill, cost))
+	if cost < 0:
+		cost = 0
+	return cost
+
+
 
 # === Utilities helpful for Cleanse effects later ===
 func remove_by_category(category: int, max_remove_count: int = 9999) -> int:

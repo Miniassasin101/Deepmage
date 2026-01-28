@@ -1,4 +1,4 @@
-[gd_scene load_steps=158 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene load_steps=159 format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
@@ -58,6 +58,7 @@
 [ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="28_f3uqp"]
 [ext_resource type="Script" uid="uid://c7ofxaslt34wn" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SourceTargetBasedSkillConditions/IsSourceTargetFaction.gd" id="29_0fvkv"]
 [ext_resource type="Script" uid="uid://cq6k3vojdsik7" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SkillSourceBasedSkillConditions/IsSourceSkillType.gd" id="30_dpue3"]
+[ext_resource type="Resource" uid="uid://d12flfcjn7vie" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildProfileResources/DuelistBuildProfile.tres" id="37_cb3j6"]
 [ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestAttackSkillResource.tres" id="39_5lfvx"]
 [ext_resource type="Resource" uid="uid://dkeoolmv8jjeq" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/SkillLibraries/SkillLibraryResource.tres" id="42_5lfvx"]
 [ext_resource type="Resource" uid="uid://cucaqplnm0re3" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/ConditionLibraries/ConditionLibraryResource.tres" id="43_f0670"]
@@ -995,6 +996,7 @@ visor_color = Color(0, 0.55250007, 0.85, 1)
 [node name="CharacterSheet" parent="UnitManager/Azure" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
 unit = NodePath("..")
 attributes_profile = SubResource("Resource_6odjx")
+build_profile = ExtResource("37_cb3j6")
 
 [node name="Verdant" parent="UnitManager" instance=ExtResource("12_k2c3k")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.037626, 0, 4)

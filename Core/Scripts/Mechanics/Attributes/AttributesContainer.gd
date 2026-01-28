@@ -48,20 +48,72 @@ var attributes_dict: Dictionary[String, Attribute] = {}
 
 ## [b]Engine callback:[/b] rebuild internal caches from the [member character_sheet] profile.
 func _ready() -> void:
+	# Helpful default wiring if you forget to set the reference in the inspector.
+	if character_sheet == null:
+		character_sheet = get_parent() as CharacterSheet
+
+	# Use your existing flags to control when profiles apply.
+	if Engine.is_editor_hint():
+		if auto_apply_profile_in_editor:
+			_rebuild_runtime_cache()
+	else:
+		if auto_apply_profile_on_play:
+			_rebuild_runtime_cache()
+
+
+## Public API: Apply a new AttributesProfile at runtime, rebuild cache, and refresh UI.
+## This is the "preset loader" you wanted for quick iteration/testing.
+func apply_profile(profile: AttributesProfile) -> void:
+	if profile == null:
+		return
+
+	# Keep the sheet in sync so other systems using character_sheet.attributes_profile see the correct preset.
+	if character_sheet != null:
+		character_sheet.attributes_profile = profile
+
 	_rebuild_runtime_cache()
+
+	# Notify listeners/UI that values may have changed.
+	attribute_changed.emit()
+	SignalBus.update_stat_bars.emit()
+	SignalBus.update_character_sheet.emit()
 
 
 ## Rebuilds the live arrays/dicts from the character sheet’s attribute profile.
-## Keeps unique instances so Inspector edits persist at the scene level.
+## IMPORTANT: this duplicates from the profile, but does NOT modify the profile resource itself.
 func _rebuild_runtime_cache() -> void:
 	attributes.clear()
 	attributes_dict.clear()
-	var attr_array: Array[Attribute] = character_sheet.attributes_profile.make_unique_attribute_array()
-	for attribute_resource in attr_array:
-		# We keep the same instances to preserve inspector edits;
-		# they are already unique and local to scene.
+	starting_attributes.clear()
+
+	if character_sheet == null:
+		return
+	if character_sheet.attributes_profile == null:
+		return
+
+	var profile: AttributesProfile = character_sheet.attributes_profile
+	var attr_array: Array[Attribute] = _make_unique_attributes_from_profile(profile)
+
+	# Inspector-friendly snapshot of the start state (useful while testing).
+	starting_attributes = attr_array.duplicate()
+
+	for attribute_resource: Attribute in attr_array:
+		if attribute_resource == null:
+			continue
 		attributes.append(attribute_resource)
 		attributes_dict[attribute_resource.attribute_name] = attribute_resource
+
+
+## Internal helper: duplicates each Attribute deeply so each unit gets unique instances.
+func _make_unique_attributes_from_profile(profile: AttributesProfile) -> Array[Attribute]:
+	var result: Array[Attribute] = []
+	for source_attribute: Attribute in profile.attributes:
+		if source_attribute == null:
+			continue
+		var unique_copy: Attribute = source_attribute.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
+		unique_copy.resource_local_to_scene = true
+		result.append(unique_copy)
+	return result
 
 
 # ---------- Utility / Query API (unchanged semantics) ----------
@@ -168,6 +220,28 @@ func remove_attribute(in_name: String) -> bool:
 		attribute_changed.emit()
 		return true
 	return false
+
+
+func set_attribute_modifier(source_id: StringName, in_name: StringName, modifier_value: int) -> bool:
+	var attribute_ref: Attribute = get_attribute(String(in_name))
+	if attribute_ref != null:
+		attribute_ref.set_modifier(source_id, modifier_value)
+		attribute_changed.emit()
+		SignalBus.update_stat_bars.emit()
+		SignalBus.update_character_sheet.emit()
+		return true
+	return false
+
+func clear_modifiers_from_source(source_id: StringName) -> void:
+	for attribute_ref: Attribute in attributes:
+		if attribute_ref != null:
+			attribute_ref.clear_modifier(source_id)
+	attribute_changed.emit()
+	SignalBus.update_stat_bars.emit()
+	SignalBus.update_character_sheet.emit()
+
+
+
 
 
 ## Returns an array of all attribute names in this container.

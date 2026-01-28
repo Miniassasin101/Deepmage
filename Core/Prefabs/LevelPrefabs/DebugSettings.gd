@@ -8,7 +8,6 @@ extends Node
 static var instance: DebugSettings = null
 
 
-
 # Called when the node enters the scene tree
 func _ready() -> void:
 	if instance != null:

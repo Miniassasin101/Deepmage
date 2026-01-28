@@ -72,7 +72,6 @@ action = SubResource("Resource_kinu8")
 internal_skill_conditions = Array[ExtResource("8_vfbb8")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
 base_power = 50
 base_accuracy = 90
-crit_mod = -3
 trait_1 = "Melee"
 trait_2 = "Block"
 description = Array[String](["Attacks while granting self block."])

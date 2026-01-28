@@ -53,6 +53,11 @@ enum SkillType { ATTACK, SUPPORT, SABOTAGE, SPECIAL}
 @export var base_accuracy: int = 95
 @export var crit_mod: int = 0
 
+@export_group("Magic")
+@export var is_spell: bool = false
+@export var mana_cost: int = 0
+@export var magic_type: StringName = &""	# ex: &"fire"
+
 
 
 @export_group("Description")
@@ -100,9 +105,15 @@ func activate_skill(bypass_declare: bool = false) -> void:
 		return
 
 	CombatLog.instance.add_log("Random Skill Unit: " + chosen_target.ui_name)
-	
+	var ctx: Dictionary = {
+	"skill": self,
+	"target": chosen_target,
+	"skill_category": int(skill_category),
+	"skill_type": int(skill_type)}
 	
 	if skill_category == SkillCategory.ACTIVE and !bypass_declare:
+		
+		SignalBus.on_skill_declared.emit(unit, ctx)
 	# Declare Skill goes here
 		await TurnSystem.instance.declare_skill(self, chosen_target)
 		await unit.get_tree().create_timer(1.2).timeout # Visual Processing time
@@ -111,6 +122,9 @@ func activate_skill(bypass_declare: bool = false) -> void:
 	
 	var t_pack: TargetPackage = Utilities.make_target_package(chosen_target)
 	t_pack.set_skill(self)
+	
+	if is_spell:
+		_spend_mana()
 
 	# If the Skill is bound to an Action, invoke it via the owner's action container.
 	if action:
@@ -122,6 +136,7 @@ func activate_skill(bypass_declare: bool = false) -> void:
 		#pass
 		# Declare Skill goes here
 		await TurnSystem.instance.after_skill_used(self, chosen_target)
+		SignalBus.on_skill_end.emit(unit, ctx)
 		# Finish the skill lifecycle.
 		end_skill()
 		return
@@ -139,6 +154,7 @@ func change_resource_name_to_skill() -> void:
 
 func end_skill() -> void:
 	# Broadcast completion so action callers can resume.
+
 	on_skill_ended.emit()
 
 
@@ -154,6 +170,10 @@ func can_activate_skill() -> bool:
 	
 	if !check_ap_pp():
 		return false
+	
+	if is_spell and !_has_enough_mana():
+		return false
+
 	
 	# True if at least one target unit satisfies all conditions.
 	if check_conditions_against_units():
@@ -362,15 +382,51 @@ func get_external_condition_blueprints() -> Array[ConditionBlueprint]:
 func get_target_preference_blueprints() -> Array[ConditionBlueprint]:
 	return target_preference_blueprints
 
+
+
+# ------------------------------------------
+# Magic Functions
+# ------------------------------------------
+
+func get_effective_mana_cost() -> int:
+	if mana_cost <= 0:
+		return 0
+	if unit == null:
+		return mana_cost
+	var status_controller: StatusController = unit.get_status_controller()
+	if status_controller != null and status_controller.has_method("modify_mana_cost"):
+		return int(status_controller.modify_mana_cost(self, mana_cost))
+	return mana_cost
+
+func _has_enough_mana() -> bool:
+	var cost: int = get_effective_mana_cost()
+	if cost <= 0:
+		return true
+	var attrs: AttributesContainer = unit.get_attributes_container()
+	var mana_att: Attribute = attrs.get_attribute("mana")
+	if mana_att == null:
+		return false
+	return mana_att.get_current_modified_value() >= cost
+
+func _spend_mana() -> void:
+	var cost: int = get_effective_mana_cost()
+	if cost <= 0:
+		return
+	unit.get_attributes_container().change_attribute_current_value_by("mana", -cost)
+
+
+
+
 # -----------------------------------------------------------------------------
 # Tags helpers
 # -----------------------------------------------------------------------------
 func has_tag(in_tag: String) -> bool:
-	in_tag = in_tag.to_lower()
-	# Case-insensitive tag check (lowercasing the input tag).
-	if tags.has(in_tag):
-		return true
+	var needle: String = in_tag.to_lower()
+	for t in tags:
+		if t.to_lower() == needle:
+			return true
 	return false
+
 
 
 func has_any_tag(in_tags: Array[String]) -> bool:

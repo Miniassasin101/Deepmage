@@ -4,6 +4,7 @@ extends PanelContainer
 ## Emitted when the user wants to add a skill from the library to tactics.
 signal on_add_to_tactics(skill_to_add: Skill)
 
+
 @export_category("References")
 @export var search_line_edit: LineEdit
 @export var skills_scroll_container: ScrollContainer
@@ -11,6 +12,8 @@ signal on_add_to_tactics(skill_to_add: Skill)
 
 @export_category("Prefabs")
 @export var library_skill_bar_prefab: PackedScene
+
+var current_unit: Unit = null
 
 
 func _ready() -> void:
@@ -56,11 +59,23 @@ func _refresh_skill_list() -> void:
 	if search_line_edit != null:
 		normalized_query = search_line_edit.text.strip_edges().to_lower()
 	
-	for skill_entry in sorted_skills:
+	var allow_all: bool = DebugSettings.instance != null and DebugSettings.instance.allow_all_skills_in_tactics
+
+	var cm: ClassManager = null
+	if current_unit != null and current_unit.character_sheet != null:
+		cm = current_unit.character_sheet.find_child("ClassManager") as ClassManager
+
+	for skill_entry: Skill in sorted_skills:
 		if skill_entry == null:
 			continue
+
 		if not _matches_query(skill_entry, normalized_query):
 			continue
+
+		if !allow_all and cm != null:
+			if !cm.can_use_skill(skill_entry):
+				continue
+
 		
 		var row_bar: LibrarySkillBar = library_skill_bar_prefab.instantiate() as LibrarySkillBar
 		skill_library_vbox.add_child(row_bar)
@@ -108,4 +123,18 @@ func _clear_skill_list() -> void:
 func _on_row_add_to_tactics(skill_to_add: Skill) -> void:
 	if skill_to_add == null:
 		return
+
+	var allow_all: bool = DebugSettings.instance != null and DebugSettings.instance.allow_all_skills_in_tactics
+	if !allow_all and current_unit != null and current_unit.character_sheet != null:
+		var cm: ClassManager = current_unit.character_sheet.find_child("ClassManager") as ClassManager
+		if cm != null and !cm.can_use_skill(skill_to_add):
+			CombatLog.instance.add_log("Cannot add skill (not available): " + skill_to_add.skill_name)
+			return
+
 	on_add_to_tactics.emit(skill_to_add)
+
+
+
+func set_current_unit(u: Unit) -> void:
+	current_unit = u
+	_refresh_skill_list()
