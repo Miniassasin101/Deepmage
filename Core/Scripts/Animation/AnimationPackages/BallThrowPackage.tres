@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AnimationPackage" load_steps=12 format=3 uid="uid://uwibxof05smc"]
+[gd_resource type="Resource" script_class="AnimationPackage" format=3 uid="uid://uwibxof05smc"]
 
 [ext_resource type="Animation" uid="uid://dpvv676nx31dy" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/Throw.res" id="1_kw84v"]
 [ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="1_skvam"]

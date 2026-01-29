@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Skill" load_steps=23 format=3 uid="uid://c06kje7dtwmgj"]
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://c06kje7dtwmgj"]
 
 [ext_resource type="Resource" uid="uid://8mq08eqitt0g" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/CapsuleBashPackage.tres" id="1_80chc"]
 [ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="2_q7dxf"]
@@ -49,8 +49,6 @@ block_anim_effect = SubResource("Resource_i7mlr")
 hit_stop_effect = SubResource("Resource_cl0pr")
 graze_stop_effect = SubResource("Resource_qr07x")
 block_stop_effect = SubResource("Resource_qr07x")
-prowess_attribute = "martial"
-defense_attribute = "parry"
 action_name = "Effect Attack"
 selection_types = Array[ExtResource("5_7vvxu")]([ExtResource("6_w6fhd")])
 metadata/_custom_type_script = "uid://b3xoc4esw8i4s"

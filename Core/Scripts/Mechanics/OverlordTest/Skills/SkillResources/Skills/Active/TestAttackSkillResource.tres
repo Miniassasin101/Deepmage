@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Skill" load_steps=22 format=3 uid="uid://c74afabw0rnw0"]
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://c74afabw0rnw0"]
 
 [ext_resource type="Resource" uid="uid://8mq08eqitt0g" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/CapsuleBashPackage.tres" id="1_8xw5c"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_jmca0"]
@@ -57,8 +57,6 @@ block_anim_effect = SubResource("Resource_2me7b")
 hit_stop_effect = SubResource("Resource_jfhli")
 graze_stop_effect = SubResource("Resource_52xn1")
 block_stop_effect = SubResource("Resource_6kg6w")
-prowess_attribute = "martial"
-defense_attribute = "parry"
 action_name = "Test Bash"
 selection_types = Array[ExtResource("5_vus8r")]([ExtResource("6_qhete")])
 tags = Array[String](["melee", "attack"])

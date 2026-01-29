@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MoveAction" load_steps=4 format=3 uid="uid://cgy0lblu8p8qy"]
+[gd_resource type="Resource" script_class="MoveAction" format=3 uid="uid://cgy0lblu8p8qy"]
 
 [ext_resource type="Script" uid="uid://bl34p0y06cyys" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/MoveAction.gd" id="1_0pqsi"]
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_8urol"]

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AttributesProfile" load_steps=16 format=3 uid="uid://cdkwk7budcsou"]
+[gd_resource type="Resource" script_class="AttributesProfile" format=3 uid="uid://cdkwk7budcsou"]
 
 [ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="1_3o14u"]
 [ext_resource type="Resource" uid="uid://0w1biehlwyj0" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/DerivedAttributes/AccuracyAttributeResource.tres" id="2_d2oba"]

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ConditionBlueprint" load_steps=4 format=3 uid="uid://1vvrbfka8foo"]
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://1vvrbfka8foo"]
 
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="1_gbutp"]
 [ext_resource type="Script" uid="uid://xw1q3xji7lhr" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/HealthBasedSkillConditions/IsFullHealthSkillCondition.gd" id="1_w68d6"]

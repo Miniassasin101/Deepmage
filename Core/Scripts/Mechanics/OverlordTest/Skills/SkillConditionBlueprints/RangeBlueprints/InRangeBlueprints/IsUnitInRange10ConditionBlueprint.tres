@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ConditionBlueprint" load_steps=4 format=3 uid="uid://bnd6x4e2l6ddg"]
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://bnd6x4e2l6ddg"]
 
 [ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="1_4o42b"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_ik50d"]

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="RangedAttackAction" load_steps=15 format=3 uid="uid://dci1vghxdl7pd"]
+[gd_resource type="Resource" script_class="RangedAttackAction" format=3 uid="uid://dci1vghxdl7pd"]
 
 [ext_resource type="Script" uid="uid://nqjg83o6epyn" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/RangedAttackAction.gd" id="1_bqwr4"]
 [ext_resource type="Resource" uid="uid://uwibxof05smc" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BallThrowPackage.tres" id="1_l3mvo"]
@@ -49,8 +49,6 @@ graze_stop_effect = SubResource("Resource_jyvkj")
 block_stop_effect = SubResource("Resource_n7lae")
 attack_range = 100.0
 is_melee_attack = false
-prowess_attribute = "martial"
-defense_attribute = "parry"
 action_name = "Throw Ball"
 selection_types = Array[ExtResource("2_u3c00")]([ExtResource("7_72k2y")])
 tags = Array[String](["melee", "attack"])

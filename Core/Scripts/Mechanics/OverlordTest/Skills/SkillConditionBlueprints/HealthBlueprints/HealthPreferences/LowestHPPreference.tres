@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ConditionBlueprint" load_steps=4 format=3 uid="uid://bbq3mnqde65jw"]
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://bbq3mnqde65jw"]
 
 [ext_resource type="Script" uid="uid://brdj6bm0hkeej" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreferenceScripts/HealthTargetPreferences/LowestHPPreference.gd" id="1_figtl"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_s4u0w"]

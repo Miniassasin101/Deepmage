@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ConditionBlueprint" load_steps=4 format=3 uid="uid://dkpdbiq01ghou"]
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://dkpdbiq01ghou"]
 
 [ext_resource type="Script" uid="uid://d2hgtnub31gt6" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreferenceScripts/AttributeTargetPreferences/LowestAttributeValuePreference.gd" id="1_w86nc"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_fsabf"]

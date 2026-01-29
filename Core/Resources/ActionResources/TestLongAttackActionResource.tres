@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AttackAction" load_steps=14 format=3 uid="uid://dccj02olf2ba7"]
+[gd_resource type="Resource" script_class="AttackAction" format=3 uid="uid://dccj02olf2ba7"]
 
 [ext_resource type="Resource" uid="uid://dq74fk7miqg1w" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/LongCapsuleBashPackage.tres" id="1_silip"]
 [ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="2_rkfpy"]
@@ -54,8 +54,6 @@ block_anim_effect = SubResource("Resource_2me7b")
 hit_stop_effect = SubResource("Resource_jfhli")
 graze_stop_effect = SubResource("Resource_52xn1")
 block_stop_effect = SubResource("Resource_6kg6w")
-prowess_attribute = "martial"
-defense_attribute = "parry"
 action_name = "Test LBash"
 selection_types = Array[ExtResource("5_dqh0h")]([ExtResource("6_wt0sl")])
 tags = Array[String](["melee", "attack"])

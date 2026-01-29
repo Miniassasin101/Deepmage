@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="GrantStatusEffect" load_steps=4 format=3 uid="uid://tr41qw80tt6u"]
+[gd_resource type="Resource" script_class="GrantStatusEffect" format=3 uid="uid://tr41qw80tt6u"]
 
 [ext_resource type="Script" uid="uid://c8s5omyjs8xrw" path="res://Deepmage/Core/Scripts/Mechanics/Effects/GrantStatusEffect.gd" id="1_4glil"]
 [ext_resource type="Script" uid="uid://kotu1b07kwoa" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/StatusScripts/Afflictions/PotencyDownAffliction.gd" id="2_4glil"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=159 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
@@ -121,6 +121,7 @@ internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resourc
 external_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_ydutk")])
 external_condition_blueprints = Array[ExtResource("14_v8epg")]([ExtResource("17_ebomw")])
 trait_1 = "Movement"
+tags = Array[String](["movement"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_wdfje"]
@@ -475,7 +476,7 @@ attribute_type = 2
 maximum_value = 0
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_lwd1i"]
+[sub_resource type="Resource" id="Resource_8hoel"]
 resource_local_to_scene = true
 script = ExtResource("11_6kl6n")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_lk7si"), SubResource("Resource_8pahp"), SubResource("Resource_rfnuq"), SubResource("Resource_73fol"), SubResource("Resource_q6bko"), SubResource("Resource_a4tjr"), SubResource("Resource_pwtg8"), SubResource("Resource_dydjx"), SubResource("Resource_2gvhv"), SubResource("Resource_src6p"), SubResource("Resource_o8y13"), SubResource("Resource_g2rko"), SubResource("Resource_su0wa")])
@@ -631,7 +632,7 @@ attribute_type = 2
 maximum_value = 0
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_knq6r"]
+[sub_resource type="Resource" id="Resource_rx2vc"]
 resource_local_to_scene = true
 script = ExtResource("11_6kl6n")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_4dv0c"), SubResource("Resource_ub3kf"), SubResource("Resource_p6sl4"), SubResource("Resource_j6cut"), SubResource("Resource_qtrpl"), SubResource("Resource_8wfs1"), SubResource("Resource_wan3k"), SubResource("Resource_ol02q"), SubResource("Resource_avl6w"), SubResource("Resource_3ixwr"), SubResource("Resource_ody2n"), SubResource("Resource_2qjkf"), SubResource("Resource_5ddj0")])
@@ -787,7 +788,7 @@ attribute_type = 2
 maximum_value = 0
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_4uu1a"]
+[sub_resource type="Resource" id="Resource_gam6i"]
 resource_local_to_scene = true
 script = ExtResource("11_6kl6n")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_68abb"), SubResource("Resource_0gv3y"), SubResource("Resource_mt8ep"), SubResource("Resource_t1is0"), SubResource("Resource_guc2f"), SubResource("Resource_gdrlf"), SubResource("Resource_yxhqu"), SubResource("Resource_wsem0"), SubResource("Resource_6836y"), SubResource("Resource_eixr0"), SubResource("Resource_k8h5i"), SubResource("Resource_o7bkt"), SubResource("Resource_yao5x")])
@@ -879,38 +880,38 @@ color = Color(0.6, 0.6, 0.6, 1)
 grow_begin = 0.0
 grow_end = 0.0
 
-[node name="Level" type="Node3D"]
+[node name="Level" type="Node3D" unique_id=1219432357]
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=766749461]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.19, 0)
 navigation_mesh = SubResource("NavigationMesh_lf0eb")
 
-[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="NavigationRegion3D" groups=["navigation_mesh_source_group"]]
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="NavigationRegion3D" unique_id=746239551 groups=["navigation_mesh_source_group"]]
 height = 2.23
 vertices = PackedVector3Array(1.0616996, 0, -3.8036938, 0.97278094, 0, -7.0195866, -2.3320305, 0, -7.064046, -2.2134717, 0, -3.848153)
 affect_navigation_mesh = true
 
-[node name="DebugSettings" type="Node" parent="."]
+[node name="DebugSettings" type="Node" parent="." unique_id=860420328]
 script = ExtResource("1_uoqcs")
 
-[node name="PauseManager" type="Node" parent="."]
+[node name="PauseManager" type="Node" parent="." unique_id=1578127748]
 script = ExtResource("2_04ue1")
 metadata/_custom_type_script = "uid://dlggn8t3b5dp3"
 
-[node name="DebugConsoleController" type="Node" parent="."]
+[node name="DebugConsoleController" type="Node" parent="." unique_id=2097953097]
 script = ExtResource("2_swo3b")
 
-[node name="ProjectileConsole" type="Node" parent="DebugConsoleController"]
+[node name="ProjectileConsole" type="Node" parent="DebugConsoleController" unique_id=667036119]
 script = ExtResource("3_s0dbn")
 
-[node name="Environment" type="Node3D" parent="."]
+[node name="Environment" type="Node3D" parent="." unique_id=571982712]
 
-[node name="Lighting" type="Node3D" parent="Environment"]
+[node name="Lighting" type="Node3D" parent="Environment" unique_id=1594270375]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment/Lighting"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment/Lighting" unique_id=1153282071]
 environment = ExtResource("3_gh8or")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment/Lighting"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment/Lighting" unique_id=492766432]
 transform = Transform3D(0.624316, -0.517834, 0.584874, -0.358336, 0.475453, 0.803455, -0.694136, -0.711191, 0.111274, -5.04075, 2.35, -0.618277)
 light_energy = 0.634
 shadow_enabled = true
@@ -919,7 +920,7 @@ directional_shadow_mode = 1
 directional_shadow_split_1 = 0.505
 directional_shadow_max_distance = 27.1
 
-[node name="Floor" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
+[node name="Floor" type="MeshInstance3D" parent="Environment" unique_id=431883841 groups=["navigation_mesh_source_group"]]
 transform = Transform3D(19.1557, 0, 0, 0, 19.1557, 0, 0, 0, 19.1557, 0, 0, 0)
 cast_shadow = 0
 gi_mode = 0
@@ -927,14 +928,14 @@ mesh = SubResource("PlaneMesh_rcno3")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("1_mu4i6")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor" unique_id=1105322896]
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor/StaticBody3D" unique_id=1052528948]
 shape = SubResource("ConcavePolygonShape3D_avqdt")
 
-[node name="Floor2" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
+[node name="Floor2" type="MeshInstance3D" parent="Environment" unique_id=1780659943 groups=["navigation_mesh_source_group"]]
 transform = Transform3D(19.1557, 0, 0, 0, 19.1557, 0, 0, 0, 19.1557, 0, 0, 26.1053)
 cast_shadow = 0
 gi_mode = 0
@@ -942,14 +943,14 @@ mesh = SubResource("PlaneMesh_rcno3")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("1_mu4i6")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor2"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor2" unique_id=1325592668]
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor2/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor2/StaticBody3D" unique_id=622745532]
 shape = SubResource("ConcavePolygonShape3D_avqdt")
 
-[node name="Floor5" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
+[node name="Floor5" type="MeshInstance3D" parent="Environment" unique_id=111470562 groups=["navigation_mesh_source_group"]]
 transform = Transform3D(3.1501377, 0, 0, 0, 3.1501374, 0, 0, 0, 3.1501374, -0.61448956, 0, -5.455774)
 cast_shadow = 0
 gi_mode = 0
@@ -957,14 +958,14 @@ mesh = SubResource("BoxMesh_f0670")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("1_mu4i6")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor5"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor5" unique_id=1511030196]
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor5/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor5/StaticBody3D" unique_id=212681]
 shape = SubResource("BoxShape3D_ebomw")
 
-[node name="Floor6" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
+[node name="Floor6" type="MeshInstance3D" parent="Environment" unique_id=123953287 groups=["navigation_mesh_source_group"]]
 transform = Transform3D(5.8820868, 0, 0, 0, -7.314209e-08, -2.5884905, 0, 1.6732959, -1.13146505e-07, 0.2025876, 0.6306863, 7.751465)
 cast_shadow = 0
 gi_mode = 0
@@ -972,82 +973,82 @@ mesh = SubResource("BoxMesh_f0670")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("1_mu4i6")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor6"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor6" unique_id=1108963542]
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor6/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor6/StaticBody3D" unique_id=236740697]
 shape = SubResource("BoxShape3D_ebomw")
 
-[node name="CameraController" parent="." instance=ExtResource("3_wbgr3")]
+[node name="CameraController" parent="." unique_id=866476987 instance=ExtResource("3_wbgr3")]
 process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.735, 1.03, 0.84)
 
-[node name="UnitManager" type="Node" parent="."]
+[node name="UnitManager" type="Node" parent="." unique_id=2132993533]
 script = ExtResource("11_lf0eb")
 
-[node name="Azure" parent="UnitManager" instance=ExtResource("12_k2c3k")]
+[node name="Azure" parent="UnitManager" unique_id=2054325409 instance=ExtResource("12_k2c3k")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8, 0, 0)
 starting_tactic = SubResource("Resource_tkd6a")
 ui_name = "Azure"
 is_enemy = true
 visor_color = Color(0, 0.55250007, 0.85, 1)
 
-[node name="CharacterSheet" parent="UnitManager/Azure" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
+[node name="CharacterSheet" parent="UnitManager/Azure" unique_id=1450461724 node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
 unit = NodePath("..")
 attributes_profile = SubResource("Resource_6odjx")
 build_profile = ExtResource("37_cb3j6")
 
-[node name="Verdant" parent="UnitManager" instance=ExtResource("12_k2c3k")]
+[node name="Verdant" parent="UnitManager" unique_id=976159200 instance=ExtResource("12_k2c3k")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.037626, 0, 4)
 starting_tactic = SubResource("Resource_k6sm3")
 ui_name = "Verdant"
 is_enemy = true
 visor_color = Color(0, 0.54, 0.261, 1)
 
-[node name="CharacterSheet" parent="UnitManager/Verdant" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
+[node name="CharacterSheet" parent="UnitManager/Verdant" unique_id=84813627 node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
 unit = NodePath("..")
-attributes_profile = SubResource("Resource_lwd1i")
+attributes_profile = SubResource("Resource_8hoel")
 
-[node name="Marigold" parent="UnitManager" instance=ExtResource("12_k2c3k")]
+[node name="Marigold" parent="UnitManager" unique_id=795500076 instance=ExtResource("12_k2c3k")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6, 0, 3.8972347)
 starting_tactic = SubResource("Resource_jiskd")
 ui_name = "Marigold"
 visor_color = Color(0.933872, 0.8713839, 3.85046e-07, 1)
 
-[node name="CharacterSheet" parent="UnitManager/Marigold" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
+[node name="CharacterSheet" parent="UnitManager/Marigold" unique_id=1439450277 node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
 unit = NodePath("..")
-attributes_profile = SubResource("Resource_knq6r")
+attributes_profile = SubResource("Resource_rx2vc")
 
-[node name="Ruby" parent="UnitManager" instance=ExtResource("12_k2c3k")]
+[node name="Ruby" parent="UnitManager" unique_id=1938278729 instance=ExtResource("12_k2c3k")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6, 0, -1.9571767)
 starting_tactic = SubResource("Resource_7g53y")
 ui_name = "Ruby"
 visor_color = Color(1, 0.120000005, 0.120000005, 1)
 
-[node name="CharacterSheet" parent="UnitManager/Ruby" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
+[node name="CharacterSheet" parent="UnitManager/Ruby" unique_id=1853802329 node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
 unit = NodePath("..")
-attributes_profile = SubResource("Resource_4uu1a")
+attributes_profile = SubResource("Resource_gam6i")
 
-[node name="MouseController" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_avqdt")]
+[node name="MouseController" parent="." unique_id=1614539325 node_paths=PackedStringArray("camera") instance=ExtResource("4_avqdt")]
 process_mode = 3
 camera = NodePath("../CameraController/CamOrigin/SpringArm3D/fCamera")
 
-[node name="Label3D" type="Label3D" parent="MouseController/MouseVisual" index="0"]
+[node name="Label3D" type="Label3D" parent="MouseController/MouseVisual" index="0" unique_id=1117958800]
 
 [node name="UnitActionRay" parent="MouseController" index="1"]
 collision_mask = 2
 
-[node name="UnitActionSystem" type="Node" parent="."]
+[node name="UnitActionSystem" type="Node" parent="." unique_id=696304431]
 process_mode = 3
 script = ExtResource("9_lf0eb")
 
-[node name="TurnSystem" type="Node" parent="." node_paths=PackedStringArray("unit_manager", "skill_trigger_system")]
+[node name="TurnSystem" type="Node" parent="." unique_id=2080096656 node_paths=PackedStringArray("unit_manager", "skill_trigger_system")]
 script = ExtResource("10_k2c3k")
 unit_manager = NodePath("../UnitManager")
 skill_trigger_system = NodePath("../CombatSystem/SkillTriggerSystem")
 
-[node name="CombatSystem" type="Node" parent="." node_paths=PackedStringArray("skill_trigger_system")]
+[node name="CombatSystem" type="Node" parent="." unique_id=214833121 node_paths=PackedStringArray("skill_trigger_system")]
 script = ExtResource("11_g7q3m")
 combat_debug_enabled = true
 skill_trigger_system = NodePath("SkillTriggerSystem")
@@ -1055,12 +1056,12 @@ fallback_skill = ExtResource("39_5lfvx")
 skill_library = ExtResource("42_5lfvx")
 condition_library = ExtResource("43_f0670")
 
-[node name="SkillTriggerSystem" type="Node" parent="CombatSystem" node_paths=PackedStringArray("combat_system")]
+[node name="SkillTriggerSystem" type="Node" parent="CombatSystem" unique_id=464332895 node_paths=PackedStringArray("combat_system")]
 script = ExtResource("26_qdwhh")
 combat_system = NodePath("..")
 metadata/_custom_type_script = "uid://c1pcudui7e5qp"
 
-[node name="PathfindingSystem" type="Node" parent="." node_paths=PackedStringArray("nav_region_3d", "curvemesh")]
+[node name="PathfindingSystem" type="Node" parent="." unique_id=1863656797 node_paths=PackedStringArray("nav_region_3d", "curvemesh")]
 script = ExtResource("12_fnj5h")
 nav_region_3d = NodePath("../NavigationRegion3D")
 curvemesh = NodePath("CurveMesh3D")
@@ -1069,7 +1070,7 @@ debug_curve_material = SubResource("StandardMaterial3D_xyav6")
 move_range_cell_size = 0.53
 move_range_snap_threshold = 0.08
 
-[node name="CurveMesh3D" type="Path3D" parent="PathfindingSystem"]
+[node name="CurveMesh3D" type="Path3D" parent="PathfindingSystem" unique_id=296220856]
 visible = false
 curve = SubResource("Curve3D_calw8")
 script = ExtResource("13_wbm0i")
@@ -1077,24 +1078,24 @@ radius_profile = ExtResource("14_calw8")
 material = SubResource("StandardMaterial3D_gh8or")
 metadata/_custom_type_script = "uid://ian5eam30p0l"
 
-[node name="PathBuilder3D" type="Node" parent="PathfindingSystem"]
+[node name="PathBuilder3D" type="Node" parent="PathfindingSystem" unique_id=855802096]
 script = ExtResource("16_dfmjn")
 metadata/_custom_type_script = "uid://cc6pcq4yohj7m"
 
-[node name="MoveRangeRingRenderer" type="Node3D" parent="PathfindingSystem"]
-visible = false
+[node name="MoveRangeRingRenderer" type="Node3D" parent="PathfindingSystem" unique_id=1612162380]
 script = ExtResource("49_ebomw")
 radius_profile = ExtResource("14_calw8")
 material = SubResource("StandardMaterial3D_04ue1")
+fade_duration = 2.0
 metadata/_custom_type_script = "uid://dr67xmhcxhifl"
 
-[node name="UILayer" type="CanvasLayer" parent="."]
+[node name="UILayer" type="CanvasLayer" parent="." unique_id=2054529626]
 process_mode = 3
 script = ExtResource("5_jtghi")
 text_controller_scene = ExtResource("9_ccwc0")
 character_log_queue_scene = ExtResource("10_lf0eb")
 
-[node name="ActionSystemUI" type="Control" parent="UILayer" node_paths=PackedStringArray("turn_system_ui", "initiative_queue_ui", "top_hp_bar", "paused_label", "action_button_hbox")]
+[node name="ActionSystemUI" type="Control" parent="UILayer" unique_id=711513529 node_paths=PackedStringArray("turn_system_ui", "initiative_queue_ui", "top_hp_bar", "paused_label", "action_button_hbox")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -1112,7 +1113,7 @@ paused_label = NodePath("PausedLabel")
 action_button_hbox = NodePath("PanelContainer/MarginContainer/ActionButtonHbox")
 action_button_prefab = ExtResource("16_tko1n")
 
-[node name="PanelContainer" type="PanelContainer" parent="UILayer/ActionSystemUI"]
+[node name="PanelContainer" type="PanelContainer" parent="UILayer/ActionSystemUI" unique_id=777746179]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -1125,23 +1126,23 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_gh8or")
 
-[node name="MarginContainer" type="MarginContainer" parent="UILayer/ActionSystemUI/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/ActionSystemUI/PanelContainer" unique_id=2028367859]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="ActionButtonHbox" type="HBoxContainer" parent="UILayer/ActionSystemUI/PanelContainer/MarginContainer"]
+[node name="ActionButtonHbox" type="HBoxContainer" parent="UILayer/ActionSystemUI/PanelContainer/MarginContainer" unique_id=154634856]
 layout_mode = 2
 
-[node name="ActionButtonUI" parent="UILayer/ActionSystemUI/PanelContainer/MarginContainer/ActionButtonHbox" instance=ExtResource("16_tko1n")]
+[node name="ActionButtonUI" parent="UILayer/ActionSystemUI/PanelContainer/MarginContainer/ActionButtonHbox" unique_id=1057004249 instance=ExtResource("16_tko1n")]
 layout_mode = 2
 
-[node name="TopHPBar" parent="UILayer/ActionSystemUI" instance=ExtResource("21_xyav6")]
+[node name="TopHPBar" parent="UILayer/ActionSystemUI" unique_id=2028794705 instance=ExtResource("21_xyav6")]
 layout_mode = 1
 
-[node name="ControlsLabel" type="Label" parent="UILayer/ActionSystemUI"]
+[node name="ControlsLabel" type="Label" parent="UILayer/ActionSystemUI" unique_id=1010957174]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.035
@@ -1154,7 +1155,7 @@ scale = Vector2(0.74275184, 0.74275184)
 text = "Start game: \"N\" | Character Sheet: Hover Unit + \"C\" | Tactics Menu: Hover Unit + \"T\""
 horizontal_alignment = 1
 
-[node name="PausedLabel" type="PanelContainer" parent="UILayer/ActionSystemUI"]
+[node name="PausedLabel" type="PanelContainer" parent="UILayer/ActionSystemUI" unique_id=769706828]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -1168,7 +1169,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_04ue1")
 metadata/_edit_use_anchors_ = true
 
-[node name="MarginContainer" type="MarginContainer" parent="UILayer/ActionSystemUI/PausedLabel"]
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/ActionSystemUI/PausedLabel" unique_id=626905464]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 7
@@ -1176,12 +1177,12 @@ theme_override_constants/margin_top = 7
 theme_override_constants/margin_right = 7
 theme_override_constants/margin_bottom = 7
 
-[node name="AttackNameLabel" type="Label" parent="UILayer/ActionSystemUI/PausedLabel/MarginContainer"]
+[node name="AttackNameLabel" type="Label" parent="UILayer/ActionSystemUI/PausedLabel/MarginContainer" unique_id=768149379]
 layout_mode = 2
 text = "Paused"
 horizontal_alignment = 1
 
-[node name="TurnSystemUI" type="Control" parent="UILayer" node_paths=PackedStringArray("turn_system", "combat_system", "end_turn_container", "end_turn_button", "turn_phase_label", "round_counter_label", "cycle_counter_label", "movement_gait_label")]
+[node name="TurnSystemUI" type="Control" parent="UILayer" unique_id=839039460 node_paths=PackedStringArray("turn_system", "combat_system", "end_turn_container", "end_turn_button", "turn_phase_label", "round_counter_label", "cycle_counter_label", "movement_gait_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -1199,7 +1200,7 @@ round_counter_label = NodePath("TurnCountContainer/VBoxContainer/MarginContainer
 cycle_counter_label = NodePath("TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer2/CycleCounterLabel")
 movement_gait_label = NodePath("TurnCountContainer/VBoxContainer/MarginContainer3/MovementGaitLabel")
 
-[node name="EndTurnContainer" type="PanelContainer" parent="UILayer/TurnSystemUI"]
+[node name="EndTurnContainer" type="PanelContainer" parent="UILayer/TurnSystemUI" unique_id=743458304]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -1213,18 +1214,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_o5ega")
 
-[node name="MarginContainer" type="MarginContainer" parent="UILayer/TurnSystemUI/EndTurnContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/TurnSystemUI/EndTurnContainer" unique_id=1586232719]
 layout_mode = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="EndTurnButton" type="Button" parent="UILayer/TurnSystemUI/EndTurnContainer/MarginContainer"]
+[node name="EndTurnButton" type="Button" parent="UILayer/TurnSystemUI/EndTurnContainer/MarginContainer" unique_id=1364083822]
 layout_mode = 2
 text = "START TURN"
 
-[node name="TurnCountContainer" type="PanelContainer" parent="UILayer/TurnSystemUI"]
+[node name="TurnCountContainer" type="PanelContainer" parent="UILayer/TurnSystemUI" unique_id=2061781383]
 visible = false
 layout_mode = 1
 anchors_preset = 5
@@ -1240,69 +1241,69 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_2uyvs")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/TurnSystemUI/TurnCountContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/TurnSystemUI/TurnCountContainer" unique_id=1670759592]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer" unique_id=61421550]
 layout_mode = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer" unique_id=2065171669]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=325847895]
 layout_mode = 2
 
-[node name="RoundCounterLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer"]
+[node name="RoundCounterLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer" unique_id=1116357713]
 layout_mode = 2
 text = "Round 1
 "
 label_settings = SubResource("LabelSettings_bwm3i")
 horizontal_alignment = 1
 
-[node name="VSeparator" type="VSeparator" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=441329293]
 layout_mode = 2
 theme_override_constants/separation = 4
 theme_override_styles/separator = SubResource("StyleBoxLine_8hl20")
 
-[node name="MarginContainer2" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=842381777]
 layout_mode = 2
 
-[node name="CycleCounterLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer2"]
+[node name="CycleCounterLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer2" unique_id=1480407194]
 layout_mode = 2
 text = "Cycle 1
 "
 label_settings = SubResource("LabelSettings_bwm3i")
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer" unique_id=550496991]
 layout_mode = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_a6kyb")
 
-[node name="MarginContainer2" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer" unique_id=1493193334]
 layout_mode = 2
 
-[node name="TurnPhaseLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer2"]
+[node name="TurnPhaseLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer2" unique_id=1089336410]
 layout_mode = 2
 text = "Combat Phase
 "
 label_settings = SubResource("LabelSettings_bwm3i")
 horizontal_alignment = 1
 
-[node name="MarginContainer3" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer"]
+[node name="MarginContainer3" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer" unique_id=1592583597]
 layout_mode = 2
 
-[node name="MovementGaitLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer3"]
+[node name="MovementGaitLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer3" unique_id=1359223533]
 layout_mode = 2
 text = "Movement Gait"
 label_settings = SubResource("LabelSettings_bwm3i")
 horizontal_alignment = 1
 
-[node name="InitiativeQueueUI" type="Control" parent="UILayer" node_paths=PackedStringArray("unit_manager", "unit_stats_container")]
+[node name="InitiativeQueueUI" type="Control" parent="UILayer" unique_id=984751727 node_paths=PackedStringArray("unit_manager", "unit_stats_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -1315,7 +1316,7 @@ unit_manager = NodePath("../../UnitManager")
 unit_stats_bar_scene = ExtResource("16_ecsph")
 unit_stats_container = NodePath("PanelContainer/MarginContainer/UnitStatsContainer")
 
-[node name="PanelContainer" type="PanelContainer" parent="UILayer/InitiativeQueueUI"]
+[node name="PanelContainer" type="PanelContainer" parent="UILayer/InitiativeQueueUI" unique_id=1817321060]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -1328,38 +1329,38 @@ grow_vertical = 2
 scale = Vector2(0.725, 0.725)
 theme_override_styles/panel = SubResource("StyleBoxFlat_o5ega")
 
-[node name="MarginContainer" type="MarginContainer" parent="UILayer/InitiativeQueueUI/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/InitiativeQueueUI/PanelContainer" unique_id=1384871176]
 layout_mode = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="UnitStatsContainer" type="VBoxContainer" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer"]
+[node name="UnitStatsContainer" type="VBoxContainer" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer" unique_id=779204903]
 layout_mode = 2
 alignment = 1
 
-[node name="UnitStatsBar" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer/UnitStatsContainer" instance=ExtResource("16_ecsph")]
+[node name="UnitStatsBar" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer/UnitStatsContainer" unique_id=568169079 instance=ExtResource("16_ecsph")]
 layout_mode = 2
 
-[node name="UnitStatsBar2" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer/UnitStatsContainer" instance=ExtResource("16_ecsph")]
+[node name="UnitStatsBar2" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer/UnitStatsContainer" unique_id=1063064773 instance=ExtResource("16_ecsph")]
 visible = false
 layout_mode = 2
 
-[node name="UnitStatsBar3" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer/UnitStatsContainer" instance=ExtResource("16_ecsph")]
+[node name="UnitStatsBar3" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer/UnitStatsContainer" unique_id=2106083146 instance=ExtResource("16_ecsph")]
 visible = false
 layout_mode = 2
 
-[node name="UnitStatsBar4" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer/UnitStatsContainer" instance=ExtResource("16_ecsph")]
+[node name="UnitStatsBar4" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer/UnitStatsContainer" unique_id=1500721097 instance=ExtResource("16_ecsph")]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="UILayer"]
+[node name="Label" type="Label" parent="UILayer" unique_id=2054676736]
 offset_right = 40.0
 offset_bottom = 23.0
 script = ExtResource("16_ex7fh")
 
-[node name="UnitCharacterSheetUI" parent="UILayer" node_paths=PackedStringArray("mouse_controller", "pathfinding") instance=ExtResource("22_gh8or")]
+[node name="UnitCharacterSheetUI" parent="UILayer" unique_id=1495672384 node_paths=PackedStringArray("mouse_controller", "pathfinding") instance=ExtResource("22_gh8or")]
 process_mode = 3
 offset_left = 0.0
 offset_top = 0.0
@@ -1368,12 +1369,12 @@ offset_bottom = 433.0
 mouse_controller = NodePath("../../MouseController")
 pathfinding = NodePath("../../PathfindingSystem")
 
-[node name="CombatLog" parent="UILayer" instance=ExtResource("27_2gnov")]
+[node name="CombatLog" parent="UILayer" unique_id=1862601541 instance=ExtResource("27_2gnov")]
 max_logs = 40
 change_amount = 240
 test_num = 40.0
 
-[node name="SkillActivationUI" parent="UILayer" instance=ExtResource("48_iq36j")]
+[node name="SkillActivationUI" parent="UILayer" unique_id=163543297 instance=ExtResource("48_iq36j")]
 
 [connection signal="pressed" from="UILayer/TurnSystemUI/EndTurnContainer/MarginContainer/EndTurnButton" to="UILayer/TurnSystemUI" method="_on_end_turn_button_pressed"]
 

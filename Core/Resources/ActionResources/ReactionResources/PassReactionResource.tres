@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PassAction" load_steps=4 format=3 uid="uid://d2ysyx0gn34ud"]
+[gd_resource type="Resource" script_class="PassAction" format=3 uid="uid://d2ysyx0gn34ud"]
 
 [ext_resource type="Script" uid="uid://285qbhvjqa08" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/ReactionScripts/PassAction.gd" id="1_5avna"]
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_ju328"]

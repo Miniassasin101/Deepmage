@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ConditionBlueprint" load_steps=4 format=3 uid="uid://dhlquh6l821lo"]
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://dhlquh6l821lo"]
 
 [ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="1_7kuqb"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_wuy1w"]

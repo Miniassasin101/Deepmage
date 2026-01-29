@@ -24,6 +24,9 @@ func on_before_damage_applied(_unit: Unit, cd: CombatEventData) -> void:
 		return
 	if status_level <= 0:
 		return
+	if cd.defender != owner:
+		return
+	
 	
 	if cd.skill.has_tag("pierce"):
 		Utilities.spawn_text_line(_unit, "PIERCED!", Color.ALICE_BLUE)

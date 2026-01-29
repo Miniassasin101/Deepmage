@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="BlockAction" load_steps=5 format=3 uid="uid://c5dl1dlq1jmiy"]
+[gd_resource type="Resource" script_class="BlockAction" format=3 uid="uid://c5dl1dlq1jmiy"]
 
 [ext_resource type="Script" uid="uid://6qs4p4pind1l" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/ReactionScripts/BlockAction.gd" id="1_ef270"]
 [ext_resource type="Resource" uid="uid://djrw5nkydvyv6" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BlockPackage.tres" id="1_jkvav"]

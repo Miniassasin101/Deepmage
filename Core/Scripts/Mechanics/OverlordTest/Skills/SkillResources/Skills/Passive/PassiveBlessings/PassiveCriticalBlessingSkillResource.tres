@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Skill" load_steps=26 format=3 uid="uid://c2p3ox34ub580"]
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://c2p3ox34ub580"]
 
 [ext_resource type="Animation" uid="uid://bolvfij56gevt" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/UnarmedBlockAnim.res" id="1_8kh3f"]
 [ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="2_fo0sk"]

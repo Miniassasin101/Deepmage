@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="BuildSource" load_steps=11 format=3 uid="uid://bq1qqcyxh3qbv"]
+[gd_resource type="Resource" script_class="BuildSource" format=3 uid="uid://bq1qqcyxh3qbv"]
 
 [ext_resource type="Script" uid="uid://da5ua2vuwghvh" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeMod.gd" id="1_pvd6m"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="2_8vwas"]

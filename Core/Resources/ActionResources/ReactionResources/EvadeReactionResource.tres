@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EvadeAction" load_steps=5 format=3 uid="uid://by016ujd3kbnh"]
+[gd_resource type="Resource" script_class="EvadeAction" format=3 uid="uid://by016ujd3kbnh"]
 
 [ext_resource type="Resource" uid="uid://bmcle0eyq4ovj" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BackDodgePackage.tres" id="1_cacm4"]
 [ext_resource type="Script" uid="uid://vrn8he3aydtf" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/ReactionScripts/EvadeAction.gd" id="1_o2f8w"]

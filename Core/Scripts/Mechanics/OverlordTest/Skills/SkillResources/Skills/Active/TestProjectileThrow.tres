@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Skill" load_steps=23 format=3 uid="uid://ov11t88e15s8"]
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://ov11t88e15s8"]
 
 [ext_resource type="Resource" uid="uid://uwibxof05smc" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BallThrowPackage.tres" id="1_w5420"]
 [ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="2_2np5c"]
@@ -52,8 +52,6 @@ hit_stop_effect = SubResource("Resource_rtscm")
 graze_stop_effect = SubResource("Resource_jyvkj")
 block_stop_effect = SubResource("Resource_n7lae")
 attack_range = 100.0
-prowess_attribute = "martial"
-defense_attribute = "parry"
 action_name = "Throw Ball"
 selection_types = Array[ExtResource("6_speyu")]([ExtResource("7_fptwh")])
 tags = Array[String](["melee", "attack"])

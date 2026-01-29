@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Skill" load_steps=10 format=3 uid="uid://dpshmhy50ni0c"]
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://dpshmhy50ni0c"]
 
 [ext_resource type="Resource" uid="uid://dccj02olf2ba7" path="res://Deepmage/Core/Resources/ActionResources/TestLongAttackActionResource.tres" id="1_xmud2"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="7_24fjk"]

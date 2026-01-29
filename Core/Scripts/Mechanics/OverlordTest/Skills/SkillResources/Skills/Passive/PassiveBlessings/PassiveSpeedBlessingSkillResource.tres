@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Skill" load_steps=23 format=3 uid="uid://bxdouerp8x6dk"]
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://bxdouerp8x6dk"]
 
 [ext_resource type="Animation" uid="uid://bolvfij56gevt" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/UnarmedBlockAnim.res" id="1_7glyx"]
 [ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="2_miefm"]
@@ -12,7 +12,7 @@
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="10_ado06"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="11_gsh2j"]
 [ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="12_b3mu5"]
-[ext_resource type="Script" uid="uid://cq6k3vojdsik7" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SkillSourceBasedSkillConditions/IsSourceSkillType.gd" id="14_7dh0f"]
+[ext_resource type="Script" uid="uid://dwcj6ji2lodbh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SkillSourceBasedSkillConditions/IsSourceSkillTagSkillCondition.gd" id="15_7glyx"]
 [ext_resource type="Script" uid="uid://cpk5t6274clio" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SourceTargetUnitBasedSkillConditions/IsSourceUserFaction.gd" id="15_sdg4o"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="16_3e4es"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="17_f37pv"]
@@ -49,15 +49,15 @@ metadata/_custom_type_script = "uid://b3xoc4esw8i4s"
 script = ExtResource("12_b3mu5")
 metadata/_custom_type_script = "uid://clbt58mwsvag8"
 
-[sub_resource type="Resource" id="Resource_4uvkp"]
-script = ExtResource("14_7dh0f")
-required_type = 1
-metadata/_custom_type_script = "uid://cq6k3vojdsik7"
-
 [sub_resource type="Resource" id="Resource_vimjk"]
 script = ExtResource("15_sdg4o")
 relation = 0
 metadata/_custom_type_script = "uid://cpk5t6274clio"
+
+[sub_resource type="Resource" id="Resource_miefm"]
+script = ExtResource("15_7glyx")
+required_tag = "movement"
+metadata/_custom_type_script = "uid://dwcj6ji2lodbh"
 
 [resource]
 resource_name = "PassiveSpeedUpSkillResource"
@@ -67,7 +67,7 @@ action = SubResource("Resource_paq0d")
 skill_category = 1
 skill_type = 1
 skill_trigger = 2
-internal_skill_conditions = Array[ExtResource("11_gsh2j")]([SubResource("Resource_4rg85"), SubResource("Resource_4uvkp"), SubResource("Resource_vimjk"), null])
+internal_skill_conditions = Array[ExtResource("11_gsh2j")]([SubResource("Resource_4rg85"), SubResource("Resource_vimjk"), SubResource("Resource_miefm")])
 trait_1 = "Martial Up 1"
 trait_2 = "Is Attacked"
 description = Array[String](["Activates when targeted by an attack to grant self block."])

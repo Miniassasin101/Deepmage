@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MoveToSafetySkill" load_steps=11 format=3 uid="uid://cdo13j8uua6g3"]
+[gd_resource type="Resource" script_class="MoveToSafetySkill" format=3 uid="uid://cdo13j8uua6g3"]
 
 [ext_resource type="Resource" uid="uid://ckf4jaulgujk1" path="res://Deepmage/Core/Resources/ActionResources/RushActionResource.tres" id="1_fxho1"]
 [ext_resource type="Script" uid="uid://bj28140wrmaiv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/PositionPreferences/PositionPreference.gd" id="2_4wppd"]
@@ -28,4 +28,5 @@ skill_type = 1
 trait_1 = "Movement"
 trait_2 = "Retreat"
 trait_3 = "Trait 1"
+tags = Array[String](["movement"])
 metadata/_custom_type_script = "uid://c57p01pt3qmue"

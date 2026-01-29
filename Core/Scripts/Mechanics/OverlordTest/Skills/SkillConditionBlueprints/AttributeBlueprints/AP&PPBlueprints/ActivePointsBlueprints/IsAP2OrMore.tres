@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ConditionBlueprint" load_steps=4 format=3 uid="uid://dxrt5g72h6xok"]
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://dxrt5g72h6xok"]
 
 [ext_resource type="Script" uid="uid://nesmof5ofbtd" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/AttributeBasedSkillConditions/IsGenericAttributeValueOrMoreSkillCondition.gd" id="1_eknc4"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_6cc0o"]

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ConditionBlueprint" load_steps=4 format=3 uid="uid://bjf3o830e2xva"]
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://bjf3o830e2xva"]
 
 [ext_resource type="Script" uid="uid://bfnfgxq4ihkpv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/HealthBasedSkillConditions/Thresholds/SelfHPPercentBelowSkillCondition.gd" id="1_g7jsj"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_ek6sp"]
