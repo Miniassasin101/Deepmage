@@ -229,11 +229,12 @@ action_name = "First Skill"
 selection_types = Array[ExtResource("5_p3ymn")]([ExtResource("7_0fy5k")])
 metadata/_custom_type_script = "uid://dka6hmfmjlgvl"
 
-[node name="CharacterSheet" type="Node" node_paths=PackedStringArray("action_container", "attributes_container", "magic_controller")]
+[node name="CharacterSheet" type="Node" node_paths=PackedStringArray("action_container", "attributes_container", "magic_controller", "class_manager")]
 script = ExtResource("1_rgld4")
 action_container = NodePath("ActionContainer")
 attributes_container = NodePath("AttributesContainer")
 magic_controller = NodePath("MagicController")
+class_manager = NodePath("ClassManager")
 attributes_profile = ExtResource("2_semri")
 build_profile = ExtResource("3_p3uej")
 

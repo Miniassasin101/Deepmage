@@ -16,6 +16,7 @@ signal on_add_to_tactics(skill_to_add: Skill)
 var current_unit: Unit = null
 
 
+
 func _ready() -> void:
 	# Optional: make scroll a little chunkier, same as before.
 	if skills_scroll_container != null:
@@ -26,6 +27,7 @@ func _ready() -> void:
 	# Search → refresh
 	if search_line_edit != null and not search_line_edit.text_changed.is_connected(_on_search_changed):
 		search_line_edit.text_changed.connect(_on_search_changed)
+	
 	
 	_refresh_skill_list()
 
@@ -63,7 +65,7 @@ func _refresh_skill_list() -> void:
 
 	var cm: ClassManager = null
 	if current_unit != null and current_unit.character_sheet != null:
-		cm = current_unit.character_sheet.find_child("ClassManager") as ClassManager
+		cm = current_unit.character_sheet.class_manager
 
 	for skill_entry: Skill in sorted_skills:
 		if skill_entry == null:

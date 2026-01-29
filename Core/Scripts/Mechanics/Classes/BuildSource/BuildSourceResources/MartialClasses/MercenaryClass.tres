@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="BuildSource" load_steps=9 format=3 uid="uid://k7d8t137f3gh"]
+[gd_resource type="Resource" script_class="BuildSource" load_steps=12 format=3 uid="uid://k7d8t137f3gh"]
 
 [ext_resource type="Script" uid="uid://da5ua2vuwghvh" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeMod.gd" id="1_rcgqr"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="2_b7t27"]
 [ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestAttackSkillResource.tres" id="3_vtxfm"]
 [ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="3_wb7tm"]
-[ext_resource type="Resource" uid="uid://ceu3eynl7qehx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/RushToUnitSkillResource.tres" id="4_lmavv"]
 [ext_resource type="Script" uid="uid://rwvfoi4t15v8" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSource.gd" id="4_tapoj"]
+[ext_resource type="Resource" uid="uid://dpshmhy50ni0c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/LongBashSkillResource.tres" id="4_vtxfm"]
+[ext_resource type="Resource" uid="uid://c2p3ox34ub580" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PassiveBlessings/PassiveCriticalBlessingSkillResource.tres" id="5_hw2fm"]
+[ext_resource type="Script" uid="uid://13tc7xg0wjs3" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/StatusScripts/Afflictions/InitiativeDownAffliction.gd" id="6_lmavv"]
 
 [sub_resource type="Resource" id="Resource_hw2fm"]
 resource_name = "MartialUp1"
@@ -21,10 +23,15 @@ attribute_name = &"parry"
 flat = 1
 metadata/_custom_type_script = "uid://da5ua2vuwghvh"
 
+[sub_resource type="Resource" id="Resource_jm17v"]
+script = ExtResource("6_lmavv")
+metadata/_custom_type_script = "uid://13tc7xg0wjs3"
+
 [resource]
 script = ExtResource("4_tapoj")
 ui_name = "Mercenary"
 tags = ["class", "martial", "mercenary"]
-grant_skills = Array[ExtResource("2_b7t27")]([ExtResource("3_vtxfm"), ExtResource("4_lmavv")])
+grant_skills = Array[ExtResource("2_b7t27")]([ExtResource("3_vtxfm"), ExtResource("4_vtxfm"), ExtResource("5_hw2fm")])
+grant_statuses = Array[ExtResource("3_wb7tm")]([SubResource("Resource_jm17v")])
 attribute_mods = Array[ExtResource("1_rcgqr")]([SubResource("Resource_hw2fm"), SubResource("Resource_khlcu")])
 metadata/_custom_type_script = "uid://rwvfoi4t15v8"

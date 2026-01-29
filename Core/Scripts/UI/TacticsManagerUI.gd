@@ -137,6 +137,8 @@ func populate_from_unit(in_unit: Unit) -> void:
 	clear_all_skills()
 
 	setup_skills_container(in_unit)
+	
+	setup_skills_library(in_unit)
 
 
 
@@ -208,6 +210,9 @@ func setup_skills_container(in_unit: Unit) -> void:
 			break
 
 
+func setup_skills_library(in_unit: Unit) -> void:
+	skills_library_ui.set_current_unit(in_unit)
+	skills_library_ui.refresh_from_global_library()
 
 
 

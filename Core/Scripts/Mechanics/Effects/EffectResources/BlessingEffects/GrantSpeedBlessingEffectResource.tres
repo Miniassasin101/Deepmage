@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="GrantStatusEffect" load_steps=4 format=3 uid="uid://bq8dydtnwacfd"]
+
+[ext_resource type="Script" uid="uid://c8s5omyjs8xrw" path="res://Deepmage/Core/Scripts/Mechanics/Effects/GrantStatusEffect.gd" id="1_ksj7q"]
+[ext_resource type="Script" uid="uid://cs3vn027f1kbm" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/StatusScripts/Blessings/GenericGainBlessing.gd" id="2_e51wv"]
+
+[sub_resource type="Resource" id="Resource_jhtri"]
+script = ExtResource("2_e51wv")
+stat_name = "speed"
+ui_name = "Speed Up 2"
+status_category = 1
+status_level = 2
+expire_timing = 2
+metadata/_custom_type_script = "uid://cs3vn027f1kbm"
+
+[resource]
+script = ExtResource("1_ksj7q")
+status = SubResource("Resource_jhtri")
+ui_name = &"Speed Gain"
+metadata/_custom_type_script = "uid://c8s5omyjs8xrw"

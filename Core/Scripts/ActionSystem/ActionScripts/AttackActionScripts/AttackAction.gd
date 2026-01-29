@@ -34,8 +34,8 @@ extends Action
 @export var die_size: int = 6   # Ex: d6, d10
 @export var die_count: int = 1  # Ex: 2d4, 5d6
 @export var is_melee_attack: bool = true
-@export var prowess_attribute: String = "might"
-@export var defense_attribute: String = "endurance"
+@export var prowess_attribute: String = "martial"
+@export var defense_attribute: String = "parry"
 @export var uses_area_pattern: bool = false
 
 
@@ -224,7 +224,8 @@ func do_resolve() -> void:
 	# Fx
 	if cd.effective_damage > 1:
 		defender.animation_controller.play_hit_reaction()
-		Utilities.spawn_damage_label(defender, cd.effective_damage, Color.FIREBRICK, 0.5)
+		var color: Color = Color.FIREBRICK if !cd.is_critical_success else Color.GOLD
+		Utilities.spawn_damage_label(defender, cd.effective_damage, color, 0.5)
 	else:
 		Utilities.spawn_damage_label(defender, cd.effective_damage, Color.AZURE, 0.5)
 
