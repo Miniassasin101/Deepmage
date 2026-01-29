@@ -111,7 +111,7 @@ func get_first_valid_passive_skill_with_context(ctx: Dictionary) -> Skill:
 
 
 
-func get_first_valid_passive_skill(trigger_skill: Skill, trigger_phase: SkillTriggerSystem.TriggerPhase) -> Skill:
+func get_first_valid_passive_skill(_trigger_skill: Skill, _trigger_phase: SkillTriggerSystem.TriggerPhase) -> Skill:
 	# Returns the first skill whose conditions allow activation.
 	if !current_tactic:
 		push_error("No Current Tactic In TacticsController")
