@@ -91,7 +91,7 @@ func update_stats(unit: Unit, with_health_anim: bool = true) -> void:
 	var current_modified_value: int = health_attribute.get_current_modified_value()
 	health_text_label.text = "Posture: %d / %d" % [
 		maxi(current_modified_value, 0), 
-		health_attribute.maximum_value
+		health_attribute.get_max_value()
 	]
 	
 	

@@ -10,6 +10,7 @@ resource_name = "PostureUp3"
 script = ExtResource("1_q5m1p")
 attribute_name = &"posture"
 flat = 3
+affect_maximum = true
 metadata/_custom_type_script = "uid://da5ua2vuwghvh"
 
 [resource]

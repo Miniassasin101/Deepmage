@@ -199,6 +199,7 @@ attribute_name = "posture"
 attribute_type = 2
 current_value = 20
 maximum_value = 20
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_ebomw"]
@@ -209,6 +210,7 @@ attribute_name = "speed"
 attribute_type = 2
 current_value = 4
 maximum_value = 4
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_04ue1"]
@@ -218,6 +220,7 @@ script = ExtResource("10_p6f6u")
 attribute_name = "evade"
 attribute_type = 2
 maximum_value = 0
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_cb3j6"]
@@ -228,6 +231,7 @@ attribute_name = "martial"
 attribute_type = 1
 current_value = 2
 maximum_value = 2
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_e15dp"]
@@ -237,6 +241,7 @@ script = ExtResource("10_p6f6u")
 attribute_name = "channel"
 attribute_type = 1
 current_value = 1
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_c2k8n"]
@@ -247,6 +252,7 @@ attribute_name = "parry"
 attribute_type = 1
 current_value = 2
 maximum_value = 2
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_hja2s"]
@@ -257,6 +263,7 @@ attribute_name = "resist"
 attribute_type = 1
 current_value = 2
 maximum_value = 2
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_f3uqp"]
@@ -267,6 +274,7 @@ attribute_name = "mana"
 attribute_type = 2
 current_value = 10
 maximum_value = 10
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_0fvkv"]
@@ -278,6 +286,7 @@ attribute_type = 2
 current_value = 2
 base_value = 2
 maximum_value = 4
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_dpue3"]
@@ -289,6 +298,7 @@ attribute_type = 2
 current_value = 2
 base_value = 2
 maximum_value = 4
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_mpmhl"]
@@ -300,6 +310,7 @@ attribute_type = 2
 current_value = 17
 maximum_value = 17
 minimum_value = -100
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_yl67w"]
@@ -309,6 +320,7 @@ script = ExtResource("10_p6f6u")
 attribute_name = "accuracy"
 attribute_type = 2
 maximum_value = 0
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_0who7"]
@@ -318,6 +330,7 @@ script = ExtResource("10_p6f6u")
 attribute_name = "critical"
 attribute_type = 2
 maximum_value = 0
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_6odjx"]
@@ -354,6 +367,7 @@ attribute_name = "posture"
 attribute_type = 2
 current_value = 20
 maximum_value = 20
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_8pahp"]
@@ -364,6 +378,7 @@ attribute_name = "speed"
 attribute_type = 2
 current_value = 4
 maximum_value = 4
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_rfnuq"]
@@ -373,6 +388,7 @@ script = ExtResource("10_p6f6u")
 attribute_name = "evade"
 attribute_type = 2
 maximum_value = 0
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_73fol"]
@@ -383,6 +399,7 @@ attribute_name = "martial"
 attribute_type = 1
 current_value = 2
 maximum_value = 2
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_q6bko"]
@@ -393,6 +410,7 @@ attribute_name = "channel"
 attribute_type = 1
 current_value = 2
 maximum_value = 2
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_a4tjr"]
@@ -403,6 +421,7 @@ attribute_name = "parry"
 attribute_type = 1
 current_value = 2
 maximum_value = 2
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_pwtg8"]
@@ -413,6 +432,7 @@ attribute_name = "resist"
 attribute_type = 1
 current_value = 2
 maximum_value = 2
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_dydjx"]
@@ -423,6 +443,7 @@ attribute_name = "mana"
 attribute_type = 2
 current_value = 10
 maximum_value = 10
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_2gvhv"]
@@ -434,6 +455,7 @@ attribute_type = 2
 current_value = 2
 base_value = 2
 maximum_value = 4
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_src6p"]
@@ -445,6 +467,7 @@ attribute_type = 2
 current_value = 2
 base_value = 2
 maximum_value = 4
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_o8y13"]
@@ -456,6 +479,7 @@ attribute_type = 2
 current_value = 16
 maximum_value = 16
 minimum_value = -100
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_g2rko"]
@@ -465,6 +489,7 @@ script = ExtResource("10_p6f6u")
 attribute_name = "accuracy"
 attribute_type = 2
 maximum_value = 0
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_su0wa"]
@@ -474,6 +499,7 @@ script = ExtResource("10_p6f6u")
 attribute_name = "critical"
 attribute_type = 2
 maximum_value = 0
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_8hoel"]
@@ -510,6 +536,7 @@ attribute_name = "posture"
 attribute_type = 2
 current_value = 20
 maximum_value = 20
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_ub3kf"]
@@ -520,6 +547,7 @@ attribute_name = "speed"
 attribute_type = 2
 current_value = 4
 maximum_value = 4
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_p6sl4"]
@@ -529,6 +557,7 @@ script = ExtResource("10_p6f6u")
 attribute_name = "evade"
 attribute_type = 2
 maximum_value = 0
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_j6cut"]
@@ -539,6 +568,7 @@ attribute_name = "martial"
 attribute_type = 1
 current_value = 2
 maximum_value = 2
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_qtrpl"]
@@ -549,6 +579,7 @@ attribute_name = "channel"
 attribute_type = 1
 current_value = 2
 maximum_value = 2
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_8wfs1"]
@@ -559,6 +590,7 @@ attribute_name = "parry"
 attribute_type = 1
 current_value = 2
 maximum_value = 2
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_wan3k"]
@@ -569,6 +601,7 @@ attribute_name = "resist"
 attribute_type = 1
 current_value = 2
 maximum_value = 2
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_ol02q"]
@@ -579,6 +612,7 @@ attribute_name = "mana"
 attribute_type = 2
 current_value = 10
 maximum_value = 10
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_avl6w"]
@@ -590,6 +624,7 @@ attribute_type = 2
 current_value = 2
 base_value = 2
 maximum_value = 4
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_3ixwr"]
@@ -601,6 +636,7 @@ attribute_type = 2
 current_value = 2
 base_value = 2
 maximum_value = 4
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_ody2n"]
@@ -612,6 +648,7 @@ attribute_type = 2
 current_value = 14
 maximum_value = 14
 minimum_value = -100
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_2qjkf"]
@@ -621,6 +658,7 @@ script = ExtResource("10_p6f6u")
 attribute_name = "accuracy"
 attribute_type = 2
 maximum_value = 0
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_5ddj0"]
@@ -630,6 +668,7 @@ script = ExtResource("10_p6f6u")
 attribute_name = "critical"
 attribute_type = 2
 maximum_value = 0
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_rx2vc"]
@@ -666,6 +705,7 @@ attribute_name = "posture"
 attribute_type = 2
 current_value = 20
 maximum_value = 20
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_0gv3y"]
@@ -676,6 +716,7 @@ attribute_name = "speed"
 attribute_type = 2
 current_value = 4
 maximum_value = 4
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_mt8ep"]
@@ -685,6 +726,7 @@ script = ExtResource("10_p6f6u")
 attribute_name = "evade"
 attribute_type = 2
 maximum_value = 0
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_t1is0"]
@@ -695,6 +737,7 @@ attribute_name = "martial"
 attribute_type = 1
 current_value = 2
 maximum_value = 2
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_guc2f"]
@@ -705,6 +748,7 @@ attribute_name = "channel"
 attribute_type = 1
 current_value = 2
 maximum_value = 2
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_gdrlf"]
@@ -715,6 +759,7 @@ attribute_name = "parry"
 attribute_type = 1
 current_value = 2
 maximum_value = 2
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_yxhqu"]
@@ -725,6 +770,7 @@ attribute_name = "resist"
 attribute_type = 1
 current_value = 2
 maximum_value = 2
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_wsem0"]
@@ -735,6 +781,7 @@ attribute_name = "mana"
 attribute_type = 2
 current_value = 10
 maximum_value = 10
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_6836y"]
@@ -746,6 +793,7 @@ attribute_type = 2
 current_value = 2
 base_value = 2
 maximum_value = 4
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_eixr0"]
@@ -757,6 +805,7 @@ attribute_type = 2
 current_value = 2
 base_value = 2
 maximum_value = 4
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_k8h5i"]
@@ -768,6 +817,7 @@ attribute_type = 2
 current_value = 15
 maximum_value = 15
 minimum_value = -100
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_o7bkt"]
@@ -777,6 +827,7 @@ script = ExtResource("10_p6f6u")
 attribute_name = "accuracy"
 attribute_type = 2
 maximum_value = 0
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_yao5x"]
@@ -786,6 +837,7 @@ script = ExtResource("10_p6f6u")
 attribute_name = "critical"
 attribute_type = 2
 maximum_value = 0
+maximum_modifiers = null
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_gam6i"]

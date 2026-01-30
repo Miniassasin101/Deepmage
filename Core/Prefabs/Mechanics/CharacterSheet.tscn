@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://14nkak1a1qkg"]
+[gd_scene format=3 uid="uid://14nkak1a1qkg"]
 
 [ext_resource type="Script" uid="uid://ceujy1qm0i6o6" path="res://Deepmage/Core/Scripts/Units/CharacterSheet.gd" id="1_rgld4"]
 [ext_resource type="Script" uid="uid://cusgogua72ojh" path="res://Deepmage/Core/Scripts/ActionSystem/ActionContainer.gd" id="2_o1iyq"]
@@ -229,7 +229,7 @@ action_name = "First Skill"
 selection_types = Array[ExtResource("5_p3ymn")]([ExtResource("7_0fy5k")])
 metadata/_custom_type_script = "uid://dka6hmfmjlgvl"
 
-[node name="CharacterSheet" type="Node" node_paths=PackedStringArray("action_container", "attributes_container", "magic_controller", "class_manager")]
+[node name="CharacterSheet" type="Node" unique_id=1198739603 node_paths=PackedStringArray("action_container", "attributes_container", "magic_controller", "class_manager")]
 script = ExtResource("1_rgld4")
 action_container = NodePath("ActionContainer")
 attributes_container = NodePath("AttributesContainer")
@@ -238,15 +238,15 @@ class_manager = NodePath("ClassManager")
 attributes_profile = ExtResource("2_semri")
 build_profile = ExtResource("3_p3uej")
 
-[node name="ActionContainer" type="Node" parent="."]
+[node name="ActionContainer" type="Node" parent="." unique_id=1078997847]
 script = ExtResource("2_o1iyq")
 actions = Array[ExtResource("3_qntpm")]([ExtResource("6_semri"), ExtResource("7_dpcrq"), SubResource("Resource_semri"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("10_wrqbw"), ExtResource("11_t0b1j"), ExtResource("15_m2aod"), ExtResource("12_x34uj"), ExtResource("13_704ky"), ExtResource("14_6wat7"), ExtResource("15_8ookq"), ExtResource("16_fpm4q"), SubResource("Resource_bqf7c"), ExtResource("24_2en3j"), SubResource("Resource_lqkdn"), SubResource("Resource_p3ymn"), SubResource("Resource_t600r")])
 
-[node name="AttributesContainer" type="Node" parent="." node_paths=PackedStringArray("character_sheet")]
+[node name="AttributesContainer" type="Node" parent="." unique_id=1511788902 node_paths=PackedStringArray("character_sheet")]
 script = ExtResource("25_ui78x")
 character_sheet = NodePath("..")
 
-[node name="ClassManager" type="Node" parent="." node_paths=PackedStringArray("character_sheet", "magic_controller")]
+[node name="ClassManager" type="Node" parent="." unique_id=621877034 node_paths=PackedStringArray("character_sheet", "magic_controller")]
 script = ExtResource("35_semri")
 character_sheet = NodePath("..")
 magic_controller = NodePath("../MagicController")
@@ -258,5 +258,5 @@ feats = Array[ExtResource("40_txd4g")]([ExtResource("41_e2vah")])
 gear_sources = Array[ExtResource("40_txd4g")]([ExtResource("42_wrqbw"), ExtResource("43_t0b1j")])
 progression = ExtResource("44_p3ymn")
 
-[node name="MagicController" type="Node" parent="."]
+[node name="MagicController" type="Node" parent="." unique_id=1291920677]
 script = ExtResource("36_dpcrq")

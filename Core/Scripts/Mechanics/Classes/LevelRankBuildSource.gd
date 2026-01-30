@@ -17,6 +17,7 @@ func get_computed_attribute_mods() -> Array[AttributeMod]:
 	var posture_mod := AttributeMod.new()
 	posture_mod.attribute_name = &"posture"
 	posture_mod.flat = posture_per_rank * rank
+	posture_mod.affect_maximum = true
 	out.append(posture_mod)
 
 	# Every 3 ranks grant Might

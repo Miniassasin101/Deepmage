@@ -15,6 +15,8 @@ extends Control
 @export_category("Labels")
 @export_group("Labels")
 @export var unit_name_label: Label
+@export var magic_class_label: Label
+@export var martial_class_label: Label
 #@export var armor_points_label: Label
 @export var accuracy_label: Label
 @export var critical_chance_label: Label
@@ -172,13 +174,16 @@ func _populate_from_unit(unit: Unit) -> void:
 	if !is_instance_valid(unit):
 		return
 	unit_name_label.text = unit.ui_name
-
+	
+	magic_class_label.text = unit.character_sheet.class_manager.magic_class.ui_name
+	martial_class_label.text = unit.character_sheet.class_manager.martial_class.ui_name
+	
 	#armor_points_label.text = str(unit.get_attributes_container().get_attribute("armor").get_current_modified_value())\
 	# + "/" + str(unit.get_attributes_container().get_attribute("armor").maximum_value)
 	#health_points_label.text = _get_attribute_or_na(unit, "health")\
 	# + "/" + str(unit.get_attributes_container().get_attribute("health").maximum_value)
 	posture_points_label.text = _get_attribute_or_na(unit, "posture")\
-	 + "/" + str(unit.get_attributes_container().get_attribute("posture").maximum_value)
+	 + "/" + str(unit.get_attributes_container().get_attribute("posture").get_max_value())
 	martial_damage_label.set_text(get_min_max_martial_dmg(unit))
 	channel_damage_label.set_text(get_min_max_channel_dmg(unit))
 	accuracy_label.text = "+" + _get_attribute_or_na(unit, "accuracy")

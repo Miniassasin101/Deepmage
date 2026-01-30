@@ -70,7 +70,7 @@ func rebuild_build() -> void:
 		for m: AttributeMod in all_mods:
 			if m == null:
 				continue
-			attrs.set_attribute_modifier(sid, m.attribute_name, m.flat)
+			attrs.set_attribute_modifier(sid, m.attribute_name, m.flat, m.affect_maximum)
 
 		# statuses granted by the build (ex: Elementalist mana efficiency)
 		for st: Status in p.grant_statuses:

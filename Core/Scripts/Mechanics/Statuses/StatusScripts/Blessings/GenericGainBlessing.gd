@@ -3,6 +3,8 @@ extends StackingStatus
 
 @export var stat_name: String = "stat_name"
 
+@export var update_maximum: bool = false
+
 func _init() -> void:
 	ui_name = "Flat Blessing"
 	status_category = StatusCategory.BLESSING

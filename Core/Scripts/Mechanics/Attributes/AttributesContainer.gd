@@ -156,10 +156,14 @@ func set_attribute_current_value(in_name: String, value: int) -> bool:
 
 ## Adds [param value] (can be negative) to the [code]current_value[/code] of the attribute named [param in_name].[br]
 ## Emits [signal AttributesContainer.attribute_changed] and [code]SignalBus.update_stat_bars[/code] on success.
-func change_attribute_current_value_by(in_name: String, value: int) -> bool:
+func change_attribute_current_value_by(in_name: String, value: int, update_maximum: bool = false) -> bool:
 	var att = get_attribute(in_name)
 	if att:
 		att.current_value += value
+		
+		if update_maximum:
+			att.maximum_value += value
+		
 		attribute_changed.emit()
 		SignalBus.update_stat_bars.emit()
 		SignalBus.update_character_sheet.emit()
@@ -169,10 +173,10 @@ func change_attribute_current_value_by(in_name: String, value: int) -> bool:
 
 ## Adds a flat modifier [param modifier_value] to the attribute named [param in_name].[br]
 ## Emits [signal AttributesContainer.attribute_changed] and [code]SignalBus.update_stat_bars[/code] on success.
-func add_attribute_modifier(in_name: String, modifier_value: int) -> bool:
+func add_attribute_modifier(in_name: String, modifier_value: int, affect_maximum: bool = false) -> bool:
 	var att = get_attribute(in_name)
 	if att:
-		att.add_modifier(modifier_value)
+		att.add_modifier(modifier_value, affect_maximum)
 		attribute_changed.emit()
 		SignalBus.update_stat_bars.emit()
 		SignalBus.update_character_sheet.emit()
@@ -182,10 +186,10 @@ func add_attribute_modifier(in_name: String, modifier_value: int) -> bool:
 
 ## Removes a flat modifier [param modifier_value] from the attribute named [param in_name].[br]
 ## Emits [signal AttributesContainer.attribute_changed] and [code]SignalBus.update_stat_bars[/code] on success.
-func remove_attribute_modifier(in_name: String, modifier_value: int) -> bool:
+func remove_attribute_modifier(in_name: String, modifier_value: int, affect_maximum: bool = false) -> bool:
 	var att = get_attribute(in_name)
 	if att:
-		att.remove_modifier(modifier_value)
+		att.remove_modifier(modifier_value, affect_maximum)
 		attribute_changed.emit()
 		SignalBus.update_stat_bars.emit()
 		SignalBus.update_character_sheet.emit()
@@ -222,15 +226,16 @@ func remove_attribute(in_name: String) -> bool:
 	return false
 
 
-func set_attribute_modifier(source_id: StringName, in_name: StringName, modifier_value: int) -> bool:
+func set_attribute_modifier(source_id: StringName, in_name: StringName, modifier_value: int, affect_maximum: bool = false) -> bool:
 	var attribute_ref: Attribute = get_attribute(String(in_name))
 	if attribute_ref != null:
-		attribute_ref.set_modifier(source_id, modifier_value)
+		attribute_ref.set_modifier(source_id, modifier_value, affect_maximum)
 		attribute_changed.emit()
 		SignalBus.update_stat_bars.emit()
 		SignalBus.update_character_sheet.emit()
-		return true
+		return true 
 	return false
+
 
 func clear_modifiers_from_source(source_id: StringName) -> void:
 	for attribute_ref: Attribute in attributes:
