@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_dvqai"]
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="5_7vvxu"]
 [ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestAttackSkillResource.tres" id="5_w6fhd"]
-[ext_resource type="Script" uid="uid://b3xoc4esw8i4s" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/InflictEffectAction.gd" id="6_vf1dt"]
+[ext_resource type="Script" uid="uid://caggmbav8c0ky" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/AttackAction.gd" id="6_dvqai"]
 [ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="6_w6fhd"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="7_vf1dt"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="8_vfbb8"]
@@ -16,20 +16,39 @@
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="11_fwyt4"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="12_wv3ex"]
 
-[sub_resource type="Resource" id="Resource_i7mlr"]
+[sub_resource type="Resource" id="Resource_2me7b"]
 script = ExtResource("2_q7dxf")
-strength = 0.12
-shake_time = 0.25
+timing = 0.55
 metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
 
-[sub_resource type="Resource" id="Resource_qr07x"]
+[sub_resource type="Resource" id="Resource_6kg6w"]
 script = ExtResource("3_k7c11")
-duration = 0.108
+duration = 0.217
+timing = 0.6
 metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 
-[sub_resource type="Resource" id="Resource_cl0pr"]
+[sub_resource type="Resource" id="Resource_vavmt"]
+script = ExtResource("2_q7dxf")
+strength = 0.1
+shake_time = 0.3
+timing = 0.55
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_52xn1"]
 script = ExtResource("3_k7c11")
-duration = 0.211
+duration = 0.138
+timing = 0.6
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_g1p88"]
+script = ExtResource("2_q7dxf")
+timing = 0.55
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_jfhli"]
+script = ExtResource("3_k7c11")
+duration = 0.349
+timing = 0.6
 metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 
 [sub_resource type="Resource" id="Resource_sr3vx"]
@@ -38,20 +57,21 @@ block_value = 20
 ui_name = &"Grant Block"
 metadata/_custom_type_script = "uid://13akgn3nuj34"
 
-[sub_resource type="Resource" id="Resource_kinu8"]
-script = ExtResource("6_vf1dt")
-self_effects = Array[ExtResource("4_dvqai")]([SubResource("Resource_sr3vx")])
+[sub_resource type="Resource" id="Resource_7vvxu"]
+script = ExtResource("6_dvqai")
 animation_package = ExtResource("1_80chc")
 fallback_skill = ExtResource("5_w6fhd")
-hit_anim_effect = SubResource("Resource_i7mlr")
-graze_anim_effect = SubResource("Resource_i7mlr")
-block_anim_effect = SubResource("Resource_i7mlr")
-hit_stop_effect = SubResource("Resource_cl0pr")
-graze_stop_effect = SubResource("Resource_qr07x")
-block_stop_effect = SubResource("Resource_qr07x")
-action_name = "Effect Attack"
+hit_anim_effect = SubResource("Resource_g1p88")
+graze_anim_effect = SubResource("Resource_vavmt")
+block_anim_effect = SubResource("Resource_2me7b")
+hit_stop_effect = SubResource("Resource_jfhli")
+graze_stop_effect = SubResource("Resource_52xn1")
+block_stop_effect = SubResource("Resource_6kg6w")
+self_effects = Array[ExtResource("4_dvqai")]([SubResource("Resource_sr3vx")])
+action_name = "Test Bash"
 selection_types = Array[ExtResource("5_7vvxu")]([ExtResource("6_w6fhd")])
-metadata/_custom_type_script = "uid://b3xoc4esw8i4s"
+tags = Array[String](["melee", "attack"])
+metadata/_custom_type_script = "uid://caggmbav8c0ky"
 
 [sub_resource type="Resource" id="Resource_eu7gh"]
 script = ExtResource("9_sr3vx")
@@ -66,7 +86,7 @@ metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
 resource_name = "GuardedBlowSkillResource"
 script = ExtResource("11_fwyt4")
 skill_name = "Guarded Blow"
-action = SubResource("Resource_kinu8")
+action = SubResource("Resource_7vvxu")
 internal_skill_conditions = Array[ExtResource("8_vfbb8")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
 base_power = 50
 base_accuracy = 90

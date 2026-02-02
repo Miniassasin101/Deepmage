@@ -31,16 +31,18 @@ extends Action
 
 
 @export_group("Attack Data")
-@export var die_size: int = 6   # Ex: d6, d10
-@export var die_count: int = 1  # Ex: 2d4, 5d6
 @export var is_melee_attack: bool = true
 @export var prowess_attribute: String = "martial"
 @export var defense_attribute: String = "parry"
 @export var uses_area_pattern: bool = false
 
 
+@export_group("Skill Effects")
+# Effects that occur on the target unit
+@export var effects: Array[Effect] = []
 
-
+# Effects that occur on the user, separate from the target
+@export var self_effects: Array[Effect] = []
 
 
 
@@ -203,7 +205,7 @@ func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
 
 
 
-func do_resolve() -> void:
+func do_resolve_dep() -> void:
 	var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
 	var defender: Unit = cd.defender
 
@@ -232,6 +234,56 @@ func do_resolve() -> void:
 	# Reaction on-impact hook
 	if cd.reaction and cd.reaction.has_method("on_impact"):
 		cd.reaction.on_impact()
+
+func do_resolve() -> void:
+	var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
+	var target_unit: Unit = cd.defender
+	
+	var target_is_self: bool = unit == target_unit
+	
+	if not cd.is_hit and !target_is_self:
+		Utilities.spawn_text_line(target_unit, "EVADE", Color.AQUA)
+		CombatLog.instance.add_log("Result: Evaded")
+		return
+
+	apply_effects(unit, target_unit)
+	
+	if target_is_self:
+		return
+	
+	elif cd.skill.skill_type != Skill.SkillType.ATTACK:
+		# Only a debuff, no damage numbers needed
+		return
+	
+
+	# OPTIONAL: switch to Posture track later.
+	# For now, keep your health to minimize refactor:
+	target_unit.get_attributes_container().add_attribute_modifier("posture", -cd.effective_damage)
+
+
+	# Fx
+	if cd.effective_damage > 1:
+		target_unit.animation_controller.play_hit_reaction()
+		var color: Color = Color.FIREBRICK if !cd.is_critical_success else Color.GOLD
+		Utilities.spawn_damage_label(target_unit, cd.effective_damage, color, 0.5)
+	else:
+		Utilities.spawn_damage_label(target_unit, cd.effective_damage, Color.AZURE, 0.5)
+
+	# Reaction on-impact hook
+	if cd.reaction and cd.reaction.has_method("on_impact"):
+		cd.reaction.on_impact()
+
+# Applies effects to their repsective targets.
+func apply_effects(user: Unit, target: Unit) -> void:
+	for effect in effects:
+		effect.set_context({"user": user, "target_unit": target})
+		effect.apply()
+
+	for effect in self_effects:
+		effect.set_context({"user": user, "target_unit": user})
+		effect.apply()
+
+
 
 
 func wait_for_animation_resolve(target_unit: Unit) -> void:
@@ -360,8 +412,8 @@ func _modify_camera_shake_effect(is_hit: bool, is_graze: bool, effective_damage:
 ## Chooses hit-stop duration based on outcome (miss/graze/block/hit) and enables/disables effect.
 func _modify_hit_stop(is_hit: bool, is_graze: bool, effective_damage: int) -> void:
 	var effect: HitstopAnimationEffect = null
-	var effects: Array[AnimationEffect] = animation_package.get_instanced_animation_effects()
-	for e in effects:
+	var h_effects: Array[AnimationEffect] = animation_package.get_instanced_animation_effects()
+	for e in h_effects:
 		if e is HitstopAnimationEffect:
 			effect = e
 	if effect:

@@ -37,6 +37,10 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	end_action()
 
 
+func _start_action_base(targ_pack: TargetPackage = null) -> void:
+	# Allows derived actions (that extend MoveAction) to run the normal "Action.start_action"
+	# without triggering MoveAction.start_action's default "move to targ_pack.position" flow.
+	super.start_action(targ_pack)
 
 
 func _begin_movement_dep(to_pos: Vector3) -> void:

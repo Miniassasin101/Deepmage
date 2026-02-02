@@ -161,7 +161,7 @@ func _resolve_attack_darkest_dungeon(action: AttackAction, attacker: Unit, defen
 	cd.total_initial_damage = dmg_roll
 	# NOTE: Protection and defense calculations here
 	
-	var damage_post_defense: int = dmg_roll - defense_value
+	var damage_post_defense: int = dmg_roll - maxi(defense_value, 0)
 	
 	cd.effective_damage = damage_post_defense
 	

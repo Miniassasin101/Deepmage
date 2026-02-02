@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SkillLibrary" load_steps=39 format=3 uid="uid://dkeoolmv8jjeq"]
+[gd_resource type="Resource" script_class="SkillLibrary" format=3 uid="uid://dkeoolmv8jjeq"]
 
 [ext_resource type="Script" uid="uid://cqsj2o45u3w7q" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillLibrary.gd" id="1_07uae"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="2_pntk6"]
@@ -9,12 +9,12 @@
 [ext_resource type="Resource" uid="uid://c06kje7dtwmgj" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/GuardedBlowSkillResource.tres" id="7_dvx14"]
 [ext_resource type="Resource" uid="uid://ov11t88e15s8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestProjectileThrow.tres" id="7_k1hhk"]
 [ext_resource type="Resource" uid="uid://cjuqlljs4k7uy" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PrintTestPassiveSkillResource.tres" id="8_k1hhk"]
+[ext_resource type="Resource" uid="uid://mictyfww6h2x" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/RushToSafetySkillResource.tres" id="9_3scwc"]
 [ext_resource type="Resource" uid="uid://dh3cjc2xijl6v" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PrintTestPassiveAfterSkillResource.tres" id="9_lwyov"]
 [ext_resource type="Resource" uid="uid://caeygn6gmknml" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/BlessingSkills/ActiveBlockSkillResource.tres" id="10_466c2"]
 [ext_resource type="Resource" uid="uid://q7sv630uw87g" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PassiveBlockSkillResource.tres" id="11_i8y8y"]
 [ext_resource type="Resource" uid="uid://c54g6d3vtonf2" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/BlessingSkills/PotencyBlessingSkillResource.tres" id="12_ytjxn"]
 [ext_resource type="Resource" uid="uid://c5np6f0dokpy1" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/AfflictionSkills/PotencyAfflictionSkillResource.tres" id="13_6gr05"]
-[ext_resource type="Resource" uid="uid://cdo13j8uua6g3" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/RushToSafetySkill.tres" id="13_kmtet"]
 [ext_resource type="Resource" uid="uid://cn36mn8jlevyc" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/BlessingSkills/EvadeBlessingSkillResource.tres" id="14_k7yd5"]
 [ext_resource type="Resource" uid="uid://bgfrttd7ejtxw" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/AfflictionSkills/EvadeAfflictionSkillResource.tres" id="15_p6o5h"]
 [ext_resource type="Resource" uid="uid://cs2c272bpyv80" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/AfflictionSkills/InitiativeAfflictionSkillResource.tres" id="16_rua0b"]
@@ -38,8 +38,9 @@
 [ext_resource type="Resource" uid="uid://cb88hwdib4xj" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PassiveBlockPPUpSkillResource.tres" id="36_ohgb7"]
 [ext_resource type="Resource" uid="uid://c2p3ox34ub580" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PassiveBlessings/PassiveCriticalBlessingSkillResource.tres" id="37_fnwvo"]
 [ext_resource type="Resource" uid="uid://bxdouerp8x6dk" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PassiveBlessings/PassiveSpeedBlessingSkillResource.tres" id="38_fnwvo"]
+[ext_resource type="Resource" uid="uid://bf0acaf6mm6gy" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestArcherSkills/SingleShotSkill.tres" id="39_3scwc"]
 
 [resource]
 script = ExtResource("1_07uae")
-skills = Array[ExtResource("2_pntk6")]([ExtResource("3_ccdkf"), ExtResource("7_k1hhk"), ExtResource("5_23st6"), ExtResource("7_6amf8"), ExtResource("7_dvx14"), ExtResource("4_us4l0"), ExtResource("13_kmtet"), ExtResource("8_k1hhk"), ExtResource("9_lwyov"), ExtResource("12_ytjxn"), ExtResource("13_6gr05"), ExtResource("14_k7yd5"), ExtResource("15_p6o5h"), ExtResource("10_466c2"), ExtResource("11_i8y8y"), ExtResource("18_qryrk"), ExtResource("18_ne1am"), ExtResource("16_rua0b"), ExtResource("20_yyc06"), ExtResource("21_ehcg5"), ExtResource("22_ddbkg"), ExtResource("23_sgms2"), ExtResource("22_kmtet"), ExtResource("23_ca0a7"), ExtResource("24_0iu18"), ExtResource("25_rrlfd"), ExtResource("28_5fmir"), ExtResource("29_qcaf6"), ExtResource("30_ohgb7"), ExtResource("31_qryrk"), ExtResource("32_fnwvo"), ExtResource("33_3scwc"), ExtResource("34_8e41t"), ExtResource("36_ohgb7"), ExtResource("37_fnwvo"), ExtResource("38_fnwvo")])
+skills = Array[ExtResource("2_pntk6")]([ExtResource("3_ccdkf"), ExtResource("7_k1hhk"), ExtResource("5_23st6"), ExtResource("7_6amf8"), ExtResource("7_dvx14"), ExtResource("4_us4l0"), ExtResource("9_3scwc"), ExtResource("8_k1hhk"), ExtResource("9_lwyov"), ExtResource("12_ytjxn"), ExtResource("13_6gr05"), ExtResource("14_k7yd5"), ExtResource("15_p6o5h"), ExtResource("10_466c2"), ExtResource("11_i8y8y"), ExtResource("18_qryrk"), ExtResource("18_ne1am"), ExtResource("16_rua0b"), ExtResource("20_yyc06"), ExtResource("21_ehcg5"), ExtResource("22_ddbkg"), ExtResource("23_sgms2"), ExtResource("22_kmtet"), ExtResource("23_ca0a7"), ExtResource("24_0iu18"), ExtResource("25_rrlfd"), ExtResource("28_5fmir"), ExtResource("29_qcaf6"), ExtResource("30_ohgb7"), ExtResource("31_qryrk"), ExtResource("32_fnwvo"), ExtResource("33_3scwc"), ExtResource("34_8e41t"), ExtResource("36_ohgb7"), ExtResource("37_fnwvo"), ExtResource("38_fnwvo"), ExtResource("39_3scwc")])
 metadata/_custom_type_script = "uid://cqsj2o45u3w7q"

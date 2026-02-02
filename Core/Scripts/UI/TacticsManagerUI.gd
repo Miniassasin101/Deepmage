@@ -122,7 +122,7 @@ func populate_unit_from_tactics_ui(resorted_active_skills: Array[Skill], resorte
 	if !current_unit:
 		return
 	
-	current_unit.tactics_controller.set_current_tactic_from_skills(resorted_active_skills, resorted_passive_skills)
+	current_unit.tactics_controller.set_current_tactic_from_skills(resorted_active_skills, resorted_passive_skills, false)
 
 
 ## Populates the entire panel from [param in_unit]: header, clears old bars, spawns bars for active skills.

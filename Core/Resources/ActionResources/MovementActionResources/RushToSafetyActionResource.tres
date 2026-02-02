@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="RushToSafetyAction" format=3 uid="uid://8wuhaspnhl00"]
+
+[ext_resource type="Script" uid="uid://bj28140wrmaiv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/PositionPreferences/PositionPreference.gd" id="1_8swgo"]
+[ext_resource type="Script" uid="uid://dk20xdie5t8dr" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/PositionPreferences/MaximizeMinEnemyDistancePreference.gd" id="2_554i4"]
+[ext_resource type="Script" uid="uid://dtmbqd24ghvnx" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/MovementActionScripts/RushToSafetyAction.gd" id="2_iscua"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="3_ddf8w"]
+[ext_resource type="Script" uid="uid://canbipd5camsd" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Samplers/RetreatRingSampler.gd" id="3_np2l8"]
+[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="6_88lf5"]
+
+[sub_resource type="Resource" id="Resource_j1f3v"]
+script = ExtResource("2_554i4")
+metadata/_custom_type_script = "uid://dk20xdie5t8dr"
+
+[sub_resource type="Resource" id="Resource_0auvs"]
+script = ExtResource("3_np2l8")
+metadata/_custom_type_script = "uid://canbipd5camsd"
+
+[resource]
+script = ExtResource("2_iscua")
+position_sampler = SubResource("Resource_0auvs")
+position_preferences = Array[ExtResource("1_8swgo")]([SubResource("Resource_j1f3v")])
+limit_by_speed = true
+move_speed = 8.0
+rotate_speed = 2.0
+acceleration_time = 2.0
+rotation_acceleration_time = 2.0
+action_name = "Rush Away"
+selection_types = Array[ExtResource("3_ddf8w")]([ExtResource("6_88lf5")])
+metadata/_custom_type_script = "uid://dtmbqd24ghvnx"

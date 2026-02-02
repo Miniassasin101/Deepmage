@@ -61,6 +61,7 @@ func toggle_button_selected(is_selected: bool) -> void:
 
 func _pressed() -> void:
 	handle_special_case()
+	grab_focus()
 
 
 

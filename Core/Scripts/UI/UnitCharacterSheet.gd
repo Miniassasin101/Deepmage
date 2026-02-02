@@ -95,12 +95,12 @@ func _input(_event: InputEvent) -> void:
 	_handle_tactics_preset_input(_event)
 
 
-func update_character_sheet() -> void:
+func update_character_sheet(update_skills: bool = false) -> void:
 	if !is_open:
 		return
 	if !last_unit:
 		return
-	_populate_from_unit(last_unit)
+	_populate_from_unit(last_unit, update_skills)
 
 ## Uses the tab index to open the character sheet at that tab through code.
 func open_character_sheet(in_unit: Unit = null, tab_index: int = 0) -> void:
@@ -139,7 +139,7 @@ func _on_open_character_sheet(unit: Unit, tab_index: int = 0) -> void:
 				tab_container.set_current_tab(1)
 		
 		# Update labels
-		_populate_from_unit(unit)
+		_populate_from_unit(unit, true)
 		# Update statuses list.
 		#_populate_statuses(unit)
 		#populate_weapons_from_unit(unit)
@@ -169,7 +169,7 @@ func _on_close_button_pressed() -> void:
 
 
 
-func _populate_from_unit(unit: Unit) -> void:
+func _populate_from_unit(unit: Unit, update_skills: bool = false) -> void:
 	# Update basic attribute labels.
 	if !is_instance_valid(unit):
 		return
@@ -211,7 +211,7 @@ func _populate_from_unit(unit: Unit) -> void:
 	will_label.text = _get_attribute_or_na(unit, "will")
 
 	# Triggers the tactics manager to populate itself from the new unit
-	if tactics_manager_ui:
+	if tactics_manager_ui and update_skills:
 		tactics_manager_ui.populate_from_unit(unit)
 	
 	_populate_statuses(unit)

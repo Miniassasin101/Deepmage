@@ -190,7 +190,7 @@ func try_handle_unit_selection(do_action_check: bool = false) -> bool:
 	
 	var char_sheet_ui: UnitCharacterSheetUI = UnitCharacterSheetUI.instance
 	if char_sheet_ui.is_open:
-		char_sheet_ui._populate_from_unit(unit)
+		char_sheet_ui._populate_from_unit(unit, true)
 		
 	return true
 

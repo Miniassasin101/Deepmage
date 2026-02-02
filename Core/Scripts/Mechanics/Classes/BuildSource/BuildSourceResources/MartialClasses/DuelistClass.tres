@@ -30,7 +30,7 @@ metadata/_custom_type_script = "uid://da5ua2vuwghvh"
 [resource]
 script = ExtResource("6_rgu10")
 ui_name = "Duelist"
-tags = ["class", "martial", "mercenary"]
+tags = ["class", "martial", "duelist"]
 grant_skills = Array[ExtResource("2_i2uo5")]([ExtResource("3_1jc2x"), ExtResource("5_i2uo5"), ExtResource("5_1jc2x")])
 attribute_mods = Array[ExtResource("1_n8vbg")]([SubResource("Resource_hw2fm"), SubResource("Resource_n8vbg"), SubResource("Resource_i2uo5")])
 metadata/_custom_type_script = "uid://rwvfoi4t15v8"

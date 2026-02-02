@@ -76,7 +76,7 @@ func apply_profile(profile: AttributesProfile) -> void:
 	# Notify listeners/UI that values may have changed.
 	attribute_changed.emit()
 	SignalBus.update_stat_bars.emit()
-	SignalBus.update_character_sheet.emit()
+	SignalBus.update_character_sheet.emit(false)
 
 
 ## Rebuilds the live arrays/dicts from the character sheet’s attribute profile.
@@ -149,7 +149,7 @@ func set_attribute_current_value(in_name: String, value: int) -> bool:
 	if att:
 		att.current_value = value
 		attribute_changed.emit()
-		SignalBus.update_character_sheet.emit()
+		SignalBus.update_character_sheet.emit(false)
 		return true
 	return false
 
@@ -166,7 +166,7 @@ func change_attribute_current_value_by(in_name: String, value: int, update_maxim
 		
 		attribute_changed.emit()
 		SignalBus.update_stat_bars.emit()
-		SignalBus.update_character_sheet.emit()
+		SignalBus.update_character_sheet.emit(false)
 		return true
 	return false
 
@@ -179,7 +179,7 @@ func add_attribute_modifier(in_name: String, modifier_value: int, affect_maximum
 		att.add_modifier(modifier_value, affect_maximum)
 		attribute_changed.emit()
 		SignalBus.update_stat_bars.emit()
-		SignalBus.update_character_sheet.emit()
+		SignalBus.update_character_sheet.emit(false)
 		return true
 	return false
 
@@ -192,10 +192,12 @@ func remove_attribute_modifier(in_name: String, modifier_value: int, affect_maxi
 		att.remove_modifier(modifier_value, affect_maximum)
 		attribute_changed.emit()
 		SignalBus.update_stat_bars.emit()
-		SignalBus.update_character_sheet.emit()
+		update_char_sheet_deferred.call_deferred()
 		return true
 	return false
 
+func update_char_sheet_deferred() -> void:
+	SignalBus.update_character_sheet.emit(false)
 
 ## Returns [code]true[/code] if an attribute with name [param in_name] exists in this container.
 func has_attribute(in_name: String) -> bool:
@@ -232,7 +234,7 @@ func set_attribute_modifier(source_id: StringName, in_name: StringName, modifier
 		attribute_ref.set_modifier(source_id, modifier_value, affect_maximum)
 		attribute_changed.emit()
 		SignalBus.update_stat_bars.emit()
-		SignalBus.update_character_sheet.emit()
+		SignalBus.update_character_sheet.emit(false)
 		return true 
 	return false
 
@@ -243,7 +245,7 @@ func clear_modifiers_from_source(source_id: StringName) -> void:
 			attribute_ref.clear_modifier(source_id)
 	attribute_changed.emit()
 	SignalBus.update_stat_bars.emit()
-	SignalBus.update_character_sheet.emit()
+	SignalBus.update_character_sheet.emit(false)
 
 
 

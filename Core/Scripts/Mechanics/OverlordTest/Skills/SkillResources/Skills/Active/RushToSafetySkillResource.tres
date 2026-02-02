@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://mictyfww6h2x"]
+
+[ext_resource type="Resource" uid="uid://8wuhaspnhl00" path="res://Deepmage/Core/Resources/ActionResources/MovementActionResources/RushToSafetyActionResource.tres" id="1_wbr12"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_txb4i"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="3_6nkai"]
+[ext_resource type="Resource" uid="uid://i8sl83myrhfj" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/RangeBlueprints/InRangeBlueprints/IsAnyEnemyAdjacentConditionBlueprint.tres" id="3_txb4i"]
+[ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="5_wbr12"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="6_kneus"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="7_2hk31"]
+
+[sub_resource type="Resource" id="Resource_txb4i"]
+script = ExtResource("5_wbr12")
+metadata/_custom_type_script = "uid://clbt58mwsvag8"
+
+[resource]
+resource_name = "RushToSafetySkillResource"
+script = ExtResource("6_kneus")
+skill_name = "Rush To Safety"
+action = ExtResource("1_wbr12")
+skill_type = 1
+internal_skill_conditions = Array[ExtResource("3_6nkai")]([SubResource("Resource_txb4i")])
+external_condition_blueprints = Array[ExtResource("2_txb4i")]([ExtResource("3_txb4i")])
+trait_1 = "Movement"
+trait_2 = "Retreat"
+tags = Array[String](["movement"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

@@ -37,9 +37,9 @@ metadata/_custom_type_script = "uid://brutb7o0hj6td"
 
 [sub_resource type="Resource" id="Resource_paq0d"]
 script = ExtResource("7_5jh08")
-effects = Array[ExtResource("5_y6x8d")]([ExtResource("6_tygue")])
 animation_package = SubResource("Resource_3dyvf")
 is_attack = false
+effects = Array[ExtResource("5_y6x8d")]([ExtResource("6_tygue")])
 hit_delay = 0.0
 use_hit_delay = true
 action_name = "Grant Block"

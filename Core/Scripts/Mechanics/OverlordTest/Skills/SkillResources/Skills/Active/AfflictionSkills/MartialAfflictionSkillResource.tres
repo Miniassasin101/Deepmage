@@ -32,7 +32,6 @@ metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 
 [sub_resource type="Resource" id="Resource_dx4vu"]
 script = ExtResource("7_rgtbu")
-effects = Array[ExtResource("4_kt4jh")]([ExtResource("5_4apcd")])
 animation_package = ExtResource("1_4apcd")
 is_attack = false
 fallback_skill = ExtResource("6_nxgbb")
@@ -42,6 +41,7 @@ block_anim_effect = SubResource("Resource_i7mlr")
 hit_stop_effect = SubResource("Resource_cl0pr")
 graze_stop_effect = SubResource("Resource_qr07x")
 block_stop_effect = SubResource("Resource_qr07x")
+effects = Array[ExtResource("4_kt4jh")]([ExtResource("5_4apcd")])
 action_name = "Effect Attack"
 selection_types = Array[ExtResource("8_wt15s")]([ExtResource("9_dni54")])
 metadata/_custom_type_script = "uid://b3xoc4esw8i4s"

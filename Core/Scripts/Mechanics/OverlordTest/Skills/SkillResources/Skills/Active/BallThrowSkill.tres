@@ -3,6 +3,7 @@
 [ext_resource type="Resource" uid="uid://uwibxof05smc" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BallThrowPackage.tres" id="1_v103h"]
 [ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="2_0jww2"]
 [ext_resource type="Script" uid="uid://dfqq4lgq8fr27" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="3_rn01h"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_u337n"]
 [ext_resource type="PackedScene" uid="uid://kybquhg07l5i" path="res://Deepmage/Core/Prefabs/VFX/TestBall.tscn" id="4_uf3lu"]
 [ext_resource type="Script" uid="uid://nqjg83o6epyn" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/RangedAttackAction.gd" id="5_7rh10"]
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="6_0ta4n"]
@@ -10,7 +11,6 @@
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="8_pue87"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="8_rn01h"]
 [ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="9_554sh"]
-[ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="10_wjstr"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="11_op8wp"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="12_gs1dv"]
 
@@ -61,17 +61,12 @@ metadata/_custom_type_script = "uid://nqjg83o6epyn"
 script = ExtResource("9_554sh")
 metadata/_custom_type_script = "uid://2nsctaj2mk50"
 
-[sub_resource type="Resource" id="Resource_jvs1f"]
-script = ExtResource("10_wjstr")
-range_var = 10.0
-metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
-
 [resource]
 resource_name = "BallThrowSkillResource"
 script = ExtResource("11_op8wp")
 skill_name = "Ball Throw"
 action = SubResource("Resource_05afn")
-internal_skill_conditions = Array[ExtResource("8_pue87")]([SubResource("Resource_nhirw"), SubResource("Resource_jvs1f")])
+internal_skill_conditions = Array[ExtResource("8_pue87")]([SubResource("Resource_nhirw")])
 trait_1 = "Ranged 10"
 tags = Array[String](["ranged"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

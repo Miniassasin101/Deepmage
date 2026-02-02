@@ -177,6 +177,8 @@ func _launch_projectile_after(delay_sec: float) -> void:
 
 		_carrier.activate()
 
+
+
 func _cleanup_projectile() -> void:
 	if _carrier != null and is_instance_valid(_carrier):
 		_carrier.detach_projectile(true, true)
