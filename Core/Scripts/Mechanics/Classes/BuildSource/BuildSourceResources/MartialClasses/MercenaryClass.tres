@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://rwvfoi4t15v8" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSource.gd" id="4_tapoj"]
 [ext_resource type="Resource" uid="uid://dpshmhy50ni0c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/LongBashSkillResource.tres" id="4_vtxfm"]
 [ext_resource type="Resource" uid="uid://c2p3ox34ub580" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PassiveBlessings/PassiveCriticalBlessingSkillResource.tres" id="5_hw2fm"]
+[ext_resource type="Resource" uid="uid://ma8esgmd7q1j" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/ExecutionAttackSkillResource.tres" id="6_hw2fm"]
 
 [sub_resource type="Resource" id="Resource_hw2fm"]
 resource_name = "MartialUp1"
@@ -22,10 +23,18 @@ attribute_name = &"parry"
 flat = 1
 metadata/_custom_type_script = "uid://da5ua2vuwghvh"
 
+[sub_resource type="Resource" id="Resource_lmavv"]
+resource_name = "PostureUp5"
+script = ExtResource("1_rcgqr")
+attribute_name = &"posture"
+flat = 5
+affect_maximum = true
+metadata/_custom_type_script = "uid://da5ua2vuwghvh"
+
 [resource]
 script = ExtResource("4_tapoj")
 ui_name = "Mercenary"
 tags = ["class", "martial", "mercenary"]
-grant_skills = Array[ExtResource("2_b7t27")]([ExtResource("3_vtxfm"), ExtResource("4_vtxfm"), ExtResource("5_hw2fm")])
-attribute_mods = Array[ExtResource("1_rcgqr")]([SubResource("Resource_hw2fm"), SubResource("Resource_khlcu")])
+grant_skills = Array[ExtResource("2_b7t27")]([ExtResource("3_vtxfm"), ExtResource("4_vtxfm"), ExtResource("5_hw2fm"), ExtResource("6_hw2fm")])
+attribute_mods = Array[ExtResource("1_rcgqr")]([SubResource("Resource_hw2fm"), SubResource("Resource_khlcu"), SubResource("Resource_lmavv")])
 metadata/_custom_type_script = "uid://rwvfoi4t15v8"

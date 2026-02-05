@@ -88,15 +88,16 @@ func update_stats(unit: Unit, with_health_anim: bool = true) -> void:
 	
 	var health_attribute: Attribute = unit.get_attributes_container().get_attribute("posture")
 
-	var current_modified_value: int = health_attribute.get_current_modified_value()
+	var current_modified_value: int = maxi(health_attribute.get_current_modified_value(), 0)
+	var current_maximum_value: int = health_attribute.get_max_value()
 	health_text_label.text = "Posture: %d / %d" % [
-		maxi(current_modified_value, 0), 
-		health_attribute.get_max_value()
+		current_modified_value, 
+		current_maximum_value
 	]
 	
 	
 	# Animate the health bar value.
-	var target_health_percentage: float = (float(current_modified_value) / float(health_attribute.maximum_value) * 100)
+	var target_health_percentage: float = (float(current_modified_value) / float(current_maximum_value) * 100)
 	#print_debug("Current Value: " + str(current_modified_value))
 	#print_debug("Target Percent: " + str(target_health_percentage))
 	

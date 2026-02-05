@@ -120,13 +120,13 @@ func setup_from_unit(in_unit: Unit) -> void:
 	unit_name_label.text = in_unit.ui_name
 
 	var health_attribute: Attribute = in_unit.get_attributes_container().get_attribute("posture")
-	var current_modified_value: int = health_attribute.get_current_modified_value()
+	var current_modified_value: int = maxi(health_attribute.get_current_modified_value(), 0)
 	current_health_label.text = "POS: %d" % [current_modified_value]
 
 	var defence: int = in_unit.get_attributes_container().get_attribute_current_value("evade")
 	current_defense_label.set_text(str(defence))
 
-	var target_health_percentage: float = (float(current_modified_value) / float(health_attribute.maximum_value) * 100.0)
+	var target_health_percentage: float = (float(current_modified_value) / float(health_attribute.get_max_value()) * 100.0)
 	health_bar.animate_to_percent(target_health_percentage)
 
 	#health_bar.set_to_percent(target_health_percentage)

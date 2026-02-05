@@ -62,7 +62,7 @@ metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 [sub_resource type="Resource" id="Resource_l1aij"]
 script = ExtResource("6_ta53b")
 projectile_speed = 40.0
-carrier_arc_height = 1.0
+carrier_arc_height = 0.5
 animation_package = ExtResource("1_0fe1o")
 hit_anim_effect = SubResource("Resource_2qrjt")
 graze_anim_effect = SubResource("Resource_1qm4u")

@@ -19,7 +19,7 @@
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="9_u3hxb"]
 [ext_resource type="Resource" uid="uid://8vem57wbteya" path="res://Deepmage/Core/Resources/ActionResources/MovementActionResources/RushToUnitActionResource.tres" id="10_0xpoi"]
 [ext_resource type="PackedScene" uid="uid://2ba8bs3ad48b" path="res://Deepmage/Core/Prefabs/VFX/SatelliteCarrier.tscn" id="10_lsp3f"]
-[ext_resource type="Script" uid="uid://ck2buvlnnr6il" path="res://Deepmage/Core/Scripts/Mechanics/Tokens/TokenController.gd" id="11_1um36"]
+[ext_resource type="Script" uid="uid://ck2buvlnnr6il" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/StatusController.gd" id="11_1um36"]
 [ext_resource type="Script" uid="uid://daykqau0okf7v" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitOutsideRangeSkillCondition.gd" id="11_52ex6"]
 [ext_resource type="Script" uid="uid://c6hp21lncudiw" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsNotSelfSkillCondition.gd" id="12_3f60d"]
 [ext_resource type="Script" uid="uid://bt62wkw6goum8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/TacticsController.gd" id="14_b3sv1"]
@@ -309,6 +309,7 @@ update_scale = false
 [node name="StatusController" type="Node" parent="." unique_id=1216770766 node_paths=PackedStringArray("unit", "unit_vfx_manager")]
 script = ExtResource("11_1um36")
 unit = NodePath("..")
+starting_statuses = null
 unit_vfx_manager = NodePath("../UnitVFXManager")
 metadata/_custom_type_script = "uid://ck2buvlnnr6il"
 

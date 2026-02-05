@@ -138,7 +138,7 @@ func get_attribute(in_name: String) -> Attribute:
 func get_attribute_current_value(in_name: String) -> int:
 	var att = get_attribute(in_name)
 	if att:
-		return att.get_current_modified_value()
+		return maxi(att.get_current_modified_value(), 0)
 	return 0
 
 

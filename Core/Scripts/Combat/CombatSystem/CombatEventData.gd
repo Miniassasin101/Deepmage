@@ -64,6 +64,22 @@ var crit_bonus_damage_pool: int = 2
 var on_impact_lines: Array[String] = []
 
 
+var context: Dictionary = {}
+
+# Snapshot of “roll inputs” (mutable by blessings/afflictions BEFORE rolling)
+var pending_power_percent: int = 100			# starts at skill.base_power
+var pending_accuracy: int = 0					# final computed accuracy after EVD, etc.
+var pending_crit_chance: int = 0				# final crit chance after mods
+var force_crit: bool = false
+var force_miss: bool = false
+
+# Optional: if you want statuses to modify defense before damage calc
+var pending_defense_value: int = 0				# starts at defender defense attribute
+
+# Optional: for debugging
+var pre_roll_notes: Array[String] = []
+
+
 # Banwa Fields (temp)
 # [{roll:int, modified:int, evaded:bool, chained:bool, crit:bool, raw_damage:int, after_defense:int}, ...]
 var per_die_results: Array[Dictionary] = [] 

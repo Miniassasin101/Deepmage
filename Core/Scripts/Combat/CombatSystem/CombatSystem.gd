@@ -109,9 +109,8 @@ func _resolve_attack_darkest_dungeon(action: AttackAction, attacker: Unit, defen
 	cd.per_die_results.clear()
 	cd.total_initial_damage = 0
 	cd.total_after_defense = 0
-	cd.any_die_hit = false
 	cd.was_crit_any = false
-	cd.chained_count = 0
+
 	
 	var attacker_attrs := attacker.get_attributes_container()
 	var defender_attrs := defender.get_attributes_container()
@@ -129,29 +128,75 @@ func _resolve_attack_darkest_dungeon(action: AttackAction, attacker: Unit, defen
 	acc_value += skill.base_accuracy + 5
 	acc_value -= evd_value
 	
+	# ---- Build context for triggers (shared by blessings/afflictions) ----
+	cd.context = {
+		"attacker": attacker,
+		"defender": defender,
+		"skill": skill,
+		"action": action,
+		"target": defender,
+	}
+
+	# ---- Initialize pending roll inputs (mutable) ----
+	cd.pending_power_percent = skill.base_power
+	cd.pending_accuracy = acc_value
+	cd.pending_crit_chance = crit_value
+	cd.pending_defense_value = defense_value
+	cd.force_crit = false
+	cd.force_miss = false
+	cd.pre_roll_notes.clear()
+
+	
+	for s in cd.skill.skill_modifying_statuses:
+		if s._conditions_pass(cd):
+			cd.attacker.status_controller.add_status(s, false)
+	
+
+	# ---- NEW PHASE: allow statuses to modify roll inputs BEFORE rolling ----
+	var attacker_statuses: StatusController = attacker.get_status_controller()
+	if attacker_statuses != null:
+		attacker_statuses.before_attack_roll(attacker, cd)
+
+	var defender_statuses: StatusController = defender.get_status_controller()
+	if defender_statuses != null:
+		defender_statuses.before_attack_roll(defender, cd)
+
+	# ---- Roll using the (possibly modified) pending values ----
+	var is_hit: bool = true
+	if cd.force_miss:
+		is_hit = false
+	else:
+		is_hit = roll_hit(cd.pending_accuracy)
+
+	var is_crit: bool = false
+	if cd.force_crit:
+		is_crit = true
+	else:
+		is_crit = roll_crit(cd.pending_crit_chance)
+
 	var weapon_low_dmg: int = 1
 	var weapon_high_dmg: int = 3
 	
 	var min_base_dmg: int = weapon_low_dmg + might_value
 	var max_base_dmg: int = weapon_high_dmg + might_value
 	
-	var base_power: float = float(skill.base_power)
-	var damage_multiplier: float = base_power/100
+
+	var damage_multiplier: float = float(cd.pending_power_percent)/100
 	
 	var modded_low_dmg: float = min_base_dmg * damage_multiplier
 	var modded_high_dmg: float = max_base_dmg * damage_multiplier
 	
-	var is_crit: bool = roll_crit(crit_value)
+
 	
 	# roll damage floors the low and high damage, always rounding down if a decimal
 	var dmg_roll: int = roll_damage(modded_low_dmg, modded_high_dmg, is_crit)
 	
-	var is_hit: bool = roll_hit(acc_value)
+
 	
 	
 	
 	cd.is_hit = is_hit
-	cd.accuracy = acc_value
+	cd.accuracy = cd.pending_accuracy
 	cd.was_crit_any = is_crit
 	cd.is_success = is_hit
 	cd.is_critical_success = is_crit
@@ -161,37 +206,28 @@ func _resolve_attack_darkest_dungeon(action: AttackAction, attacker: Unit, defen
 	cd.total_initial_damage = dmg_roll
 	# NOTE: Protection and defense calculations here
 	
-	var damage_post_defense: int = dmg_roll - maxi(defense_value, 0)
+	var damage_post_defense: int = dmg_roll - maxi(cd.pending_defense_value, 0)
 	
 	cd.effective_damage = damage_post_defense
-	
-	
-
 	
 	# NOTE: condition and effect Damage modifiers here (ex: +50% dmg vs Soaked targets)
 	
 	
 	# === let ATTACKER statuses modify the pending result (e.g., Blind, PotencyUp) ===
-	var attacker_statuses: StatusController = attacker.get_status_controller()
+
 	if attacker_statuses != null:
 		attacker_statuses.before_damage_applied(cd)
 	# === DEFENDER statuses (e.g., Block, CritSealIncoming, PotencyDown) ===
-	var defender_statuses: StatusController = defender.get_status_controller()
 	if defender_statuses != null:
 		defender_statuses.before_damage_applied(cd)
 	
 	var final_damage_multiplier: float = cd.damage_multiplier/100.0
 	
-	var curr_eff_dmg: float = cd.effective_damage
-	curr_eff_dmg *= final_damage_multiplier
-	
-	
+	var curr_eff_dmg: float = cd.effective_damage * final_damage_multiplier
 	
 	cd.effective_damage = int(curr_eff_dmg) # rounds down
 	
-	
-	
-		# Clamp after status math
+	# Clamp after status math
 	if cd.effective_damage < 0:
 		cd.effective_damage = 0
 
@@ -311,7 +347,7 @@ func _debug_dump_current_event() -> void:
 	var gates := "  Gates: %s=%d | %s=%d | EVD=%d | ACCU=%d" % [cd.action.prowess_attribute.to_pascal_case(), prowess_val, cd.action.defense_attribute.to_pascal_case(), defense_val, evd_val, acc_val]
 	CombatLog.instance.add_log(gates)
 	
-	CombatLog.instance.add_log("  Damage Multiplier: " + str(cd.damage_multiplier / 100.0))
+	CombatLog.instance.add_log("  Damage Multiplier: " + str(cd.pending_power_percent / 100.0))
 
 
 	var flags := "  Flags: is_hit=%s | is_success=%s | is_crit=%s | is_graze=%s | dmg=%d" % [

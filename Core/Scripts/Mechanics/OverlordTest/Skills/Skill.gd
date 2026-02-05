@@ -53,6 +53,10 @@ enum SkillType { ATTACK, SUPPORT, SABOTAGE, SPECIAL}
 @export var base_accuracy: int = 95
 @export var crit_mod: int = 0
 
+@export_group("Skill Effects")
+@export_subgroup("Modifies Skill")
+@export var skill_modifying_statuses: Array[Status] = []
+
 @export_group("Magic")
 @export var is_spell: bool = false
 @export var mana_cost: int = 0

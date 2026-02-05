@@ -16,7 +16,7 @@ func _get_percent(unit_ref: Unit) -> float:
 	if attr == null:
 		return -1.0
 
-	var current_value: int = attr.get_current_modified_value()
+	var current_value: int = maxi(attr.get_current_modified_value(), 0)
 	var maximum_value: int = attr.get_max_value()
 
 	if maximum_value <= 0:
@@ -27,6 +27,7 @@ func _get_percent(unit_ref: Unit) -> float:
 func check_condition(_skill: Skill, target: Unit) -> bool:
 	var pct: float = _get_percent(target)
 	if pct < 0.0:
+		push_error("Invalid Percentage")
 		return false
 	if pct < threshold_01:
 		return true

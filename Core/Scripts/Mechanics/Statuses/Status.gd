@@ -22,7 +22,7 @@ enum ApplicationInterval {Never, PerRound, PerTurn, PerAttack, PerSkillEnd, PerS
 enum ExpireTiming { Never, EndOfTurn, EndOfRound, OnUse }
 @export var expire_timing: ExpireTiming = ExpireTiming.Never
 
-
+@export var trigger_conditions: Array[SkillCondition] = []
 
 @export var tags_type: Array[StringName] = []
 
@@ -54,7 +54,26 @@ func modify_status(_status: Status) -> void:
 func modify_mana_cost(_unit: Unit, _skill: Skill, cost: int) -> int:
 	return cost
 
+func _conditions_pass(cd: CombatEventData) -> bool:
+	if trigger_conditions.is_empty():
+		return true
 
+	var ctx: Dictionary = cd.context
+	for cond in trigger_conditions:
+		if cond == null:
+			continue
+		cond.set_context(ctx)
+
+		# Most of your SkillConditions are (skill, target)
+		var skill_ref: Skill = ctx.get("skill")
+		var target_ref: Unit = ctx.get("target")
+		if skill_ref == null or target_ref == null:
+			return false
+
+		if !cond.check_condition(skill_ref, target_ref):
+			return false
+
+	return true
 
 func increase_level(by_amount: int = 1) -> void:
 	status_level += by_amount
@@ -91,6 +110,10 @@ func on_round_end(_unit: Unit, _round_index: int) -> void:
 func on_skill_declared(_unit: Unit, _ctx: Dictionary) -> void:
 	pass
 func on_skill_end(_unit: Unit, _ctx: Dictionary) -> void:
+	pass
+
+
+func before_attack_roll(_unit: Unit, _cd: CombatEventData) -> void:
 	pass
 
 

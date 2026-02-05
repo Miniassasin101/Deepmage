@@ -63,6 +63,15 @@ func make_statuses_unique() -> void:
 	statuses = temp_statuses
 
 
+
+func before_attack_roll(in_unit: Unit, cd: CombatEventData) -> void:
+	for status_inst in statuses: # however you store them
+		if status_inst == null:
+			continue
+
+		status_inst.before_attack_roll(in_unit, cd)
+
+
 # === Damage stage hooks ===
 func before_damage_applied(cd: CombatEventData) -> void:
 	for s in statuses:
@@ -158,7 +167,7 @@ func remove_by_tag(tag: StringName, max_remove_count: int = 9999) -> int:
 
 
 
-func add_status(in_status: Status) -> bool:
+func add_status(in_status: Status, sync_vfx: bool = true) -> bool:
 	if in_status == null:
 		return false
 	in_status.owner = unit
@@ -167,7 +176,8 @@ func add_status(in_status: Status) -> bool:
 		existing.merge_with(in_status)
 		return true
 	statuses.append(in_status)
-	_sync_status_vfx()
+	if sync_vfx:
+		_sync_status_vfx()
 	in_status.on_added(unit)
 	return true
 

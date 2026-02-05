@@ -16,7 +16,7 @@ func _get_percent(unit_ref: Unit) -> float:
 	if attr == null:
 		return -1.0
 
-	var current_value: int = attr.get_current_modified_value()
+	var current_value: int = maxi(attr.get_current_modified_value(), 0)
 	var maximum_value: int = attr.get_max_value()
 	if maximum_value <= 0:
 		return -1.0
