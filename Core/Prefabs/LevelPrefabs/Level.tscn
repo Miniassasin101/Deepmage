@@ -34,6 +34,7 @@
 [ext_resource type="Script" uid="uid://cc6pcq4yohj7m" path="res://Deepmage/Core/Scripts/Projectile/PathBuilder3D.gd" id="16_dfmjn"]
 [ext_resource type="PackedScene" uid="uid://3p3xt0lymqsd" path="res://Deepmage/Core/Prefabs/UI/UnitStatsBar.tscn" id="16_ecsph"]
 [ext_resource type="Script" uid="uid://cjhhvf5ub04kj" path="res://Deepmage/Core/Scripts/UI/FPSLabel.gd" id="16_ex7fh"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="16_hja2s"]
 [ext_resource type="PackedScene" uid="uid://psdfsrnutgxe" path="res://Deepmage/Core/Prefabs/UI/ActionButtonUI.tscn" id="16_tko1n"]
 [ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="17_23xud"]
 [ext_resource type="Resource" uid="uid://dhlquh6l821lo" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/FactionBlueprints/IsEnemyConditionBlueprint.tres" id="17_ebomw"]
@@ -96,7 +97,6 @@ script = ExtResource("12_f2qps")
 skill_name = "Bash"
 action = ExtResource("13_iq36j")
 internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
-skill_modifying_statuses = null
 trait_1 = "Melee"
 description = Array[String](["Moves towards then Bashes a unit in range 5"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
@@ -123,7 +123,6 @@ skill_type = 1
 internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_sb21c"), SubResource("Resource_7omu2")])
 external_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_ydutk")])
 external_condition_blueprints = Array[ExtResource("14_v8epg")]([ExtResource("17_ebomw")])
-skill_modifying_statuses = null
 trait_1 = "Movement"
 tags = Array[String](["movement"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
@@ -185,7 +184,6 @@ skill_type = 1
 skill_trigger = 2
 internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_4rg85"), SubResource("Resource_a1x7f"), SubResource("Resource_4uvkp")])
 is_disabled = true
-skill_modifying_statuses = null
 trait_1 = "Block"
 description = Array[String](["Activates when targeted by an attack to grant self block."])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
@@ -341,7 +339,6 @@ skill_type = 1
 skill_trigger = 2
 internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_4rg85"), SubResource("Resource_a1x7f"), SubResource("Resource_4uvkp")])
 is_disabled = true
-skill_modifying_statuses = null
 trait_1 = "Block"
 description = Array[String](["Activates when targeted by an attack to grant self block."])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
@@ -498,7 +495,6 @@ skill_type = 1
 skill_trigger = 2
 internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_4rg85"), SubResource("Resource_a1x7f"), SubResource("Resource_4uvkp")])
 is_disabled = true
-skill_modifying_statuses = null
 trait_1 = "Block"
 description = Array[String](["Activates when targeted by an attack to grant self block."])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
@@ -655,7 +651,6 @@ skill_type = 1
 skill_trigger = 2
 internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_4rg85"), SubResource("Resource_a1x7f"), SubResource("Resource_4uvkp")])
 is_disabled = true
-skill_modifying_statuses = null
 trait_1 = "Block"
 description = Array[String](["Activates when targeted by an attack to grant self block."])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

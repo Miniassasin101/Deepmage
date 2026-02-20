@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://dwcj6ji2lodbh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SkillSourceBasedSkillConditions/IsSourceSkillTagSkillCondition.gd" id="15_7glyx"]
 [ext_resource type="Script" uid="uid://cpk5t6274clio" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SourceTargetUnitBasedSkillConditions/IsSourceUserFaction.gd" id="15_sdg4o"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="16_3e4es"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="16_7glyx"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="17_f37pv"]
 
 [sub_resource type="Resource" id="Resource_wdfje"]
