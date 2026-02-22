@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bdohbmjso32gu"]
+[gd_scene format=3 uid="uid://bdohbmjso32gu"]
 
 [ext_resource type="Script" uid="uid://jnvq5p6s7a2f" path="res://Deepmage/Core/Scripts/UI/TacticsManagerUI.gd" id="1_27dc7"]
 [ext_resource type="Script" uid="uid://nhsyq3d75icn" path="res://addons/ReorderableContainer/reorderable_vbox.gd" id="1_qrecu"]
@@ -115,7 +115,7 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
-[node name="TacticsManagerUI" type="PanelContainer" node_paths=PackedStringArray("tactics_header_label", "conditions_header_hbox", "active_skills_rvbox", "passive_skills_rvbox", "conditions_library_ui", "skills_library_ui", "help_button")]
+[node name="TacticsManagerUI" type="PanelContainer" unique_id=724099892 node_paths=PackedStringArray("tactics_header_label", "conditions_header_hbox", "active_skills_rvbox", "passive_skills_rvbox", "conditions_library_ui", "skills_library_ui", "help_button")]
 custom_minimum_size = Vector2(727.3884, 446)
 anchors_preset = -1
 anchor_left = 0.00086805556
@@ -141,120 +141,121 @@ library_skill_bar_prefab = ExtResource("4_msis2")
 help_window_scene = ExtResource("4_gljm4")
 metadata/_edit_use_anchors_ = true
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=208111141]
 layout_mode = 2
 theme_override_constants/margin_left = 6
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 4
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer" unique_id=1665003172]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="HeaderVBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2"]
+[node name="HeaderVBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2" unique_id=1950873653]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer" unique_id=1214265873]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/MarginContainer" unique_id=1934825829]
 layout_mode = 2
 
-[node name="TacticsHeaderLabel" type="Label" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/MarginContainer/HBoxContainer"]
+[node name="TacticsHeaderLabel" type="Label" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/MarginContainer/HBoxContainer" unique_id=1491404324]
 layout_mode = 2
 text = "Tactics"
 label_settings = SubResource("LabelSettings_dmaep")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/MarginContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/MarginContainer/HBoxContainer" unique_id=320568194]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/MarginContainer/HBoxContainer/MarginContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/MarginContainer/HBoxContainer/MarginContainer" unique_id=769414356]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_styles/panel = SubResource("StyleBoxFlat_l7pw0")
 
-[node name="HelpButton" type="Button" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/MarginContainer/HBoxContainer/MarginContainer/PanelContainer"]
+[node name="HelpButton" type="Button" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/MarginContainer/HBoxContainer/MarginContainer/PanelContainer" unique_id=916292989]
 layout_mode = 2
 text = "Help"
 
-[node name="HeadersStylizedPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer"]
+[node name="HeadersStylizedPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer" unique_id=91070946]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_qrecu")
 
-[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel"]
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel" unique_id=78905157]
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_right = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2" unique_id=356685514]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer" unique_id=336308254]
 custom_minimum_size = Vector2(181, 0)
 layout_mode = 2
 size_flags_stretch_ratio = 0.36
 theme_override_constants/separation = 9
 
-[node name="PriorityHeaderLabel" type="Label" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer/HBoxContainer"]
+[node name="PriorityHeaderLabel" type="Label" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer/HBoxContainer" unique_id=1415585910]
+visible = false
 custom_minimum_size = Vector2(43, 0)
 layout_mode = 2
 text = "Order"
 label_settings = SubResource("LabelSettings_dmaep")
 
-[node name="SkillHeaderLabel" type="Label" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer/HBoxContainer"]
+[node name="SkillHeaderLabel" type="Label" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer/HBoxContainer" unique_id=2069134392]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Skill"
+text = "      Skill"
 label_settings = SubResource("LabelSettings_dmaep")
 horizontal_alignment = 1
 
-[node name="ConditionsHeaderHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer"]
+[node name="ConditionsHeaderHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer" unique_id=1597465971]
 layout_mode = 2
 theme_override_constants/separation = 40
 alignment = 1
 
-[node name="ConditionHeaderLabel" type="Label" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer/ConditionsHeaderHBoxContainer"]
+[node name="ConditionHeaderLabel" type="Label" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer/ConditionsHeaderHBoxContainer" unique_id=738720345]
 custom_minimum_size = Vector2(131.92, 0)
 layout_mode = 2
 text = "Condition 1"
 label_settings = SubResource("LabelSettings_dmaep")
 horizontal_alignment = 1
 
-[node name="ConditionHeaderLabel2" type="Label" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer/ConditionsHeaderHBoxContainer"]
+[node name="ConditionHeaderLabel2" type="Label" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer/ConditionsHeaderHBoxContainer" unique_id=1901170831]
 custom_minimum_size = Vector2(131.92, 0)
 layout_mode = 2
 text = "Condition 2"
 label_settings = SubResource("LabelSettings_dmaep")
 horizontal_alignment = 1
 
-[node name="ConditionHeaderLabel3" type="Label" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer/ConditionsHeaderHBoxContainer"]
+[node name="ConditionHeaderLabel3" type="Label" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer/ConditionsHeaderHBoxContainer" unique_id=1207322852]
 custom_minimum_size = Vector2(131.92, 0)
 layout_mode = 2
 text = "Condition 3"
 label_settings = SubResource("LabelSettings_dmaep")
 horizontal_alignment = 1
 
-[node name="SkillsStylizedPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer"]
+[node name="SkillsStylizedPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer" unique_id=890898250]
 process_mode = 3
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vnc2f")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel" unique_id=1033007150]
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer" unique_id=1511831522]
 layout_mode = 2
 theme_override_constants/separation = 7
 
-[node name="ActiveSkillsReorderableVBox" type="Container" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer"]
+[node name="ActiveSkillsReorderableVBox" type="Container" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer" unique_id=1775069125]
 process_mode = 3
 custom_minimum_size = Vector2(0, 116)
 layout_mode = 2
@@ -262,24 +263,24 @@ script = ExtResource("1_qrecu")
 is_vertical = true
 metadata/_custom_type_script = "uid://nhsyq3d75icn"
 
-[node name="TacticsSkillBar" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox" instance=ExtResource("2_vnc2f")]
+[node name="TacticsSkillBar" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox" unique_id=386566642 instance=ExtResource("2_vnc2f")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_27dc7")
 
-[node name="TacticsSkillBar2" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox" instance=ExtResource("2_vnc2f")]
+[node name="TacticsSkillBar2" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox" unique_id=606668394 instance=ExtResource("2_vnc2f")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_27dc7")
 
-[node name="TacticsSkillBar3" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox" instance=ExtResource("2_vnc2f")]
+[node name="TacticsSkillBar3" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox" unique_id=623544881 instance=ExtResource("2_vnc2f")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_27dc7")
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer" unique_id=1191795457]
 layout_mode = 2
 theme_override_constants/separation = -1
 theme_override_styles/separator = SubResource("StyleBoxLine_vnc2f")
 
-[node name="PassiveSkillsReorderableVBox" type="Container" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer"]
+[node name="PassiveSkillsReorderableVBox" type="Container" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer" unique_id=1101398095]
 process_mode = 3
 custom_minimum_size = Vector2(0, 116)
 layout_mode = 2
@@ -287,30 +288,30 @@ script = ExtResource("1_qrecu")
 is_vertical = true
 metadata/_custom_type_script = "uid://nhsyq3d75icn"
 
-[node name="TacticsSkillBar" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/PassiveSkillsReorderableVBox" instance=ExtResource("2_vnc2f")]
+[node name="TacticsSkillBar" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/PassiveSkillsReorderableVBox" unique_id=2049016397 instance=ExtResource("2_vnc2f")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_msis2")
 
-[node name="TacticsSkillBar2" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/PassiveSkillsReorderableVBox" instance=ExtResource("2_vnc2f")]
+[node name="TacticsSkillBar2" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/PassiveSkillsReorderableVBox" unique_id=652102040 instance=ExtResource("2_vnc2f")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_msis2")
 
-[node name="TacticsSkillBar3" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/PassiveSkillsReorderableVBox" instance=ExtResource("2_vnc2f")]
+[node name="TacticsSkillBar3" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/PassiveSkillsReorderableVBox" unique_id=666899638 instance=ExtResource("2_vnc2f")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_msis2")
 
-[node name="SkillsStylizedPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer2"]
+[node name="SkillsStylizedPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer2" unique_id=571839561]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vnc2f")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel" unique_id=2009572548]
 layout_mode = 2
 theme_override_constants/margin_left = -2
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = -2
 theme_override_constants/margin_bottom = 5
 
-[node name="FoldableContainer" type="FoldableContainer" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel/MarginContainer"]
+[node name="FoldableContainer" type="FoldableContainer" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel/MarginContainer" unique_id=2089688854]
 custom_minimum_size = Vector2(624, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.99, 0.99, 0.99, 1)
@@ -319,27 +320,27 @@ theme_override_constants/outline_size = 1
 theme_override_styles/focus = SubResource("StyleBoxFlat_il0hb")
 title = "Skills Library"
 
-[node name="SkillsLibraryUI" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel/MarginContainer/FoldableContainer" instance=ExtResource("5_l7pw0")]
+[node name="SkillsLibraryUI" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel/MarginContainer/FoldableContainer" unique_id=546789931 instance=ExtResource("5_l7pw0")]
 layout_mode = 2
 
-[node name="SkillsStylizedPanel2" type="PanelContainer" parent="MarginContainer/VBoxContainer2"]
+[node name="SkillsStylizedPanel2" type="PanelContainer" parent="MarginContainer/VBoxContainer2" unique_id=1168035922]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vnc2f")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel2"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel2" unique_id=163002084]
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 5
 
-[node name="FoldableContainer" type="FoldableContainer" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel2/MarginContainer"]
+[node name="FoldableContainer" type="FoldableContainer" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel2/MarginContainer" unique_id=1070705151]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_styles/focus = SubResource("StyleBoxFlat_il0hb")
 title = "Conditions Library"
 
-[node name="ConditionsLibraryUI" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel2/MarginContainer/FoldableContainer" instance=ExtResource("5_il0hb")]
+[node name="ConditionsLibraryUI" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel2/MarginContainer/FoldableContainer" unique_id=706908823 instance=ExtResource("5_il0hb")]
 layout_mode = 2
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/HeaderVBoxContainer/MarginContainer/HBoxContainer/MarginContainer/PanelContainer/HelpButton" to="." method="on_help_button_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c3xpwrrdt3fa2"]
+[gd_scene format=3 uid="uid://c3xpwrrdt3fa2"]
 
 [ext_resource type="Script" uid="uid://crn3p160ndo4c" path="res://addons/ReorderableContainer/reorderable_hbox.gd" id="1_dmaep"]
 [ext_resource type="Script" uid="uid://dkromkfvkvfgs" path="res://Deepmage/Core/Scripts/UI/TacticsSkillBar.gd" id="1_syp6n"]
@@ -57,11 +57,12 @@ shadow_size = 3
 shadow_offset = Vector2(-1, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_uwyv1"]
+font_size = 13
 outline_size = 3
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_syp6n"]
-bg_color = Color(0.1408, 0.1568, 0.16, 0.09019608)
+bg_color = Color(0.1408, 0.1568, 0.16, 0.27450982)
 border_width_left = 3
 border_width_right = 3
 border_color = Color(0.55, 0.55, 0.55, 1)
@@ -72,7 +73,11 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 shadow_offset = Vector2(-1, 1)
 
-[node name="TacticsSkillBar" type="PanelContainer" node_paths=PackedStringArray("priority_number_label", "skill_name_label", "conditions_rhbox")]
+[sub_resource type="LabelSettings" id="LabelSettings_0kxyp"]
+font_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[node name="TacticsSkillBar" type="PanelContainer" unique_id=521843372 node_paths=PackedStringArray("priority_number_label", "skill_name_label", "conditions_rhbox")]
 size_flags_horizontal = 0
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_dmaep")
@@ -84,24 +89,24 @@ red_style_box = SubResource("StyleBoxFlat_0kxyp")
 blue_style_box = SubResource("StyleBoxFlat_j4mds")
 gray_style_box = SubResource("StyleBoxFlat_iylcu")
 
-[node name="MarginContainer2" type="MarginContainer" parent="."]
+[node name="MarginContainer2" type="MarginContainer" parent="." unique_id=1095086447]
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2" unique_id=1384171622]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/HBoxContainer"]
-custom_minimum_size = Vector2(180, 0)
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/HBoxContainer" unique_id=695654346]
+custom_minimum_size = Vector2(190.465, 0)
 layout_mode = 2
-theme_override_constants/separation = 9
+theme_override_constants/separation = 0
 
-[node name="PriorityNumberLabel" type="Label" parent="MarginContainer2/HBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(46, 0)
+[node name="PriorityNumberLabel" type="Label" parent="MarginContainer2/HBoxContainer/HBoxContainer" unique_id=25812948]
+custom_minimum_size = Vector2(18.64, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.0
@@ -110,13 +115,13 @@ text = "0"
 label_settings = SubResource("LabelSettings_uwyv1")
 horizontal_alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer2/HBoxContainer/HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer2/HBoxContainer/HBoxContainer" unique_id=664573610]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_syp6n")
 
-[node name="SkillNameLabel" type="Label" parent="MarginContainer2/HBoxContainer/HBoxContainer/PanelContainer"]
+[node name="SkillNameLabel" type="Label" parent="MarginContainer2/HBoxContainer/HBoxContainer/PanelContainer" unique_id=57409310]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
@@ -125,20 +130,28 @@ label_settings = SubResource("LabelSettings_uwyv1")
 horizontal_alignment = 1
 text_overrun_behavior = 1
 
-[node name="ConditionsRHBox" type="Container" parent="MarginContainer2/HBoxContainer"]
+[node name="PointsLabel" type="Label" parent="MarginContainer2/HBoxContainer/HBoxContainer/PanelContainer" unique_id=301160726]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+text = "◆◆◇"
+label_settings = SubResource("LabelSettings_0kxyp")
+text_overrun_behavior = 1
+
+[node name="ConditionsRHBox" type="Container" parent="MarginContainer2/HBoxContainer" unique_id=565286641]
 custom_minimum_size = Vector2(509, 0)
 layout_mode = 2
 mouse_filter = 0
 script = ExtResource("1_dmaep")
 metadata/_custom_type_script = "uid://crn3p160ndo4c"
 
-[node name="ConditionSlot" parent="MarginContainer2/HBoxContainer/ConditionsRHBox" instance=ExtResource("3_0kxyp")]
+[node name="ConditionSlot" parent="MarginContainer2/HBoxContainer/ConditionsRHBox" unique_id=698433609 instance=ExtResource("3_0kxyp")]
 layout_mode = 2
 
-[node name="ConditionSlot2" parent="MarginContainer2/HBoxContainer/ConditionsRHBox" instance=ExtResource("3_0kxyp")]
+[node name="ConditionSlot2" parent="MarginContainer2/HBoxContainer/ConditionsRHBox" unique_id=601296805 instance=ExtResource("3_0kxyp")]
 layout_mode = 2
 
-[node name="ConditionSlot3" parent="MarginContainer2/HBoxContainer/ConditionsRHBox" instance=ExtResource("3_0kxyp")]
+[node name="ConditionSlot3" parent="MarginContainer2/HBoxContainer/ConditionsRHBox" unique_id=1529855574 instance=ExtResource("3_0kxyp")]
 layout_mode = 2
 
 [connection signal="sort_children" from="MarginContainer2/HBoxContainer/ConditionsRHBox" to="MarginContainer2/HBoxContainer/ConditionsRHBox" method="_on_sort_children"]

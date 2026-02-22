@@ -10,4 +10,6 @@ func before_attack_roll(unit: Unit, cd: CombatEventData) -> void:
 	cd.pending_power_percent += bonus_power_percent
 	cd.pre_roll_notes.append("ExecutionBlessing: power +" + str(bonus_power_percent))
 	
+	Utilities.spawn_text_line(cd.attacker, "Execution!", Color.RED)
+	
 	remove_self(unit)
