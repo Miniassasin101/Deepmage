@@ -257,7 +257,7 @@ theme_override_constants/separation = 7
 
 [node name="ActiveSkillsReorderableVBox" type="Container" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer" unique_id=1775069125]
 process_mode = 3
-custom_minimum_size = Vector2(0, 116)
+custom_minimum_size = Vector2(0, 104)
 layout_mode = 2
 script = ExtResource("1_qrecu")
 is_vertical = true
@@ -282,7 +282,7 @@ theme_override_styles/separator = SubResource("StyleBoxLine_vnc2f")
 
 [node name="PassiveSkillsReorderableVBox" type="Container" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer" unique_id=1101398095]
 process_mode = 3
-custom_minimum_size = Vector2(0, 116)
+custom_minimum_size = Vector2(0, 104)
 layout_mode = 2
 script = ExtResource("1_qrecu")
 is_vertical = true

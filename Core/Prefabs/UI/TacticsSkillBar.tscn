@@ -78,6 +78,12 @@ font_size = 10
 outline_color = Color(0, 0, 0, 1)
 
 [node name="TacticsSkillBar" type="PanelContainer" unique_id=521843372 node_paths=PackedStringArray("priority_number_label", "skill_name_label", "conditions_rhbox")]
+custom_minimum_size = Vector2(707, 28)
+anchors_preset = -1
+anchor_right = 0.6137153
+anchor_bottom = 0.043209877
+offset_right = -707.0
+offset_bottom = -28.0
 size_flags_horizontal = 0
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_dmaep")
@@ -88,6 +94,7 @@ conditions_rhbox = NodePath("MarginContainer2/HBoxContainer/ConditionsRHBox")
 red_style_box = SubResource("StyleBoxFlat_0kxyp")
 blue_style_box = SubResource("StyleBoxFlat_j4mds")
 gray_style_box = SubResource("StyleBoxFlat_iylcu")
+metadata/_edit_use_anchors_ = true
 
 [node name="MarginContainer2" type="MarginContainer" parent="." unique_id=1095086447]
 layout_mode = 2

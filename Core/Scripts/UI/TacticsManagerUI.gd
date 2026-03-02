@@ -260,6 +260,7 @@ func _on_library_add_skill(skill_from_library: Skill) -> void:
 	var new_bar: TacticsSkillBar = _spawn_tactics_bar_for_skill(new_skill, target_container)
 	if new_bar == null:
 		return
+	target_container._on_sort_children(0.5)
 
 	# Place at end of that container
 	reprioritize_skills()
