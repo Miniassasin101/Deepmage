@@ -32,6 +32,8 @@ extends PanelContainer
 ## Reorderable list for [b]passive[/b] skills currently on the unit (optional use in this UI).
 @export var passive_skills_rvbox: ReorderableVBox
 
+@export var skill_description_ui: SkillDescriptionUI
+
 ## Vertical list of addable skills coming from the global [Class SkillLibrary].
 @export var skill_library_vbox: VBoxContainer
 ## Reference to the conditions library pane/widget for browsing/adding conditions.

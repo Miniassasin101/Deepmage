@@ -71,5 +71,6 @@ skill_trigger = 2
 internal_skill_conditions = Array[ExtResource("11_gsh2j")]([SubResource("Resource_4rg85"), SubResource("Resource_vimjk"), SubResource("Resource_miefm")])
 trait_1 = "Martial Up 1"
 trait_2 = "Is Attacked"
-description = Array[String](["Activates when targeted by an attack to grant self block."])
+trigger_description = "When targeted by a movement skill"
+description = Array[String](["Grants a Speed blessing when this unit is targeted by a movement skill"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d2tvg6j8l70gh"]
+[gd_scene format=3 uid="uid://d2tvg6j8l70gh"]
 
 [ext_resource type="Script" uid="uid://c3yg3brnykql0" path="res://Deepmage/Core/Scripts/UI/LibrarySkillBar.gd" id="1_c4rvn"]
 
@@ -108,7 +108,7 @@ outline_size = 1
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
 
-[node name="LibrarySkillBar" type="PanelContainer" node_paths=PackedStringArray("category_label", "skill_name_label", "type_trait_hbox", "skill_name_panel_container", "type_label", "trait_label_1", "trait_label_2", "trait_label_3", "highlight_container")]
+[node name="LibrarySkillBar" type="PanelContainer" unique_id=1122941898 node_paths=PackedStringArray("category_label", "skill_name_label", "type_trait_hbox", "skill_name_panel_container", "type_label", "trait_label_1", "trait_label_2", "trait_label_3", "highlight_container")]
 size_flags_horizontal = 0
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_7l1yy")
@@ -118,6 +118,7 @@ skill_name_label = NodePath("MarginContainer/HBoxContainer/MarginContainer/HBoxC
 type_trait_hbox = NodePath("MarginContainer/HBoxContainer/TypeTraitHBox")
 skill_name_panel_container = NodePath("MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/SkillNamePanelContainer")
 type_label = NodePath("MarginContainer/HBoxContainer/TypeTraitHBox/TypeLabel")
+hide_not_filled_traits = null
 trait_label_1 = NodePath("MarginContainer/HBoxContainer/TypeTraitHBox/TraitLabel1")
 trait_label_2 = NodePath("MarginContainer/HBoxContainer/TypeTraitHBox/TraitLabel2")
 trait_label_3 = NodePath("MarginContainer/HBoxContainer/TypeTraitHBox/TraitLabel3")
@@ -128,30 +129,32 @@ gray_label_settings = SubResource("LabelSettings_gf4fw")
 red_style_box = SubResource("StyleBoxFlat_xgimi")
 blue_style_box = SubResource("StyleBoxFlat_c4rvn")
 gray_style_box = SubResource("StyleBoxFlat_7xl6c")
+hover_in_duration_seconds = null
+hover_out_duration_seconds = null
 highlight_container = NodePath(".")
 style_box_unhighlighted_texture = SubResource("StyleBoxFlat_7l1yy")
 style_box_highlighted_texture = SubResource("StyleBoxFlat_jb8bk")
 style_box_selected_texture = SubResource("StyleBoxFlat_7l1yy")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1631703508]
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_right = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1845847438]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer" unique_id=887692616]
 layout_mode = 2
 theme_override_constants/margin_left = 9
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer" unique_id=327194379]
 custom_minimum_size = Vector2(195.025, 0)
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="CategoryLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+[node name="CategoryLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer" unique_id=2074677001]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -162,14 +165,14 @@ label_settings = SubResource("LabelSettings_c4rvn")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SkillNamePanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+[node name="SkillNamePanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer" unique_id=1061370067]
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_gf4fw")
 
-[node name="SkillNameLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/SkillNamePanelContainer"]
+[node name="SkillNameLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/SkillNamePanelContainer" unique_id=1860877942]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
@@ -177,12 +180,12 @@ text = "Skill Name"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TypeTraitHBox" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
+[node name="TypeTraitHBox" type="HBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1365219821]
 process_mode = 1
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="TypeLabel" type="Label" parent="MarginContainer/HBoxContainer/TypeTraitHBox"]
+[node name="TypeLabel" type="Label" parent="MarginContainer/HBoxContainer/TypeTraitHBox" unique_id=1674879514]
 custom_minimum_size = Vector2(72.275, 0)
 layout_mode = 2
 mouse_filter = 1
@@ -192,7 +195,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 text_overrun_behavior = 1
 
-[node name="TraitLabel1" type="Label" parent="MarginContainer/HBoxContainer/TypeTraitHBox"]
+[node name="TraitLabel1" type="Label" parent="MarginContainer/HBoxContainer/TypeTraitHBox" unique_id=198658535]
 custom_minimum_size = Vector2(105, 0)
 layout_mode = 2
 mouse_filter = 1
@@ -202,7 +205,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 text_overrun_behavior = 1
 
-[node name="TraitLabel2" type="Label" parent="MarginContainer/HBoxContainer/TypeTraitHBox"]
+[node name="TraitLabel2" type="Label" parent="MarginContainer/HBoxContainer/TypeTraitHBox" unique_id=226870076]
 custom_minimum_size = Vector2(105, 0)
 layout_mode = 2
 mouse_filter = 1
@@ -212,7 +215,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 text_overrun_behavior = 1
 
-[node name="TraitLabel3" type="Label" parent="MarginContainer/HBoxContainer/TypeTraitHBox"]
+[node name="TraitLabel3" type="Label" parent="MarginContainer/HBoxContainer/TypeTraitHBox" unique_id=390969719]
 custom_minimum_size = Vector2(105, 0)
 layout_mode = 2
 mouse_filter = 1

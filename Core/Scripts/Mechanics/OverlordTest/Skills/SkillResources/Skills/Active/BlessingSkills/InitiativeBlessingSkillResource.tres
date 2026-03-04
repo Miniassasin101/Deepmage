@@ -56,4 +56,6 @@ skill_type = 1
 base_accuracy = 90
 crit_mod = -3
 trait_1 = "Initiative Up 5"
+trigger_description = "Always"
+description = Array[String](["Grants an Initiative blessing, increasing turn order priority"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

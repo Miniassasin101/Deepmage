@@ -75,5 +75,6 @@ skill_type = 1
 skill_trigger = 2
 internal_skill_conditions = Array[ExtResource("11_0cm66")]([SubResource("Resource_4rg85"), SubResource("Resource_a1x7f"), SubResource("Resource_4uvkp")])
 trait_1 = "Block"
-description = Array[String](["Activates when targeted by an attack to grant self block."])
+trigger_description = "When an ally uses an attack skill"
+description = Array[String](["Grants Block when an ally makes an attack"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

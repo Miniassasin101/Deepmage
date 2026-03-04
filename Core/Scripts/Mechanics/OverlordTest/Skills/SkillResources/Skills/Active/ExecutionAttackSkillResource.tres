@@ -100,5 +100,6 @@ action = SubResource("Resource_nmg0e")
 internal_skill_conditions = Array[ExtResource("9_5co8x")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
 skill_modifying_statuses = Array[ExtResource("13_5mwhy")]([SubResource("Resource_4pxkg")])
 trait_1 = "Melee"
+trigger_description = "When an enemy is within range 3"
 description = Array[String](["Moves towards then Bashes a unit in range 5"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

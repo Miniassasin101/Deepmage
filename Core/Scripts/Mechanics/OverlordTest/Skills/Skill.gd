@@ -71,6 +71,7 @@ enum SkillType { ATTACK, SUPPORT, SABOTAGE, SPECIAL}
 
 
 ## Series of lines describing the behavior and/or effect of the skill.
+@export var trigger_description: String = ""
 @export var description: Array[String] = []
 
 ## Mark the skill in various ways so other combat elements know how to interact with it.

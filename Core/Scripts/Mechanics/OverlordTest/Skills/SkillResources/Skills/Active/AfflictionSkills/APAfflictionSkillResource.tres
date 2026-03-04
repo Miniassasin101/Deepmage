@@ -56,5 +56,6 @@ skill_type = 2
 base_power = 0
 base_accuracy = 90
 crit_mod = -3
-description = Array[String](["Attacks while granting self block."])
+trigger_description = "Always"
+description = Array[String](["Inflicts an AP affliction on the target, draining Action Points"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

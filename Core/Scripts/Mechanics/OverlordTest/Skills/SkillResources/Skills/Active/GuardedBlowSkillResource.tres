@@ -93,5 +93,6 @@ base_power = 50
 base_accuracy = 90
 trait_1 = "Melee"
 trait_2 = "Block"
-description = Array[String](["Attacks while granting self block."])
+trigger_description = "An enemy within rush range"
+description = Array[String](["Attacks while reinforcing one's guard", "+20 Block"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

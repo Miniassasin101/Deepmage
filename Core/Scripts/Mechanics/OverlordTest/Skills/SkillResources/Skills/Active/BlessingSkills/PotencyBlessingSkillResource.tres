@@ -72,5 +72,6 @@ base_power = 0
 base_accuracy = 90
 crit_mod = -3
 trait_1 = "Damage Up"
-description = Array[String](["Attacks while granting self block."])
+trigger_description = "Always"
+description = Array[String](["Grants a Potency Up blessing, increasing damage dealt"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

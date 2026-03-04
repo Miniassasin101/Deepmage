@@ -69,5 +69,7 @@ skill_name = "Ball Throw"
 action = SubResource("Resource_05afn")
 internal_skill_conditions = Array[ExtResource("8_pue87")]([SubResource("Resource_nhirw")])
 trait_1 = "Ranged 10"
+trigger_description = "When an enemy is in range"
+description = Array[String](["Throws a ball at an enemy in range"])
 tags = Array[String](["ranged"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

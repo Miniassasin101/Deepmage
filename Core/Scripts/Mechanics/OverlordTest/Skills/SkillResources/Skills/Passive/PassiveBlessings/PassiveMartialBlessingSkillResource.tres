@@ -75,5 +75,6 @@ skill_trigger = 2
 internal_skill_conditions = Array[ExtResource("11_v5od3")]([SubResource("Resource_4rg85"), SubResource("Resource_a1x7f"), SubResource("Resource_4uvkp"), SubResource("Resource_vimjk")])
 trait_1 = "Martial Up 1"
 trait_2 = "Is Attacked"
-description = Array[String](["Activates when targeted by an attack to grant self block."])
+trigger_description = "When this unit is attacked"
+description = Array[String](["Grants a Martial blessing when this unit is targeted by an attack"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

@@ -62,5 +62,6 @@ action = SubResource("Resource_paq0d")
 skill_type = 1
 internal_skill_conditions = Array[ExtResource("11_hcsre")]([SubResource("Resource_4rg85")])
 trait_1 = "Block"
+trigger_description = "Always"
 description = Array[String](["Grants block to self"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

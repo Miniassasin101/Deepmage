@@ -95,5 +95,7 @@ action = SubResource("Resource_l1aij")
 internal_skill_conditions = Array[ExtResource("10_rmqg6")]([SubResource("Resource_nhirw"), SubResource("Resource_jvs1f")])
 trait_1 = "Ranged 10"
 trait_2 = "Defense Down"
+trigger_description = "When an enemy is within range 10"
+description = Array[String](["Fires a ranged shot at an enemy, draining their Parry"])
 tags = Array[String](["ranged"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

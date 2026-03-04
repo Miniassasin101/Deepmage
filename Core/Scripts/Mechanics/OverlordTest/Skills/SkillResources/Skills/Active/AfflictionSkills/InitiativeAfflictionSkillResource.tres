@@ -55,4 +55,6 @@ action = SubResource("Resource_76j0t")
 skill_type = 2
 base_accuracy = 90
 crit_mod = -3
+trigger_description = "Always"
+description = Array[String](["Inflicts an Initiative affliction on the target, reducing turn order priority"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

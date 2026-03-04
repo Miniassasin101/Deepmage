@@ -80,5 +80,6 @@ skill_name = "Bash"
 action = SubResource("Resource_nmg0e")
 internal_skill_conditions = Array[ExtResource("2_r8df1")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
 trait_1 = "Melee"
-description = Array[String](["Moves towards then Bashes a unit in range 5"])
+trigger_description = "An enemy within rush distance"
+description = Array[String](["Rushes to target before hitting with a solid strike."])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

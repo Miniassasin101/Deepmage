@@ -21,6 +21,9 @@ extends PanelContainer
 ## Payload: ([param skill_to_add]: [Class Skill])
 signal on_add_to_tactics(skill_to_add: Skill)
 
+signal on_show_skill_description(skill_to_show: Skill)
+
+
 @export_category("References")
 ## Label showing the skill’s category (e.g., Active/Passive).
 @export var category_label: Label
@@ -176,11 +179,15 @@ func _on_library_gui_input(input_event: InputEvent) -> void:
 
 	# Right-click with no modifiers → request add to tactics
 	var is_right_click: bool = int(mouse_button.button_index) == MOUSE_BUTTON_RIGHT
+	var is_left_click: bool = int(mouse_button.button_index) == MOUSE_BUTTON_LEFT
 	var shift_down: bool = Input.is_key_pressed(KEY_SHIFT)
 	var ctrl_down: bool = Input.is_key_pressed(KEY_CTRL)
 
 	if is_right_click and not shift_down and not ctrl_down and current_skill != null:
 		on_add_to_tactics.emit(current_skill)
+	
+	if is_left_click and shift_down and not ctrl_down and current_skill != null:
+		on_show_skill_description.emit(current_skill)
 
 
 ## Picks a category-appropriate [Class StyleBoxFlat] for the name panel. Returns a fallback if none set.

@@ -56,5 +56,6 @@ skill_type = 1
 base_power = 0
 base_accuracy = 90
 crit_mod = -3
-description = Array[String](["Attacks while granting self block."])
+trigger_description = "Always"
+description = Array[String](["Grants a Parry blessing, increasing defense"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

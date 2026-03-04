@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://canbipd5camsd" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Samplers/RetreatRingSampler.gd" id="5_g2640"]
 [ext_resource type="Script" uid="uid://c57p01pt3qmue" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/MoveToSafetySkill.gd" id="6_4h6h1"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="7_fi227"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="9_j7ar7"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="11_iqdr3"]
 
 [sub_resource type="Resource" id="Resource_j7ar7"]

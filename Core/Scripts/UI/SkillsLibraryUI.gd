@@ -6,6 +6,7 @@ signal on_add_to_tactics(skill_to_add: Skill)
 
 
 @export_category("References")
+@export var tactics_manager_ui: TacticsManagerUI
 @export var search_line_edit: LineEdit
 @export var skills_scroll_container: ScrollContainer
 @export var skill_library_vbox: VBoxContainer
@@ -85,6 +86,8 @@ func _refresh_skill_list() -> void:
 		
 		if not row_bar.on_add_to_tactics.is_connected(_on_row_add_to_tactics):
 			row_bar.on_add_to_tactics.connect(_on_row_add_to_tactics)
+		if not row_bar.on_show_skill_description.is_connected(_on_row_show_skill_description):
+			row_bar.on_show_skill_description.connect(_on_row_show_skill_description)
 
 
 func _matches_query(skill_entry: Skill, normalized_query: String) -> bool:
@@ -134,6 +137,9 @@ func _on_row_add_to_tactics(skill_to_add: Skill) -> void:
 			return
 
 	on_add_to_tactics.emit(skill_to_add)
+
+func _on_row_show_skill_description(in_skill: Skill) -> void:
+	tactics_manager_ui.skill_description_ui.load_data_from_skill(in_skill)
 
 
 

@@ -22,6 +22,8 @@ signal on_tactics_skill_bar_update
 @export var priority_number_label: Label
 ## Label displaying the skill’s display name.
 @export var skill_name_label: Label
+## Label displaying filled/empty diamonds equal to the skill’s point cost.
+@export var points_label: Label
 ## Horizontal reorderable container holding child [Class ConditionSlot]s.
 @export var conditions_rhbox: ReorderableHBox
 @export_group("Styleboxes")
@@ -325,10 +327,23 @@ func _on_gui_input_skillbar(input_event: InputEvent) -> void:
 	if is_left_click and shift_down and ctrl_down:
 		_duplicate_self()
 		return
+	
+	if is_left_click and shift_down and not ctrl_down:
+		open_skill_description()
+		return
 
 	if is_right_click and not shift_down and not ctrl_down:
 		_toggle_disabled_state()
 		return
+
+func open_skill_description() -> void:
+	var manager: TacticsManagerUI = _find_parent_manager()
+	if !manager:
+		return
+	
+	manager.skill_description_ui.load_data_from_skill(current_skill)
+	
+	
 
 
 ## Toggles [member Skill.is_disabled] and updates visuals, then notifies parent via [signal on_tactics_skill_bar_update].
@@ -438,6 +453,8 @@ func populate_from_skill(in_skill: Skill) -> void:
 		return
 	current_skill = in_skill
 	set_skill_name(in_skill.skill_name)
+	if points_label:
+		points_label.set_text("◆".repeat(in_skill.skill_cost) + "◇".repeat(max(0, 3 - in_skill.skill_cost)))
 	_set_slots_from_skill_blueprints(in_skill)
 	if in_skill.skill_category == Skill.SkillCategory.ACTIVE:
 		set_self_as_active()

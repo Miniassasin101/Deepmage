@@ -26,5 +26,7 @@ action = ExtResource("1_qs42l")
 skill_type = 1
 internal_skill_conditions = Array[ExtResource("2_7omu2")]([SubResource("Resource_sb21c"), SubResource("Resource_7omu2")])
 trait_1 = "Movement"
+trigger_description = "When a unit is out of melee range"
+description = Array[String](["Rushes towards a unit that is out of melee range"])
 tags = Array[String](["movement"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

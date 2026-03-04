@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bsucdxii8yb25"]
+[gd_scene format=3 uid="uid://bsucdxii8yb25"]
 
 [ext_resource type="Script" uid="uid://d3vak5l7lt4w7" path="res://Deepmage/Core/Scripts/UI/SkillsLibraryUI.gd" id="1_dtw41"]
 [ext_resource type="PackedScene" uid="uid://d2tvg6j8l70gh" path="res://Deepmage/Core/Prefabs/UI/LibrarySkillBar.tscn" id="2_hhn6d"]
@@ -57,7 +57,7 @@ corner_detail = 5
 expand_margin_left = 2.0
 expand_margin_right = 2.0
 
-[node name="SkillsLibraryUI" type="PanelContainer" node_paths=PackedStringArray("search_line_edit", "skills_scroll_container", "skill_library_vbox")]
+[node name="SkillsLibraryUI" type="PanelContainer" unique_id=1825863443 node_paths=PackedStringArray("search_line_edit", "skills_scroll_container", "skill_library_vbox")]
 custom_minimum_size = Vector2(617, 200)
 theme_override_styles/panel = SubResource("StyleBoxFlat_l7pw0")
 script = ExtResource("1_dtw41")
@@ -66,47 +66,47 @@ skills_scroll_container = NodePath("MarginContainer/VBoxContainer/MarginContaine
 skill_library_vbox = NodePath("MarginContainer/VBoxContainer/MarginContainer/SkillLibraryScrollContainer/SkillLibraryVBox")
 library_skill_bar_prefab = ExtResource("2_hhn6d")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1092174461]
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1481067829]
 layout_mode = 2
 theme_override_constants/separation = 1
 
-[node name="ConditionsHeaderMarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+[node name="ConditionsHeaderMarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer" unique_id=446818223]
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/VBoxContainer/ConditionsHeaderMarginContainer"]
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/VBoxContainer/ConditionsHeaderMarginContainer" unique_id=1418363560]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_gljm4")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/ConditionsHeaderMarginContainer/PanelContainer2"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/ConditionsHeaderMarginContainer/PanelContainer2" unique_id=1973980438]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ConditionsHeaderMarginContainer/PanelContainer2/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ConditionsHeaderMarginContainer/PanelContainer2/MarginContainer" unique_id=535369547]
 layout_mode = 2
 theme_override_constants/separation = 7
 
-[node name="SkillsHeaderLabel" type="Label" parent="MarginContainer/VBoxContainer/ConditionsHeaderMarginContainer/PanelContainer2/MarginContainer/HBoxContainer"]
+[node name="SkillsHeaderLabel" type="Label" parent="MarginContainer/VBoxContainer/ConditionsHeaderMarginContainer/PanelContainer2/MarginContainer/HBoxContainer" unique_id=1130705027]
 layout_mode = 2
 text = "Skill"
 label_settings = SubResource("LabelSettings_uwyv1")
 vertical_alignment = 1
 
-[node name="SkillsLineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/ConditionsHeaderMarginContainer/PanelContainer2/MarginContainer/HBoxContainer"]
+[node name="SkillsLineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/ConditionsHeaderMarginContainer/PanelContainer2/MarginContainer/HBoxContainer" unique_id=1082984262]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 13
@@ -115,7 +115,7 @@ theme_override_styles/read_only = SubResource("StyleBoxFlat_rqjwo")
 theme_override_styles/focus = SubResource("StyleBoxFlat_mh71v")
 placeholder_text = "Enter Skill Name..."
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer" unique_id=1774570186]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 4
@@ -123,13 +123,16 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="SkillLibraryScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
+[node name="SkillLibraryScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MarginContainer" unique_id=1919206268]
 layout_mode = 2
 
-[node name="SkillLibraryVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/SkillLibraryScrollContainer"]
+[node name="SkillLibraryVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/SkillLibraryScrollContainer" unique_id=1176973405]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 7
 
-[node name="LibrarySkillBar" parent="MarginContainer/VBoxContainer/MarginContainer/SkillLibraryScrollContainer/SkillLibraryVBox" instance=ExtResource("2_hhn6d")]
+[node name="LibrarySkillBar" parent="MarginContainer/VBoxContainer/MarginContainer/SkillLibraryScrollContainer/SkillLibraryVBox" unique_id=667518517 instance=ExtResource("2_hhn6d")]
 layout_mode = 2
+hide_not_filled_traits = true
+hover_in_duration_seconds = 0.12
+hover_out_duration_seconds = 0.18

@@ -57,5 +57,6 @@ base_power = 0
 base_accuracy = 90
 crit_mod = -3
 trait_1 = "Stacking"
-description = Array[String](["Reduces enemy crit chance."])
+trigger_description = "Always"
+description = Array[String](["Inflicts a Critical affliction on the target, reducing critical hit chance"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

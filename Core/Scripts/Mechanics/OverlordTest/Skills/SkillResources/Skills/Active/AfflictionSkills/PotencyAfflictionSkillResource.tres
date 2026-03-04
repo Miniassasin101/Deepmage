@@ -56,4 +56,6 @@ skill_type = 2
 base_accuracy = 90
 crit_mod = -3
 trait_1 = "Damage Down"
+trigger_description = "Always"
+description = Array[String](["Inflicts a Potency affliction on the target, reducing damage dealt"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

@@ -86,5 +86,6 @@ skill_trigger = 2
 internal_skill_conditions = Array[ExtResource("11_kejs2")]([SubResource("Resource_4rg85"), SubResource("Resource_4uvkp"), SubResource("Resource_vimjk")])
 trait_1 = "Martial Up 1"
 trait_2 = "Is Attacking"
-description = Array[String](["Activates when targeted by an attack to grant self block."])
+trigger_description = "When this unit attacks"
+description = Array[String](["Grants a Critical blessing when this unit makes an attack"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
