@@ -22,9 +22,9 @@ extends Action
 @export var block_anim_effect: CameraShakeAnimationEffect
 
 @export_group("Hit Stop Effects")
-@export var hit_stop_effect: HitstopAnimationEffect
-@export var graze_stop_effect: HitstopAnimationEffect
-@export var block_stop_effect: HitstopAnimationEffect
+@export var hit_stop_effect: HitStopAnimationEffect
+@export var graze_stop_effect: HitStopAnimationEffect
+@export var block_stop_effect: HitStopAnimationEffect
 
 @export_group("Selection Data")
 @export var attack_range: float = 2.0
@@ -164,7 +164,11 @@ func modify_shake_and_hitstop() -> void:
 	
 	animation_package.instanced_animation_effects.clear()
 	
-	for event in animation_package.get_anim_effects():
+	var ev_effects: Array[AnimationEffect] = animation_package.get_anim_effects()
+	
+	for event in ev_effects:
+		if event == null:
+			continue
 		animation_package.instanced_animation_effects.append(event.duplicate())
 	
 	_modify_camera_shake_effect(is_hit, is_graze, cd.effective_damage)
@@ -201,6 +205,9 @@ func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
 			attack_delay += hit_delay
 		
 		await unit.get_tree().create_timer(max(0.0, attack_delay + hit_center)).timeout
+		var _cd: CombatEventData = CombatSystem.instance.current_combat_event_data
+		if _cd != null and _cd.defender != null:
+			_apply_defender_hitstop(_cd.defender, _cd)
 		do_resolve()
 
 
@@ -411,10 +418,10 @@ func _modify_camera_shake_effect(is_hit: bool, is_graze: bool, effective_damage:
 
 ## Chooses hit-stop duration based on outcome (miss/graze/block/hit) and enables/disables effect.
 func _modify_hit_stop(is_hit: bool, is_graze: bool, effective_damage: int) -> void:
-	var effect: HitstopAnimationEffect = null
+	var effect: HitStopAnimationEffect = null
 	var h_effects: Array[AnimationEffect] = animation_package.get_instanced_animation_effects()
 	for e in h_effects:
-		if e is HitstopAnimationEffect:
+		if e is HitStopAnimationEffect:
 			effect = e
 	if effect:
 		effect.is_disabled = false
@@ -432,6 +439,32 @@ func _modify_hit_stop(is_hit: bool, is_graze: bool, effective_damage: int) -> vo
 			CombatLog.instance.add_log("Effect Timing: " + str(effect.timing))
 			effect.timing += hit_delay
 
+
+
+## Freezes the defender’s animator at the hit moment.
+## Called from _resolve_at_hit_moment_or_timer so defender freeze is decoupled
+## from the attacker’s HitStopAnimationEffect.play_effect().
+func _apply_defender_hitstop(target_unit: Unit, cd: CombatEventData) -> void:
+	if target_unit == null or target_unit == unit:
+		return
+	var ctrl: AnimationController = target_unit.animation_controller
+	if ctrl == null:
+		return
+	var stop_effect: HitStopAnimationEffect = null
+	if not cd.is_hit:
+		if cd.is_graze:
+			stop_effect = graze_stop_effect
+		else:
+			return  # miss — no defender freeze
+	elif cd.effective_damage == 0:
+		stop_effect = block_stop_effect
+	else:
+		stop_effect = hit_stop_effect
+	if stop_effect == null or stop_effect.is_disabled or stop_effect.duration <= 0.0:
+		return
+	ctrl.set_timescales(0.0)
+	await ctrl.get_tree().create_timer(stop_effect.duration).timeout
+	ctrl.set_timescales(1.0)
 
 
 ## Spawns a small text label over the unit with this action’s name (UI feedback).

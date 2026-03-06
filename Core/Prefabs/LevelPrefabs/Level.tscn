@@ -1027,7 +1027,7 @@ unit = NodePath("..")
 attributes_profile = SubResource("Resource_rx2vc")
 
 [node name="Ruby" parent="UnitManager" unique_id=1938278729 instance=ExtResource("12_k2c3k")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6, 0, -1.9571767)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2.3097086, 0, -0.9571767)
 starting_tactic = SubResource("Resource_7g53y")
 ui_name = "Ruby"
 visor_color = Color(1, 0.120000005, 0.120000005, 1)

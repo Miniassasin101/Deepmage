@@ -2,7 +2,7 @@
 
 [ext_resource type="Resource" uid="uid://djrw5nkydvyv6" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BlockPackage.tres" id="1_dmfxn"]
 [ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="2_grexe"]
-[ext_resource type="Script" uid="uid://dfqq4lgq8fr27" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="3_ucq8p"]
+[ext_resource type="Script" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="3_ucq8p"]
 [ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_16gl0"]
 [ext_resource type="Resource" uid="uid://dcere2vdcmkxo" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/BlessingEffects/GrantChannelBlessingEffectResource.tres" id="5_dmfxn"]
 [ext_resource type="Resource" uid="uid://caeygn6gmknml" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/BlessingSkills/ActiveBlockSkillResource.tres" id="6_1eoe1"]
@@ -23,12 +23,10 @@ metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
 
 [sub_resource type="Resource" id="Resource_qr07x"]
 script = ExtResource("3_ucq8p")
-duration = 0.108
 metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 
 [sub_resource type="Resource" id="Resource_cl0pr"]
 script = ExtResource("3_ucq8p")
-duration = 0.211
 metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 
 [sub_resource type="Resource" id="Resource_dbcqt"]
