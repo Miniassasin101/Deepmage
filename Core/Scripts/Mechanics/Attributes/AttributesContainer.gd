@@ -2,12 +2,12 @@
 ## [i]Per-unit attribute store with query/mutate helpers and runtime caches.[/i]
 ##
 ## [b]Responsibilities[/b][br]
-## • Holds a unit’s [code]Attribute[/code] resources and exposes getters/setters with modifier support.[br]
+## • Holds a unit's [code]Attribute[/code] resources and exposes getters/setters with modifier support.[br]
 ## • Builds fast lookup caches ([member attributes], [member attributes_dict]) from the [member character_sheet].[br]
 ## • Emits [signal AttributesContainer.attribute_changed] when an attribute value/modifier changes.[br]
 ##
 ## [b]Lifecycle[/b][br]
-## • On [method Node._ready], calls [_rebuild_runtime_cache] to populate runtime arrays/dicts from the sheet’s profile.[br]
+## • On [method Node._ready], calls [_rebuild_runtime_cache] to populate runtime arrays/dicts from the sheet's profile.[br]
 ## • [member starting_attributes] is an Inspector-visible snapshot field (not auto-filled here).[br]
 ##
 ## [b]Notes[/b][br]
@@ -20,6 +20,16 @@ extends Node
 ## Emitted whenever an attribute changes (value or modifiers).[br]
 ## [b]Emission payload (as used here):[/b] [code](String attribute_name, int new_current_value)[/code]
 signal attribute_changed
+
+## Emitted when a Track-type attribute (Posture, HP, etc.) crosses from above 0 down to 0.[br]
+## Only fires on the crossing edge — not repeatedly while already at 0.[br]
+## Connect on [Unit] to trigger the downed state.
+signal track_depleted(attribute_name: String)
+
+## Emitted when a Track-type attribute rises back above 0 after having been at 0.[br]
+## Only fires on the crossing edge — not on every heal tick while already positive.[br]
+## Connect on [Unit] to trigger revival.
+signal track_restored(attribute_name: String)
 
 
 @export_category("References")
@@ -79,7 +89,7 @@ func apply_profile(profile: AttributesProfile) -> void:
 	SignalBus.update_character_sheet.emit(false)
 
 
-## Rebuilds the live arrays/dicts from the character sheet’s attribute profile.
+## Rebuilds the live arrays/dicts from the character sheet's attribute profile.
 ## IMPORTANT: this duplicates from the profile, but does NOT modify the profile resource itself.
 func _rebuild_runtime_cache() -> void:
 	attributes.clear()
@@ -147,9 +157,11 @@ func get_attribute_current_value(in_name: String) -> int:
 func set_attribute_current_value(in_name: String, value: int) -> bool:
 	var att = get_attribute(in_name)
 	if att:
+		var pre_value: int = att.get_current_modified_value()
 		att.current_value = value
 		attribute_changed.emit()
 		SignalBus.update_character_sheet.emit(false)
+		_emit_track_signals(att, pre_value)
 		return true
 	return false
 
@@ -159,14 +171,16 @@ func set_attribute_current_value(in_name: String, value: int) -> bool:
 func change_attribute_current_value_by(in_name: String, value: int, update_maximum: bool = false) -> bool:
 	var att = get_attribute(in_name)
 	if att:
+		var pre_value: int = att.get_current_modified_value()
 		att.current_value += value
-		
+
 		if update_maximum:
 			att.maximum_value += value
-		
+
 		attribute_changed.emit()
 		SignalBus.update_stat_bars.emit()
 		SignalBus.update_character_sheet.emit(false)
+		_emit_track_signals(att, pre_value)
 		return true
 	return false
 
@@ -176,10 +190,12 @@ func change_attribute_current_value_by(in_name: String, value: int, update_maxim
 func add_attribute_modifier(in_name: String, modifier_value: int, affect_maximum: bool = false) -> bool:
 	var att = get_attribute(in_name)
 	if att:
+		var pre_value: int = att.get_current_modified_value()
 		att.add_modifier(modifier_value, affect_maximum)
 		attribute_changed.emit()
 		SignalBus.update_stat_bars.emit()
 		SignalBus.update_character_sheet.emit(false)
+		_emit_track_signals(att, pre_value)
 		return true
 	return false
 
@@ -189,10 +205,12 @@ func add_attribute_modifier(in_name: String, modifier_value: int, affect_maximum
 func remove_attribute_modifier(in_name: String, modifier_value: int, affect_maximum: bool = false) -> bool:
 	var att = get_attribute(in_name)
 	if att:
+		var pre_value: int = att.get_current_modified_value()
 		att.remove_modifier(modifier_value, affect_maximum)
 		attribute_changed.emit()
 		SignalBus.update_stat_bars.emit()
 		update_char_sheet_deferred.call_deferred()
+		_emit_track_signals(att, pre_value)
 		return true
 	return false
 
@@ -231,26 +249,45 @@ func remove_attribute(in_name: String) -> bool:
 func set_attribute_modifier(source_id: StringName, in_name: StringName, modifier_value: int, affect_maximum: bool = false) -> bool:
 	var attribute_ref: Attribute = get_attribute(String(in_name))
 	if attribute_ref != null:
+		var pre_value: int = attribute_ref.get_current_modified_value()
 		attribute_ref.set_modifier(source_id, modifier_value, affect_maximum)
 		attribute_changed.emit()
 		SignalBus.update_stat_bars.emit()
 		SignalBus.update_character_sheet.emit(false)
-		return true 
+		_emit_track_signals(attribute_ref, pre_value)
+		return true
 	return false
 
 
 func clear_modifiers_from_source(source_id: StringName) -> void:
 	for attribute_ref: Attribute in attributes:
 		if attribute_ref != null:
+			var pre_value: int = attribute_ref.get_current_modified_value()
 			attribute_ref.clear_modifier(source_id)
+			_emit_track_signals(attribute_ref, pre_value)
 	attribute_changed.emit()
 	SignalBus.update_stat_bars.emit()
 	SignalBus.update_character_sheet.emit(false)
 
 
-
-
-
 ## Returns an array of all attribute names in this container.
 func get_all_attribute_names() -> Array[String]:
 	return attributes_dict.keys()
+
+
+# ---------- Private Helpers ----------
+
+## Checks whether a Track-type attribute has crossed the 0 boundary and emits the
+## appropriate signal. Call this AFTER any mutation, passing the value read BEFORE
+## the mutation as [param pre_value].
+##
+## Only Track attributes (attribute_type == 3) emit these signals — AP, PP, initiative,
+## and other non-Track attributes are silently ignored.
+func _emit_track_signals(att: Attribute, pre_value: int) -> void:
+	if att.attribute_type != 2:
+		return
+	var post_value: int = att.get_current_modified_value()
+	if pre_value > 0 and post_value <= 0:
+		track_depleted.emit(att.attribute_name)
+	elif pre_value <= 0 and post_value > 0:
+		track_restored.emit(att.attribute_name)

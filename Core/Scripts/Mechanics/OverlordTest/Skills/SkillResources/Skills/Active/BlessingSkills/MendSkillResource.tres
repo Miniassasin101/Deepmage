@@ -1,0 +1,83 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://d0h0uwntvj4pn"]
+
+[ext_resource type="Resource" uid="uid://djrw5nkydvyv6" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BlockPackage.tres" id="1_anim"]
+[ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="2_shake"]
+[ext_resource type="Script" uid="uid://dfqq4lgq8fr27" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="3_stop"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_effect"]
+[ext_resource type="Script" uid="uid://c8s5omyjs8xrw" path="res://Deepmage/Core/Scripts/Mechanics/Effects/GrantStatusEffect.gd" id="5_grant"]
+[ext_resource type="Script" uid="uid://bl8f0itpdwibr" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/StatusScripts/Blessings/RestorePostureBlessing.gd" id="6_restore"]
+[ext_resource type="Script" uid="uid://b3xoc4esw8i4s" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/InflictEffectAction.gd" id="7_inflict"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="8_nbool"]
+[ext_resource type="Resource" uid="uid://caeygn6gmknml" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/BlessingSkills/ActiveBlockSkillResource.tres" id="9_fallback"]
+[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="10_unitbool"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="11_skill"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="12_cond_base"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="12_mwdng"]
+[ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="13_self"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="15_51dhw"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="16_rejrs"]
+
+[sub_resource type="Resource" id="Resource_shake"]
+script = ExtResource("2_shake")
+strength = 0.06
+shake_time = 0.15
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_stop_short"]
+script = ExtResource("3_stop")
+duration = 0.08
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_blessing"]
+script = ExtResource("6_restore")
+amount_per_stack_int = 4
+ui_name = "Mend"
+status_category = 1
+status_level = 1
+
+[sub_resource type="Resource" id="Resource_effect"]
+script = ExtResource("5_grant")
+status = SubResource("Resource_blessing")
+ui_name = &"Mend"
+metadata/_custom_type_script = "uid://c8s5omyjs8xrw"
+
+[sub_resource type="Resource" id="Resource_stop_long"]
+script = ExtResource("3_stop")
+duration = 0.15
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_action"]
+script = ExtResource("7_inflict")
+animation_package = ExtResource("1_anim")
+is_attack = false
+fallback_skill = ExtResource("9_fallback")
+hit_anim_effect = SubResource("Resource_shake")
+graze_anim_effect = SubResource("Resource_shake")
+block_anim_effect = SubResource("Resource_shake")
+hit_stop_effect = SubResource("Resource_stop_long")
+graze_stop_effect = SubResource("Resource_stop_short")
+block_stop_effect = SubResource("Resource_stop_short")
+effects = Array[ExtResource("4_effect")]([SubResource("Resource_effect")])
+action_name = "Mend"
+selection_types = Array[ExtResource("8_nbool")]([ExtResource("10_unitbool")])
+metadata/_custom_type_script = "uid://b3xoc4esw8i4s"
+
+[sub_resource type="Resource" id="Resource_cond_self"]
+script = ExtResource("13_self")
+metadata/_custom_type_script = "uid://clbt58mwsvag8"
+
+[resource]
+resource_name = "MendSkillResource"
+script = ExtResource("11_skill")
+skill_name = "Mend"
+action = SubResource("Resource_action")
+skill_type = 1
+internal_skill_conditions = Array[ExtResource("12_cond_base")]([SubResource("Resource_cond_self")])
+base_power = 0
+base_accuracy = 100
+crit_mod = -3
+trait_1 = "Healing"
+trait_2 = "Self"
+trigger_description = "Always"
+description = Array[String](["Hastily patches wounds and steadies breathing, restoring 4 Posture."])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

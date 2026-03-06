@@ -381,8 +381,8 @@ func _play_reaction_with_delay(reaction_anim_pack: AnimationPackage, sync: Dicti
 ## Chooses camera shake parameters based on outcome (miss/graze/block/hit) and enables/disables effect.
 func _modify_camera_shake_effect(is_hit: bool, is_graze: bool, effective_damage: int) -> void:
 	var effect: CameraShakeAnimationEffect = null
-	var effects: Array[AnimationEffect] = animation_package.get_instanced_animation_effects()
-	for e in effects:
+	var a_effects: Array[AnimationEffect] = animation_package.get_instanced_animation_effects()
+	for e in a_effects:
 		if e is CameraShakeAnimationEffect:
 			effect = e
 	if effect:

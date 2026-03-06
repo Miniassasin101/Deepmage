@@ -5,9 +5,12 @@ enum RoundPhase { AI_PLANNING, PLAYER_PLANNING, RESOLUTION, CLEANUP }
 
 @export_category("References")
 @export var unit_manager: UnitManager
-@export var leader_system: Node          # optional: apply leader skills during planning
 @export var enemy_ai_system: Node        # optional: your AI planner
 @export var skill_trigger_system: SkillTriggerSystem
+@export_category("Debug")
+## When false, units never enter the Downed state regardless of posture damage.
+## Toggle in the Inspector at runtime to test combat without units going down.
+@export var death_enabled: bool = true
 @export_category("Chaining")
 @export var chain_depth_limit: int = 8
 var chain_group_stack: Array[ChainGroup] = []
@@ -143,7 +146,7 @@ func _enter_player_planning_phase() -> void:
 
 	# Give control to player: open tactics/equipment/leader UI here
 	UnitActionSystem.instance.is_enabled = true
-	# (Leader skills applied on confirm)
+
 	# Wait for player to end the planning phase so the round can begin it's cycles
 	CombatLog.instance.add_log("Player Planning")
 	start_round_button_blocked = false
@@ -170,10 +173,6 @@ func begin_round_resolution() -> void:
 	
 	# Called by UI “Begin Round” button or end turn button
 	SignalBus.on_planning_player_end.emit(round_number)
-
-	# Apply Leader pre-round effects if any
-	if leader_system:
-		leader_system.call("apply_pre_round_effects", round_number)
 
 	# Any other at round start effects trigger here: (Limited at start of combat skills/Protocols)
 	CombatLog.instance.add_log("Round Resolution")
@@ -214,7 +213,7 @@ func _enter_cleanup_phase() -> void:
 	# StatusSystem.instance.end_of_round_tick()
 
 	if _is_combat_over():
-		SignalBus.team_wiped.emit(cached_enemy_alive_count == 0)
+		SignalBus.on_team_wiped.emit(cached_enemy_alive_count == 0)
 		CombatLog.instance.add_log()
 		CombatLog.instance.add_log("Combat Ended!")
 		return
@@ -621,6 +620,19 @@ func _roll_initiative_for_all_living() -> void:
 		if unit.is_alive():
 			var result: int = unit.get_attributes_container().get_attribute_current_value("initiative")
 			initiative_scores[unit] = result
+
+
+## Inserts a just-revived unit into the current round's initiative queue.
+## Called by Unit.revive() when revival happens during a planning phase,
+## after AP/PP have already been restored on the unit.
+## Safe to call if the unit is somehow already in the queue — it won't duplicate.
+func add_revived_unit_to_round(unit: Unit) -> void:
+	var init_score: int = unit.get_attributes_container().get_attribute_current_value("initiative")
+	initiative_scores[unit] = init_score
+	_sort_initiative_queue()
+	SignalBus.instantiate_initiative_queue.emit()
+	SignalBus.update_stat_bars.emit()
+	CombatLog.instance.add_log(unit.ui_name + " re-enters the initiative queue.")
 
 
 func resort_initiative_mid_round(preserve_current_turn: bool = true) -> void:

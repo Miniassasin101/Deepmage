@@ -4,6 +4,10 @@ extends Node
 
 var units: Array[Unit] = []
 
+## Units currently in the Downed state. Populated by register_downed(), cleared by register_revived().
+## Does not include units that were never downed. Use get_all_units() for every unit in the scene.
+var downed_units: Array[Unit] = []
+
 static var instance: UnitManager = null
 
 var unit_number: int = 1
@@ -52,3 +56,29 @@ func get_unit_by_name(in_name: String) -> Unit:
 
 func get_all_units() -> Array[Unit]:
 	return units
+
+
+## Returns only units that are currently alive (not downed).
+## Use this for targeting, initiative rolls, and combat checks.
+func get_living_units() -> Array[Unit]:
+	var living: Array[Unit] = []
+	for u in units:
+		if u.is_alive():
+			living.append(u)
+	return living
+
+
+## Returns a copy of the downed units list.
+func get_downed_units() -> Array[Unit]:
+	return downed_units.duplicate()
+
+
+## Called by Unit.apply_downed() — tracks the unit as downed.
+func register_downed(unit: Unit) -> void:
+	if !downed_units.has(unit):
+		downed_units.append(unit)
+
+
+## Called by Unit.revive() — removes the unit from the downed list.
+func register_revived(unit: Unit) -> void:
+	downed_units.erase(unit)

@@ -84,12 +84,118 @@ func _ready() -> void:
 		return
 	setup_navigation()
 	call_deferred("setup_mesh_colors")
+	_connect_attribute_signals()
 
 
-# FIXME: Placeholder
+# ─────────────────────────────────────────────────────────────────────────────
+# State Queries
+# ─────────────────────────────────────────────────────────────────────────────
+
 func is_alive() -> bool:
-	
-	return true
+	return !is_downed()
+
+
+## Returns true if this unit currently has the Downed status applied.
+func is_downed() -> bool:
+	if status_controller == null:
+		return false
+	return status_controller.get_status_by_name("Downed") != null
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Downed / Revival
+# ─────────────────────────────────────────────────────────────────────────────
+
+## Applies the Downed status: zeroes AP/PP, dims visuals, emits defeat signal.
+## Called automatically when posture hits 0 (if death_enabled on TurnSystem).
+## Can also be called manually for scripted knockouts.
+func apply_downed() -> void:
+	var downed_status: DownedStatus = DownedStatus.new()
+	status_controller.add_status(downed_status)
+	UnitManager.instance.register_downed(self)
+	SignalBus.on_unit_defeated.emit(self)
+	Utilities.spawn_text_line(self, "DOWNED", Color.GRAY)
+	CombatLog.instance.add_log(ui_name + " has been downed!")
+
+
+## Removes the Downed status and restores visuals.
+## If revived during the planning phase, also restores AP/PP and re-adds the unit
+## to the initiative queue so they can fully participate in the upcoming round.
+## If revived during resolution, AP/PP remain at 0 until the next round refresh.
+func revive() -> void:
+	var downed_status: Status = status_controller.get_status_by_name("Downed")
+	if downed_status == null:
+		return
+	status_controller.remove_status(downed_status)
+	UnitManager.instance.register_revived(self)
+	SignalBus.on_unit_revived.emit(self)
+	Utilities.spawn_text_line(self, "REVIVED!", Color.GREEN)
+	CombatLog.instance.add_log(ui_name + " has been revived!")
+
+	# During planning the round's initiative roll and AP/PP refresh have already
+	# happened, so we restore them manually and inject the unit into the queue.
+	if TurnSystem.instance != null:
+		var phase: int = TurnSystem.instance.current_phase
+		var in_planning: bool = (phase == TurnSystem.RoundPhase.AI_PLANNING
+				or phase == TurnSystem.RoundPhase.PLAYER_PLANNING)
+		if in_planning:
+			_restore_ap_pp_to_base()
+			TurnSystem.instance.add_revived_unit_to_round(self)
+
+
+## Restores AP and PP to their base (maximum) values.
+## Called on planning-phase revival so the unit is ready to act in the upcoming round.
+func _restore_ap_pp_to_base() -> void:
+	var attrs: AttributesContainer = get_attributes_container()
+	var ap: Attribute = attrs.get_attribute("active_points")
+	if ap:
+		attrs.set_attribute_current_value("active_points", ap.base_value)
+	var pp: Attribute = attrs.get_attribute("passive_points")
+	if pp:
+		attrs.set_attribute_current_value("passive_points", pp.base_value)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Attribute Signal Handlers
+# ─────────────────────────────────────────────────────────────────────────────
+
+## Connects to the AttributesContainer's track signals so posture crossing 0
+## automatically triggers the downed/revival flow.
+## Called from _ready() — children run _ready() before parents in Godot 4,
+## so AttributesContainer is guaranteed to be initialized at this point.
+func _connect_attribute_signals() -> void:
+	if character_sheet == null:
+		push_warning(ui_name + ": Cannot connect attribute signals — character_sheet is null.")
+		return
+	var attrs: AttributesContainer = character_sheet.get_attributes_container()
+	if attrs == null:
+		push_warning(ui_name + ": Cannot connect attribute signals — AttributesContainer is null.")
+		return
+	attrs.track_depleted.connect(_on_track_depleted)
+	attrs.track_restored.connect(_on_track_restored)
+
+
+## Fired by AttributesContainer when a Track attribute crosses from above 0 to 0.
+## Triggers the downed state if it's posture, the unit isn't already down,
+## and death is enabled in TurnSystem (debug toggle).
+func _on_track_depleted(attribute_name: String) -> void:
+	if attribute_name != "posture":
+		return
+	if is_downed():
+		return  # Already downed; don't apply twice.
+	if TurnSystem.instance == null or !TurnSystem.instance.death_enabled:
+		return  # Debug immortal mode — skip downed state entirely.
+	apply_downed()
+
+
+## Fired by AttributesContainer when a Track attribute rises from 0 back above 0.
+## Triggers revival if the unit is currently downed.
+func _on_track_restored(attribute_name: String) -> void:
+	if attribute_name != "posture":
+		return
+	if !is_downed():
+		return  # Not downed; nothing to revive.
+	revive()
 
 
 

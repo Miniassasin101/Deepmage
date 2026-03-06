@@ -296,6 +296,12 @@ func get_all_valid_units() -> Array[Unit]:
 	var valid_units: Array[Unit] = []
 
 	for test_unit in all_units:
+		# Downed units are excluded from targeting by default.
+		# Skills that intentionally target downed units (e.g. revival, mercy kills)
+		# must carry the "targets_downed" tag to opt in.
+		if test_unit.is_downed() and !has_tag("targets_downed"):
+			continue
+
 		var conditions_passed: bool = true
 
 		for condition in get_all_skill_conditions():

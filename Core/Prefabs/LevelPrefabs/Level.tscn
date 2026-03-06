@@ -38,6 +38,7 @@
 [ext_resource type="PackedScene" uid="uid://psdfsrnutgxe" path="res://Deepmage/Core/Prefabs/UI/ActionButtonUI.tscn" id="16_tko1n"]
 [ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="17_23xud"]
 [ext_resource type="Resource" uid="uid://dhlquh6l821lo" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/FactionBlueprints/IsEnemyConditionBlueprint.tres" id="17_ebomw"]
+[ext_resource type="Resource" uid="uid://4cvyv2itllcv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/BlessingSkills/FieldHealSkillResource.tres" id="18_f3uqp"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="18_hymmt"]
 [ext_resource type="Animation" uid="uid://bolvfij56gevt" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/UnarmedBlockAnim.res" id="19_00nvd"]
 [ext_resource type="Resource" uid="uid://8vem57wbteya" path="res://Deepmage/Core/Resources/ActionResources/MovementActionResources/RushToUnitActionResource.tres" id="19_v4iap"]
@@ -190,7 +191,7 @@ metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_tkd6a"]
 script = ExtResource("24_5lfvx")
-active_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_6g8w4"), SubResource("Resource_idaqs")])
+active_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_6g8w4"), ExtResource("18_f3uqp"), SubResource("Resource_idaqs")])
 passive_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_05afn")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
@@ -511,7 +512,7 @@ resource_name = "Posture"
 script = ExtResource("10_p6f6u")
 attribute_name = "posture"
 attribute_type = 2
-current_value = 20
+current_value = 1
 maximum_value = 20
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 

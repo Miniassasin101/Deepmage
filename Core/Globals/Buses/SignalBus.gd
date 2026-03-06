@@ -41,7 +41,8 @@ signal on_skill_end(user: Unit, ctx: Dictionary)
 
 
 
-signal on_unit_defeated(unit: Unit)                          # HOOK: on death
+signal on_unit_defeated(unit: Unit)                          # HOOK: unit downed (posture = 0)
+signal on_unit_revived(unit: Unit)                           # HOOK: unit revived (posture > 0 again)
 signal on_team_wiped(is_enemy_team: bool)
 
 

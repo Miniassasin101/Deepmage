@@ -342,8 +342,7 @@ func open_skill_description() -> void:
 		return
 	
 	manager.skill_description_ui.load_data_from_skill(current_skill)
-	
-	
+
 
 
 ## Toggles [member Skill.is_disabled] and updates visuals, then notifies parent via [signal on_tactics_skill_bar_update].
