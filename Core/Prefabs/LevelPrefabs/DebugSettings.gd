@@ -1,3 +1,4 @@
+# Joseph Is Corny
 class_name DebugSettings
 extends Node
 
