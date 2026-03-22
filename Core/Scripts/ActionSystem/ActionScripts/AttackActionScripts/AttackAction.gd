@@ -181,66 +181,36 @@ func modify_shake_and_hitstop() -> void:
 
 ## Resolves rules/effects at the correct hit moment: prefer signal from animation, otherwise uses a timer fallback.
 func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
-	#var ctrl := unit.animation_controller
+	var ctrl := unit.animation_controller
 
-	# Prefer: wait for HitMomentAnimationEffect fired by the attack animation
-	var used_signal := false
-	#if ctrl != null and !use_hit_delay:
-
-	#	await ctrl.effects_controller.on_hit_moment
-	#	#print_debug("Signal Recieved")
-	#	do_resolve()
-	#	used_signal = true
-	#	return
-
-	# Fallback: timer to hit-center (attack_delay + center of window)
-	if !used_signal:
-		var attack_delay: float = sync.get("attack_delay", -1.0)
-		var hit_center: float = sync.get("attack_center", -1.0)
-		if hit_center == -1.0 or attack_delay == -1.0:
-			push_error("Invalid Hit Center Or Attack Delay (Animation Sync Error)")
-			return
-		
-		if use_hit_delay:
-			attack_delay += hit_delay
-		
-		await unit.get_tree().create_timer(max(0.0, attack_delay + hit_center)).timeout
-		var _cd: CombatEventData = CombatSystem.instance.current_combat_event_data
-		if _cd != null and _cd.defender != null:
-			_apply_defender_hitstop(_cd.defender, _cd)
+	# Preferred: wait for HitMomentAnimationEffect signal fired at the exact animation frame.
+	# Requires effects_controller to be set and use_hit_delay to be off.
+	if ctrl != null and ctrl.effects_controller != null and !use_hit_delay:
+		await ctrl.effects_controller.on_hit_moment
+		var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
+		if cd != null and cd.defender != null:
+			_apply_defender_hitstop(cd.defender, cd)
 		do_resolve()
-
-
-
-func do_resolve_dep() -> void:
-	var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
-	var defender: Unit = cd.defender
-
-	if not cd.is_hit:
-		Utilities.spawn_text_line(defender, "EVADE", Color.AQUA)
-		CombatLog.instance.add_log("Result: Evaded")
-		return
-	
-	elif cd.skill.skill_type != Skill.SkillType.ATTACK:
-		# Only a debuff, no damage numbers needed
 		return
 
+	# Fallback: timer to hit-center (attack_delay + center of window).
+	# Used when effects_controller is absent or use_hit_delay is on.
+	var attack_delay: float = sync.get("attack_delay", -1.0)
+	var hit_center: float = sync.get("attack_center", -1.0)
+	if hit_center == -1.0 or attack_delay == -1.0:
+		push_error("Invalid Hit Center Or Attack Delay (Animation Sync Error)")
+		return
 
-	# OPTIONAL: switch to Posture track later.
-	# For now, keep your health to minimize refactor:
-	defender.get_attributes_container().add_attribute_modifier("posture", -cd.effective_damage)
+	if use_hit_delay:
+		attack_delay += hit_delay
 
-	# Fx
-	if cd.effective_damage > 1:
-		defender.animation_controller.play_hit_reaction()
-		var color: Color = Color.FIREBRICK if !cd.is_critical_success else Color.GOLD
-		Utilities.spawn_damage_label(defender, cd.effective_damage, color, 0.5)
-	else:
-		Utilities.spawn_damage_label(defender, cd.effective_damage, Color.AZURE, 0.5)
+	await unit.get_tree().create_timer(max(0.0, attack_delay + hit_center)).timeout
+	var _cd: CombatEventData = CombatSystem.instance.current_combat_event_data
+	if _cd != null and _cd.defender != null:
+		_apply_defender_hitstop(_cd.defender, _cd)
+	do_resolve()
 
-	# Reaction on-impact hook
-	if cd.reaction and cd.reaction.has_method("on_impact"):
-		cd.reaction.on_impact()
+
 
 func do_resolve() -> void:
 	var cd: CombatEventData = CombatSystem.instance.current_combat_event_data

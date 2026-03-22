@@ -23,8 +23,6 @@ var event_library: AnimationLibrary = null
 var _restore_speed_on_finish := 1.0
 var _override_speed := 1.0
 
-# cache: events animation name -> Animation (so we build once)
-var _event_anim_cache: Dictionary = {}
 
 func _ready() -> void:
 	if animator:
@@ -114,28 +112,26 @@ func get_anim_time_left() -> float:
 
 
 func _on_anim_finished(anim_name: StringName) -> void:
-	var matches := false
-	if anim_name.ends_with("/" + str(current_animation)): matches = true
-	elif anim_name == current_animation: matches = true
+	# Ignore completions from hit-reaction or any other non-package animation.
+	var matches := anim_name.ends_with("/" + str(current_animation)) or anim_name == current_animation
+	if not matches:
+		return
 
-	if matches:
-		# stop events player too
-		if event_animator and event_animator.is_playing():
-			#event_animator.stop()
-			pass
-		animator.speed_scale = _restore_speed_on_finish
-		animation_finished.emit(current_animation)
-	
+	animator.speed_scale = _restore_speed_on_finish
+
+	# Wait for the event animator before declaring the package done,
+	# so listeners receive the signal only after all effects have fired.
 	if event_animator and event_animator.is_playing():
 		await event_animator.animation_finished
-	
+
 	if event_library:
 		for anim in event_library.get_animation_list():
 			event_library.remove_animation(anim)
-	
+
 	is_resolving = false
-	
-	animation_finished.emit()
+
+	# Single emit, once both animators are truly finished.
+	animation_finished.emit(current_animation)
 
 # Called by method keys on the events animation
 func _on_event_key(effect: AnimationEffect) -> void:
@@ -149,62 +145,41 @@ func _play_events_for_package(pack: AnimationPackage) -> void:
 	if event_animator == null:
 		return
 
-	var ev_name := _ensure_events_animation(pack) # builds and registers in library if missing
+	var ev_name := _ensure_events_animation(pack)
 
-	# keep players in lock-step
+	# Keep players in lock-step, then fire and forget.
+	# _on_anim_finished is the single place that waits for event_animator.
 	event_animator.speed_scale = animator.speed_scale
-
 	event_animator.play(ev_name)
-	# update immediately so first key at t=0 fires if present
-	event_animator.advance(0)
-	
-	await event_animator.animation_finished
+	event_animator.advance(0)  # flush any key at t=0 immediately
 
 
 func _ensure_events_animation(pack: AnimationPackage) -> StringName:
 	var ename := StringName(pack.get_anim_name() + "__events")
 
-	# already present in player?
-	if event_animator.has_animation(ename):
-		#return ename
-		pass
-	# built and cached but not yet registered?
-	if _event_anim_cache.has(ename):
-		#_register_events_anim(ename, _event_anim_cache[ename])
-		#return ename
-		pass
-
-	# Build fresh
+	# Always build fresh: instanced_animation_effects are duplicated and mutated
+	# each attack (by modify_shake_and_hitstop), so any cached Animation would
+	# hold stale effect references and fire wrong durations/settings.
 	var anim := Animation.new()
 	anim.loop_mode = Animation.LOOP_NONE
 
-	# Length: at least main length or last effect + small pad
 	var main_len := pack.animation.length
 	var last_fx := _last_effect_time(pack)
 	anim.length = maxf(main_len, last_fx + 0.01)
 
-	# 1) Method track that calls back into this controller
+	# Method track — calls _on_event_key(effect) at each effect's timing.
 	var track := anim.add_track(Animation.TYPE_METHOD)
-	anim.track_set_path(track, NodePath("."))  # "." resolves to AnimationController (event_animator's root_node parent)
+	anim.track_set_path(track, NodePath("."))
 	for fx in pack.get_instanced_animation_effects():
-		var method_details: Dictionary = {
-			"method": "_on_event_key",
-			"args": [fx]
-			}
+		anim.track_insert_key(track, fx.timing, {"method": "_on_event_key", "args": [fx]})
 
-		anim.track_insert_key(track, fx.timing, method_details)
-		pass
-
-	# 2) Optional: add named markers for sync/debug (HIT/REACT/PEAK)
+	# Named markers for sync/debug (HIT_START, HIT_END, REACT_ON, REACT_OFF, PEAK).
 	if pack.has_method("marker_time"):
-		var labels := [&"HIT_START", &"HIT_END", &"REACT_ON", &"REACT_OFF", &"PEAK"]
-		for label in labels:
+		for label in [&"HIT_START", &"HIT_END", &"REACT_ON", &"REACT_OFF", &"PEAK"]:
 			var t := float(pack.marker_time(label))
 			if t >= 0.0:
 				anim.add_marker(StringName(label), t)
 
-	# Cache & register into the default library of the event_animator
-	_event_anim_cache[ename] = anim
 	_register_events_anim(ename, anim)
 	return ename
 
