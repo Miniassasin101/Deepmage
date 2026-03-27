@@ -64,6 +64,7 @@
 [ext_resource type="Resource" uid="uid://mictyfww6h2x" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/RushToSafetySkillResource.tres" id="38_c2k8n"]
 [ext_resource type="Resource" uid="uid://ctauxicitono6" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildProfileResources/ArcherBuildProfile.tres" id="38_e15dp"]
 [ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestAttackSkillResource.tres" id="39_5lfvx"]
+[ext_resource type="Resource" uid="uid://bf0acaf6mm6gy" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestArcherSkills/SingleShotSkill.tres" id="40_0fvkv"]
 [ext_resource type="Resource" uid="uid://dkeoolmv8jjeq" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/SkillLibraries/SkillLibraryResource.tres" id="42_5lfvx"]
 [ext_resource type="Resource" uid="uid://cucaqplnm0re3" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/ConditionLibraries/ConditionLibraryResource.tres" id="43_f0670"]
 [ext_resource type="PackedScene" uid="uid://boy7waxi1xa2y" path="res://Deepmage/Core/Prefabs/UI/SkillActivationUI.tscn" id="48_iq36j"]
@@ -346,7 +347,7 @@ metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_k6sm3"]
 script = ExtResource("24_5lfvx")
-active_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_6g8w4"), SubResource("Resource_idaqs"), ExtResource("38_c2k8n")])
+active_skills = Array[ExtResource("12_f2qps")]([ExtResource("40_0fvkv"), SubResource("Resource_6g8w4"), SubResource("Resource_idaqs"), ExtResource("38_c2k8n")])
 passive_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_ufsey")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 

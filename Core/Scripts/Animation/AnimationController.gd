@@ -72,6 +72,10 @@ func play_package(pack: AnimationPackage) -> void:
 func play_package_timed(pack: AnimationPackage, delay: float = 0.0, speed_scale: float = 1.0) -> void:
 	if pack == null:
 		return
+	# Mark resolving immediately so callers that check is_resolving during the
+	# delay window (e.g. wait_for_animation_resolve on a ranged reaction) don't
+	# see a false gap and skip the await.
+	is_resolving = true
 	_override_speed = speed_scale
 	_restore_speed_on_finish = 1.0
 	_start_after_delay(pack, delay)
@@ -116,7 +120,9 @@ func _on_anim_finished(anim_name: StringName) -> void:
 	var matches := anim_name.ends_with("/" + str(current_animation)) or anim_name == current_animation
 	if not matches:
 		return
-
+	
+	
+	
 	animator.speed_scale = _restore_speed_on_finish
 
 	# Wait for the event animator before declaring the package done,
@@ -184,21 +190,15 @@ func _ensure_events_animation(pack: AnimationPackage) -> StringName:
 	return ename
 
 func _register_events_anim(in_name: StringName, anim: Animation) -> void:
-	# Ensure default library exists and add the animation there
-	var lib: AnimationLibrary = null#event_animator.get_animation_library("default")
 	for library in event_animator.get_animation_library_list():
 		event_animator.remove_animation_library(library)
 
-
 	if !event_animator.has_animation_library(""):
-		lib = AnimationLibrary.new()
+		var lib := AnimationLibrary.new()
 		event_animator.add_animation_library("", lib)
 		event_library = lib
 
-		pass
-	else:
-		lib = event_library
-	lib.add_animation(in_name, anim)
+	event_library.add_animation(in_name, anim)
 
 
 func _last_effect_time(pack: AnimationPackage) -> float:
@@ -219,10 +219,18 @@ func _libpath(anim_name: String) -> String:
 func play_hit_reaction(flash_white: bool = true) -> void:
 	if !hit_reaction_anim:
 		return
-	
+
 	var h_r_name: StringName = hit_reaction_anim.resource_name
-	
+
 	if flash_white:
 		unit.flash_white()
-		
+
+	# If a package animation (e.g. block) is currently playing, it is about to
+	# be interrupted. Stop the event animator so its stale events are discarded,
+	# then update current_animation so _on_anim_finished can match the hit
+	# reaction when it finishes and correctly emit animation_finished.
+	if event_animator and event_animator.is_playing():
+		event_animator.stop()
+	current_animation = h_r_name
+
 	await play_animation_by_name(h_r_name)

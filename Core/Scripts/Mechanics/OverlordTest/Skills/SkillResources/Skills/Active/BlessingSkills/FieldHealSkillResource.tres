@@ -25,7 +25,6 @@ metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
 
 [sub_resource type="Resource" id="Resource_stop_short"]
 script = ExtResource("3_stop")
-metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 
 [sub_resource type="Resource" id="Resource_blessing"]
 script = ExtResource("6_restore")
@@ -42,7 +41,6 @@ metadata/_custom_type_script = "uid://c8s5omyjs8xrw"
 
 [sub_resource type="Resource" id="Resource_stop_long"]
 script = ExtResource("3_stop")
-metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 
 [sub_resource type="Resource" id="Resource_action"]
 script = ExtResource("7_inflict")

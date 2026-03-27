@@ -3,6 +3,8 @@
 [ext_resource type="Animation" uid="uid://dpvv676nx31dy" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/Throw.res" id="1_kw84v"]
 [ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="1_skvam"]
 [ext_resource type="Script" uid="uid://brutb7o0hj6td" path="res://Deepmage/Core/Scripts/Animation/AnimationPackage.gd" id="2_13qgx"]
+[ext_resource type="Script" uid="uid://bkgigckslvvpk" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="4_kw84v"]
+[ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="5_h8djc"]
 [ext_resource type="Script" uid="uid://bf2hv6d83v6fv" path="res://Deepmage/Core/Resources/DataStructures/AnimationSyncProfile.gd" id="7_c6br4"]
 [ext_resource type="Script" uid="uid://beaqcf4hetaxo" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitMomentAnimationEffect.gd" id="8_hitm"]
 
@@ -10,6 +12,16 @@
 script = ExtResource("8_hitm")
 timing = 1.35
 metadata/_custom_type_script = "uid://beaqcf4hetaxo"
+
+[sub_resource type="Resource" id="Resource_m1mbx"]
+script = ExtResource("4_kw84v")
+timing = 1.37
+metadata/_custom_type_script = "uid://bkgigckslvvpk"
+
+[sub_resource type="Resource" id="Resource_pox3h"]
+script = ExtResource("5_h8djc")
+timing = 1.3599999999999999
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
 
 [sub_resource type="Resource" id="Resource_c6br4"]
 script = ExtResource("7_c6br4")
@@ -24,6 +36,6 @@ metadata/_custom_type_script = "uid://bf2hv6d83v6fv"
 script = ExtResource("2_13qgx")
 name = "BallThrow"
 animation = ExtResource("1_kw84v")
-animation_effects = Array[ExtResource("1_skvam")]([SubResource("Resource_hitm")])
+animation_effects = Array[ExtResource("1_skvam")]([SubResource("Resource_hitm"), SubResource("Resource_m1mbx"), SubResource("Resource_pox3h")])
 sync_profile = SubResource("Resource_c6br4")
 metadata/_custom_type_script = "uid://brutb7o0hj6td"
