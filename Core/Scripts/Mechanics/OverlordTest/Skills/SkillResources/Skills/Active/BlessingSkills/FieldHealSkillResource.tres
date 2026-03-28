@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="12_a1hd0"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="12_cond_base"]
 [ext_resource type="Script" uid="uid://chfgmawv4njrc" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsAllySkillCondition.gd" id="13_ally"]
+[ext_resource type="Resource" uid="uid://3t5inyabsolo" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/HealthBlueprints/HealthThresholds/IsHPBelow50%.tres" id="13_bacre"]
 [ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="15_bacre"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="16_qqhb7"]
 
@@ -69,6 +70,7 @@ skill_name = "Field Heal"
 action = SubResource("Resource_action")
 skill_type = 1
 internal_skill_conditions = Array[ExtResource("12_cond_base")]([SubResource("Resource_cond_ally")])
+external_condition_blueprints = Array[ExtResource("12_a1hd0")]([ExtResource("13_bacre")])
 base_power = 0
 base_accuracy = 100
 crit_mod = -3

@@ -28,8 +28,6 @@ enum SkillType { ATTACK, SUPPORT, SABOTAGE, SPECIAL}
 ## Skill conditions that are inherent to the skill and not editable by players.
 @export var internal_skill_conditions: Array[SkillCondition] = []
 
-## Skill conditions that are fully editable by players.
-@export var external_skill_conditions: Array[SkillCondition] = []
 
 @export var external_condition_blueprints: Array[ConditionBlueprint] = []:
 	set(value):
@@ -375,10 +373,6 @@ func get_all_skill_conditions() -> Array[SkillCondition]:
 	all_conditions.append_array(_external_conditions_cache)
 	return all_conditions
 
-
-func get_external_skill_conditions() -> Array[SkillCondition]:
-	_ensure_condition_caches_built()
-	return _external_conditions_cache
 
 
 

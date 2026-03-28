@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bkgigckslvvpk" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="3_injnt"]
 [ext_resource type="Script" uid="uid://caggmbav8c0ky" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/AttackAction.gd" id="4_drn3v"]
 [ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="4_fjrh5"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_injnt"]
 [ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="5_slhqu"]
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="5_vus8r"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="6_bthyw"]
@@ -43,28 +44,14 @@ script = ExtResource("3_injnt")
 [sub_resource type="Resource" id="Resource_nmg0e"]
 script = ExtResource("4_drn3v")
 animation_package = ExtResource("1_8xw5c")
-is_attack = null
 hit_anim_effect = SubResource("Resource_g1p88")
 graze_anim_effect = SubResource("Resource_vavmt")
 block_anim_effect = SubResource("Resource_2me7b")
 hit_stop_effect = SubResource("Resource_jfhli")
 graze_stop_effect = SubResource("Resource_52xn1")
 block_stop_effect = SubResource("Resource_6kg6w")
-attack_range = null
-is_melee_attack = null
-prowess_attribute = null
-defense_attribute = null
-uses_area_pattern = null
-effects = null
-self_effects = null
-desired_react_lead = null
-default_reaction_latency = null
-hit_delay = null
-use_hit_delay = null
-reaction_anim_end_wait_margin = null
 action_name = "Test Bash"
 selection_types = Array[ExtResource("5_vus8r")]([ExtResource("6_qhete")])
-reaction_check_timing = null
 tags = Array[String](["melee", "attack"])
 metadata/_custom_type_script = "uid://caggmbav8c0ky"
 

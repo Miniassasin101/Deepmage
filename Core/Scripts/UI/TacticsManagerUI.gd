@@ -251,7 +251,6 @@ func _on_library_add_skill(skill_from_library: Skill) -> void:
 	if skill_from_library == null:
 		return
 	var new_skill: Skill = skill_from_library.duplicate(true)
-	new_skill.external_skill_conditions = []
 	new_skill.target_preferences = []
 	new_skill.is_disabled = false
 

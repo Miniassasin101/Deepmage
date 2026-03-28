@@ -20,7 +20,7 @@ metadata/_custom_type_script = "uid://bkgigckslvvpk"
 
 [sub_resource type="Resource" id="Resource_pox3h"]
 script = ExtResource("5_h8djc")
-timing = 1.3599999999999999
+timing = 1.36
 metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
 
 [sub_resource type="Resource" id="Resource_c6br4"]

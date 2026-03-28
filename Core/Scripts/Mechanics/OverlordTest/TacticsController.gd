@@ -8,8 +8,6 @@ extends Node
 
 
 
-
-
 func _ready() -> void:
 	# Setup on combat start and also initialize locally.
 	SignalBus.on_combat_started.connect(setup)
@@ -29,7 +27,7 @@ func setup_tactic() -> void:
 func setup() -> void:
 	if unit and unit.starting_tactic:
 		starting_tactic = unit.starting_tactic.duplicate(true)
-	# Copy skills from the starting tactic into the current tactic, then “own” them.
+	# Copy skills from the starting tactic into the current tactic, then "own" them.
 	current_tactic.active_skills.assign(starting_tactic.active_skills)
 	current_tactic.passive_skills.assign(starting_tactic.passive_skills)
 
@@ -47,10 +45,10 @@ func set_current_tactic_from_skills(in_askills: Array[Skill] = [], in_pskills: A
 
 	new_tactic.set_active_skills(in_askills)
 	new_tactic.set_passive_skills(in_pskills)
-	
+
 	if make_unique:
 		new_tactic.make_skills_unique(unit)
-	
+
 	current_tactic = new_tactic
 
 
@@ -59,9 +57,9 @@ func get_first_valid_active_skill() -> Skill:
 	if !current_tactic:
 		push_error("No Current Tactic In TacticsController")
 	var valid_skill: Skill = null
-	
+
 	var priority_num: int = 0
-	
+
 	var active_skills_list: Array[Skill] = current_tactic.active_skills
 	for candidate_skill in active_skills_list:
 		if candidate_skill.unit == null:
@@ -70,13 +68,13 @@ func get_first_valid_active_skill() -> Skill:
 		if candidate_skill.can_activate_skill():
 			valid_skill = candidate_skill
 			break
-	
+
 	if valid_skill:
 		CombatLog.instance.add_log("Unit: " + unit.ui_name + "  Skill: " + valid_skill.skill_name + "  Priority: " + str(priority_num), true)
 
 	return valid_skill
 	# TODO: Replace linear scan with priority ordering or scoring function.
-	# TODO: Add “selector” strategies (first-valid, best-target, highest-damage, utility).
+	# TODO: Add "selector" strategies (first-valid, best-target, highest-damage, utility).
 
 
 
@@ -108,43 +106,16 @@ func get_first_valid_passive_skill_with_context(ctx: Dictionary) -> Skill:
 	return valid_skill
 
 
-
-
-
-func get_first_valid_passive_skill(_trigger_skill: Skill, _trigger_phase: SkillTriggerSystem.TriggerPhase) -> Skill:
-	# Returns the first skill whose conditions allow activation.
-	if !current_tactic:
-		push_error("No Current Tactic In TacticsController")
-	var valid_skill: Skill = null
-	
-	var priority_num: int = 0
-	
-	var passive_skills_list: Array[Skill] = current_tactic.passive_skills
-	for candidate_skill in passive_skills_list:
-		if candidate_skill.unit == null:
-			candidate_skill.set_unit(unit)
-		priority_num += 1
-		if candidate_skill.can_activate_skill():
-			valid_skill = candidate_skill
-			break
-	
-	if valid_skill:
-		CombatLog.instance.add_log("Unit: " + unit.ui_name + "  Skill: " + valid_skill.skill_name + "  Priority: " + str(priority_num), true)
-
-	return valid_skill
-
-
-
 func get_skill_priority_num(in_skill: Skill) -> int:
 	var prio_num: int = 0
 	if !in_skill:
 		return prio_num
-	
+
 	for candidate_skill in current_tactic.active_skills:
 		if !candidate_skill:
 			continue
 		prio_num += 1
 		if candidate_skill == in_skill:
 			return prio_num
-	
+
 	return prio_num

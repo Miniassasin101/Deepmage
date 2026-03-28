@@ -106,9 +106,9 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	await unit.get_tree().process_frame
 	await _resolve_at_hit_moment_or_timer(sync)
 	# NOTE: Make sure event timings dont perfectly overlap: Causes animation event override for earlier ones.
-	
+
 	await wait_for_animation_resolve(target_unit)
-	
+
 
 	end_action()
 
@@ -121,7 +121,7 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 func move_to_target_unit(targ_unit: Unit) -> void:
 	if targ_unit == unit:
 		return
-	
+
 	if get_distance_to_unit(targ_unit) <= attack_range:
 		return
 	var temp_action: Action = action_container.use_action(get_move_to_action(), targ_unit)
@@ -161,16 +161,16 @@ func modify_shake_and_hitstop() -> void:
 	var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
 	var is_hit: bool = cd.is_hit
 	var is_graze: bool = cd.is_graze
-	
+
 	animation_package.instanced_animation_effects.clear()
-	
+
 	var ev_effects: Array[AnimationEffect] = animation_package.get_anim_effects()
-	
+
 	for event in ev_effects:
 		if event == null:
 			continue
 		animation_package.instanced_animation_effects.append(event.duplicate())
-	
+
 	_modify_camera_shake_effect(is_hit, is_graze, cd.effective_damage)
 	_modify_hit_stop(is_hit, is_graze, cd.effective_damage)
 
@@ -180,6 +180,10 @@ func modify_shake_and_hitstop() -> void:
 # =========================
 
 ## Resolves rules/effects at the correct hit moment: prefer signal from animation, otherwise uses a timer fallback.
+## Fires BEFORE_HIT_RESOLVES chain (passives may modify cd before damage), then applies damage,
+## then fires AFTER_HIT_RESOLVES chain (passives react to the outcome).
+## Both phases play their animations concurrently with the ongoing attack animation, which is
+## fire-and-forget and continues independently on the attacker's AnimationController.
 func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
 	var ctrl := unit.animation_controller
 
@@ -188,9 +192,26 @@ func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
 	if ctrl != null and ctrl.effects_controller != null and !use_hit_delay:
 		await ctrl.effects_controller.on_hit_moment
 		var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
+
+		# Phase 2: BEFORE_HIT_RESOLVES — passives can read/modify cd before damage is applied.
+		# (Evade/Dodge Away, Halve Damage, etc.)
+		if TurnSystem.instance != null and cd != null and cd.skill != null:
+			await TurnSystem.instance.open_hit_reactions(
+				SkillTriggerSystem.TriggerPhase.BEFORE_HIT_RESOLVES,
+				cd.skill, cd.attacker, cd.defender, 0)
+
 		if cd != null and cd.defender != null:
 			_apply_defender_hitstop(cd.defender, cd)
+
 		do_resolve()
+
+		# Phase 3: AFTER_HIT_RESOLVES — passives react to the applied outcome.
+		# (Thorny Skin, revenge attacks, etc.)
+		if TurnSystem.instance != null and cd != null and cd.skill != null:
+			await TurnSystem.instance.open_hit_reactions(
+				SkillTriggerSystem.TriggerPhase.AFTER_HIT_RESOLVES,
+				cd.skill, cd.attacker, cd.defender, 0)
+
 		return
 
 	# Fallback: timer to hit-center (attack_delay + center of window).
@@ -205,33 +226,47 @@ func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
 		attack_delay += hit_delay
 
 	await unit.get_tree().create_timer(max(0.0, attack_delay + hit_center)).timeout
-	var _cd: CombatEventData = CombatSystem.instance.current_combat_event_data
-	if _cd != null and _cd.defender != null:
-		_apply_defender_hitstop(_cd.defender, _cd)
+	var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
+
+	# Phase 2: BEFORE_HIT_RESOLVES
+	if TurnSystem.instance != null and cd != null and cd.skill != null:
+		await TurnSystem.instance.open_hit_reactions(
+			SkillTriggerSystem.TriggerPhase.BEFORE_HIT_RESOLVES,
+			cd.skill, cd.attacker, cd.defender, 0)
+
+	if cd != null and cd.defender != null:
+		_apply_defender_hitstop(cd.defender, cd)
+
 	do_resolve()
+
+	# Phase 3: AFTER_HIT_RESOLVES
+	if TurnSystem.instance != null and cd != null and cd.skill != null:
+		await TurnSystem.instance.open_hit_reactions(
+			SkillTriggerSystem.TriggerPhase.AFTER_HIT_RESOLVES,
+			cd.skill, cd.attacker, cd.defender, 0)
 
 
 
 func do_resolve() -> void:
 	var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
 	var target_unit: Unit = cd.defender
-	
+
 	var target_is_self: bool = unit == target_unit
-	
+
 	if not cd.is_hit and !target_is_self:
 		Utilities.spawn_text_line(target_unit, "EVADE", Color.AQUA)
 		CombatLog.instance.add_log("Result: Evaded")
 		return
 
 	apply_effects(unit, target_unit)
-	
+
 	if target_is_self:
 		return
-	
+
 	elif cd.skill.skill_type != Skill.SkillType.ATTACK:
 		# Only a debuff, no damage numbers needed
 		return
-	
+
 
 	# OPTIONAL: switch to Posture track later.
 	# For now, keep your health to minimize refactor:
@@ -270,7 +305,7 @@ func wait_for_animation_resolve(target_unit: Unit) -> void:
 		if target_unit.animation_controller.is_resolving:
 			#CombatLog.instance.add_log()
 			#CombatLog.instance.add_log(str(target_unit.animation_controller.get_anim_time_left()))
-			
+
 			var time_left: float = target_unit.animation_controller.get_anim_time_left()
 			if time_left >= reaction_anim_end_wait_margin + 0.1:
 				var difference: float = time_left - reaction_anim_end_wait_margin
@@ -319,7 +354,7 @@ func _play_attack_with_delay(pack: AnimationPackage, sync: Dictionary) -> void:
 	await unit.get_tree().create_timer(maxf(0.0, attack_delay_val)).timeout
 	unit.animation_controller.play_package(pack)
 
-## Plays the defender’s reaction animation (if applicable) with delay/scale from sync data.
+## Plays the defender's reaction animation (if applicable) with delay/scale from sync data.
 func _play_reaction_with_delay(reaction_anim_pack: AnimationPackage, sync: Dictionary) -> void:
 	var c_event: CombatEventData = CombatSystem.instance.current_combat_event_data
 	var defender: Unit = c_event.defender
@@ -334,11 +369,11 @@ func _play_reaction_with_delay(reaction_anim_pack: AnimationPackage, sync: Dicti
 
 	var delay: float = sync.get("reaction_delay", 0.0) as float
 	var scale: float = sync.get("reaction_scale", 1.0) as float
-	
+
 	if use_hit_delay:
 		delay += hit_delay
-	
-	
+
+
 	if anim_contr.has_method("play_package_timed"):
 		anim_contr.play_package_timed(reaction_anim_pack, max(0.0, delay), max(0.01, scale))
 		return
@@ -380,10 +415,10 @@ func _modify_camera_shake_effect(is_hit: bool, is_graze: bool, effective_damage:
 			effect.shake_frequency = hit_anim_effect.shake_frequency
 			effect.shake_time = hit_anim_effect.shake_time
 			effect.strength = hit_anim_effect.strength
-		
+
 		if use_hit_delay:
 			effect.timing += hit_delay
-	
+
 
 
 ## Chooses hit-stop duration based on outcome (miss/graze/block/hit) and enables/disables effect.
@@ -404,16 +439,16 @@ func _modify_hit_stop(is_hit: bool, is_graze: bool, effective_damage: int) -> vo
 			effect.duration = block_stop_effect.duration
 		else:
 			effect.duration = hit_stop_effect.duration
-		
+
 		if use_hit_delay:
 			CombatLog.instance.add_log("Effect Timing: " + str(effect.timing))
 			effect.timing += hit_delay
 
 
 
-## Freezes the defender’s animator at the hit moment.
+## Freezes the defender's animator at the hit moment.
 ## Called from _resolve_at_hit_moment_or_timer so defender freeze is decoupled
-## from the attacker’s HitStopAnimationEffect.play_effect().
+## from the attacker's HitStopAnimationEffect.play_effect().
 func _apply_defender_hitstop(target_unit: Unit, cd: CombatEventData) -> void:
 	if target_unit == null or target_unit == unit:
 		return
@@ -437,7 +472,7 @@ func _apply_defender_hitstop(target_unit: Unit, cd: CombatEventData) -> void:
 	ctrl.set_timescales(1.0)
 
 
-## Spawns a small text label over the unit with this action’s name (UI feedback).
+## Spawns a small text label over the unit with this action's name (UI feedback).
 func spawn_action_name_text() -> void:
 	Utilities.spawn_text_line(unit, action_name)
 
@@ -449,7 +484,6 @@ func spawn_action_name_text() -> void:
 ## Returns the attribute used for damage rolls (for UI or rule queries).
 func get_stat_name() -> String:
 	return prowess_attribute
-
 
 
 
@@ -522,10 +556,9 @@ static func _compute_sync(atk_window: Vector2, react_window: Vector2, peak_time:
 	var hit_len := maxf(0.001, atk_window.y - atk_window.x)
 	var react_len := maxf(0.001, react_window.y - react_window.x)
 	var reaction_scale := clampf(hit_len / react_len, scale_range.x, scale_range.y)
-	
+
 	# Testing Purposes
-	
-	
+
 
 	return {
 		"attack_delay": attack_delay,

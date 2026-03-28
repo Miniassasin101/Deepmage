@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_x1llc"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="3_x1llc"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="4_2ykmg"]
+[ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="5_2ykmg"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="5_u0rcg"]
 [ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="6_x1llc"]
 
@@ -14,6 +15,10 @@ text_color = Color(0.941176, 0.972549, 1, 1)
 action_name = "Unit Text"
 metadata/_custom_type_script = "uid://doahtvq8r205k"
 
+[sub_resource type="Resource" id="Resource_tfw8t"]
+script = ExtResource("5_2ykmg")
+metadata/_custom_type_script = "uid://clbt58mwsvag8"
+
 [resource]
 resource_name = "PrintTestAfterSkillResource"
 script = ExtResource("4_2ykmg")
@@ -22,4 +27,7 @@ action = SubResource("Resource_2ykmg")
 skill_category = 1
 skill_type = 1
 skill_trigger = 3
+internal_skill_conditions = Array[ExtResource("3_x1llc")]([SubResource("Resource_tfw8t")])
+trigger_description = "After a skill resolves"
+description = Array[String](["Test skill: spawns floating text after a skill finishes resolving"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

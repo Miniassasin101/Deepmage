@@ -103,10 +103,6 @@ trait_1 = "Melee"
 description = Array[String](["Moves towards then Bashes a unit in range 5"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
-[sub_resource type="Resource" id="Resource_ydutk"]
-script = ExtResource("16_bvt28")
-metadata/_custom_type_script = "uid://2nsctaj2mk50"
-
 [sub_resource type="Resource" id="Resource_sb21c"]
 script = ExtResource("20_8v6vh")
 range_var = 2.1
@@ -123,7 +119,6 @@ skill_name = "Rush To Unit"
 action = ExtResource("19_v4iap")
 skill_type = 1
 internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_sb21c"), SubResource("Resource_7omu2")])
-external_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_ydutk")])
 external_condition_blueprints = Array[ExtResource("14_v8epg")]([ExtResource("17_ebomw")])
 trait_1 = "Movement"
 tags = Array[String](["movement"])

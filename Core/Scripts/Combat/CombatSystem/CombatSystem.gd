@@ -1,6 +1,6 @@
 ## [b]Class:[/b] CombatSystem
 ## [i]Central coordinator for resolving combat actions using a Gubat Banwa–style flow.[/i]
-## 
+##
 ## [b]Responsibilities[/b][br]
 ## • Owns the active [code]CombatEventData[/code] for an in-progress attack.[br]
 ## • Applies GB dice logic: EVD gate, melee chaining (top-or-higher), ranged crit (top-or-higher), Prowess/Defense, and minimum damage rules.[br]
@@ -9,8 +9,8 @@
 ##
 ## [b]Design Notes[/b][br]
 ## • Singleton-like: first instance sets [code]CombatSystem.instance[/code]; later instances self-remove in [method Node._ready].[br]
-## • Core resolution lives in [method _resolve_attack_gubat_banwa]. Per-die meta is handled by [method _roll_single_die_meta].[br]
-## • A legacy single-die helper exists as [method _process_single_violence_die] (kept for reference/tests).[br]
+## • Core resolution lives in [method _resolve_attack_darkest_dungeon]. Hit/crit rolling delegates to [HitResolver]; damage delegates to [DamageCalculator].[br]
+## • Formula constants (weapon range, crit multiplier, accuracy bonus) live in [CombatFormulaResource] assigned to [member formula].[br]
 ## • Inline comments explain the sequence; documentation comments use BBCode so tooltips render nicely in the Inspector and class reference.
 class_name CombatSystem
 extends Node
@@ -31,12 +31,16 @@ extends Node
 @export var condition_library: ConditionLibrary = null
 
 @export_category("Constants")
-@export var crit_dmg_multiplier: float = 1.5
+## Formula constants (weapon range, crit multiplier, accuracy bonus).
+## If unassigned, a default instance is created at runtime with standard values.
+@export var formula: CombatFormulaResource = null
 
 
 ## The working record for the currently executing combat event; populated throughout resolution.
 var current_combat_event_data: CombatEventData = null
 
+var _hit_resolver: HitResolver = HitResolver.new()
+var _damage_calculator: DamageCalculator = DamageCalculator.new()
 
 
 ## Singleton-style static pointer to the active [Class CombatSystem] instance.
@@ -68,67 +72,62 @@ func _ready() -> void:
 func declare_attack(action: AttackAction, attacker: Unit, defender: Unit, skill: Skill = null) -> void:
 	current_combat_event_data = CombatEventData.new()
 
-	# Set combat event participants 
+	# Set combat event participants
 	current_combat_event_data.attacker = attacker
 	current_combat_event_data.defender = defender
 
 	# Set Combat Event Action
 	current_combat_event_data.action = action
-	
+
 	# Set Skill
 	current_combat_event_data.skill = skill if skill != null else action.fallback_skill
-	
+
 
 	# High-level log of the attempt
 	CombatLog.instance.add_log()
 	CombatLog.instance.add_log(attacker.ui_name + " attacks " + defender.ui_name + " with " + current_combat_event_data.skill.skill_name)
 
-	# Hook point: “ally attacked”, “enemy attacked”, etc. (left as a placeholder)
-	
-	
-	# 2) Resolve using Gubat Banwa steps
+	# Hook point: "ally attacked", "enemy attacked", etc. (left as a placeholder)
+
+
+	# Resolve using Darkest Dungeon-style steps
 	if skill == null or skill.skill_type != Skill.SkillType.ATTACK:
 		return
 	#await _resolve_attack_gubat_banwa(action, attacker, defender, skill)
 	_resolve_attack_darkest_dungeon(action, attacker, defender, current_combat_event_data.skill)
-	
+
 	await determine_reaction(current_combat_event_data)
-	
+
 	_debug_dump_current_event()
-	
+
 	# Execute a queued Reaction (if any)
 	if current_combat_event_data.reaction:
-	
 		current_combat_event_data.reaction.resolve_reaction()
 
 
 func _resolve_attack_darkest_dungeon(action: AttackAction, attacker: Unit, defender: Unit, skill: Skill) -> void:
 	var cd: CombatEventData = current_combat_event_data
-	
+
 	# Reset
 	cd.per_die_results.clear()
 	cd.total_initial_damage = 0
 	cd.total_after_defense = 0
 	cd.was_crit_any = false
 
-	
 	var attacker_attrs := attacker.get_attributes_container()
 	var defender_attrs := defender.get_attributes_container()
-	
-	var might_value: int = attacker_attrs.get_attribute_current_value(action.prowess_attribute)
-	var defense_value: int = defender_attrs.get_attribute_current_value(action.defense_attribute)   # PAR/RES
-	var acc_value: int = attacker_attrs.get_attribute_current_value("accuracy")
-	var evd_value: int = defender_attrs.get_attribute_current_value("evade")                    # EVD
 
-	# NEW: allow a crit chance attribute; still honors skill.crit_mod
-	var base_crit_chance: int =  attacker_attrs.get_attribute_current_value("critical")
+	var might_value: int = attacker_attrs.get_attribute_current_value(action.prowess_attribute)
+	var defense_value: int = defender_attrs.get_attribute_current_value(action.defense_attribute)
+	var acc_value: int = attacker_attrs.get_attribute_current_value("accuracy")
+	var evd_value: int = defender_attrs.get_attribute_current_value("evade")
+	var base_crit_chance: int = attacker_attrs.get_attribute_current_value("critical")
 	var crit_value: int = base_crit_chance + skill.crit_mod
 
-	
-	acc_value += skill.base_accuracy + 5
+	acc_value += skill.base_accuracy + _get_formula().accuracy_base_bonus
 	acc_value -= evd_value
-	
-	# ---- Build context for triggers (shared by blessings/afflictions) ----
+
+	# Build context for triggers (shared by blessings/afflictions)
 	cd.context = {
 		"attacker": attacker,
 		"defender": defender,
@@ -137,7 +136,7 @@ func _resolve_attack_darkest_dungeon(action: AttackAction, attacker: Unit, defen
 		"target": defender,
 	}
 
-	# ---- Initialize pending roll inputs (mutable) ----
+	# Initialize pending roll inputs (mutable by status hooks)
 	cd.pending_power_percent = skill.base_power
 	cd.pending_accuracy = acc_value
 	cd.pending_crit_chance = crit_value
@@ -146,150 +145,53 @@ func _resolve_attack_darkest_dungeon(action: AttackAction, attacker: Unit, defen
 	cd.force_miss = false
 	cd.pre_roll_notes.clear()
 
-	
 	for s in cd.skill.skill_modifying_statuses:
 		if s._conditions_pass(cd):
 			cd.attacker.status_controller.add_status(s, false)
-	
 
-	# ---- NEW PHASE: allow statuses to modify roll inputs BEFORE rolling ----
+	# Pre-roll status hooks: statuses may modify pending inputs before rolling
 	var attacker_statuses: StatusController = attacker.get_status_controller()
 	if attacker_statuses != null:
 		attacker_statuses.before_attack_roll(attacker, cd)
-
 	var defender_statuses: StatusController = defender.get_status_controller()
 	if defender_statuses != null:
 		defender_statuses.before_attack_roll(defender, cd)
 
-	# ---- Roll using the (possibly modified) pending values ----
-	var is_hit: bool = true
-	if cd.force_miss:
-		is_hit = false
-	else:
-		is_hit = roll_hit(cd.pending_accuracy)
-
-	var is_crit: bool = false
-	if cd.force_crit:
-		is_crit = true
-	else:
-		is_crit = roll_crit(cd.pending_crit_chance)
-
-	var weapon_low_dmg: int = 1
-	var weapon_high_dmg: int = 3
-	
-	var min_base_dmg: int = weapon_low_dmg + might_value
-	var max_base_dmg: int = weapon_high_dmg + might_value
-	
-
-	var damage_multiplier: float = float(cd.pending_power_percent)/100
-	
-	var modded_low_dmg: float = min_base_dmg * damage_multiplier
-	var modded_high_dmg: float = max_base_dmg * damage_multiplier
-	
-
-	
-	# roll damage floors the low and high damage, always rounding down if a decimal
-	var dmg_roll: int = roll_damage(modded_low_dmg, modded_high_dmg, is_crit)
-	
-
-	
-	
-	
-	cd.is_hit = is_hit
+	# Hit and crit resolution
+	_hit_resolver.resolve(cd)
 	cd.accuracy = cd.pending_accuracy
-	cd.was_crit_any = is_crit
-	cd.is_success = is_hit
-	cd.is_critical_success = is_crit
-	cd.is_graze = false
-	cd.initial_low_damage = int(modded_low_dmg)
-	cd.initial_high_damage = int(modded_high_dmg)
-	cd.total_initial_damage = dmg_roll
-	# NOTE: Protection and defense calculations here
-	
-	var damage_post_defense: int = dmg_roll - maxi(cd.pending_defense_value, 0)
-	
-	cd.effective_damage = damage_post_defense
-	
-	# NOTE: condition and effect Damage modifiers here (ex: +50% dmg vs Soaked targets)
-	
-	
-	# === let ATTACKER statuses modify the pending result (e.g., Blind, PotencyUp) ===
 
+	# Damage calculation (base damage minus defense; no status multipliers yet)
+	_damage_calculator.calculate(cd, might_value, _get_formula())
+
+	# Post-roll status hooks: statuses may modify cd.damage_multiplier (100-based)
 	if attacker_statuses != null:
 		attacker_statuses.before_damage_applied(cd)
-	# === DEFENDER statuses (e.g., Block, CritSealIncoming, PotencyDown) ===
 	if defender_statuses != null:
 		defender_statuses.before_damage_applied(cd)
-	
-	var final_damage_multiplier: float = cd.damage_multiplier/100.0
-	
-	var curr_eff_dmg: float = cd.effective_damage * final_damage_multiplier
-	
-	cd.effective_damage = int(curr_eff_dmg) # rounds down
-	
-	# Clamp after status math
+
+	var final_damage_multiplier: float = cd.damage_multiplier / 100.0
+	cd.effective_damage = int(cd.effective_damage * final_damage_multiplier)
 	if cd.effective_damage < 0:
 		cd.effective_damage = 0
 
-
-	# Combat Logs
-	if not is_hit:
+	# Combat logs
+	if not cd.is_hit:
 		CombatLog.instance.add_log("Evaded")
 	else:
-		if is_crit:
+		if cd.is_critical_success:
 			CombatLog.instance.add_log("Critical Hit!")
 		CombatLog.instance.add_log("Initial Damage: %d" % cd.total_initial_damage)
-		
 
 
+## Returns [member formula] if assigned; otherwise creates and caches a default [CombatFormulaResource].
+func _get_formula() -> CombatFormulaResource:
+	if formula == null:
+		formula = CombatFormulaResource.new()
+	return formula
 
 
-func roll_crit(crit_chance: int) -> bool:
-	if crit_chance <= 0:
-		return false
-	
-	if crit_chance >= 100:
-		return true
-	
-	var random_num: int = randi_range(1, 100)
-	
-	if random_num <= crit_chance:
-		return true
-	
-	return false
-
-
-# Roll Under hit chance function
-func roll_hit(hit_chance: int) -> bool:
-	if hit_chance >= 100:
-		return true
-	if hit_chance <= 0:
-		return false
-	
-	var rolled_num: int = randi_range(1, 100)
-	
-	if rolled_num <= hit_chance:
-		return true
-	
-	return false
-
-
-func roll_damage(low_dmg: float, high_dmg: float, is_crit: bool) -> int:
-	
-	if is_crit:
-		return int(high_dmg * crit_dmg_multiplier)
-	
-	var rolled_num: int = randi_range(int(low_dmg), int(high_dmg))
-	
-	return rolled_num
-	
-	
-
-
-
-
-
-## Choose and run the defender’s Reaction based on the event flags.[br]
+## Choose and run the defender's Reaction based on the event flags.[br]
 ## If [member CombatEventData.is_hit] is true → try [code]"Block"[/code]; otherwise → [code]"Evade"[/code].[br]
 ## If a Reaction is found and used, waits for its [signal Reaction.on_action_ended] before continuing.
 func determine_reaction(cd: CombatEventData) -> void:
@@ -346,7 +248,7 @@ func _debug_dump_current_event() -> void:
 
 	var gates := "  Gates: %s=%d | %s=%d | EVD=%d | ACCU=%d" % [cd.action.prowess_attribute.to_pascal_case(), prowess_val, cd.action.defense_attribute.to_pascal_case(), defense_val, evd_val, acc_val]
 	CombatLog.instance.add_log(gates)
-	
+
 	CombatLog.instance.add_log("  Damage Multiplier: " + str(cd.pending_power_percent / 100.0))
 
 
@@ -359,8 +261,6 @@ func _debug_dump_current_event() -> void:
 	if cd.reaction != null:
 		var react_line: String = "  Reaction: %s" % [cd.reaction.action_name]
 		CombatLog.instance.add_log(react_line)
-
-
 
 
 ## Get the global [Class SkillLibrary] reference.
