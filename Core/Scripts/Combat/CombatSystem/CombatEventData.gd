@@ -14,6 +14,15 @@ var action: AttackAction = null
 
 var reaction: Reaction = null
 
+## Tags written by passive skills at BEFORE_HIT_RESOLVES to influence reaction selection.
+## Examples: "deflected", "barrier_absorbed", "fire_resisted", "parried".
+## ReactionRule.excluded_combat_flags uses these to skip default animations.
+var combat_flags: Array[String] = []
+
+## If set by a passive skill, ReactionResolver returns this directly and skips rule evaluation.
+## Set to a PassAction instance to suppress the reaction entirely.
+var reaction_override: Reaction = null
+
 
 # Attack Data
 var is_success: bool = false

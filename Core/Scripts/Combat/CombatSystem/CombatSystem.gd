@@ -4,7 +4,7 @@
 ## [b]Responsibilities[/b][br]
 ## • Owns the active [code]CombatEventData[/code] for an in-progress attack.[br]
 ## • Applies GB dice logic: EVD gate, melee chaining (top-or-higher), ranged crit (top-or-higher), Prowess/Defense, and minimum damage rules.[br]
-## • Determines and awaits defender [b]Reactions[/b] (e.g. [code]"Block"[/code], [code]"Evade"[/code]).[br]
+## • Determines and awaits defender [b]Reactions[/b] via [ReactionResolver] and the unit's [ReactionPack].[br]
 ## • Emits detailed logs when [member combat_debug_enabled] is [code]true[/code].
 ##
 ## [b]Design Notes[/b][br]
@@ -58,7 +58,7 @@ func _ready() -> void:
 
 
 ## Declare and resolve an attack from [param attacker] to [param defender] using [param action].
-## Initializes a fresh [code]CombatEventData[/code], logs, runs GB resolution, then resolves any queued Reaction.
+## Initializes a fresh [code]CombatEventData[/code], logs, runs resolution, then selects and runs the defender's Reaction.
 ##
 ## [b]Parameters[/b][br]
 ## • [param action]: [Class AttackAction] — the action to resolve.[br]
@@ -68,7 +68,7 @@ func _ready() -> void:
 ## [b]Side Effects[/b][br]
 ## • Populates [member current_combat_event_data] with dice results, flags, and totals.[br]
 ## • May spawn floating text via [code]Utilities.spawn_text_line[/code].[br]
-## • May enqueue/resolve a Reaction on the defender via their [code]ActionContainer[/code].
+## • Selects a Reaction from the defender's [ReactionPack] via [ReactionResolver] and awaits it.
 func declare_attack(action: AttackAction, attacker: Unit, defender: Unit, skill: Skill = null) -> void:
 	current_combat_event_data = CombatEventData.new()
 
@@ -99,10 +99,6 @@ func declare_attack(action: AttackAction, attacker: Unit, defender: Unit, skill:
 	await determine_reaction(current_combat_event_data)
 
 	_debug_dump_current_event()
-
-	# Execute a queued Reaction (if any)
-	if current_combat_event_data.reaction:
-		current_combat_event_data.reaction.resolve_reaction()
 
 
 func _resolve_attack_darkest_dungeon(action: AttackAction, attacker: Unit, defender: Unit, skill: Skill) -> void:
@@ -191,18 +187,18 @@ func _get_formula() -> CombatFormulaResource:
 	return formula
 
 
-## Choose and run the defender's Reaction based on the event flags.[br]
-## If [member CombatEventData.is_hit] is true → try [code]"Block"[/code]; otherwise → [code]"Evade"[/code].[br]
-## If a Reaction is found and used, waits for its [signal Reaction.on_action_ended] before continuing.
+## Choose and run the defender's Reaction using the ReactionPack system.[br]
+## Delegates selection to [ReactionResolver], which evaluates the defender's [ReactionPack]
+## rules (highest priority first) against the current [CombatEventData].[br]
+## Respects [member CombatEventData.reaction_override] set by passives at BEFORE_HIT_RESOLVES.[br]
+## If a Reaction is found, awaits its [signal Action.on_action_ended] before continuing.
 func determine_reaction(cd: CombatEventData) -> void:
-	if cd.is_hit:
-		cd.reaction = cd.defender.get_action_container().get_action_by_name("Block")
-	else:
-		cd.reaction = cd.defender.get_action_container().get_action_by_name("Evade")
-	if cd.reaction:
-		var react: Reaction = cd.defender.get_action_container().use_action(cd.reaction, cd.defender)
-		await react.on_action_ended
-	return
+	var reaction: Reaction = ReactionResolver.resolve(cd, cd.defender)
+	cd.reaction = reaction
+	if reaction == null:
+		return
+	var run: Action = cd.defender.get_action_container().use_action(reaction, cd.defender)
+	await run.on_action_ended
 
 
 ## Emit a multi-section debug dump to [code]CombatLog[/code]: header, core stats, gates snapshot,

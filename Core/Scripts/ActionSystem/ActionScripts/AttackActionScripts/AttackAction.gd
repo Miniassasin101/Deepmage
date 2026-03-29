@@ -281,10 +281,6 @@ func do_resolve() -> void:
 	else:
 		Utilities.spawn_damage_label(target_unit, cd.effective_damage, Color.AZURE, 0.5)
 
-	# Reaction on-impact hook
-	if cd.reaction and cd.reaction.has_method("on_impact"):
-		cd.reaction.on_impact()
-
 # Applies effects to their repsective targets.
 func apply_effects(user: Unit, target: Unit) -> void:
 	for effect in effects:

@@ -37,6 +37,7 @@ enum TurnState {
 
 @export_category("Tactics")
 @export var starting_tactic: Tactic = null
+@export var reaction_pack: ReactionPack = null
 
 @export_category("Unique Aspects")
 
