@@ -1,59 +1,24 @@
 [gd_resource type="Resource" script_class="Skill" format=3 uid="uid://dak16mhb6tfmi"]
 
 [ext_resource type="Resource" uid="uid://djrw5nkydvyv6" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BlockPackage.tres" id="1_4apcd"]
-[ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="2_lhx1r"]
-[ext_resource type="Script" uid="uid://bkgigckslvvpk" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="3_nibkd"]
 [ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_kt4jh"]
 [ext_resource type="Resource" uid="uid://bn138wdu8bcgu" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/AfflictionEffects/GrantMartialAfflictionEffectResource.tres" id="5_4apcd"]
-[ext_resource type="Resource" uid="uid://caeygn6gmknml" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/BlessingSkills/ActiveBlockSkillResource.tres" id="6_nxgbb"]
-[ext_resource type="Script" uid="uid://b3xoc4esw8i4s" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/InflictEffectAction.gd" id="7_rgtbu"]
-[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="8_wt15s"]
-[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="9_dni54"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="10_1xkkg"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="11_j43vo"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="12_6oqfi"]
 [ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="13_lhx1r"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="13_sn60j"]
 
-[sub_resource type="Resource" id="Resource_i7mlr"]
-script = ExtResource("2_lhx1r")
-strength = 0.12
-shake_time = 0.25
-metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
-
-[sub_resource type="Resource" id="Resource_qr07x"]
-script = ExtResource("3_nibkd")
-metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
-
-[sub_resource type="Resource" id="Resource_cl0pr"]
-script = ExtResource("3_nibkd")
-metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
-
-[sub_resource type="Resource" id="Resource_dx4vu"]
-script = ExtResource("7_rgtbu")
-animation_package = ExtResource("1_4apcd")
-is_attack = false
-fallback_skill = ExtResource("6_nxgbb")
-hit_anim_effect = SubResource("Resource_i7mlr")
-graze_anim_effect = SubResource("Resource_i7mlr")
-block_anim_effect = SubResource("Resource_i7mlr")
-hit_stop_effect = SubResource("Resource_cl0pr")
-graze_stop_effect = SubResource("Resource_qr07x")
-block_stop_effect = SubResource("Resource_qr07x")
-effects = Array[ExtResource("4_kt4jh")]([ExtResource("5_4apcd")])
-action_name = "Effect Attack"
-selection_types = Array[ExtResource("8_wt15s")]([ExtResource("9_dni54")])
-metadata/_custom_type_script = "uid://b3xoc4esw8i4s"
-
 [resource]
 resource_name = "MartialDownSkillResource"
 script = ExtResource("12_6oqfi")
 skill_name = "Martial Down"
-action = SubResource("Resource_dx4vu")
 skill_type = 2
 base_power = 0
 base_accuracy = 90
 crit_mod = -3
+animation_package = ExtResource("1_4apcd")
+effects = Array[ExtResource("4_kt4jh")]([ExtResource("5_4apcd")])
 trait_1 = "Evade Down"
 trigger_description = "Always"
 description = Array[String](["Inflicts a Martial affliction on the target, reducing attack power"])

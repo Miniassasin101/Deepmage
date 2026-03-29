@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UseFirstSkillAction" format=3 uid="uid://ksqbtp5sydrf"]
+
+[ext_resource type="Script" uid="uid://dka6hmfmjlgvl" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/UseFirstSkillAction.gd" id="1_d50ni"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_n3um7"]
+[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="3_n3um7"]
+
+[resource]
+script = ExtResource("1_d50ni")
+action_name = "First Skill"
+selection_types = Array[ExtResource("2_n3um7")]([ExtResource("3_n3um7")])
+metadata/_custom_type_script = "uid://dka6hmfmjlgvl"

@@ -181,9 +181,9 @@ func begin_unit_turn(unit: Unit) -> void:
 
 # ─── HIT REACTION GATEWAY ─────────────────────────────────────────────────────
 
-## Public entry point for AttackAction to open a BEFORE_HIT_RESOLVES or AFTER_HIT_RESOLVES
+## Public entry point for CombatAction to open a BEFORE_HIT_RESOLVES or AFTER_HIT_RESOLVES
 ## chain group at the hit moment. Keeps _open_and_resolve_chain_group() private while
-## giving AttackAction a clean, named hook.
+## giving CombatAction a clean, named hook.
 func open_hit_reactions(phase: int, source_skill: Skill, source_user: Unit, source_target: Unit, depth: int) -> void:
 	await _open_and_resolve_chain_group(phase, source_skill, source_user, source_target, depth)
 
@@ -395,10 +395,16 @@ func _resolve_top_chain_group(mapping_units_to_skills: Dictionary) -> void:
 		if passive_skill == null:
 			active_group.next_index += 1
 			continue
-
+		
+		# Delay to aid in player visual parsing
+		await get_tree().create_timer(0.5).timeout
+		
 		await _declare_passive(passive_skill, reactor_unit, active_group)
 		await _use_passive(passive_skill, reactor_unit, active_group)
 		await _end_passive(passive_skill, reactor_unit, active_group)
+		
+		# Delay to aid in player visual parsing
+		await get_tree().create_timer(0.5).timeout
 
 		active_group.next_index += 1
 
@@ -406,6 +412,8 @@ func _resolve_top_chain_group(mapping_units_to_skills: Dictionary) -> void:
 func _declare_passive(passive_skill: Skill, reactor_unit: Unit, parent_group: ChainGroup) -> void:
 	CombatLog.instance.add_log(reactor_unit.ui_name + " declares passive: " + passive_skill.skill_name)
 	used_p_skill_this_turn.append(reactor_unit)
+	if passive_skill.skill_name == "Passive Critical Up":# or passive_skill.skill_name == "Passive Martial Up":
+		pass
 
 	var manager_ref: PassiveBarManager = _get_passive_manager()
 	if manager_ref != null:
@@ -426,8 +434,16 @@ func _use_passive(passive_skill: Skill, reactor_unit: Unit, _parent_group: Chain
 		var pp_attribute: Attribute = reactor_unit.get_attributes_container().get_attribute("passive_points")
 		if pp_attribute != null:
 			reactor_unit.get_attributes_container().change_attribute_current_value_by("passive_points", -passive_skill.skill_cost)
-
+	
+	var reaction_context: Dictionary = {
+		"source_skill": _parent_group.source_skill,
+		"source_user": _parent_group.source_user,
+		"source_target": _parent_group.source_target,
+		"trigger_phase": _parent_group.trigger_phase
+	}
+	
 	if passive_skill.action != null:
+		passive_skill._apply_context_to_all_conditions(reaction_context)
 		var target_pkg: TargetPackage = TargetPackage.new()
 		var target_unit: Unit = passive_skill.get_random_valid_unit()
 		target_pkg.set_unit_target(target_unit)

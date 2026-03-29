@@ -1,23 +1,28 @@
 [gd_resource type="Resource" script_class="Skill" format=3 uid="uid://c2p3ox34ub580"]
 
+[ext_resource type="Resource" uid="uid://2cp5ciqvdei1" path="res://Deepmage/Core/Resources/ActionResources/TestStatusActionResource.tres" id="1_3drkk"]
 [ext_resource type="Animation" uid="uid://bolvfij56gevt" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/UnarmedBlockAnim.res" id="1_8kh3f"]
 [ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="2_fo0sk"]
 [ext_resource type="Script" uid="uid://brutb7o0hj6td" path="res://Deepmage/Core/Scripts/Animation/AnimationPackage.gd" id="3_icpdj"]
 [ext_resource type="Script" uid="uid://bf2hv6d83v6fv" path="res://Deepmage/Core/Resources/DataStructures/AnimationSyncProfile.gd" id="4_1wkd2"]
+[ext_resource type="Script" uid="uid://beaqcf4hetaxo" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitMomentAnimationEffect.gd" id="4_8kh3f"]
 [ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="5_rvwkf"]
 [ext_resource type="Script" uid="uid://c8s5omyjs8xrw" path="res://Deepmage/Core/Scripts/Mechanics/Effects/GrantStatusEffect.gd" id="6_8kh3f"]
-[ext_resource type="Script" uid="uid://b3xoc4esw8i4s" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/InflictEffectAction.gd" id="7_epvme"]
 [ext_resource type="Script" uid="uid://cs3vn027f1kbm" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/StatusScripts/Blessings/GenericGainBlessing.gd" id="7_fo0sk"]
-[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="8_1st6e"]
-[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="9_r6asc"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="10_30bmf"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="11_kejs2"]
-[ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="12_dopu4"]
+[ext_resource type="Script" uid="uid://mvqtctoapw5t" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SkillSourceBasedSkillConditions/IsSourceSkillCategory.gd" id="12_3drkk"]
+[ext_resource type="Script" uid="uid://chfgmawv4njrc" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsAllySkillCondition.gd" id="13_8kh3f"]
 [ext_resource type="Script" uid="uid://cq6k3vojdsik7" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SkillSourceBasedSkillConditions/IsSourceSkillType.gd" id="14_rbe5h"]
 [ext_resource type="Script" uid="uid://cpk5t6274clio" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SourceTargetUnitBasedSkillConditions/IsSourceUserFaction.gd" id="15_hapnu"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="16_wqbj4"]
 [ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="17_fo0sk"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="17_ie364"]
+
+[sub_resource type="Resource" id="Resource_fo0sk"]
+script = ExtResource("4_8kh3f")
+timing = 0.35
+metadata/_custom_type_script = "uid://beaqcf4hetaxo"
 
 [sub_resource type="Resource" id="Resource_wdfje"]
 script = ExtResource("4_1wkd2")
@@ -33,6 +38,7 @@ metadata/_custom_type_script = "uid://bf2hv6d83v6fv"
 script = ExtResource("3_icpdj")
 name = "UnarmedBlock"
 animation = ExtResource("1_8kh3f")
+animation_effects = Array[ExtResource("2_fo0sk")]([SubResource("Resource_fo0sk")])
 sync_profile = SubResource("Resource_wdfje")
 metadata/_custom_type_script = "uid://brutb7o0hj6td"
 
@@ -51,39 +57,36 @@ status = SubResource("Resource_icpdj")
 ui_name = &"Crit Chance Gain"
 metadata/_custom_type_script = "uid://c8s5omyjs8xrw"
 
-[sub_resource type="Resource" id="Resource_paq0d"]
-script = ExtResource("7_epvme")
-animation_package = SubResource("Resource_3dyvf")
-is_attack = false
-effects = Array[ExtResource("5_rvwkf")]([SubResource("Resource_1wkd2")])
-hit_delay = 0.0
-use_hit_delay = true
-action_name = "Grant Block"
-selection_types = Array[ExtResource("8_1st6e")]([ExtResource("9_r6asc")])
-metadata/_custom_type_script = "uid://b3xoc4esw8i4s"
+[sub_resource type="Resource" id="Resource_rvwkf"]
+script = ExtResource("12_3drkk")
+required_category = 1
+metadata/_custom_type_script = "uid://mvqtctoapw5t"
 
-[sub_resource type="Resource" id="Resource_4rg85"]
-script = ExtResource("12_dopu4")
-metadata/_custom_type_script = "uid://clbt58mwsvag8"
-
-[sub_resource type="Resource" id="Resource_4uvkp"]
+[sub_resource type="Resource" id="Resource_epvme"]
 script = ExtResource("14_rbe5h")
+required_type = 1
 metadata/_custom_type_script = "uid://cq6k3vojdsik7"
 
-[sub_resource type="Resource" id="Resource_vimjk"]
+[sub_resource type="Resource" id="Resource_epq0g"]
+script = ExtResource("13_8kh3f")
+metadata/_custom_type_script = "uid://chfgmawv4njrc"
+
+[sub_resource type="Resource" id="Resource_1st6e"]
 script = ExtResource("15_hapnu")
-relation = 0
+relation = 1
 metadata/_custom_type_script = "uid://cpk5t6274clio"
 
 [resource]
 resource_name = "PassiveCriticalUpSkillResource"
 script = ExtResource("16_wqbj4")
 skill_name = "Passive Critical Up"
-action = SubResource("Resource_paq0d")
+action = ExtResource("1_3drkk")
 skill_category = 1
 skill_type = 1
 skill_trigger = 2
-internal_skill_conditions = Array[ExtResource("11_kejs2")]([SubResource("Resource_4rg85"), SubResource("Resource_4uvkp"), SubResource("Resource_vimjk")])
+internal_skill_conditions = Array[ExtResource("11_kejs2")]([SubResource("Resource_rvwkf"), SubResource("Resource_epvme"), SubResource("Resource_epq0g"), SubResource("Resource_1st6e")])
+animation_package = SubResource("Resource_3dyvf")
+effects = Array[ExtResource("5_rvwkf")]([SubResource("Resource_1wkd2")])
 trait_1 = "Martial Up 1"
 trait_2 = "Is Attacking"
 trigger_description = "When this unit attacks"

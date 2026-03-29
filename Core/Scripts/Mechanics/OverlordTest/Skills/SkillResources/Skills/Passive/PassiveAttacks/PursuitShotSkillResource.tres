@@ -1,13 +1,10 @@
 [gd_resource type="Resource" script_class="Skill" format=3 uid="uid://rjed6kq3ufww"]
 
 [ext_resource type="Resource" uid="uid://uwibxof05smc" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BallThrowPackage.tres" id="1_3e3nt"]
-[ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="2_topty"]
-[ext_resource type="Script" uid="uid://bkgigckslvvpk" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="3_74q0u"]
-[ext_resource type="PackedScene" uid="uid://kybquhg07l5i" path="res://Deepmage/Core/Prefabs/VFX/TestBall.tscn" id="5_27mei"]
+[ext_resource type="PackedScene" uid="uid://kybquhg07l5i" path="res://Deepmage/Core/Prefabs/VFX/TestBall.tscn" id="1_8jf02"]
+[ext_resource type="Script" uid="uid://dakp7qskf75ug" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/CombatActionScripts/RangedCombatAction.gd" id="2_3e3nt"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="3_topty"]
 [ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="5_xai4a"]
-[ext_resource type="Script" uid="uid://nqjg83o6epyn" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/RangedAttackAction.gd" id="6_hhryw"]
-[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="9_pqvbg"]
-[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="10_6oskp"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="11_nwlp8"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="12_lrjfa"]
 [ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="13_2jytk"]
@@ -18,48 +15,11 @@
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="16_pu58l"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="17_a1m7r"]
 
-[sub_resource type="Resource" id="Resource_gi5u1"]
-script = ExtResource("2_topty")
-metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
-
-[sub_resource type="Resource" id="Resource_n7lae"]
-script = ExtResource("3_74q0u")
-metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
-
-[sub_resource type="Resource" id="Resource_1qm4u"]
-script = ExtResource("2_topty")
-metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
-
-[sub_resource type="Resource" id="Resource_jyvkj"]
-script = ExtResource("3_74q0u")
-metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
-
-[sub_resource type="Resource" id="Resource_2qrjt"]
-script = ExtResource("2_topty")
-shake_time = 0.3
-metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
-
-[sub_resource type="Resource" id="Resource_rtscm"]
-script = ExtResource("3_74q0u")
-metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
-
-[sub_resource type="Resource" id="Resource_jnjcb"]
-script = ExtResource("6_hhryw")
-projectile_speed = 40.0
-carrier_arc_height = 0.5
-animation_package = ExtResource("1_3e3nt")
-hit_anim_effect = SubResource("Resource_2qrjt")
-graze_anim_effect = SubResource("Resource_1qm4u")
-block_anim_effect = SubResource("Resource_gi5u1")
-hit_stop_effect = SubResource("Resource_rtscm")
-graze_stop_effect = SubResource("Resource_jyvkj")
-block_stop_effect = SubResource("Resource_n7lae")
-attack_range = 100.0
-is_melee_attack = false
-action_name = "Throw Ball"
-selection_types = Array[ExtResource("9_pqvbg")]([ExtResource("10_6oskp")])
-tags = Array[String](["ranged", "attack"])
-metadata/_custom_type_script = "uid://nqjg83o6epyn"
+[sub_resource type="Resource" id="Resource_27mei"]
+script = ExtResource("2_3e3nt")
+is_melee = false
+action_name = "RangedCombatAction"
+metadata/_custom_type_script = "uid://dakp7qskf75ug"
 
 [sub_resource type="Resource" id="Resource_4uvkp"]
 script = ExtResource("14_do8a4")
@@ -82,12 +42,13 @@ metadata/_custom_type_script = "uid://r3k12gybpprn"
 resource_name = "PursuitShotSkillResource"
 script = ExtResource("16_pu58l")
 skill_name = "Pursuit Shot"
-action = SubResource("Resource_jnjcb")
+action = SubResource("Resource_27mei")
 skill_category = 1
 skill_trigger = 3
 internal_skill_conditions = Array[ExtResource("12_lrjfa")]([SubResource("Resource_4uvkp"), SubResource("Resource_vimjk"), SubResource("Resource_j4q1g"), SubResource("Resource_74q0u")])
 base_power = 75
 crit_mod = 10
+animation_package = ExtResource("1_3e3nt")
 trait_1 = "Ranged"
 trait_2 = "On Ally Attack"
 trigger_description = "When an ally attacks an enemy"

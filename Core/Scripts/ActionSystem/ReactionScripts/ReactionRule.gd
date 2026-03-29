@@ -19,7 +19,7 @@ enum Outcome {
 
 
 ## Which outcomes activate this rule. Empty = matches any outcome.
-@export var match_outcomes: Array[int] = []
+@export var match_outcomes: Array[Outcome] = []
 
 ## All of these tags must be on the attacking [Skill]. Empty = any skill.
 @export var required_attack_tags: Array[String] = []

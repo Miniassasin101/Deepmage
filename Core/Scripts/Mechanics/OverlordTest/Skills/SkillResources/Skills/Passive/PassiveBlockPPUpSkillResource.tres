@@ -1,15 +1,13 @@
 [gd_resource type="Resource" script_class="Skill" format=3 uid="uid://cb88hwdib4xj"]
 
 [ext_resource type="Animation" uid="uid://bolvfij56gevt" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/UnarmedBlockAnim.res" id="1_q8kpt"]
+[ext_resource type="Resource" uid="uid://2cp5ciqvdei1" path="res://Deepmage/Core/Resources/ActionResources/TestStatusActionResource.tres" id="1_qevq0"]
 [ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="2_qevq0"]
 [ext_resource type="Script" uid="uid://brutb7o0hj6td" path="res://Deepmage/Core/Scripts/Animation/AnimationPackage.gd" id="3_4liih"]
 [ext_resource type="Script" uid="uid://bf2hv6d83v6fv" path="res://Deepmage/Core/Resources/DataStructures/AnimationSyncProfile.gd" id="4_8mov8"]
 [ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="5_cvswd"]
 [ext_resource type="Script" uid="uid://13akgn3nuj34" path="res://Deepmage/Core/Scripts/Mechanics/Effects/GrantBlockEffect.gd" id="6_4bjy0"]
-[ext_resource type="Script" uid="uid://b3xoc4esw8i4s" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/InflictEffectAction.gd" id="7_njd6v"]
 [ext_resource type="Resource" uid="uid://csk0w16e3neuu" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/BlessingEffects/GrantPPBlessingEffectResource.tres" id="7_qevq0"]
-[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="8_kfvyq"]
-[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="9_5jsyl"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="10_rrhfo"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="11_ihang"]
 [ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="12_56fyy"]
@@ -42,17 +40,6 @@ use_expire_rule = 2
 ui_name = &"Grant Block"
 metadata/_custom_type_script = "uid://13akgn3nuj34"
 
-[sub_resource type="Resource" id="Resource_paq0d"]
-script = ExtResource("7_njd6v")
-animation_package = SubResource("Resource_3dyvf")
-is_attack = false
-effects = Array[ExtResource("5_cvswd")]([SubResource("Resource_ckhw7"), ExtResource("7_qevq0")])
-hit_delay = 0.0
-use_hit_delay = true
-action_name = "Grant Block"
-selection_types = Array[ExtResource("8_kfvyq")]([ExtResource("9_5jsyl")])
-metadata/_custom_type_script = "uid://b3xoc4esw8i4s"
-
 [sub_resource type="Resource" id="Resource_4rg85"]
 script = ExtResource("12_56fyy")
 metadata/_custom_type_script = "uid://clbt58mwsvag8"
@@ -70,11 +57,13 @@ metadata/_custom_type_script = "uid://cq6k3vojdsik7"
 resource_name = "PpUpBlockSkillResource"
 script = ExtResource("15_mw55q")
 skill_name = "PP Up Block"
-action = SubResource("Resource_paq0d")
+action = ExtResource("1_qevq0")
 skill_category = 1
 skill_type = 1
 skill_trigger = 2
 internal_skill_conditions = Array[ExtResource("11_ihang")]([SubResource("Resource_4rg85"), SubResource("Resource_a1x7f"), SubResource("Resource_4uvkp")])
+animation_package = SubResource("Resource_3dyvf")
+effects = Array[ExtResource("5_cvswd")]([SubResource("Resource_ckhw7"), ExtResource("7_qevq0")])
 trait_1 = "Block"
 trait_2 = "PP Up"
 trigger_description = "When an ally uses an attack skill"

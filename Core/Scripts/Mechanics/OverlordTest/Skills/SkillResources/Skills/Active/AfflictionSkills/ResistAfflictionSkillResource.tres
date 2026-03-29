@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_4h3kq"]
 [ext_resource type="Resource" uid="uid://d4eanntmle060" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/AfflictionEffects/GrantResistAfflictionEffectResource.tres" id="5_v2llv"]
 [ext_resource type="Resource" uid="uid://caeygn6gmknml" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/BlessingSkills/ActiveBlockSkillResource.tres" id="6_nsgvk"]
-[ext_resource type="Script" uid="uid://b3xoc4esw8i4s" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/InflictEffectAction.gd" id="7_mjmda"]
+[ext_resource type="Script" uid="uid://caggmbav8c0ky" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/AttackAction.gd" id="7_mjmda"]
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="8_bspyk"]
 [ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="9_ri0jm"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="10_2ye1q"]
@@ -32,8 +32,6 @@ metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
 
 [sub_resource type="Resource" id="Resource_dx4vu"]
 script = ExtResource("7_mjmda")
-effects = Array[ExtResource("4_4h3kq")]([ExtResource("5_v2llv")])
-animation_package = ExtResource("1_v2llv")
 is_attack = false
 fallback_skill = ExtResource("6_nsgvk")
 hit_anim_effect = SubResource("Resource_i7mlr")
@@ -46,7 +44,7 @@ prowess_attribute = "martial"
 defense_attribute = "parry"
 action_name = "Effect Attack"
 selection_types = Array[ExtResource("8_bspyk")]([ExtResource("9_ri0jm")])
-metadata/_custom_type_script = "uid://b3xoc4esw8i4s"
+metadata/_custom_type_script = "uid://caggmbav8c0ky"
 
 [resource]
 resource_name = "ResistDownSkillResource"
@@ -60,4 +58,6 @@ crit_mod = -3
 trait_1 = "Evade Down"
 trigger_description = "Always"
 description = Array[String](["Inflicts a Resist affliction on the target, lowering magical resistance"])
+effects = Array[ExtResource("4_4h3kq")]([ExtResource("5_v2llv")])
+animation_package = ExtResource("1_v2llv")
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

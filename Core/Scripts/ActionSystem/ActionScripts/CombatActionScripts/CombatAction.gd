@@ -1,0 +1,631 @@
+class_name CombatAction
+extends Action
+
+# -----------------------------------------------------------------------------
+# NOTE: Animation Timing Tips
+# Adjust sync profiles in action/reaction (hit start/end), (react start/end)
+# -----------------------------------------------------------------------------
+
+
+# =========================
+# Exported Variables
+# =========================
+
+@export_category("Action Variables")
+@export var is_attack: bool = true
+@export var fallback_skill: Skill = null
+
+@export_group("Camera Shake Effects")
+@export var hit_anim_effect: CameraShakeAnimationEffect
+@export var graze_anim_effect: CameraShakeAnimationEffect
+@export var block_anim_effect: CameraShakeAnimationEffect
+
+@export_group("Hit Stop Effects")
+@export var hit_stop_effect: HitStopAnimationEffect
+@export var graze_stop_effect: HitStopAnimationEffect
+@export var block_stop_effect: HitStopAnimationEffect
+
+@export_group("Selection Data")
+@export var attack_range: float = 2.0
+
+@export_group("Attack Data")
+@export var is_melee: bool = true
+@export var uses_area_pattern: bool = false
+
+# ---------------------------------------------------------------------------
+# Runtime — set at the start of each start_action() from the TargetPackage
+# skill, with fallback_skill as a backup when no skill context is provided.
+# ---------------------------------------------------------------------------
+var _active_skill: Skill = null
+
+
+
+
+# === Sync tuning ===
+@export_group("Animation Sync Tuning")
+@export var desired_react_lead: float = 0.05      # reaction center happens slightly before hit center
+@export var default_reaction_latency: float = 0.06 # reaction input → start
+
+@export var hit_delay: float = 3.0
+@export var use_hit_delay: bool = false
+
+@export var reaction_anim_end_wait_margin: float = 0.15
+
+# Cached helper action reference
+var move_to_action: MoveToUnitAction = null
+
+## Optional: how close (in radians) we want to be before starting the attack.
+## If < 0, MovementController default is used.
+const pre_rotation_margin_override: float = 0.12   # ~7 degrees feels nice
+
+
+# =========================
+# Lifecycle
+# =========================
+
+## Starts the full attack flow: ensure range, face target, prompt reactions, sync and play anims, resolve on hit, then end.
+func start_action(targ_pack: TargetPackage = null) -> void:
+	super.start_action(targ_pack)
+
+	if targ_pack == null or targ_pack.get_unit() == null:
+		end_action()
+		return
+
+	# Resolve skill — prefer the one carried by the target package, fall back
+	# to the action's own fallback_skill (used when invoked without a skill context).
+	_active_skill = targ_pack.get_skill()
+	if _active_skill == null:
+		_active_skill = fallback_skill
+	if _active_skill == null:
+		push_error("CombatAction: no skill available — assign a fallback_skill or invoke via Skill.activate_skill().")
+		end_action()
+		return
+
+	var target_unit: Unit = targ_pack.get_unit()
+	var skill: Skill = _active_skill
+
+	# 1) Move into range if needed
+	await move_to_target_unit(target_unit)
+
+	#spawn_action_name_text()
+
+	# 2) Face target
+	await rotate_towards_target(target_unit)
+
+	# 3) Declare attack (triggers reaction prompt + tests)
+	await declare_attack(target_unit, skill)
+
+	# 5) Build sync with chosen reaction (if any)
+	var reaction_anim_pack: AnimationPackage = get_reaction_anim_pack()
+	var sync: Dictionary = get_animation_sync(reaction_anim_pack)
+
+	# 6) Configure effects based on FX intent (NOT the rules result)
+	modify_shake_and_hitstop()
+
+	# 7) Schedule plays with offsets/time-scale (attack always plays)
+	_play_attack_with_delay(_active_skill.animation_package, sync)
+	_play_reaction_with_delay(reaction_anim_pack, sync)
+
+	# 8) Resolve exactly at the hit moment (keeps the actual rules result)
+	await unit.get_tree().process_frame
+	await _resolve_at_hit_moment_or_timer(sync)
+	# NOTE: Make sure event timings dont perfectly overlap: Causes animation event override for earlier ones.
+
+	await wait_for_animation_resolve(target_unit)
+
+	_active_skill = null
+	end_action()
+
+
+# =========================
+# Helpers: Movement / Rotation / Declaration
+# =========================
+
+## Moves the unit into attack range of the target unit if needed.
+func move_to_target_unit(targ_unit: Unit) -> void:
+	if targ_unit == unit:
+		return
+	
+	if !is_melee:
+		return
+	
+	if get_distance_to_unit(targ_unit) <= attack_range:
+		return
+	var temp_action: Action = action_container.use_action(get_move_to_action(), targ_unit)
+	await temp_action.on_action_ended
+	print_debug("moved to target")
+	return
+
+## Declares the attack to the combat system (prompts for defender reactions & runs hit tests).
+func declare_attack(target_unit: Unit, skill: Skill = null) -> void:
+	await CombatSystem.instance.declare_attack(self, unit, target_unit, skill)
+
+## Rotates the unit to face the target position, then waits for pre-rotation completion.
+func rotate_towards_target(target: Unit) -> void:
+	if target == unit:
+		return
+	var target_pos := target.get_global_position()
+	unit.movement_controller.rotate_unit_towards_target_position(
+		target_pos,
+		4.0,                         # rotation speed
+		pre_rotation_margin_override # early-start margin
+	)
+	await unit.movement_controller.rotation_precomplete
+
+## Retrieves the reaction animation package from the chosen reaction, if any.
+func get_reaction_anim_pack() -> AnimationPackage:
+	var reaction: Reaction = CombatSystem.instance.current_combat_event_data.reaction
+
+	var reaction_anim_pack: AnimationPackage = null
+
+	if reaction != null and reaction.has_method("get_reaction_package"):
+		reaction_anim_pack = reaction.call("get_reaction_package")
+
+	return reaction_anim_pack
+
+## Reads current combat event outcome flags (hit/graze/block) and primes FX settings accordingly.
+func modify_shake_and_hitstop() -> void:
+	var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
+	var is_hit: bool = cd.is_hit
+	var is_graze: bool = cd.is_graze
+
+	var pack: AnimationPackage = _active_skill.animation_package
+	pack.instanced_animation_effects.clear()
+
+	for event in pack.get_anim_effects():
+		if event == null:
+			continue
+		pack.instanced_animation_effects.append(event.duplicate())
+
+	_modify_camera_shake_effect(is_hit, is_graze, cd.effective_damage)
+	_modify_hit_stop(is_hit, is_graze, cd.effective_damage)
+
+
+# =========================
+# Hit Resolution Timing
+# =========================
+
+## Resolves rules/effects at the correct hit moment: prefer signal from animation, otherwise uses a timer fallback.
+## Fires BEFORE_HIT_RESOLVES chain (passives may modify cd before damage), then applies damage,
+## then fires AFTER_HIT_RESOLVES chain (passives react to the outcome).
+## Both phases play their animations concurrently with the ongoing attack animation, which is
+## fire-and-forget and continues independently on the attacker's AnimationController.
+func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
+	var ctrl := unit.animation_controller
+
+	# Preferred: wait for HitMomentAnimationEffect signal fired at the exact animation frame.
+	# Requires effects_controller to be set and use_hit_delay to be off.
+	if ctrl != null and ctrl.effects_controller != null and !use_hit_delay:
+		await ctrl.effects_controller.on_hit_moment
+		var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
+
+		# Phase 2: BEFORE_HIT_RESOLVES — passives can read/modify cd before damage is applied.
+		# (Evade/Dodge Away, Halve Damage, etc.)
+		if TurnSystem.instance != null and cd != null and cd.skill != null:
+			await TurnSystem.instance.open_hit_reactions(
+				SkillTriggerSystem.TriggerPhase.BEFORE_HIT_RESOLVES,
+				cd.skill, cd.attacker, cd.defender, 0)
+
+		if cd != null and cd.defender != null:
+			_apply_defender_hitstop(cd.defender, cd)
+
+		do_resolve()
+
+		# Phase 3: AFTER_HIT_RESOLVES — passives react to the applied outcome.
+		# (Thorny Skin, revenge attacks, etc.)
+		if TurnSystem.instance != null and cd != null and cd.skill != null:
+			await TurnSystem.instance.open_hit_reactions(
+				SkillTriggerSystem.TriggerPhase.AFTER_HIT_RESOLVES,
+				cd.skill, cd.attacker, cd.defender, 0)
+
+		return
+
+	# Fallback: timer to hit-center (attack_delay + center of window).
+	# Used when effects_controller is absent or use_hit_delay is on.
+	var attack_delay: float = sync.get("attack_delay", -1.0)
+	var hit_center: float = sync.get("attack_center", -1.0)
+	if hit_center == -1.0 or attack_delay == -1.0:
+		push_error("Invalid Hit Center Or Attack Delay (Animation Sync Error)")
+		return
+
+	if use_hit_delay:
+		attack_delay += hit_delay
+
+	await unit.get_tree().create_timer(max(0.0, attack_delay + hit_center)).timeout
+	var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
+
+	# Phase 2: BEFORE_HIT_RESOLVES
+	if TurnSystem.instance != null and cd != null and cd.skill != null:
+		await TurnSystem.instance.open_hit_reactions(
+			SkillTriggerSystem.TriggerPhase.BEFORE_HIT_RESOLVES,
+			cd.skill, cd.attacker, cd.defender, 0)
+
+	if cd != null and cd.defender != null:
+		_apply_defender_hitstop(cd.defender, cd)
+
+	do_resolve()
+
+	# Phase 3: AFTER_HIT_RESOLVES
+	if TurnSystem.instance != null and cd != null and cd.skill != null:
+		await TurnSystem.instance.open_hit_reactions(
+			SkillTriggerSystem.TriggerPhase.AFTER_HIT_RESOLVES,
+			cd.skill, cd.attacker, cd.defender, 0)
+
+
+
+func do_resolve() -> void:
+	var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
+	var target_unit: Unit = cd.defender
+
+	var target_is_self: bool = unit == target_unit
+
+	if not cd.is_hit and !target_is_self:
+		Utilities.spawn_text_line(target_unit, "EVADE", Color.AQUA)
+		CombatLog.instance.add_log("Result: Evaded")
+		return
+
+	apply_effects(unit, target_unit)
+
+	if target_is_self:
+		return
+
+	elif cd.skill.skill_type != Skill.SkillType.ATTACK:
+		# Only a debuff, no damage numbers needed
+		return
+
+
+	# OPTIONAL: switch to Posture track later.
+	# For now, keep your health to minimize refactor:
+	target_unit.get_attributes_container().add_attribute_modifier("posture", -cd.effective_damage)
+
+
+	# Fx
+	if cd.effective_damage > 1:
+		target_unit.animation_controller.play_hit_reaction()
+		var color: Color = Color.FIREBRICK if !cd.is_critical_success else Color.GOLD
+		Utilities.spawn_damage_label(target_unit, cd.effective_damage, color, 0.5)
+	else:
+		Utilities.spawn_damage_label(target_unit, cd.effective_damage, Color.AZURE, 0.5)
+
+# Applies effects from the active skill to their respective targets.
+func apply_effects(user: Unit, target: Unit) -> void:
+	if _active_skill == null:
+		return
+	for effect in _active_skill.effects:
+		effect.set_context({"user": user, "target_unit": target})
+		effect.apply()
+	for effect in _active_skill.self_effects:
+		effect.set_context({"user": user, "target_unit": user})
+		effect.apply()
+
+
+
+
+func wait_for_animation_resolve(target_unit: Unit) -> void:
+	# 9) End once the attack animation completes
+	if unit.animation_controller.is_resolving:
+		await unit.animation_controller.animation_finished
+		if target_unit.animation_controller.is_resolving:
+			#CombatLog.instance.add_log()
+			#CombatLog.instance.add_log(str(target_unit.animation_controller.get_anim_time_left()))
+
+			var time_left: float = target_unit.animation_controller.get_anim_time_left()
+			if time_left >= reaction_anim_end_wait_margin + 0.1:
+				var difference: float = time_left - reaction_anim_end_wait_margin
+				await unit.get_tree().create_timer(difference).timeout
+				return
+			await target_unit.animation_controller.animation_finished
+
+
+
+
+# =========================
+# Animation Sync & Scheduling
+# =========================
+
+## Computes timing offsets and scaling for attack vs reaction based on markers and reaction latency.
+func get_animation_sync(reaction_anim_pack: AnimationPackage) -> Dictionary:
+	var reaction: Reaction = CombatSystem.instance.current_combat_event_data.reaction
+	var reaction_latency: float = default_reaction_latency
+
+	if reaction != null and reaction.has_method("get_reaction_latency"):
+		reaction_latency = float(reaction.call("get_reaction_latency"))
+
+	var atk_hit := _safe_marker_window(_active_skill.animation_package, &"HIT_START", &"HIT_END")
+	var dd_inv := _safe_marker_window(reaction_anim_pack, &"REACT_ON", &"REACT_OFF")
+	var dd_peak := _safe_marker_time(reaction_anim_pack, &"PEAK")
+	var scale_range := _safe_scale_range(reaction_anim_pack)
+	# var can_sync: bool = atk_hit.x >= 0.0 and dd_inv.x >= 0.0
+
+	var sync: Dictionary = _compute_sync(
+		atk_hit, dd_inv, dd_peak,
+		desired_react_lead, reaction_latency, scale_range
+	)
+	return sync
+
+## Plays the attack animation package after a computed delay (or immediately if supported method absent).
+func _play_attack_with_delay(pack: AnimationPackage, sync: Dictionary) -> void:
+	if unit.animation_controller == null:
+		return
+
+	var attack_delay_val: float = sync.get("attack_delay", 0.0) as float
+
+	if unit.animation_controller.has_method("play_package_timed"):
+		unit.animation_controller.play_package_timed(pack, max(0.0, attack_delay_val), 1.0)
+		return
+
+	await unit.get_tree().create_timer(maxf(0.0, attack_delay_val)).timeout
+	unit.animation_controller.play_package(pack)
+
+## Plays the defender's reaction animation (if applicable) with delay/scale from sync data.
+func _play_reaction_with_delay(reaction_anim_pack: AnimationPackage, sync: Dictionary) -> void:
+	var c_event: CombatEventData = CombatSystem.instance.current_combat_event_data
+	var defender: Unit = c_event.defender
+	var anim_contr: AnimationController = defender.animation_controller
+
+	var should_play_reaction: bool = true#!c_event.is_hit and (reaction_anim_pack != null) and (defender != null)
+	if !should_play_reaction:
+		return
+
+	if anim_contr == null:
+		return
+
+	var delay: float = sync.get("reaction_delay", 0.0) as float
+	var scale: float = sync.get("reaction_scale", 1.0) as float
+
+	if use_hit_delay:
+		delay += hit_delay
+
+
+	if anim_contr.has_method("play_package_timed"):
+		anim_contr.play_package_timed(reaction_anim_pack, max(0.0, delay), max(0.01, scale))
+		return
+
+	await defender.get_tree().create_timer(maxf(0.0, delay)).timeout
+	var old := anim_contr.animator.speed_scale
+	anim_contr.set_timescales(maxf(0.01, scale))
+	anim_contr.play_package(reaction_anim_pack)
+	await anim_contr.animation_finished
+	anim_contr.set_timescales(old)
+
+
+# =========================
+# Effects Configuration (Pre-Play)
+# =========================
+
+## Returns a freshly-constructed CameraShakeAnimationEffect with the given defaults.
+## Used when no effect has been assigned in the editor.
+func _default_shake(p_strength: float, p_shake_time: float, p_shake_frequency: float) -> CameraShakeAnimationEffect:
+	var e := CameraShakeAnimationEffect.new()
+	e.strength = p_strength
+	e.shake_time = p_shake_time
+	e.shake_frequency = p_shake_frequency
+	return e
+
+## Returns a freshly-constructed HitStopAnimationEffect with the given default duration.
+## Used when no effect has been assigned in the editor.
+func _default_stop(p_duration: float) -> HitStopAnimationEffect:
+	var e := HitStopAnimationEffect.new()
+	e.duration = p_duration
+	return e
+
+
+## Chooses camera shake parameters based on outcome (miss/graze/block/hit) and enables/disables effect.
+func _modify_camera_shake_effect(is_hit: bool, is_graze: bool, effective_damage: int) -> void:
+	var effect: CameraShakeAnimationEffect = null
+	var a_effects: Array[AnimationEffect] = _active_skill.animation_package.get_instanced_animation_effects()
+
+	for e in a_effects:
+		if e is CameraShakeAnimationEffect:
+			effect = e
+
+	if effect == null:
+		return  # animation package has no shake slot — nothing to configure
+
+	var _hit_shake   := hit_anim_effect   if hit_anim_effect   != null else _default_shake(0.14, 0.30, 50)
+	var _graze_shake := graze_anim_effect if graze_anim_effect != null else _default_shake(0.07, 0.20, 50)
+	var _block_shake := block_anim_effect if block_anim_effect != null else _default_shake(0.06, 0.15, 50)
+
+	effect.is_disabled = false
+	if !is_hit:
+		if is_graze:
+			effect.shake_frequency = _graze_shake.shake_frequency
+			effect.shake_time      = _graze_shake.shake_time
+			effect.strength        = _graze_shake.strength
+		else:
+			effect.is_disabled = true  # miss — no shake
+	elif effective_damage == 0:
+		effect.shake_frequency = _block_shake.shake_frequency
+		effect.shake_time      = _block_shake.shake_time
+		effect.strength        = _block_shake.strength
+	else:
+		effect.shake_frequency = _hit_shake.shake_frequency
+		effect.shake_time      = _hit_shake.shake_time
+		effect.strength        = _hit_shake.strength
+
+	if use_hit_delay:
+		effect.timing += hit_delay
+
+
+## Chooses hit-stop duration based on outcome (miss/graze/block/hit) and enables/disables effect.
+func _modify_hit_stop(is_hit: bool, is_graze: bool, effective_damage: int) -> void:
+	var effect: HitStopAnimationEffect = null
+	var h_effects: Array[AnimationEffect] = _active_skill.animation_package.get_instanced_animation_effects()
+
+	for e in h_effects:
+		if e is HitStopAnimationEffect:
+			effect = e
+
+	if effect == null:
+		return  # animation package has no stop slot — nothing to configure
+
+	var _hit_stop   := hit_stop_effect   if hit_stop_effect   != null else _default_stop(0.12)
+	var _graze_stop := graze_stop_effect if graze_stop_effect != null else _default_stop(0.08)
+	var _block_stop := block_stop_effect if block_stop_effect != null else _default_stop(0.06)
+
+	effect.is_disabled = false
+	if !is_hit:
+		if is_graze:
+			effect.duration = _graze_stop.duration
+		else:
+			effect.is_disabled = true  # miss — no stop
+	elif effective_damage == 0:
+		effect.duration = _block_stop.duration
+	else:
+		effect.duration = _hit_stop.duration
+
+	if use_hit_delay:
+		CombatLog.instance.add_log("Effect Timing: " + str(effect.timing))
+		effect.timing += hit_delay
+
+
+## Freezes the defender's animator at the hit moment.
+## Called from _resolve_at_hit_moment_or_timer so defender freeze is decoupled
+## from the attacker's HitStopAnimationEffect.play_effect().
+func _apply_defender_hitstop(target_unit: Unit, cd: CombatEventData) -> void:
+	if target_unit == null or target_unit == unit:
+		return
+	var ctrl: AnimationController = target_unit.animation_controller
+	if ctrl == null:
+		return
+
+	var stop_effect: HitStopAnimationEffect
+	if not cd.is_hit:
+		if cd.is_graze:
+			stop_effect = graze_stop_effect if graze_stop_effect != null else _default_stop(0.08)
+		else:
+			return  # miss — no defender freeze
+	elif cd.effective_damage == 0:
+		stop_effect = block_stop_effect if block_stop_effect != null else _default_stop(0.06)
+	else:
+		stop_effect = hit_stop_effect if hit_stop_effect != null else _default_stop(0.12)
+
+	if stop_effect.is_disabled or stop_effect.duration <= 0.0:
+		return
+	ctrl.set_timescales(0.0)
+	await ctrl.get_tree().create_timer(stop_effect.duration).timeout
+	ctrl.set_timescales(1.0)
+
+
+## Spawns a small text label over the unit with this action's name (UI feedback).
+func spawn_action_name_text() -> void:
+	Utilities.spawn_text_line(unit, action_name)
+
+
+# =========================
+# Queries
+# =========================
+
+## Returns the prowess attribute used for damage rolls (for UI or rule queries).
+func get_stat_name() -> String:
+	return _active_skill.prowess_attribute if _active_skill != null else "martial"
+
+## Returns the defense attribute used for damage mitigation (for UI or rule queries).
+func get_defense_attribute() -> String:
+	return _active_skill.defense_attribute if _active_skill != null else "parry"
+
+
+
+
+## Checks if this action can be used on the given target pack (range, self-target, and pathing).
+func can_activate_on_target(target_pack: TargetPackage) -> bool:
+	if target_pack == null or !target_pack.has_tag("unit"):
+		return false
+
+	var target_unit: Unit = target_pack.unit
+
+	if unit == null:
+		return false
+
+	#if target_unit == unit:
+	#	return false
+	if is_melee:
+		if get_distance_to_unit(target_unit) > attack_range:
+			if !can_move_to_unit(target_unit):
+				return false
+	return true
+
+## Distance helper from unit to a given unit.
+func get_distance_to_unit(in_unit: Unit) -> float:
+	return unit.get_global_position().distance_to(in_unit.get_global_position())
+
+## Checks if we have a valid MoveToUnitAction and if it can reach the target.
+func can_move_to_unit(target_unit: Unit) -> bool:
+	var move_action: MoveToUnitAction = get_move_to_action()
+	if move_action == null:
+		return false
+	if !action_container.can_use_action_at_target(move_action, target_unit):
+		return false
+	return true
+
+## Retrieves (and caches) a MoveToUnitAction from the action container, if present.
+func get_move_to_action() -> MoveToUnitAction:
+	if move_to_action:
+		return move_to_action
+	var actions: Array[Action] = action_container.get_all_actions()
+	for action in actions:
+		if action is MoveToUnitAction:
+			move_to_action = action
+			return action
+	return null
+
+
+# =========================
+# Sync Math & Safe Accessors
+# =========================
+
+## Core timing math: aligns attack window with reaction window using latency and desired lead; returns schedule & scale.
+static func _compute_sync(atk_window: Vector2, react_window: Vector2, peak_time: float, lead: float, reaction_latency: float, scale_range: Vector2) -> Dictionary:
+	# Centers
+	var attack_center: float = 0.5 * (atk_window.x + atk_window.y)
+	var react_center: float = peak_time if peak_time >= 0.0 else 0.5 * (react_window.x + react_window.y)
+
+	# We want reaction to slightly LEAD the hit
+	var adjusted_react_c: float = react_center - maxf(0.0, lead)
+
+	# Choose non-negative schedule delays
+	var attack_delay: float = reaction_latency + adjusted_react_c - attack_center
+	var reaction_delay: float = reaction_latency
+	if attack_delay < 0.0:
+		# Push both forward equally so neither is negative
+		reaction_delay -= attack_delay
+		attack_delay = 0.0
+
+	# Micro time scale so reaction span roughly matches the attack span
+	var hit_len := maxf(0.001, atk_window.y - atk_window.x)
+	var react_len := maxf(0.001, react_window.y - react_window.x)
+	var reaction_scale := clampf(hit_len / react_len, scale_range.x, scale_range.y)
+
+	# Testing Purposes
+
+
+	return {
+		"attack_delay": attack_delay,
+		"attack_center": attack_center,
+		"reaction_delay": reaction_delay,
+		"reaction_scale": reaction_scale
+	}
+
+## Safe marker-window access: returns [-1, -1] if missing or method unsupported.
+static func _safe_marker_window(pack: AnimationPackage, a: StringName, b: StringName) -> Vector2:
+	if pack == null:
+		return Vector2(-1.0, -1.0)
+	if pack.has_method("marker_window"):
+		return pack.marker_window(a, b)
+	return Vector2(-1.0, -1.0)
+
+## Safe marker-time access: returns -1 if missing or method unsupported.
+static func _safe_marker_time(pack: AnimationPackage, label: StringName) -> float:
+	if pack == null:
+		return -1.0
+	if pack.has_method("marker_time"):
+		return float(pack.marker_time(label))
+	return -1.0
+
+## Safe time-scale range access: returns [1, 1] if missing or method unsupported.
+static func _safe_scale_range(pack: AnimationPackage) -> Vector2:
+	if pack == null:
+		return Vector2(1.0, 1.0)
+	if pack.has_method("time_scale_range"):
+		return pack.time_scale_range()
+	return Vector2(1.0, 1.0)

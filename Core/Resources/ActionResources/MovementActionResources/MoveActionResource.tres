@@ -11,16 +11,10 @@ metadata/_custom_type_script = "uid://cihsn5lxnlupk"
 
 [resource]
 script = ExtResource("1_0pqsi")
-limit_by_speed = null
 move_speed = 8.0
 rotate_speed = 5.0
 acceleration_time = 3.0
 rotation_acceleration_time = 2.0
-stopping_distance = null
-unit_avoid_radius = null
-unit_avoid_sample_number = null
 action_name = "Move"
 selection_types = Array[ExtResource("2_8urol")]([SubResource("Resource_lsp3f")])
-reaction_check_timing = null
-tags = null
 metadata/_custom_type_script = "uid://bl34p0y06cyys"

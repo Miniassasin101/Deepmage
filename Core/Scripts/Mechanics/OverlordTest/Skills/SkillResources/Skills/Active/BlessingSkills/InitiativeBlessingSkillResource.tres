@@ -1,58 +1,31 @@
 [gd_resource type="Resource" script_class="Skill" format=3 uid="uid://p1k8apmla1cv"]
 
 [ext_resource type="Resource" uid="uid://djrw5nkydvyv6" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BlockPackage.tres" id="1_661y1"]
-[ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="2_bp4cr"]
-[ext_resource type="Script" uid="uid://bkgigckslvvpk" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="3_cj4dy"]
+[ext_resource type="Script" uid="uid://crlblfi0eiqt0" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/CombatActionScripts/CombatAction.gd" id="1_nthkp"]
 [ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_ngn82"]
 [ext_resource type="Resource" uid="uid://c8i40dejwpeua" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/BlessingEffects/GrantInitiativeBlessingEffectResource.tres" id="5_j5xd5"]
-[ext_resource type="Resource" uid="uid://caeygn6gmknml" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/BlessingSkills/ActiveBlockSkillResource.tres" id="6_xxveg"]
-[ext_resource type="Script" uid="uid://b3xoc4esw8i4s" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/InflictEffectAction.gd" id="7_ee4d0"]
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="8_kj64a"]
-[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="9_mv05u"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="10_hqfbs"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="11_v87wi"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="12_4l8j8"]
 [ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="13_84867"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="13_d5ybe"]
 
-[sub_resource type="Resource" id="Resource_i7mlr"]
-script = ExtResource("2_bp4cr")
-strength = 0.12
-shake_time = 0.25
-metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
-
-[sub_resource type="Resource" id="Resource_qr07x"]
-script = ExtResource("3_cj4dy")
-metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
-
-[sub_resource type="Resource" id="Resource_cl0pr"]
-script = ExtResource("3_cj4dy")
-metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
-
-[sub_resource type="Resource" id="Resource_84867"]
-script = ExtResource("7_ee4d0")
-animation_package = ExtResource("1_661y1")
-is_attack = false
-fallback_skill = ExtResource("6_xxveg")
-hit_anim_effect = SubResource("Resource_i7mlr")
-graze_anim_effect = SubResource("Resource_i7mlr")
-block_anim_effect = SubResource("Resource_i7mlr")
-hit_stop_effect = SubResource("Resource_cl0pr")
-graze_stop_effect = SubResource("Resource_qr07x")
-block_stop_effect = SubResource("Resource_qr07x")
-effects = Array[ExtResource("4_ngn82")]([ExtResource("5_j5xd5")])
-action_name = "Effect Attack"
-selection_types = Array[ExtResource("8_kj64a")]([ExtResource("9_mv05u")])
-metadata/_custom_type_script = "uid://b3xoc4esw8i4s"
+[sub_resource type="Resource" id="Resource_xhiib"]
+script = ExtResource("1_nthkp")
+action_name = "Status Grant Action"
+metadata/_custom_type_script = "uid://crlblfi0eiqt0"
 
 [resource]
 resource_name = "InitiativeUpSkillResource"
 script = ExtResource("12_4l8j8")
 skill_name = "Initiative Up"
-action = SubResource("Resource_84867")
+action = SubResource("Resource_xhiib")
 skill_type = 1
 base_accuracy = 90
 crit_mod = -3
+animation_package = ExtResource("1_661y1")
+effects = Array[ExtResource("4_ngn82")]([ExtResource("5_j5xd5")])
 trait_1 = "Initiative Up 5"
 trigger_description = "Always"
 description = Array[String](["Grants an Initiative blessing, increasing turn order priority"])

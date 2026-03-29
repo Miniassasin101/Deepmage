@@ -28,7 +28,7 @@ func setup_action(in_action_container: ActionContainer) -> void:
 
 	if !unit and action_container:
 		unit = action_container.unit
-		if self is AttackAction:
+		if self is CombatAction:
 			pass
 
 

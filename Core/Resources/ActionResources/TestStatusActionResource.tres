@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CombatAction" format=3 uid="uid://2cp5ciqvdei1"]
+
+[ext_resource type="Script" uid="uid://crlblfi0eiqt0" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/CombatActionScripts/CombatAction.gd" id="1_oc4f6"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_fojjn"]
+[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="3_fojjn"]
+
+[resource]
+script = ExtResource("1_oc4f6")
+is_attack = false
+action_name = "TestStatusAction"
+selection_types = Array[ExtResource("2_fojjn")]([ExtResource("3_fojjn")])

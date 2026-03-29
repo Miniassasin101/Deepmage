@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="Skill" format=3 uid="uid://mictyfww6h2x"]
 
 [ext_resource type="Resource" uid="uid://8wuhaspnhl00" path="res://Deepmage/Core/Resources/ActionResources/MovementActionResources/RushToSafetyActionResource.tres" id="1_wbr12"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="2_6nkai"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_txb4i"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="3_6nkai"]
 [ext_resource type="Resource" uid="uid://i8sl83myrhfj" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/RangeBlueprints/InRangeBlueprints/IsAnyEnemyAdjacentConditionBlueprint.tres" id="3_txb4i"]

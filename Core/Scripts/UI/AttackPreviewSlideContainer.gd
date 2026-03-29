@@ -8,7 +8,7 @@ extends SlidePanelContainer
 @export var accuracy_pool_label: Label    # hook to your AccuracyLabel
 @export var target_successes_label: Label # hook to your DifficultyLabel
 
-func get_damage_preview(attack: AttackAction, attacker: Unit, target: Unit) -> Dictionary:
+func get_damage_preview(attack: CombatAction, attacker: Unit, target: Unit) -> Dictionary:
 	if attack == null or attacker == null or target == null:
 		return {"min": 0, "max": 0}
 
@@ -35,7 +35,7 @@ func get_damage_preview(attack: AttackAction, attacker: Unit, target: Unit) -> D
 	
 	return {"min": min_dmg, "max": max_dmg}
 
-func fill_from_attack(attack: AttackAction, attacker: Unit, target: Unit) -> void:
+func fill_from_attack(attack: CombatAction, attacker: Unit, target: Unit) -> void:
 	if attack == null or attacker == null or target == null:
 		clear(); return
 

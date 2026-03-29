@@ -1,59 +1,32 @@
 [gd_resource type="Resource" script_class="Skill" format=3 uid="uid://mupav8mwmhw7"]
 
+[ext_resource type="Script" uid="uid://crlblfi0eiqt0" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/CombatActionScripts/CombatAction.gd" id="1_6ovea"]
 [ext_resource type="Resource" uid="uid://djrw5nkydvyv6" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BlockPackage.tres" id="1_dmfxn"]
-[ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="2_grexe"]
-[ext_resource type="Script" uid="uid://bkgigckslvvpk" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="3_ucq8p"]
 [ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_16gl0"]
 [ext_resource type="Resource" uid="uid://dcere2vdcmkxo" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/BlessingEffects/GrantChannelBlessingEffectResource.tres" id="5_dmfxn"]
-[ext_resource type="Resource" uid="uid://caeygn6gmknml" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/BlessingSkills/ActiveBlockSkillResource.tres" id="6_1eoe1"]
-[ext_resource type="Script" uid="uid://b3xoc4esw8i4s" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/InflictEffectAction.gd" id="7_3t7xd"]
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="8_vsp4d"]
-[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="9_oeob1"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="10_265c7"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="11_2ud3j"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="12_xgx65"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="13_ef74i"]
 [ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="13_grexe"]
 
-[sub_resource type="Resource" id="Resource_i7mlr"]
-script = ExtResource("2_grexe")
-strength = 0.12
-shake_time = 0.25
-metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
-
-[sub_resource type="Resource" id="Resource_qr07x"]
-script = ExtResource("3_ucq8p")
-metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
-
-[sub_resource type="Resource" id="Resource_cl0pr"]
-script = ExtResource("3_ucq8p")
-metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
-
-[sub_resource type="Resource" id="Resource_dbcqt"]
-script = ExtResource("7_3t7xd")
-animation_package = ExtResource("1_dmfxn")
-is_attack = false
-fallback_skill = ExtResource("6_1eoe1")
-hit_anim_effect = SubResource("Resource_i7mlr")
-graze_anim_effect = SubResource("Resource_i7mlr")
-block_anim_effect = SubResource("Resource_i7mlr")
-hit_stop_effect = SubResource("Resource_cl0pr")
-graze_stop_effect = SubResource("Resource_qr07x")
-block_stop_effect = SubResource("Resource_qr07x")
-effects = Array[ExtResource("4_16gl0")]([ExtResource("5_dmfxn")])
-action_name = "Effect Attack"
-selection_types = Array[ExtResource("8_vsp4d")]([ExtResource("9_oeob1")])
-metadata/_custom_type_script = "uid://b3xoc4esw8i4s"
+[sub_resource type="Resource" id="Resource_xhiib"]
+script = ExtResource("1_6ovea")
+action_name = "Status Grant Action"
+metadata/_custom_type_script = "uid://crlblfi0eiqt0"
 
 [resource]
 resource_name = "ChannelUpSkillResource"
 script = ExtResource("12_xgx65")
 skill_name = "Channel Up"
-action = SubResource("Resource_dbcqt")
+action = SubResource("Resource_xhiib")
 skill_type = 1
 base_power = 0
 base_accuracy = 90
 crit_mod = -3
+animation_package = ExtResource("1_dmfxn")
+effects = Array[ExtResource("4_16gl0")]([ExtResource("5_dmfxn")])
 trigger_description = "Always"
 description = Array[String](["Grants a Channel blessing to self"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

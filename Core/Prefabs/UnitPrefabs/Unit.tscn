@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://c2aqj40trpjeq" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/EffectsController.gd" id="4_s3v1t"]
 [ext_resource type="Resource" uid="uid://cuudvrampevcg" path="res://Deepmage/Core/Resources/ActionResources/TestAttackActionResource.tres" id="4_sxvrp"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="5_7ehp6"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="5_t7uvv"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="6_1343x"]
 [ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="7_s3v1t"]
 [ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="8_t7uvv"]
@@ -25,6 +26,7 @@
 [ext_resource type="Script" uid="uid://c6hp21lncudiw" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsNotSelfSkillCondition.gd" id="12_3f60d"]
 [ext_resource type="Script" uid="uid://bt62wkw6goum8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/TacticsController.gd" id="14_b3sv1"]
 [ext_resource type="Material" uid="uid://caeve0dltuafr" path="res://Deepmage/Core/Art/Materials/WhiteHitFXMaterial.tres" id="14_sne6a"]
+[ext_resource type="Resource" uid="uid://dn7yq5p8tqv2k" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/ReactionPacks/HumanoidDefaultReactionPack.tres" id="15_s3v1t"]
 [ext_resource type="Script" uid="uid://bubf25btsnnfv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Tactic.gd" id="17_7o6ql"]
 [ext_resource type="Script" uid="uid://6lf4dn0lowha" path="res://Deepmage/Core/Prefabs/UnitPrefabs/UnitVfxManager.gd" id="26_7ehp6"]
 [ext_resource type="PackedScene" uid="uid://sg0ku24m72it" path="res://Deepmage/Core/Prefabs/VFX/BlessingParticleEffect.tscn" id="26_pksos"]
@@ -49,10 +51,6 @@ trait_1 = "Melee"
 description = Array[String](["Moves towards then Bashes a unit in range 5"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
-[sub_resource type="Resource" id="Resource_ydutk"]
-script = ExtResource("7_s3v1t")
-metadata/_custom_type_script = "uid://2nsctaj2mk50"
-
 [sub_resource type="Resource" id="Resource_sb21c"]
 script = ExtResource("11_52ex6")
 range_var = 2.1
@@ -69,7 +67,6 @@ skill_name = "Rush To Unit"
 action = ExtResource("10_0xpoi")
 skill_type = 1
 internal_skill_conditions = Array[ExtResource("6_1343x")]([SubResource("Resource_sb21c"), SubResource("Resource_7omu2")])
-external_skill_conditions = Array[ExtResource("6_1343x")]([SubResource("Resource_ydutk")])
 trait_1 = "Movement"
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
@@ -200,6 +197,7 @@ left_hand_socket = NodePath("Rig/LeftHandMesh/LeftHandSocket")
 right_hand_socket = NodePath("Rig/RightHandMesh/RightHandSocket")
 character_sheet_packed_scene = ExtResource("2_sne6a")
 starting_tactic = SubResource("Resource_qyife")
+reaction_pack = ExtResource("15_s3v1t")
 white_hit_flash_mat = ExtResource("14_sne6a")
 
 [node name="Rig" type="Node3D" parent="." unique_id=1975549980]

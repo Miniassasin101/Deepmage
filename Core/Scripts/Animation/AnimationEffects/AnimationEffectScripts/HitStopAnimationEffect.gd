@@ -6,7 +6,7 @@ extends AnimationEffect
 var is_disabled: bool = false
 
 ## Freezes only this unit's animator for `duration` seconds.
-## Defender hitstop is applied separately by AttackAction at the hit moment,
+## Defender hitstop is applied separately by CombatAction at the hit moment,
 ## keeping combat knowledge out of visual effect resources.
 func play_effect(unit: Unit = null) -> void:
 	if unit == null or is_disabled or duration <= 0.0:

@@ -66,8 +66,8 @@ func _on_unit_hovered_changed(in_unit: Unit) -> void:
 
 # --- Decides whether to show/hide/fill the preview slide ---
 func _refresh_preview() -> void:
-	# Must have an AttackAction selected
-	if !enable_slide_preview or _selected_action == null or !(_selected_action is AttackAction):
+	# Must have an CombatAction selected
+	if !enable_slide_preview or _selected_action == null or !(_selected_action is CombatAction):
 		slide.clear()
 		_close_slide()
 		return
@@ -102,7 +102,7 @@ func _refresh_preview() -> void:
 
 	
 	# All good: fill & open
-	slide.fill_from_attack(_selected_action as AttackAction, attacker, target)
+	slide.fill_from_attack(_selected_action as CombatAction, attacker, target)
 	_open_slide()
 
 

@@ -36,18 +36,23 @@
 [ext_resource type="PackedScene" uid="uid://psdfsrnutgxe" path="res://Deepmage/Core/Prefabs/UI/ActionButtonUI.tscn" id="16_tko1n"]
 [ext_resource type="Resource" uid="uid://dhlquh6l821lo" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/FactionBlueprints/IsEnemyConditionBlueprint.tres" id="17_ebomw"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="18_hymmt"]
+[ext_resource type="Animation" uid="uid://bolvfij56gevt" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/UnarmedBlockAnim.res" id="19_00nvd"]
 [ext_resource type="Resource" uid="uid://8vem57wbteya" path="res://Deepmage/Core/Resources/ActionResources/MovementActionResources/RushToUnitActionResource.tres" id="19_v4iap"]
+[ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="20_5lfvx"]
 [ext_resource type="Script" uid="uid://daykqau0okf7v" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitOutsideRangeSkillCondition.gd" id="20_8v6vh"]
-[ext_resource type="Resource" uid="uid://blfxs1u2ff33y" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PrintTestPassiveBeforeSkillResource.tres" id="21_8v6vh"]
 [ext_resource type="Script" uid="uid://c6hp21lncudiw" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsNotSelfSkillCondition.gd" id="21_11ubm"]
-[ext_resource type="Resource" uid="uid://c6vt5q86p2ci7" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PassiveBlessings/PassiveMartialBlessingSkillResource.tres" id="21_w01yd"]
+[ext_resource type="Script" uid="uid://brutb7o0hj6td" path="res://Deepmage/Core/Scripts/Animation/AnimationPackage.gd" id="21_f0670"]
 [ext_resource type="PackedScene" uid="uid://cdifkxjoiv0eq" path="res://Deepmage/Core/Prefabs/UI/TopHPBar.tscn" id="21_xyav6"]
+[ext_resource type="Script" uid="uid://bf2hv6d83v6fv" path="res://Deepmage/Core/Resources/DataStructures/AnimationSyncProfile.gd" id="22_ebomw"]
 [ext_resource type="PackedScene" uid="uid://cqqsm2gpif3dw" path="res://Deepmage/Core/Prefabs/UI/UnitCharacterSheet.tscn" id="22_gh8or"]
 [ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="23_04ue1"]
 [ext_resource type="Script" uid="uid://bubf25btsnnfv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Tactic.gd" id="24_5lfvx"]
+[ext_resource type="Script" uid="uid://13akgn3nuj34" path="res://Deepmage/Core/Scripts/Mechanics/Effects/GrantBlockEffect.gd" id="24_cb3j6"]
 [ext_resource type="Script" uid="uid://c1pcudui7e5qp" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillTriggerSystem.gd" id="26_qdwhh"]
 [ext_resource type="PackedScene" uid="uid://bt5idkoxachxk" path="res://Deepmage/Core/Prefabs/UI/CombatLog.tscn" id="27_2gnov"]
-[ext_resource type="Resource" uid="uid://q7sv630uw87g" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PassiveBlockSkillResource.tres" id="36_cb3j6"]
+[ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="28_f3uqp"]
+[ext_resource type="Script" uid="uid://c7ofxaslt34wn" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SourceTargetBasedSkillConditions/IsSourceTargetFaction.gd" id="29_0fvkv"]
+[ext_resource type="Script" uid="uid://cq6k3vojdsik7" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SkillSourceBasedSkillConditions/IsSourceSkillType.gd" id="30_dpue3"]
 [ext_resource type="Resource" uid="uid://d12flfcjn7vie" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildProfileResources/DuelistBuildProfile.tres" id="37_cb3j6"]
 [ext_resource type="Resource" uid="uid://mictyfww6h2x" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/RushToSafetySkillResource.tres" id="38_c2k8n"]
 [ext_resource type="Resource" uid="uid://ctauxicitono6" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildProfileResources/ArcherBuildProfile.tres" id="38_e15dp"]
@@ -94,10 +99,61 @@ trait_1 = "Movement"
 tags = Array[String](["movement"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
+[sub_resource type="Resource" id="Resource_wdfje"]
+script = ExtResource("22_ebomw")
+markers = Dictionary[String, float]({
+"HIT_END": 0.4,
+"HIT_START": 0.27,
+"REACT_OFF": 0.4,
+"REACT_ON": 0.27
+})
+metadata/_custom_type_script = "uid://bf2hv6d83v6fv"
+
+[sub_resource type="Resource" id="Resource_3dyvf"]
+script = ExtResource("21_f0670")
+name = "UnarmedBlock"
+animation = ExtResource("19_00nvd")
+sync_profile = SubResource("Resource_wdfje")
+metadata/_custom_type_script = "uid://brutb7o0hj6td"
+
+[sub_resource type="Resource" id="Resource_ckhw7"]
+script = ExtResource("24_cb3j6")
+use_expire_rule = 2
+ui_name = &"Grant Block"
+metadata/_custom_type_script = "uid://13akgn3nuj34"
+
+[sub_resource type="Resource" id="Resource_4rg85"]
+script = ExtResource("28_f3uqp")
+metadata/_custom_type_script = "uid://clbt58mwsvag8"
+
+[sub_resource type="Resource" id="Resource_a1x7f"]
+script = ExtResource("29_0fvkv")
+relation = 0
+metadata/_custom_type_script = "uid://c7ofxaslt34wn"
+
+[sub_resource type="Resource" id="Resource_4uvkp"]
+script = ExtResource("30_dpue3")
+metadata/_custom_type_script = "uid://cq6k3vojdsik7"
+
+[sub_resource type="Resource" id="Resource_05afn"]
+resource_name = "PassiveBlockSkillResource"
+script = ExtResource("12_f2qps")
+skill_name = "Passive Block"
+skill_category = 1
+skill_type = 1
+skill_trigger = 2
+internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_4rg85"), SubResource("Resource_a1x7f"), SubResource("Resource_4uvkp")])
+is_disabled = true
+animation_package = SubResource("Resource_3dyvf")
+effects = Array[ExtResource("23_04ue1")]([SubResource("Resource_ckhw7")])
+trait_1 = "Block"
+description = Array[String](["Activates when targeted by an attack to grant self block."])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"
+
 [sub_resource type="Resource" id="Resource_tkd6a"]
 script = ExtResource("24_5lfvx")
 active_skills = Array[ExtResource("12_f2qps")]([ExtResource("39_5lfvx"), SubResource("Resource_idaqs")])
-passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("21_w01yd")])
+passive_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_05afn")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
 [sub_resource type="Resource" id="Resource_f0670"]
@@ -235,10 +291,23 @@ script = ExtResource("11_6kl6n")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_f0670"), SubResource("Resource_ebomw"), SubResource("Resource_04ue1"), SubResource("Resource_cb3j6"), SubResource("Resource_e15dp"), SubResource("Resource_c2k8n"), SubResource("Resource_hja2s"), SubResource("Resource_f3uqp"), SubResource("Resource_0fvkv"), SubResource("Resource_dpue3"), SubResource("Resource_mpmhl"), SubResource("Resource_yl67w"), SubResource("Resource_0who7")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
 
+[sub_resource type="Resource" id="Resource_ufsey"]
+resource_name = "PassiveBlockSkillResource"
+script = ExtResource("12_f2qps")
+skill_name = "Passive Block"
+skill_category = 1
+skill_type = 1
+skill_trigger = 2
+internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_4rg85"), SubResource("Resource_a1x7f"), SubResource("Resource_4uvkp")])
+is_disabled = true
+trait_1 = "Block"
+description = Array[String](["Activates when targeted by an attack to grant self block."])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"
+
 [sub_resource type="Resource" id="Resource_k6sm3"]
 script = ExtResource("24_5lfvx")
 active_skills = Array[ExtResource("12_f2qps")]([ExtResource("40_0fvkv"), ExtResource("39_5lfvx"), SubResource("Resource_idaqs"), ExtResource("38_c2k8n")])
-passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("42_dpue3")])
+passive_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_ufsey"), ExtResource("42_dpue3")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
 [sub_resource type="Resource" id="Resource_lk7si"]
@@ -377,10 +446,23 @@ script = ExtResource("11_6kl6n")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_lk7si"), SubResource("Resource_8pahp"), SubResource("Resource_rfnuq"), SubResource("Resource_73fol"), SubResource("Resource_q6bko"), SubResource("Resource_a4tjr"), SubResource("Resource_pwtg8"), SubResource("Resource_dydjx"), SubResource("Resource_2gvhv"), SubResource("Resource_src6p"), SubResource("Resource_o8y13"), SubResource("Resource_g2rko"), SubResource("Resource_su0wa")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
 
+[sub_resource type="Resource" id="Resource_o24kd"]
+resource_name = "PassiveBlockSkillResource"
+script = ExtResource("12_f2qps")
+skill_name = "Passive Block"
+skill_category = 1
+skill_type = 1
+skill_trigger = 2
+internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_4rg85"), SubResource("Resource_a1x7f"), SubResource("Resource_4uvkp")])
+is_disabled = true
+trait_1 = "Block"
+description = Array[String](["Activates when targeted by an attack to grant self block."])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"
+
 [sub_resource type="Resource" id="Resource_jiskd"]
 script = ExtResource("24_5lfvx")
 active_skills = Array[ExtResource("12_f2qps")]([ExtResource("39_5lfvx"), SubResource("Resource_idaqs")])
-passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("21_8v6vh")])
+passive_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_o24kd")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
 [sub_resource type="Resource" id="Resource_4dv0c"]
@@ -519,10 +601,23 @@ script = ExtResource("11_6kl6n")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_4dv0c"), SubResource("Resource_ub3kf"), SubResource("Resource_p6sl4"), SubResource("Resource_j6cut"), SubResource("Resource_qtrpl"), SubResource("Resource_8wfs1"), SubResource("Resource_wan3k"), SubResource("Resource_ol02q"), SubResource("Resource_avl6w"), SubResource("Resource_3ixwr"), SubResource("Resource_ody2n"), SubResource("Resource_2qjkf"), SubResource("Resource_5ddj0")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
 
+[sub_resource type="Resource" id="Resource_utj8h"]
+resource_name = "PassiveBlockSkillResource"
+script = ExtResource("12_f2qps")
+skill_name = "Passive Block"
+skill_category = 1
+skill_type = 1
+skill_trigger = 2
+internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_4rg85"), SubResource("Resource_a1x7f"), SubResource("Resource_4uvkp")])
+is_disabled = true
+trait_1 = "Block"
+description = Array[String](["Activates when targeted by an attack to grant self block."])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"
+
 [sub_resource type="Resource" id="Resource_7g53y"]
 script = ExtResource("24_5lfvx")
 active_skills = Array[ExtResource("12_f2qps")]([ExtResource("39_5lfvx"), SubResource("Resource_idaqs")])
-passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("36_cb3j6")])
+passive_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_utj8h")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
 [sub_resource type="Resource" id="Resource_68abb"]

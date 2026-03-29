@@ -61,7 +61,7 @@ func _ready() -> void:
 ## Initializes a fresh [code]CombatEventData[/code], logs, runs resolution, then selects and runs the defender's Reaction.
 ##
 ## [b]Parameters[/b][br]
-## • [param action]: [Class AttackAction] — the action to resolve.[br]
+## • [param action]: [Class CombatAction] — the action to resolve.[br]
 ## • [param attacker]: [Class Unit] — the attacking unit.[br]
 ## • [param defender]: [Class Unit] — the defending unit.
 ##
@@ -69,7 +69,7 @@ func _ready() -> void:
 ## • Populates [member current_combat_event_data] with dice results, flags, and totals.[br]
 ## • May spawn floating text via [code]Utilities.spawn_text_line[/code].[br]
 ## • Selects a Reaction from the defender's [ReactionPack] via [ReactionResolver] and awaits it.
-func declare_attack(action: AttackAction, attacker: Unit, defender: Unit, skill: Skill = null) -> void:
+func declare_attack(action: CombatAction, attacker: Unit, defender: Unit, skill: Skill = null) -> void:
 	current_combat_event_data = CombatEventData.new()
 
 	# Set combat event participants
@@ -101,7 +101,7 @@ func declare_attack(action: AttackAction, attacker: Unit, defender: Unit, skill:
 	_debug_dump_current_event()
 
 
-func _resolve_attack_darkest_dungeon(action: AttackAction, attacker: Unit, defender: Unit, skill: Skill) -> void:
+func _resolve_attack_darkest_dungeon(action: CombatAction, attacker: Unit, defender: Unit, skill: Skill) -> void:
 	var cd: CombatEventData = current_combat_event_data
 
 	# Reset
@@ -113,8 +113,8 @@ func _resolve_attack_darkest_dungeon(action: AttackAction, attacker: Unit, defen
 	var attacker_attrs := attacker.get_attributes_container()
 	var defender_attrs := defender.get_attributes_container()
 
-	var might_value: int = attacker_attrs.get_attribute_current_value(action.prowess_attribute)
-	var defense_value: int = defender_attrs.get_attribute_current_value(action.defense_attribute)
+	var might_value: int = attacker_attrs.get_attribute_current_value(skill.prowess_attribute)
+	var defense_value: int = defender_attrs.get_attribute_current_value(skill.defense_attribute)
 	var acc_value: int = attacker_attrs.get_attribute_current_value("accuracy")
 	var evd_value: int = defender_attrs.get_attribute_current_value("evade")
 	var base_crit_chance: int = attacker_attrs.get_attribute_current_value("critical")
@@ -198,7 +198,10 @@ func determine_reaction(cd: CombatEventData) -> void:
 	if reaction == null:
 		return
 	var run: Action = cd.defender.get_action_container().use_action(reaction, cd.defender)
+	if run == null:
+		push_error("Invalid Reaction on defender")
 	await run.on_action_ended
+	pass
 
 
 ## Emit a multi-section debug dump to [code]CombatLog[/code]: header, core stats, gates snapshot,
@@ -226,9 +229,9 @@ func _debug_dump_current_event() -> void:
 			cd.action.get_class(),
 			cd.initial_low_damage,
 			cd.initial_high_damage,
-			cd.action.prowess_attribute,
-			cd.action.defense_attribute,
-			str(cd.action.is_melee_attack)
+			cd.skill.prowess_attribute,
+			cd.skill.defense_attribute,
+			str(cd.action.is_melee)
 		]
 	)
 	CombatLog.instance.add_log(core)
@@ -237,12 +240,12 @@ func _debug_dump_current_event() -> void:
 	# Gates snapshot (at resolution)
 	var attacker_attrs := cd.attacker.get_attributes_container()
 	var defender_attrs := cd.defender.get_attributes_container()
-	var prowess_val := attacker_attrs.get_attribute_current_value(cd.action.prowess_attribute)
-	var defense_val := defender_attrs.get_attribute_current_value(cd.action.defense_attribute)
+	var prowess_val := attacker_attrs.get_attribute_current_value(cd.skill.prowess_attribute)
+	var defense_val := defender_attrs.get_attribute_current_value(cd.skill.defense_attribute)
 	var evd_val := defender_attrs.get_attribute_current_value("evade")
 	var acc_val := cd.accuracy
 
-	var gates := "  Gates: %s=%d | %s=%d | EVD=%d | ACCU=%d" % [cd.action.prowess_attribute.to_pascal_case(), prowess_val, cd.action.defense_attribute.to_pascal_case(), defense_val, evd_val, acc_val]
+	var gates := "  Gates: %s=%d | %s=%d | EVD=%d | ACCU=%d" % [cd.skill.prowess_attribute.to_pascal_case(), prowess_val, cd.skill.defense_attribute.to_pascal_case(), defense_val, evd_val, acc_val]
 	CombatLog.instance.add_log(gates)
 
 	CombatLog.instance.add_log("  Damage Multiplier: " + str(cd.pending_power_percent / 100.0))

@@ -51,6 +51,7 @@ func make_actions_unique() -> void:
 ## Returns the resolved action instance from this container (or [code]null[/code] if not found/invalid).
 func use_action(in_action: Action, target: Variant, use_in_action: bool = false) -> Action:
 	if !in_action:
+		push_error("Invalid Action Attempted")
 		return
 	
 	var test_action: Action = get_action_by_name(in_action.action_name) if !use_in_action else in_action#.duplicate(true)

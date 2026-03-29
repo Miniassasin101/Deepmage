@@ -51,9 +51,25 @@ enum SkillType { ATTACK, SUPPORT, SABOTAGE, SPECIAL}
 @export var base_accuracy: int = 95
 @export var crit_mod: int = 0
 
+@export_group("Animation and Combat")
+## The animation played when this skill is used.
+@export var animation_package: AnimationPackage
+## Attribute key used for the attacker's power (e.g. "martial", "arcane").
+@export var prowess_attribute: String = "martial"
+## Attribute key used for the defender's resistance (e.g. "parry", "resist").
+@export var defense_attribute: String = "parry"
+
 @export_group("Skill Effects")
 @export_subgroup("Modifies Skill")
 @export var skill_modifying_statuses: Array[Status] = []
+
+@export_subgroup("Target Effects")
+## Effects applied to the target unit at the hit moment.
+@export var effects: Array[Effect] = []
+
+@export_subgroup("Self Effects")
+## Effects applied to the user unit at the hit moment.
+@export var self_effects: Array[Effect] = []
 
 @export_group("Magic")
 @export var is_spell: bool = false

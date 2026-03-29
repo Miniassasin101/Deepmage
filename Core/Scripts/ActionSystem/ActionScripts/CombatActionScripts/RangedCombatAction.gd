@@ -1,5 +1,5 @@
-class_name RangedAttackAction
-extends AttackAction
+class_name RangedCombatAction
+extends CombatAction
 
 # =========================
 # Exports (tune to taste)
@@ -41,7 +41,7 @@ var _owned_projectile: bool = false
 
 # ------------------------------------------------------------
 # We piggyback on the timing calculation step:
-# AttackAction.start_action() calls get_animation_sync().
+# CombatAction.start_action() calls get_animation_sync().
 # Here we override that call to (a) build the projectile path,
 # (b) pre-plan travel, and (c) move the hit moment by travel time.
 # ------------------------------------------------------------
@@ -70,7 +70,7 @@ func get_animation_sync(reaction_anim_pack: AnimationPackage) -> Dictionary:
 	# Spawn (or attach) projectile
 	_proj = _make_or_fetch_projectile()
 	if _proj == null:
-		push_error("RangedAttackAction: projectile_scene is missing or not a Node3D.")
+		push_error("RangedCombatAction: projectile_scene is missing or not a Node3D.")
 	else:
 		_carrier.attach_projectile(_proj, true)
 		
@@ -91,9 +91,9 @@ func get_animation_sync(reaction_anim_pack: AnimationPackage) -> Dictionary:
 	
 
 	# Figure out WHEN the projectile is released in the attack anim
-	var release_t := _safe_marker_time(animation_package, fire_marker)
+	var release_t := _safe_marker_time(_active_skill.animation_package, fire_marker)
 	if release_t < 0.0:
-		release_t = _safe_marker_time(animation_package, fallback_fire_if_missing)
+		release_t = _safe_marker_time(_active_skill.animation_package, fallback_fire_if_missing)
 	if release_t < 0.0:
 		release_t = 0.0   # last resort: at animation start
 
@@ -103,7 +103,7 @@ func get_animation_sync(reaction_anim_pack: AnimationPackage) -> Dictionary:
 	var attack_center := float(sync.get("attack_center", 0.0))
 	var extra := (release_t + projectile_travel_time) - attack_center
 	hit_delay = maxf(0.0, extra)    # never go negative; if travel is short we don't pull the hit earlier
-	use_hit_delay = true            # tell AttackAction to use timer-based hit with our delay
+	use_hit_delay = true            # tell CombatAction to use timer-based hit with our delay
 
 	# Schedule the LAUNCH to match the attack playback
 	var attack_delay := float(sync.get("attack_delay", 0.0))

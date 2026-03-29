@@ -1,15 +1,11 @@
 [gd_resource type="Resource" script_class="Skill" format=3 uid="uid://djreue8l2xkig"]
 
 [ext_resource type="Resource" uid="uid://djrw5nkydvyv6" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BlockPackage.tres" id="1_anim"]
-[ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="2_shake"]
-[ext_resource type="Script" uid="uid://bkgigckslvvpk" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="3_stop"]
+[ext_resource type="Script" uid="uid://crlblfi0eiqt0" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/CombatActionScripts/CombatAction.gd" id="1_bwu5k"]
 [ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_effect"]
 [ext_resource type="Script" uid="uid://c8s5omyjs8xrw" path="res://Deepmage/Core/Scripts/Mechanics/Effects/GrantStatusEffect.gd" id="5_grant"]
 [ext_resource type="Script" uid="uid://bl8f0itpdwibr" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/StatusScripts/Blessings/RestorePostureBlessing.gd" id="6_restore"]
-[ext_resource type="Script" uid="uid://b3xoc4esw8i4s" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/InflictEffectAction.gd" id="7_inflict"]
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="8_nbool"]
-[ext_resource type="Resource" uid="uid://caeygn6gmknml" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/BlessingSkills/ActiveBlockSkillResource.tres" id="9_fallback"]
-[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="10_unitbool"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="11_skill"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="12_co3e5"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="12_cond_base"]
@@ -18,15 +14,10 @@
 [ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="16_urujj"]
 [ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="17_ieuc8"]
 
-[sub_resource type="Resource" id="Resource_shake"]
-script = ExtResource("2_shake")
-strength = 0.1
-shake_time = 0.25
-metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
-
-[sub_resource type="Resource" id="Resource_stop_short"]
-script = ExtResource("3_stop")
-metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+[sub_resource type="Resource" id="Resource_xhiib"]
+script = ExtResource("1_bwu5k")
+action_name = "Status Grant Action"
+metadata/_custom_type_script = "uid://crlblfi0eiqt0"
 
 [sub_resource type="Resource" id="Resource_blessing"]
 script = ExtResource("6_restore")
@@ -41,26 +32,6 @@ status = SubResource("Resource_blessing")
 ui_name = &"Revive"
 metadata/_custom_type_script = "uid://c8s5omyjs8xrw"
 
-[sub_resource type="Resource" id="Resource_stop_long"]
-script = ExtResource("3_stop")
-metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
-
-[sub_resource type="Resource" id="Resource_action"]
-script = ExtResource("7_inflict")
-animation_package = ExtResource("1_anim")
-is_attack = false
-fallback_skill = ExtResource("9_fallback")
-hit_anim_effect = SubResource("Resource_shake")
-graze_anim_effect = SubResource("Resource_shake")
-block_anim_effect = SubResource("Resource_shake")
-hit_stop_effect = SubResource("Resource_stop_long")
-graze_stop_effect = SubResource("Resource_stop_short")
-block_stop_effect = SubResource("Resource_stop_short")
-effects = Array[ExtResource("4_effect")]([SubResource("Resource_effect")])
-action_name = "Revive"
-selection_types = Array[ExtResource("8_nbool")]([ExtResource("10_unitbool")])
-metadata/_custom_type_script = "uid://b3xoc4esw8i4s"
-
 [sub_resource type="Resource" id="Resource_cond_ally"]
 script = ExtResource("13_ally")
 metadata/_custom_type_script = "uid://chfgmawv4njrc"
@@ -72,13 +43,15 @@ script = ExtResource("14_downed")
 resource_name = "ReviveSkillResource"
 script = ExtResource("11_skill")
 skill_name = "Revive"
-action = SubResource("Resource_action")
+action = SubResource("Resource_xhiib")
 skill_type = 1
 skill_cost = 2
 internal_skill_conditions = Array[ExtResource("12_cond_base")]([SubResource("Resource_cond_ally"), SubResource("Resource_cond_downed")])
 base_power = 0
 base_accuracy = 100
 crit_mod = -3
+animation_package = ExtResource("1_anim")
+effects = Array[ExtResource("4_effect")]([SubResource("Resource_effect")])
 trait_1 = "Revival"
 trait_2 = "Ally"
 trigger_description = "Always"

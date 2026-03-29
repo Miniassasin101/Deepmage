@@ -10,7 +10,7 @@ var defender: Unit = null
 var skill: Skill = null
 
 # Actions/Reactions
-var action: AttackAction = null
+var action: CombatAction = null
 
 var reaction: Reaction = null
 
