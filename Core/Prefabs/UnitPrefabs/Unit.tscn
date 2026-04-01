@@ -308,7 +308,6 @@ update_scale = false
 [node name="StatusController" type="Node" parent="." unique_id=1216770766 node_paths=PackedStringArray("unit", "unit_vfx_manager")]
 script = ExtResource("11_1um36")
 unit = NodePath("..")
-starting_statuses = null
 unit_vfx_manager = NodePath("../UnitVFXManager")
 metadata/_custom_type_script = "uid://ck2buvlnnr6il"
 

@@ -4,6 +4,7 @@
 [ext_resource type="Resource" uid="uid://djrw5nkydvyv6" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BlockPackage.tres" id="2_3qydp"]
 [ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="5_4glmv"]
 [ext_resource type="Script" uid="uid://13akgn3nuj34" path="res://Deepmage/Core/Scripts/Mechanics/Effects/GrantBlockEffect.gd" id="6_hmkfa"]
+[ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="9_fkfou"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="10_du607"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="11_0cm66"]
 [ext_resource type="Script" uid="uid://c7ofxaslt34wn" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SourceTargetBasedSkillConditions/IsSourceTargetFaction.gd" id="13_6xt6p"]
@@ -20,12 +21,16 @@ metadata/_custom_type_script = "uid://13akgn3nuj34"
 
 [sub_resource type="Resource" id="Resource_a1x7f"]
 script = ExtResource("13_6xt6p")
-relation = 1
+relation = 0
 metadata/_custom_type_script = "uid://c7ofxaslt34wn"
 
 [sub_resource type="Resource" id="Resource_4uvkp"]
 script = ExtResource("14_a1x7f")
 metadata/_custom_type_script = "uid://cq6k3vojdsik7"
+
+[sub_resource type="Resource" id="Resource_vprm7"]
+script = ExtResource("9_fkfou")
+metadata/_custom_type_script = "uid://clbt58mwsvag8"
 
 [resource]
 resource_name = "PassiveBlockSkillResource"
@@ -35,7 +40,8 @@ action = ExtResource("1_nri5f")
 skill_category = 1
 skill_type = 1
 skill_trigger = 2
-internal_skill_conditions = Array[ExtResource("11_0cm66")]([SubResource("Resource_a1x7f"), SubResource("Resource_4uvkp")])
+internal_skill_conditions = Array[ExtResource("11_0cm66")]([SubResource("Resource_a1x7f"), SubResource("Resource_4uvkp"), SubResource("Resource_vprm7")])
+is_disabled = true
 animation_package = ExtResource("2_3qydp")
 effects = Array[ExtResource("5_4glmv")]([SubResource("Resource_ckhw7")])
 trait_1 = "Block"

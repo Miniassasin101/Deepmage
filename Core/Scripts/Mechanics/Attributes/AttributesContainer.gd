@@ -145,10 +145,13 @@ func get_attribute(in_name: String) -> Attribute:
 
 ## Returns the current [i]modified[/i] value (base + modifiers) of the attribute named [param in_name].[br]
 ## Returns [code]0[/code] if the attribute does not exist.
-func get_attribute_current_value(in_name: String) -> int:
+func get_attribute_current_value(in_name: String, allow_negative_vals: bool = false) -> int:
 	var att = get_attribute(in_name)
 	if att:
-		return maxi(att.get_current_modified_value(), 0)
+		if !allow_negative_vals:
+			return maxi(att.get_current_modified_value(), 0)
+		else:
+			return att.get_current_modified_value()
 	return 0
 
 

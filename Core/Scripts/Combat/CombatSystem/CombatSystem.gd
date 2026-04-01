@@ -109,14 +109,15 @@ func _resolve_attack_darkest_dungeon(action: CombatAction, attacker: Unit, defen
 	cd.total_initial_damage = 0
 	cd.total_after_defense = 0
 	cd.was_crit_any = false
-
+	
+	
 	var attacker_attrs := attacker.get_attributes_container()
 	var defender_attrs := defender.get_attributes_container()
 
 	var might_value: int = attacker_attrs.get_attribute_current_value(skill.prowess_attribute)
 	var defense_value: int = defender_attrs.get_attribute_current_value(skill.defense_attribute)
-	var acc_value: int = attacker_attrs.get_attribute_current_value("accuracy")
-	var evd_value: int = defender_attrs.get_attribute_current_value("evade")
+	var acc_value: int = attacker_attrs.get_attribute_current_value("accuracy", true)
+	var evd_value: int = defender_attrs.get_attribute_current_value("evade", true)
 	var base_crit_chance: int = attacker_attrs.get_attribute_current_value("critical")
 	var crit_value: int = base_crit_chance + skill.crit_mod
 

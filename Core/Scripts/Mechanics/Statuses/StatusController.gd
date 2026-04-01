@@ -68,7 +68,7 @@ func before_attack_roll(in_unit: Unit, cd: CombatEventData) -> void:
 	for status_inst in statuses: # however you store them
 		if status_inst == null:
 			continue
-
+		
 		status_inst.before_attack_roll(in_unit, cd)
 
 

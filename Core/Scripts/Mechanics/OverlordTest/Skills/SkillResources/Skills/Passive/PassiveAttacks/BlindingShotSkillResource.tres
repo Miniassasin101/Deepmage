@@ -1,0 +1,78 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://dcsbni56ahu34"]
+
+[ext_resource type="PackedScene" uid="uid://kybquhg07l5i" path="res://Deepmage/Core/Prefabs/VFX/TestBall.tscn" id="1_0u0d5"]
+[ext_resource type="Script" uid="uid://dakp7qskf75ug" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/CombatActionScripts/RangedCombatAction.gd" id="2_cirnx"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="3_6g5q3"]
+[ext_resource type="Resource" uid="uid://uwibxof05smc" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BallThrowPackage.tres" id="4_ht86v"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="5_iedls"]
+[ext_resource type="Script" uid="uid://c8s5omyjs8xrw" path="res://Deepmage/Core/Scripts/Mechanics/Effects/GrantStatusEffect.gd" id="6_ht86v"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="6_tlhip"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="7_b3fcb"]
+[ext_resource type="Script" uid="uid://db1xarxagsk0k" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/StatusScripts/Afflictions/GenericGainAffliction.gd" id="7_iedls"]
+[ext_resource type="Script" uid="uid://cq6k3vojdsik7" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SkillSourceBasedSkillConditions/IsSourceSkillType.gd" id="8_mljv6"]
+[ext_resource type="Script" uid="uid://cpk5t6274clio" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SourceTargetUnitBasedSkillConditions/IsSourceUserFaction.gd" id="9_wre1w"]
+[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="10_rke5h"]
+[ext_resource type="Script" uid="uid://c7ofxaslt34wn" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SourceTargetBasedSkillConditions/IsSourceTargetFaction.gd" id="11_0u0d5"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="12_4cyje"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="13_1qoqx"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="14_maakf"]
+[ext_resource type="Script" uid="uid://dpuqdmbq5a4in" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SourceTargetBasedSkillConditions/IsSourceUser.gd" id="15_srcur"]
+
+[sub_resource type="Resource" id="Resource_27mei"]
+script = ExtResource("2_cirnx")
+is_melee = false
+action_name = "RangedCombatAction"
+metadata/_custom_type_script = "uid://dakp7qskf75ug"
+
+[sub_resource type="Resource" id="Resource_tlhip"]
+script = ExtResource("7_iedls")
+stat_name = "accuracy"
+ui_name = "Accuracy Down"
+status_category = 2
+status_level = 20
+expire_timing = 2
+metadata/_custom_type_script = "uid://db1xarxagsk0k"
+
+[sub_resource type="Resource" id="Resource_b3fcb"]
+script = ExtResource("6_ht86v")
+status = SubResource("Resource_tlhip")
+ui_name = &"Accuracy Drain"
+metadata/_custom_type_script = "uid://c8s5omyjs8xrw"
+
+[sub_resource type="Resource" id="Resource_4uvkp"]
+script = ExtResource("8_mljv6")
+metadata/_custom_type_script = "uid://cq6k3vojdsik7"
+
+[sub_resource type="Resource" id="Resource_vimjk"]
+script = ExtResource("9_wre1w")
+metadata/_custom_type_script = "uid://cpk5t6274clio"
+
+[sub_resource type="Resource" id="Resource_j4q1g"]
+script = ExtResource("10_rke5h")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_cirnx"]
+script = ExtResource("11_0u0d5")
+relation = 1
+metadata/_custom_type_script = "uid://c7ofxaslt34wn"
+
+[sub_resource type="Resource" id="Resource_srcusr"]
+script = ExtResource("15_srcur")
+
+[resource]
+resource_name = "BlindingShotSkillResource"
+script = ExtResource("12_4cyje")
+skill_name = "Blinding Shot"
+action = SubResource("Resource_27mei")
+skill_category = 1
+skill_trigger = 2
+internal_skill_conditions = Array[ExtResource("7_b3fcb")]([SubResource("Resource_4uvkp"), SubResource("Resource_vimjk"), SubResource("Resource_j4q1g"), SubResource("Resource_cirnx"), SubResource("Resource_srcusr")])
+base_power = 75
+crit_mod = 10
+animation_package = ExtResource("4_ht86v")
+effects = Array[ExtResource("5_iedls")]([SubResource("Resource_b3fcb")])
+trait_1 = "Ranged"
+trait_2 = "Intercepting"
+trigger_description = "When an enemy targets an ally with an attack"
+description = Array[String](["Fires at the attacker before they can strike, inflicting an accuracy penalty"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"
