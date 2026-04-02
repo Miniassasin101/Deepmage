@@ -18,6 +18,8 @@
 [ext_resource type="Resource" uid="uid://br2jiaiufcylm" path="res://Deepmage/Core/Resources/ActionResources/MovementActionResources/TeleportActionResource.tres" id="11_grtb5"]
 [ext_resource type="Resource" uid="uid://dkgox1ly7bfii" path="res://Deepmage/Core/Resources/ActionResources/TextDistanceFromUnitActionResource.tres" id="11_hd7qr"]
 [ext_resource type="Script" uid="uid://p4bb1ulowyag" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributesContainer.gd" id="25_ui78x"]
+[ext_resource type="Script" uid="uid://0covjvx686p3" path="res://Deepmage/Core/Scripts/Mechanics/Equipment/EquipmentContainer.gd" id="30_vcafi"]
+[ext_resource type="Resource" uid="uid://d0y06uljt6wll" path="res://Deepmage/Core/Resources/Equipment/Weapons/TestWeapons/TestSword.tres" id="31_ucxv2"]
 [ext_resource type="Script" uid="uid://wnokk4hycw83" path="res://Deepmage/Core/Scripts/Mechanics/Classes/ClassManager.gd" id="35_semri"]
 [ext_resource type="Script" uid="uid://d3crcpqyvdwur" path="res://Deepmage/Core/Scripts/Mechanics/Magic/MagicController.gd" id="36_dpcrq"]
 [ext_resource type="Resource" uid="uid://r1voosghl6ll" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Ancestries/HumanAncestry.tres" id="36_lqkdn"]
@@ -30,12 +32,13 @@
 [ext_resource type="Resource" uid="uid://dcmueyhnuimld" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Gear/BracersGear.tres" id="43_t0b1j"]
 [ext_resource type="Resource" uid="uid://bbh5ijxuf1wuf" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Rank/Rank.tres" id="44_p3ymn"]
 
-[node name="CharacterSheet" type="Node" unique_id=1198739603 node_paths=PackedStringArray("action_container", "attributes_container", "magic_controller", "class_manager")]
+[node name="CharacterSheet" type="Node" unique_id=1198739603 node_paths=PackedStringArray("action_container", "attributes_container", "magic_controller", "class_manager", "equipment_container")]
 script = ExtResource("1_rgld4")
 action_container = NodePath("ActionContainer")
 attributes_container = NodePath("AttributesContainer")
 magic_controller = NodePath("MagicController")
 class_manager = NodePath("ClassManager")
+equipment_container = NodePath("EquipmentContainer")
 attributes_profile = ExtResource("2_semri")
 build_profile = ExtResource("3_p3uej")
 
@@ -61,3 +64,8 @@ progression = ExtResource("44_p3ymn")
 
 [node name="MagicController" type="Node" parent="." unique_id=1291920677]
 script = ExtResource("36_dpcrq")
+
+[node name="EquipmentContainer" type="Node" parent="." unique_id=1319926146]
+script = ExtResource("30_vcafi")
+carried_gear = Array[ExtResource("40_txd4g")]([ExtResource("31_ucxv2")])
+metadata/_custom_type_script = "uid://0covjvx686p3"

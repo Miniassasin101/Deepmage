@@ -6,7 +6,7 @@ extends Control
 @export var mouse_controller: MouseController = null
 @export var pathfinding: PathfindingSystem= null
 @export var tactics_manager_ui: TacticsManagerUI = null
-
+@export var gear_container: GearContainer = null
 
 @export_category("Scenes")
 @export var character_sheet_part_panel_scene: PackedScene  # (Not used for body parts anymore)
@@ -213,15 +213,24 @@ func _populate_from_unit(unit: Unit, update_skills: bool = false) -> void:
 	# Triggers the tactics manager to populate itself from the new unit
 	if tactics_manager_ui and update_skills:
 		tactics_manager_ui.populate_from_unit(unit)
-	
+
+	# Refresh the gear panel for the new unit.
+	if gear_container != null:
+		gear_container.show_for_unit(unit)
+
 	_populate_statuses(unit)
-	
+
 	last_unit = unit
 
 
 func get_min_max_martial_dmg(unit: Unit) -> String:
+	var charsheet: CharacterSheet = unit.character_sheet
+	var weapon: Weapon = charsheet.equipment_container.get_weapon("weapon_main")
 	var weapon_min: int = 1 # Note Get weapon damages here
 	var weapon_max: int = 3
+	if weapon:
+		weapon_min = weapon.damage_min
+		weapon_max = weapon.damage_max
 	
 	var martial_val: int = int(_get_attribute_or_na(unit, "martial"))
 	

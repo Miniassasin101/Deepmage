@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cdg74g3uyifaq"]
+
+[ext_resource type="Script" uid="uid://bwaklds0myuua" path="res://Deepmage/Core/Scripts/UI/EquipmentPanelUI.gd" id="1_dui0f"]
+
+[node name="EquipmentPanelUI" type="PanelContainer" unique_id=1154205104]
+script = ExtResource("1_dui0f")
+metadata/_custom_type_script = "uid://bwaklds0myuua"

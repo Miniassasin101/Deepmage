@@ -82,6 +82,12 @@ func declare_attack(action: CombatAction, attacker: Unit, defender: Unit, skill:
 	# Set Skill
 	current_combat_event_data.skill = skill if skill != null else action.fallback_skill
 
+	# Resolve the active weapon from the attacker's EquipmentContainer (if present).
+	var _ec: EquipmentContainer = null
+	if attacker.character_sheet != null:
+		_ec = attacker.character_sheet.equipment_container
+	if _ec != null:
+		current_combat_event_data.weapon = _ec.get_active_weapon_for_skill(current_combat_event_data.skill)
 
 	# High-level log of the attempt
 	CombatLog.instance.add_log()

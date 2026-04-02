@@ -5,3 +5,4 @@
 
 [resource]
 script = ExtResource("1_etyeu")
+action_name = "Attack Action"

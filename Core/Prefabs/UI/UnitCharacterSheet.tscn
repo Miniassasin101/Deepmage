@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cqqsm2gpif3dw"]
 
 [ext_resource type="Script" uid="uid://d23wjfbfks7yo" path="res://Deepmage/Core/Scripts/UI/UnitCharacterSheet.gd" id="1_s4tfa"]
-[ext_resource type="Script" uid="uid://sf85e6lefcql" path="res://Deepmage/Core/Scripts/UI/WeaponsContainer.gd" id="3_6ibqs"]
+[ext_resource type="PackedScene" uid="uid://bmrhj0h8vm07x" path="res://Deepmage/Core/Prefabs/UI/GearContainer.tscn" id="2_7gglt"]
 [ext_resource type="PackedScene" uid="uid://bdohbmjso32gu" path="res://Deepmage/Core/Prefabs/UI/TacticsManagerUI.tscn" id="3_7gglt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wvosu"]
@@ -36,7 +36,7 @@ gradient = SubResource("Gradient_sbgmx")
 
 [sub_resource type="Theme" id="Theme_32rw0"]
 
-[node name="UnitCharacterSheetUI" type="Control" unique_id=210217793 node_paths=PackedStringArray("tactics_manager_ui", "unit_name_label", "magic_class_label", "martial_class_label", "accuracy_label", "critical_chance_label", "martial_damage_label", "channel_damage_label", "posture_points_label", "experience_rolls_label", "initiative_label", "speed_label", "unused_label_1", "might_label", "endurance_label", "agility_label", "sense_label", "mind_label", "presence_label", "martial_label", "channel_label", "parry_label", "resist_label", "clash_label", "evade_label", "will_label", "status_container", "tab_container", "close_button")]
+[node name="UnitCharacterSheetUI" type="Control" unique_id=210217793 node_paths=PackedStringArray("tactics_manager_ui", "gear_container", "unit_name_label", "magic_class_label", "martial_class_label", "accuracy_label", "critical_chance_label", "martial_damage_label", "channel_damage_label", "posture_points_label", "experience_rolls_label", "initiative_label", "speed_label", "unused_label_1", "might_label", "endurance_label", "agility_label", "sense_label", "mind_label", "presence_label", "martial_label", "channel_label", "parry_label", "resist_label", "clash_label", "evade_label", "will_label", "status_container", "tab_container", "close_button")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 2.0
@@ -46,6 +46,7 @@ offset_bottom = 455.125
 scale = Vector2(0.62, 0.62)
 script = ExtResource("1_s4tfa")
 tactics_manager_ui = NodePath("MarginContainer/TabContainer/Tactics/TacticsManagerUI")
+gear_container = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/WeaponMarginContainer/GearContainer")
 unit_name_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer3/PanelContainer/MarginContainer/VboxContainer/UnitNameLabel")
 magic_class_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer3/PanelContainer/MarginContainer/VboxContainer/MagicClassLabel")
 martial_class_label = NodePath("MarginContainer/TabContainer/Character/VBoxContainer/UpperMarginContainer/PanelContainer/HBoxContainer/MarginContainer3/PanelContainer/MarginContainer/VboxContainer/MartialClassLabel")
@@ -954,75 +955,11 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/WeaponMarginContainer" unique_id=1644380658]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/WeaponMarginContainer/PanelContainer" unique_id=828116951]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="WeaponsContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/WeaponMarginContainer/PanelContainer/MarginContainer" unique_id=256365755 node_paths=PackedStringArray("weapon_name_container", "weapon_damage_container", "weapon_ap_container")]
-layout_mode = 2
-theme = SubResource("Theme_32rw0")
-script = ExtResource("3_6ibqs")
-weapon_name_container = NodePath("VBoxContainer/WeaponNameContainer")
-weapon_damage_container = NodePath("VBoxContainer2/WeaponCategoryContainer")
-weapon_ap_container = NodePath("VBoxContainer4/WeaponEffectsContainer")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/WeaponMarginContainer/PanelContainer/MarginContainer/WeaponsContainer" unique_id=1303094545]
-layout_mode = 2
-
-[node name="WeaponNameTag" type="Label" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/WeaponMarginContainer/PanelContainer/MarginContainer/WeaponsContainer/VBoxContainer" unique_id=1883631830]
-layout_mode = 2
-text = "Weapon"
-horizontal_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/WeaponMarginContainer/PanelContainer/MarginContainer/WeaponsContainer/VBoxContainer" unique_id=796243816]
-layout_mode = 2
-
-[node name="WeaponNameContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/WeaponMarginContainer/PanelContainer/MarginContainer/WeaponsContainer/VBoxContainer" unique_id=637705842]
-layout_mode = 2
-
-[node name="VSeparator" type="VSeparator" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/WeaponMarginContainer/PanelContainer/MarginContainer/WeaponsContainer" unique_id=127134364]
-layout_mode = 2
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/WeaponMarginContainer/PanelContainer/MarginContainer/WeaponsContainer" unique_id=98224932]
-layout_mode = 2
-
-[node name="WeaponCategoryTag" type="Label" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/WeaponMarginContainer/PanelContainer/MarginContainer/WeaponsContainer/VBoxContainer2" unique_id=2127888359]
-layout_mode = 2
-text = "Category"
-horizontal_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/WeaponMarginContainer/PanelContainer/MarginContainer/WeaponsContainer/VBoxContainer2" unique_id=536461702]
-layout_mode = 2
-
-[node name="WeaponCategoryContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/WeaponMarginContainer/PanelContainer/MarginContainer/WeaponsContainer/VBoxContainer2" unique_id=183192457]
-layout_mode = 2
-
-[node name="VSeparator3" type="VSeparator" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/WeaponMarginContainer/PanelContainer/MarginContainer/WeaponsContainer" unique_id=536881799]
-layout_mode = 2
-theme_override_constants/separation = 2
-
-[node name="VBoxContainer4" type="VBoxContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/WeaponMarginContainer/PanelContainer/MarginContainer/WeaponsContainer" unique_id=650337166]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="WeaponEffectsTag" type="Label" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/WeaponMarginContainer/PanelContainer/MarginContainer/WeaponsContainer/VBoxContainer4" unique_id=1734695306]
-layout_mode = 2
-text = "Effects"
-horizontal_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/WeaponMarginContainer/PanelContainer/MarginContainer/WeaponsContainer/VBoxContainer4" unique_id=809946756]
-layout_mode = 2
-
-[node name="WeaponEffectsContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/WeaponMarginContainer/PanelContainer/MarginContainer/WeaponsContainer/VBoxContainer4" unique_id=798417166]
+[node name="GearContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer/WeaponMarginContainer" unique_id=1420525434 instance=ExtResource("2_7gglt")]
 layout_mode = 2
 
 [node name="ItemMarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Character/VBoxContainer/LowerMarginContainer/PanelContainer2/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1508894374]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

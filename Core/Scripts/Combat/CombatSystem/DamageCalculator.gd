@@ -20,8 +20,15 @@ extends RefCounted
 ## [member CombatEventData.total_initial_damage], and [member CombatEventData.effective_damage].
 ## [param might_value] is the attacker's resolved prowess attribute value.
 func calculate(cd: CombatEventData, might_value: int, formula: CombatFormulaResource) -> void:
-	var min_base_dmg: int = formula.weapon_damage_min + might_value
-	var max_base_dmg: int = formula.weapon_damage_max + might_value
+	# Use the equipped weapon's damage range when available; fall back to formula globals.
+	var weapon_min: int = formula.weapon_damage_min
+	var weapon_max: int = formula.weapon_damage_max
+	if cd.weapon != null:
+		weapon_min = cd.weapon.damage_min
+		weapon_max = cd.weapon.damage_max
+
+	var min_base_dmg: int = weapon_min + might_value
+	var max_base_dmg: int = weapon_max + might_value
 
 	var power_mult: float = float(cd.pending_power_percent) / 100.0
 	var modded_low: float = min_base_dmg * power_mult

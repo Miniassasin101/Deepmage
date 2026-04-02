@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="2_k0ba1"]
 [ext_resource type="Resource" uid="uid://c2p3ox34ub580" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PassiveBlessings/PassiveCriticalBlessingSkillResource.tres" id="3_q1k5i"]
 [ext_resource type="Resource" uid="uid://bf0acaf6mm6gy" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestArcherSkills/SingleShotSkill.tres" id="4_vfimv"]
-[ext_resource type="Resource" uid="uid://mictyfww6h2x" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/RushToSafetySkillResource.tres" id="5_vfimv"]
+[ext_resource type="Resource" uid="uid://mictyfww6h2x" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/MovementSkills/RushToSafetySkillResource.tres" id="5_vfimv"]
 [ext_resource type="Resource" uid="uid://rjed6kq3ufww" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PassiveAttacks/PursuitShotSkillResource.tres" id="6_k0ba1"]
 [ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="6_mrk0r"]
 [ext_resource type="Script" uid="uid://rwvfoi4t15v8" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSource.gd" id="7_teuhn"]

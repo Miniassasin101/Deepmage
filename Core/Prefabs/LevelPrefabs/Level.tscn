@@ -40,6 +40,7 @@
 [ext_resource type="Script" uid="uid://daykqau0okf7v" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitOutsideRangeSkillCondition.gd" id="20_8v6vh"]
 [ext_resource type="Script" uid="uid://c6hp21lncudiw" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsNotSelfSkillCondition.gd" id="21_11ubm"]
 [ext_resource type="PackedScene" uid="uid://cdifkxjoiv0eq" path="res://Deepmage/Core/Prefabs/UI/TopHPBar.tscn" id="21_xyav6"]
+[ext_resource type="Resource" uid="uid://r00jkqjfop5o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/AttackSkills/SwordSlashSkillResource.tres" id="22_04ue1"]
 [ext_resource type="PackedScene" uid="uid://cqqsm2gpif3dw" path="res://Deepmage/Core/Prefabs/UI/UnitCharacterSheet.tscn" id="22_gh8or"]
 [ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="23_04ue1"]
 [ext_resource type="Script" uid="uid://bubf25btsnnfv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Tactic.gd" id="24_5lfvx"]
@@ -53,14 +54,15 @@
 [ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="34_f0670"]
 [ext_resource type="Resource" uid="uid://q7sv630uw87g" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PassiveBlockSkillResource.tres" id="36_cb3j6"]
 [ext_resource type="Resource" uid="uid://d12flfcjn7vie" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildProfileResources/DuelistBuildProfile.tres" id="37_cb3j6"]
-[ext_resource type="Resource" uid="uid://mictyfww6h2x" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/RushToSafetySkillResource.tres" id="38_c2k8n"]
+[ext_resource type="Resource" uid="uid://mictyfww6h2x" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/MovementSkills/RushToSafetySkillResource.tres" id="38_c2k8n"]
 [ext_resource type="Resource" uid="uid://ctauxicitono6" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildProfileResources/ArcherBuildProfile.tres" id="38_e15dp"]
-[ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestAttackSkillResource.tres" id="39_5lfvx"]
+[ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/AttackSkills/TestAttackSkillResource.tres" id="39_5lfvx"]
 [ext_resource type="Resource" uid="uid://bf0acaf6mm6gy" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestArcherSkills/SingleShotSkill.tres" id="40_0fvkv"]
 [ext_resource type="Resource" uid="uid://dkeoolmv8jjeq" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/SkillLibraries/SkillLibraryResource.tres" id="42_5lfvx"]
 [ext_resource type="Resource" uid="uid://cucaqplnm0re3" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/ConditionLibraries/ConditionLibraryResource.tres" id="43_f0670"]
 [ext_resource type="PackedScene" uid="uid://boy7waxi1xa2y" path="res://Deepmage/Core/Prefabs/UI/SkillActivationUI.tscn" id="48_iq36j"]
 [ext_resource type="Script" uid="uid://dr67xmhcxhifl" path="res://Deepmage/Core/Scripts/Navigation/MoveRangeRingRenderer.gd" id="49_ebomw"]
+[ext_resource type="Script" uid="uid://bwvg6p8mhrer7" path="res://Deepmage/Core/Prefabs/LevelPrefabs/EquipmentConsole.gd" id="eq_console_1"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_lf0eb"]
 vertices = PackedVector3Array(-2.6557007, 0.3526907, -7.6557007, -0.6557007, 0.3526907, -7.6557007, -0.6557007, 0.3526907, -18.6557, -18.6557, 0.3526907, -6.1557007, -2.9057007, 0.3526907, -5.9057007, -18.6557, 0.3526907, -18.6557, 1.3442993, 0.3526907, -7.6557007, 1.5942993, 0.3526907, -5.4057007, 18.5943, 0.3526907, -5.4057007, 18.5943, 0.3526907, -18.6557, -3.9057007, 0.3526907, 6.3442993, 0.09429932, 0.3526907, 6.5942993, -0.15570068, 0.3526907, -3.1557007, -2.9057007, 0.3526907, -3.4057007, -4.4057007, 0.3526907, 8.094299, -18.6557, 0.3526907, 8.094299, 1.5942993, 0.3526907, -3.4057007, 3.8442993, 0.3526907, 6.5942993, 4.3442993, 0.3526907, 8.094299, 18.5943, 0.3526907, 8.094299, 4.0942993, 0.3526907, 9.094299, 18.5943, 0.3526907, 44.8443, -4.1557007, 0.3526907, 9.094299, -18.6557, 0.3526907, 44.8443)
@@ -99,7 +101,7 @@ metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_tkd6a"]
 script = ExtResource("24_5lfvx")
-active_skills = Array[ExtResource("12_f2qps")]([ExtResource("39_5lfvx"), SubResource("Resource_idaqs")])
+active_skills = Array[ExtResource("12_f2qps")]([ExtResource("39_5lfvx"), ExtResource("22_04ue1"), SubResource("Resource_idaqs")])
 passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("36_cb3j6")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
@@ -232,7 +234,7 @@ attribute_type = 2
 maximum_value = 0
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_w01yd"]
+[sub_resource type="Resource" id="Resource_6odjx"]
 resource_local_to_scene = true
 script = ExtResource("11_6kl6n")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_f0670"), SubResource("Resource_ebomw"), SubResource("Resource_04ue1"), SubResource("Resource_cb3j6"), SubResource("Resource_e15dp"), SubResource("Resource_c2k8n"), SubResource("Resource_hja2s"), SubResource("Resource_f3uqp"), SubResource("Resource_0fvkv"), SubResource("Resource_dpue3"), SubResource("Resource_mpmhl"), SubResource("Resource_yl67w"), SubResource("Resource_0who7")])
@@ -410,7 +412,7 @@ attribute_type = 2
 maximum_value = 0
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_00nvd"]
+[sub_resource type="Resource" id="Resource_gam6i"]
 resource_local_to_scene = true
 script = ExtResource("11_6kl6n")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_lk7si"), SubResource("Resource_8pahp"), SubResource("Resource_rfnuq"), SubResource("Resource_73fol"), SubResource("Resource_q6bko"), SubResource("Resource_a4tjr"), SubResource("Resource_pwtg8"), SubResource("Resource_dydjx"), SubResource("Resource_2gvhv"), SubResource("Resource_src6p"), SubResource("Resource_o8y13"), SubResource("Resource_g2rko"), SubResource("Resource_su0wa")])
@@ -552,7 +554,7 @@ attribute_type = 2
 maximum_value = 0
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_5lfvx"]
+[sub_resource type="Resource" id="Resource_05afn"]
 resource_local_to_scene = true
 script = ExtResource("11_6kl6n")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_4dv0c"), SubResource("Resource_ub3kf"), SubResource("Resource_p6sl4"), SubResource("Resource_j6cut"), SubResource("Resource_qtrpl"), SubResource("Resource_8wfs1"), SubResource("Resource_wan3k"), SubResource("Resource_ol02q"), SubResource("Resource_avl6w"), SubResource("Resource_3ixwr"), SubResource("Resource_ody2n"), SubResource("Resource_2qjkf"), SubResource("Resource_5ddj0")])
@@ -694,7 +696,7 @@ attribute_type = 2
 maximum_value = 0
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_6odjx"]
+[sub_resource type="Resource" id="Resource_ufsey"]
 resource_local_to_scene = true
 script = ExtResource("11_6kl6n")
 attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_68abb"), SubResource("Resource_0gv3y"), SubResource("Resource_mt8ep"), SubResource("Resource_t1is0"), SubResource("Resource_guc2f"), SubResource("Resource_gdrlf"), SubResource("Resource_yxhqu"), SubResource("Resource_wsem0"), SubResource("Resource_6836y"), SubResource("Resource_eixr0"), SubResource("Resource_k8h5i"), SubResource("Resource_o7bkt"), SubResource("Resource_yao5x")])
@@ -811,6 +813,9 @@ script = ExtResource("2_swo3b")
 [node name="ProjectileConsole" type="Node" parent="DebugConsoleController" unique_id=667036119]
 script = ExtResource("3_s0dbn")
 
+[node name="EquipmentConsole" type="Node" parent="DebugConsoleController" unique_id=348291047]
+script = ExtResource("eq_console_1")
+
 [node name="Environment" type="Node3D" parent="." unique_id=571982712]
 
 [node name="Lighting" type="Node3D" parent="Environment" unique_id=1594270375]
@@ -903,7 +908,7 @@ visor_color = Color(0, 0.55250007, 0.85, 1)
 
 [node name="CharacterSheet" parent="UnitManager/Azure" unique_id=1450461724 node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
 unit = NodePath("..")
-attributes_profile = SubResource("Resource_w01yd")
+attributes_profile = SubResource("Resource_6odjx")
 build_profile = ExtResource("37_cb3j6")
 
 [node name="Verdant" parent="UnitManager" unique_id=976159200 instance=ExtResource("12_k2c3k")]
@@ -915,7 +920,7 @@ visor_color = Color(0, 0.54, 0.261, 1)
 
 [node name="CharacterSheet" parent="UnitManager/Verdant" unique_id=84813627 node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
 unit = NodePath("..")
-attributes_profile = SubResource("Resource_00nvd")
+attributes_profile = SubResource("Resource_gam6i")
 build_profile = ExtResource("38_e15dp")
 
 [node name="Marigold" parent="UnitManager" unique_id=795500076 instance=ExtResource("12_k2c3k")]
@@ -926,7 +931,7 @@ visor_color = Color(0.933872, 0.8713839, 3.85046e-07, 1)
 
 [node name="CharacterSheet" parent="UnitManager/Marigold" unique_id=1439450277 node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
 unit = NodePath("..")
-attributes_profile = SubResource("Resource_5lfvx")
+attributes_profile = SubResource("Resource_05afn")
 
 [node name="Ruby" parent="UnitManager" unique_id=1938278729 instance=ExtResource("12_k2c3k")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2.3097086, 0, -0.9571767)
@@ -936,7 +941,7 @@ visor_color = Color(1, 0.120000005, 0.120000005, 1)
 
 [node name="CharacterSheet" parent="UnitManager/Ruby" unique_id=1853802329 node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
 unit = NodePath("..")
-attributes_profile = SubResource("Resource_6odjx")
+attributes_profile = SubResource("Resource_ufsey")
 
 [node name="MouseController" parent="." unique_id=1614539325 node_paths=PackedStringArray("camera") instance=ExtResource("4_avqdt")]
 process_mode = 3

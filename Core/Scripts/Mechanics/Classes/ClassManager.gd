@@ -10,6 +10,7 @@ extends Node
 @export var background: BuildSource
 @export var martial_class: BuildSource
 @export var magic_class: BuildSource
+@export var boons: Array[BuildSource]
 @export var feats: Array[BuildSource] = []
 @export var gear_sources: Array[BuildSource] = []
 @export var progression: BuildSource
@@ -160,6 +161,93 @@ func _clear_previous() -> void:
 	for st: Status in _applied_status_instances:
 		status_controller.remove_status(st)
 	_applied_status_instances.clear()
+
+# =============================================================================
+# Runtime equip / unequip — apply or reverse a single BuildSource without
+# triggering a full rebuild.  Called by EquipmentContainer.
+# =============================================================================
+
+func equip_gear(item: BuildSource) -> void:
+	if !gear_sources.has(item):
+		gear_sources.append(item)
+	_apply_single_source(item)
+
+
+func unequip_gear(item: BuildSource) -> void:
+	gear_sources.erase(item)
+	_remove_single_source(item)
+
+
+func _apply_single_source(p: BuildSource) -> void:
+	_cache_refs()
+	if unit == null or character_sheet == null:
+		return
+	var sid: StringName = _make_source_id(p)
+	if _applied_source_ids.has(sid):
+		return  # already applied — avoid double-adding
+	_applied_source_ids.append(sid)
+
+	var attrs: AttributesContainer = character_sheet.get_attributes_container()
+
+	# Attribute modifiers
+	for m: AttributeMod in p.attribute_mods:
+		if m == null:
+			continue
+		attrs.set_attribute_modifier(sid, m.attribute_name, m.flat, m.affect_maximum)
+
+	# Granted statuses
+	for st: Status in p.grant_statuses:
+		if st == null:
+			continue
+		var inst: Status = st.duplicate(true)
+		_applied_status_instances.append(inst)
+		unit.get_status_controller().add_status(inst)
+
+	# Available non-spell skills
+	for sk: Skill in p.grant_skills:
+		if sk == null:
+			continue
+		_available_skill_ids[_skill_id(sk)] = true
+
+	# Spells
+	if magic_controller:
+		for sp: Skill in p.grant_spells:
+			if sp == null:
+				continue
+			if sp.magic_type != &"" and !magic_controller.has_magic_type(sp.magic_type):
+				continue
+			magic_controller.learn_spell(sp)
+
+
+func _remove_single_source(p: BuildSource) -> void:
+	_cache_refs()
+	if unit == null or character_sheet == null:
+		return
+	var sid: StringName = _make_source_id(p)
+	var attrs: AttributesContainer = character_sheet.get_attributes_container()
+
+	# Clear attribute modifiers registered under this source
+	attrs.clear_modifiers_from_source(sid)
+	_applied_source_ids.erase(sid)
+
+	# Remove non-spell skills from available pool
+	for sk: Skill in p.grant_skills:
+		if sk == null:
+			continue
+		_available_skill_ids.erase(_skill_id(sk))
+
+	# Remove statuses that were granted by this source
+	var granted_names: Array[String] = []
+	for st: Status in p.grant_statuses:
+		if st != null:
+			granted_names.append(st.ui_name)
+	for st in _applied_status_instances.duplicate():
+		if granted_names.has(st.ui_name):
+			unit.get_status_controller().remove_status(st)
+			_applied_status_instances.erase(st)
+
+	# TODO: forget_spell support when MagicController exposes it
+
 
 func _make_source_id(p: BuildSource) -> StringName:
 	var rp: String = p.resource_path

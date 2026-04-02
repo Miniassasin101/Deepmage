@@ -5,6 +5,12 @@ extends Node
 @export var starting_tactic: Tactic = null
 @export var current_tactic: Tactic
 
+## Active skills granted by currently-equipped gear (populated by EquipmentContainer).
+var equipment_active_skills: Array[Skill] = []
+
+## Passive skills granted by currently-equipped gear (populated by EquipmentContainer).
+var equipment_passive_skills: Array[Skill] = []
+
 
 
 
@@ -52,6 +58,29 @@ func set_current_tactic_from_skills(in_askills: Array[Skill] = [], in_pskills: A
 	current_tactic = new_tactic
 
 
+## Register an equipment-granted skill.  Call with a duplicate instance that has source_item set.
+func add_equipment_skill(skill: Skill) -> void:
+	if skill == null:
+		return
+	skill.set_unit(unit)
+	if skill.skill_category == Skill.SkillCategory.PASSIVE:
+		if !equipment_passive_skills.has(skill):
+			equipment_passive_skills.append(skill)
+	else:
+		if !equipment_active_skills.has(skill):
+			equipment_active_skills.append(skill)
+
+
+## Remove all equipment-granted skills whose source_item matches [param source].
+func remove_equipment_skills_from_source(source: BuildSource) -> void:
+	equipment_active_skills = equipment_active_skills.filter(
+		func(sk: Skill) -> bool: return sk.source_item != source
+	)
+	equipment_passive_skills = equipment_passive_skills.filter(
+		func(sk: Skill) -> bool: return sk.source_item != source
+	)
+
+
 func get_first_valid_active_skill() -> Skill:
 	# Returns the first skill whose conditions allow activation.
 	if !current_tactic:
@@ -60,7 +89,10 @@ func get_first_valid_active_skill() -> Skill:
 
 	var priority_num: int = 0
 
-	var active_skills_list: Array[Skill] = current_tactic.active_skills
+	# Tactic skills first, then equipment-granted skills.
+	var active_skills_list: Array[Skill] = current_tactic.active_skills.duplicate()
+	active_skills_list.append_array(equipment_active_skills)
+
 	for candidate_skill in active_skills_list:
 		if candidate_skill.unit == null:
 			candidate_skill.set_unit(unit)
@@ -85,7 +117,9 @@ func get_first_valid_passive_skill_with_context(ctx: Dictionary) -> Skill:
 
 	var trigger_phase: int = ctx.get("trigger_phase", SkillTriggerSystem.TriggerPhase.NONE)
 	var valid_skill: Skill = null
-	var passive_skills_list: Array[Skill] = current_tactic.passive_skills
+	# Tactic passives first, then equipment-granted passives.
+	var passive_skills_list: Array[Skill] = current_tactic.passive_skills.duplicate()
+	passive_skills_list.append_array(equipment_passive_skills)
 	var priority_counter: int = 0
 
 	for candidate_skill in passive_skills_list:

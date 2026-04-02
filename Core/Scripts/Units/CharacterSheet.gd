@@ -7,6 +7,7 @@ extends Node
 @export var attributes_container: AttributesContainer = null
 @export var magic_controller: MagicController = null
 @export var class_manager: ClassManager = null
+@export var equipment_container: EquipmentContainer = null
 
 @export_category("Attributes Preset")
 @export var attributes_profile: AttributesProfile
@@ -35,6 +36,12 @@ func _ready() -> void:
 	if class_manager == null:
 		class_manager = find_child("ClassManager", true, false) as ClassManager
 
+	# EquipmentContainer is also a child of CharacterSheet.
+	if equipment_container == null:
+		equipment_container = find_child("EquipmentContainer", true, false) as EquipmentContainer
+	if equipment_container != null and equipment_container.unit == null:
+		equipment_container.unit = unit
+
 	# Apply presets AFTER references are wired.
 	call_deferred("_apply_presets")
 
@@ -61,6 +68,13 @@ func _apply_build_profile() -> void:
 	# Push the preset into ClassManager, then rebuild.
 	build_profile.apply_to_class_manager(class_manager)
 	class_manager.call_deferred("rebuild_build")
+
+	# Seed the equipment container's carried_gear from the build profile's gear_sources
+	# so the picker panel knows which items the unit is carrying.
+	if equipment_container != null and equipment_container.carried_gear.is_empty():
+		for item: BuildSource in build_profile.gear_sources:
+			if item != null and !equipment_container.carried_gear.has(item):
+				equipment_container.carried_gear.append(item)
 
 
 func _apply_magic_preset_fallback() -> void:

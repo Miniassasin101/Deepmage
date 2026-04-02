@@ -9,6 +9,10 @@ var defender: Unit = null
 # Skill
 var skill: Skill = null
 
+## The weapon used for this attack (resolved from EquipmentContainer at declaration time).
+## null when the attacker has no EquipmentContainer or the skill has no associated weapon.
+var weapon: Weapon = null
+
 # Actions/Reactions
 var action: CombatAction = null
 

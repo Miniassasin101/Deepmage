@@ -84,6 +84,9 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	var target_unit: Unit = targ_pack.get_unit()
 	var skill: Skill = _active_skill
 
+	# 0) Auto-swap: put the weapon associated with this skill into the main hand.
+	_ensure_weapon_for_skill(skill)
+
 	# 1) Move into range if needed
 	await move_to_target_unit(target_unit)
 
@@ -135,6 +138,22 @@ func move_to_target_unit(targ_unit: Unit) -> void:
 	await temp_action.on_action_ended
 	print_debug("moved to target")
 	return
+
+## If [param skill] was granted by a Weapon, ensures that weapon type is in the main-hand slot.
+## This is silent: if the weapon isn't carried at all, the swap is simply skipped.
+func _ensure_weapon_for_skill(skill: Skill) -> void:
+	if skill == null or skill.source_item == null:
+		return
+	var weapon := skill.source_item as Weapon
+	if weapon == null:
+		return
+	if unit == null or unit.character_sheet == null:
+		return
+	var ec: EquipmentContainer = unit.character_sheet.equipment_container
+	if ec == null:
+		return
+	ec.ensure_weapon_type_in_main_hand(weapon.weapon_type)
+
 
 ## Declares the attack to the combat system (prompts for defender reactions & runs hit tests).
 func declare_attack(target_unit: Unit, skill: Skill = null) -> void:
@@ -297,6 +316,15 @@ func apply_effects(user: Unit, target: Unit) -> void:
 	for effect in _active_skill.self_effects:
 		effect.set_context({"user": user, "target_unit": user})
 		effect.apply()
+
+	# Apply inherent on-hit effects from the weapon used for this attack.
+	var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
+	if cd != null and cd.weapon != null and cd.is_hit:
+		for effect in cd.weapon.inherent_effects:
+			if effect == null:
+				continue
+			effect.set_context({"user": user, "target_unit": target})
+			effect.apply()
 
 
 

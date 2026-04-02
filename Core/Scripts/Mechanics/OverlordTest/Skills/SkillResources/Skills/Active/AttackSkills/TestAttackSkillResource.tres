@@ -26,6 +26,7 @@ script = ExtResource("6_bthyw")
 skill_name = "Bash"
 action = ExtResource("1_yts5n")
 internal_skill_conditions = Array[ExtResource("2_r8df1")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
+is_disabled = true
 animation_package = ExtResource("1_8xw5c")
 trait_1 = "Melee"
 trigger_description = "An enemy within rush distance"

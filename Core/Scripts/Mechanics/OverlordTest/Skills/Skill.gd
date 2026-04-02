@@ -102,6 +102,10 @@ var _condition_caches_built: bool = false
 ## Unit that owns the skill (set by Tactic when duplicating/assigning).
 var unit: Unit = null
 
+## Set at runtime when the skill is granted by a piece of equipment (Weapon, etc.).
+## EquipmentContainer writes this when it duplicates the skill and pushes it into TacticsController.
+var source_item: BuildSource = null
+
 func _init() -> void:
 	if Engine.is_editor_hint():
 		change_resource_name_to_skill()
