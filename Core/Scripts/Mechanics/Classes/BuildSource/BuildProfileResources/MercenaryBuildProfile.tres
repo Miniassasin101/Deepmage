@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="BuildProfile" load_steps=11 format=3 uid="uid://cruv3h07wplnu"]
+[gd_resource type="Resource" script_class="BuildProfile" format=3 uid="uid://cruv3h07wplnu"]
 
 [ext_resource type="Resource" uid="uid://7yrn2ntt7uqi" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Backgrounds/FarmerBackground.tres" id="1_2t36d"]
 [ext_resource type="Script" uid="uid://ceyv1b0lbsbfv" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildProfile.gd" id="1_l63jr"]

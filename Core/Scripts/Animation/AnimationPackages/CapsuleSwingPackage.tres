@@ -10,18 +10,19 @@
 
 [sub_resource type="Resource" id="Resource_nc0kv"]
 script = ExtResource("4_rg4js")
-timing = 0.84
+strength = 0.135
+timing = 0.76
 metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
 
 [sub_resource type="Resource" id="Resource_yr6px"]
 script = ExtResource("3_bwksw")
-duration = 0.488
-timing = 0.82
+duration = 0.22
+timing = 0.8
 metadata/_custom_type_script = "uid://bkgigckslvvpk"
 
 [sub_resource type="Resource" id="Resource_yfkgf"]
 script = ExtResource("5_1bi73")
-timing = 0.8
+timing = 0.78
 metadata/_custom_type_script = "uid://beaqcf4hetaxo"
 
 [sub_resource type="Resource" id="Resource_00ilp"]

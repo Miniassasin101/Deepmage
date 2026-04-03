@@ -12,8 +12,13 @@ extends Node
 @export_category("Attributes Preset")
 @export var attributes_profile: AttributesProfile
 
+@export_category("Gear Preset")
+@export var gear_preset: GearPreset = null
+
 @export_category("Build Preset")
-@export var build_profile: BuildProfile
+@export var build_profile: BuildProfile = null
+
+
 
 @export_category("Magic Preset")
 @export var magic_types: Array[StringName] = []
@@ -49,6 +54,7 @@ func _ready() -> void:
 func _apply_presets() -> void:
 	_apply_attributes_profile()
 	_apply_build_profile()
+	_apply_gear_preset()
 	_apply_magic_preset_fallback()
 
 
@@ -77,8 +83,35 @@ func _apply_build_profile() -> void:
 				equipment_container.carried_gear.append(item)
 
 
+func _apply_gear_preset() -> void:
+	if gear_preset == null or equipment_container == null:
+		return
+
+	# Map every preset field to its slot constant.
+	# equip() already handles two-handed weapon rules internally:
+	#   - equipping a two-hander into WEAPON_MAIN clears WEAPON_SUB
+	#   - equipping into WEAPON_SUB is blocked if main is two-handed
+	var items_to_slots: Array = [
+		[gear_preset.main_weapon,  EquipmentContainer.WEAPON_MAIN],
+		[gear_preset.sub_weapon,   EquipmentContainer.WEAPON_SUB],
+		[gear_preset.armor,        EquipmentContainer.ARMOR],
+		[gear_preset.accessory_1,  EquipmentContainer.ACCESSORY_1],
+		[gear_preset.accessory_2,  EquipmentContainer.ACCESSORY_2],
+	]
+
+	for pair in items_to_slots:
+		var item: BuildSource = pair[0]
+		var slot: StringName  = pair[1]
+		if item == null:
+			continue
+		# Ensure the item appears in carried_gear so picker panels can see it.
+		if !equipment_container.carried_gear.has(item):
+			equipment_container.carried_gear.append(item)
+		equipment_container.equip(item, slot)
+
+
 func _apply_magic_preset_fallback() -> void:
-	# Optional: If you’re not using ClassManager/build_profile on a unit,
+	# Optional: If you're not using ClassManager/build_profile on a unit,
 	# this lets you quickly force magic types for testing.
 	if build_profile != null:
 		return

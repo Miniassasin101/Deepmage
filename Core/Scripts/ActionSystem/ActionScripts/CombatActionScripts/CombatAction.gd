@@ -467,9 +467,11 @@ func _modify_camera_shake_effect(is_hit: bool, is_graze: bool, effective_damage:
 		effect.shake_time      = _block_shake.shake_time
 		effect.strength        = _block_shake.strength
 	else:
-		effect.shake_frequency = _hit_shake.shake_frequency
-		effect.shake_time      = _hit_shake.shake_time
-		effect.strength        = _hit_shake.strength
+		#effect.shake_frequency = _hit_shake.shake_frequency
+		#effect.shake_time      = _hit_shake.shake_time
+		#effect.strength        = _hit_shake.strength
+		pass
+		#The effects attatched to the action are outdated, it now comes from the animation package itself instead.
 
 	if use_hit_delay:
 		effect.timing += hit_delay
@@ -486,6 +488,8 @@ func _modify_hit_stop(is_hit: bool, is_graze: bool, effective_damage: int) -> vo
 
 	if effect == null:
 		return  # animation package has no stop slot — nothing to configure
+	
+	hit_stop_effect = effect
 
 	var _hit_stop   := hit_stop_effect   if hit_stop_effect   != null else _default_stop(0.12)
 	var _graze_stop := graze_stop_effect if graze_stop_effect != null else _default_stop(0.08)
@@ -498,9 +502,10 @@ func _modify_hit_stop(is_hit: bool, is_graze: bool, effective_damage: int) -> vo
 		else:
 			effect.is_disabled = true  # miss — no stop
 	elif effective_damage == 0:
-		effect.duration = _block_stop.duration
+		effect.duration = effect.duration/2#_block_stop.duration
 	else:
-		effect.duration = _hit_stop.duration
+		#effect.duration = _hit_stop.duration
+		pass
 
 	if use_hit_delay:
 		CombatLog.instance.add_log("Effect Timing: " + str(effect.timing))

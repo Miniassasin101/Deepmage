@@ -217,7 +217,7 @@ func _run_one_cycle() -> void:
 	for u in initiative_manager.queue:
 		u.turn_state = Unit.TurnState.IN_QUEUE
 
-	var any_action_executed_in_this_pass: bool = false
+	#var any_action_executed_in_this_pass: bool = false
 
 	for acting_unit in initiative_manager.queue:
 		if !is_instance_valid(acting_unit):
@@ -246,8 +246,8 @@ func _run_one_cycle() -> void:
 		await SkillTriggerSystem.instance.fire("TURN_END", {"unit": acting_unit, "pass_index": cycle_index})
 		await get_tree().create_timer(0.1).timeout
 
-		if action_executed:
-			any_action_executed_in_this_pass = true
+		#if action_executed:
+		#	any_action_executed_in_this_pass = true
 
 		if _is_combat_over():
 			break

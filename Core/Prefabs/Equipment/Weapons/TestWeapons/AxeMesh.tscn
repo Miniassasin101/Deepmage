@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dy5gye6plrthr"]
+
+[ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_gwkaw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ybpq7"]
+size = Vector3(0.12, 1.405, 0.12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gwkaw"]
+size = Vector3(0.075, 0.4, 0.52)
+
+[node name="AxeMesh" type="Node3D" unique_id=445449092]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1071060435]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.39544228, 0)
+mesh = SubResource("BoxMesh_ybpq7")
+surface_material_override/0 = ExtResource("1_gwkaw")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1842133714]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8312948, 0.19446766)
+mesh = SubResource("BoxMesh_gwkaw")
+surface_material_override/0 = ExtResource("1_gwkaw")

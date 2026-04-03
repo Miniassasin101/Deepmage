@@ -214,7 +214,7 @@ mesh = SubResource("BoxMesh_0qgfu")
 surface_material_override/0 = ExtResource("1_cc6tg")
 
 [node name="LeftHandMeshPivot" type="Node3D" parent="Rig" unique_id=270327670]
-transform = Transform3D(0.99999976, 0.00026549344, -8.00054e-05, -0.00026549608, 0.99999976, -3.3077507e-05, 7.999661e-05, 3.3098746e-05, 0.9999998, 0.713219, 1.02331, 0.14047702)
+transform = Transform3D(0.9999997, 0.00026549344, -8.00054e-05, -0.00026549608, 0.9999997, -3.3077507e-05, 7.99966e-05, 3.3098746e-05, 0.9999998, 0.713219, 1.02331, 0.14047702)
 
 [node name="LeftHandSocket" type="Marker3D" parent="Rig/LeftHandMeshPivot" unique_id=1661377765]
 transform = Transform3D(0.9999999, -3.3196557e-11, 7.275958e-12, 2.3646862e-11, 0.99999994, 0, 7.275958e-12, 1.4901161e-08, 1.0000001, 0, 0, 0)
