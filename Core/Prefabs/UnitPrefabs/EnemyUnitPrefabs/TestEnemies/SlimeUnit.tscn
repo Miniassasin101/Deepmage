@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bd0igxl8lei8g"]
+
+[ext_resource type="PackedScene" uid="uid://2h1a1e1r8hc2" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.tscn" id="1_13ws5"]
+
+[node name="SlimeUnit" unique_id=1110603061 instance=ExtResource("1_13ws5")]
+
+[node name="LeftHandMeshPivot" parent="Rig" parent_id_path=PackedInt32Array(1975549980) index="1" unique_id=270327670]
+transform = Transform3D(0.9999993, 0.00026549347, -8.000539e-05, -0.00026549597, 0.9999998, -3.3077507e-05, 7.999657e-05, 3.309875e-05, 0.99999976, 0.713219, 1.02331, 0.14047702)
