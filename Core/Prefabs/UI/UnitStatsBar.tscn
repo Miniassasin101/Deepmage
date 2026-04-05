@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://3p3xt0lymqsd"]
+[gd_scene format=3 uid="uid://3p3xt0lymqsd"]
 
 [ext_resource type="Script" uid="uid://d31u148mfqqic" path="res://Deepmage/Core/Scripts/UI/UnitStatsBar.gd" id="1_73dlo"]
 [ext_resource type="StyleBox" uid="uid://dxf8kqkw1goiw" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarShadowedStyleBox.tres" id="1_cydlx"]
@@ -12,18 +12,21 @@
 font_size = 21
 
 [sub_resource type="LabelSettings" id="LabelSettings_gpv71"]
-font_color = Color(1, 0.90999997, 0.90999997, 1)
+font_color = Color(1, 0.37, 0.37, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_5nvtf"]
-font_color = Color(0.84000003, 0.90133333, 1, 1)
+font_color = Color(0.42000002, 0.64233327, 1, 1)
 
-[node name="UnitStatsBar" type="MarginContainer" node_paths=PackedStringArray("unit_stats_bar_content", "unit_name_label", "initiative_score_label", "active_points_label", "passive_points_label", "mana_points_label", "health_text_label", "health_bar")]
-custom_minimum_size = Vector2(0, 123)
+[node name="UnitStatsBar" type="MarginContainer" unique_id=584116863 node_paths=PackedStringArray("unit_stats_bar_content", "unit_name_label", "initiative_score_label", "active_points_label", "passive_points_label", "mana_points_label", "health_text_label", "health_bar")]
+custom_minimum_size = Vector2(0, 110.57)
 anchors_preset = -1
 anchor_left = 0.0017361111
 anchor_top = 0.0030864198
-anchor_right = 0.13628472
-anchor_bottom = 0.19290124
+anchor_right = 0.11946615
+anchor_bottom = 0.15239005
+offset_right = 19.375
+offset_bottom = 13.821251
+scale = Vector2(0.875, 0.875)
 script = ExtResource("1_73dlo")
 unit_stats_bar_content = NodePath("UnitStatsBarContent")
 unit_name_label = NodePath("UnitStatsBarContent/MarginContainer/VBoxContainer/UnitNameLabel")
@@ -40,68 +43,69 @@ red_flat_stylebox = ExtResource("5_afvsy")
 blue_flat_stylebox = ExtResource("3_cydlx")
 metadata/_edit_use_anchors_ = true
 
-[node name="UnitStatsBarContent" type="PanelContainer" parent="."]
+[node name="UnitStatsBarContent" type="PanelContainer" parent="." unique_id=981971363]
 layout_mode = 2
 theme_override_styles/panel = ExtResource("4_mx6qg")
 
-[node name="MarginContainer" type="MarginContainer" parent="UnitStatsBarContent"]
+[node name="MarginContainer" type="MarginContainer" parent="UnitStatsBarContent" unique_id=1507269153]
 layout_mode = 2
 theme_override_constants/margin_left = 3
-theme_override_constants/margin_top = 3
+theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 3
-theme_override_constants/margin_bottom = 3
+theme_override_constants/margin_bottom = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UnitStatsBarContent/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UnitStatsBarContent/MarginContainer" unique_id=1651235266]
 layout_mode = 2
+theme_override_constants/separation = 1
 alignment = 1
 
-[node name="UnitNameLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer"]
+[node name="UnitNameLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer" unique_id=1280292283]
 layout_mode = 2
 text = "Unit Name"
 label_settings = SubResource("LabelSettings_bwm3i")
 horizontal_alignment = 1
 
-[node name="InitiativeScoreLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer"]
+[node name="InitiativeScoreLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer" unique_id=1275341165]
 visible = false
 layout_mode = 2
 text = "Initiative Score"
 horizontal_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="UnitStatsBarContent/MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UnitStatsBarContent/MarginContainer/VBoxContainer" unique_id=1567804072]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UnitStatsBarContent/MarginContainer/VBoxContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UnitStatsBarContent/MarginContainer/VBoxContainer/MarginContainer" unique_id=1778918196]
 layout_mode = 2
 
-[node name="ActivePointsLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="ActivePointsLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=141835384]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "AP: 1"
 label_settings = SubResource("LabelSettings_gpv71")
 horizontal_alignment = 2
 
-[node name="DividingLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="DividingLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=929843422]
 layout_mode = 2
 text = "|"
 horizontal_alignment = 1
 
-[node name="PassivePointsLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="PassivePointsLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=1180014545]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "PP: 1"
 label_settings = SubResource("LabelSettings_5nvtf")
 
-[node name="ManaLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer"]
+[node name="ManaLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer" unique_id=1546637785]
 visible = false
 layout_mode = 2
 text = "Mana Points"
 horizontal_alignment = 1
 
-[node name="HealthTextLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer"]
+[node name="HealthTextLabel" type="Label" parent="UnitStatsBarContent/MarginContainer/VBoxContainer" unique_id=346364701]
 layout_mode = 2
 text = "Health/Max health"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SimpleAnimatableProgressBar" parent="UnitStatsBarContent/MarginContainer/VBoxContainer" instance=ExtResource("7_5nvtf")]
+[node name="SimpleAnimatableProgressBar" parent="UnitStatsBarContent/MarginContainer/VBoxContainer" unique_id=708237538 instance=ExtResource("7_5nvtf")]
 layout_mode = 2

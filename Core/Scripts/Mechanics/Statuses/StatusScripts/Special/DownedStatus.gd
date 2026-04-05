@@ -19,6 +19,7 @@ func on_added(unit: Unit) -> void:
 
 	# Dim all unit meshes to visually communicate downed state.
 	for mesh: MeshInstance3D in unit.get_all_unit_meshes():
+		
 		mesh.transparency = 0.6
 
 

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ReactionPack" format=3 uid="uid://chqw8qddk1n2"]
+
+[ext_resource type="Resource" uid="uid://d2ysyx0gn34ud" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/HumanoidReactionResources/PassReactionResource.tres" id="1_s6lts"]
+[ext_resource type="Script" uid="uid://c5n2kh3w6iaim" path="res://Deepmage/Core/Scripts/ActionSystem/ReactionScripts/ReactionRule.gd" id="2_tvy0c"]
+[ext_resource type="Resource" uid="uid://bnkjvlvt1sfv1" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/MonsterReactionResources/SlimeReactionResources/SlimeBlockReactionResource.tres" id="3_4ec40"]
+[ext_resource type="Resource" uid="uid://clp6ucy0jcfca" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/MonsterReactionResources/SlimeReactionResources/SlimeEvadeReactionResource.tres" id="4_ls0rg"]
+[ext_resource type="Script" uid="uid://d17457ktsi1g8" path="res://Deepmage/Core/Scripts/ActionSystem/ReactionScripts/ReactionPack.gd" id="11_75i36"]
+
+[sub_resource type="Resource" id="Resource_0nrju"]
+script = ExtResource("2_tvy0c")
+match_outcomes = Array[int]([1, 3])
+reaction_action = ExtResource("3_4ec40")
+priority = 5
+
+[sub_resource type="Resource" id="Resource_cr8e6"]
+script = ExtResource("2_tvy0c")
+match_outcomes = Array[int]([2, 4])
+reaction_action = ExtResource("4_ls0rg")
+priority = 5
+
+[resource]
+script = ExtResource("11_75i36")
+rules = Array[ExtResource("2_tvy0c")]([SubResource("Resource_0nrju"), SubResource("Resource_cr8e6")])
+fallback_reaction = ExtResource("1_s6lts")

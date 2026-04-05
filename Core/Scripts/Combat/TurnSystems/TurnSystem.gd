@@ -188,6 +188,65 @@ func open_hit_reactions(phase: int, source_skill: Skill, source_user: Unit, sour
 	await _open_and_resolve_chain_group(phase, source_skill, source_user, source_target, depth)
 
 
+## Silently evaluates and applies BEFORE_HIT_RESOLVES passive skills at declaration time,
+## before any animation begins. Effects (e.g. [ForceMissEffect]) are applied directly
+## from [member Skill.effects] / [member Skill.self_effects] — no Action, no UI, no chain.
+##
+## Deliberately skips the [member used_p_skill_this_turn] guard so Dodge/Parry passives
+## always fire regardless of what the unit has already done this turn.
+##
+## Called by [method CombatSystem.declare_attack] after the hit roll but BEFORE
+## [method CombatSystem.determine_reaction], so [member CombatEventData.is_hit] is
+## already final when the reaction animation is selected.
+##
+## Skills that fire are appended to [member CombatEventData.pre_hit_passive_skills]
+## so [CombatAction] can schedule their passive bar slide-in later.
+func evaluate_pre_hit_passives(cd: CombatEventData) -> void:
+	if skill_trigger_system == null or cd == null or cd.skill == null:
+		return
+
+	var ctx: Dictionary = {
+		"source_skill":  cd.skill,
+		"source_user":   cd.attacker,
+		"source_target": cd.defender,
+		"trigger_phase": SkillTriggerSystem.TriggerPhase.BEFORE_HIT_RESOLVES
+	}
+
+	for reactor_unit: Unit in initiative_queue:
+		if reactor_unit == null or !reactor_unit.is_alive():
+			continue
+		if reactor_unit.tactics_controller == null:
+			continue
+
+		var passive_skill: Skill = reactor_unit.tactics_controller.get_first_valid_passive_skill_with_context(ctx)
+		if passive_skill == null:
+			continue
+
+		# Stamp context onto conditions so they can read combat event data during effect.apply()
+		passive_skill._apply_context_to_all_conditions(ctx)
+
+		# Deduct passive points (same as _use_passive in the normal chain)
+		reactor_unit.get_attributes_container().change_attribute_current_value_by("passive_points", -passive_skill.skill_cost)
+
+		# Apply effects directly — no Action, no animation, no UI at this stage
+		var target_unit: Unit = passive_skill.get_random_valid_unit()
+		for effect in passive_skill.effects:
+			if effect == null:
+				continue
+			effect.set_context({"user": reactor_unit, "target_unit": target_unit})
+			effect.apply()
+		for effect in passive_skill.self_effects:
+			if effect == null:
+				continue
+			effect.set_context({"user": reactor_unit, "target_unit": reactor_unit})
+			effect.apply()
+
+		if !cd.pre_hit_passive_skills.has(passive_skill):
+			cd.pre_hit_passive_skills.append(passive_skill)
+
+		CombatLog.instance.add_log(reactor_unit.ui_name + " pre-evaluated passive: " + passive_skill.skill_name)
+
+
 ## Executes a passive skill without opening a chain group for reactions.
 ## Used by SkillTriggerSystem.fire() for round-boundary passives (ON_ROUND_START,
 ## ON_ROUND_END), which cannot be reacted to by design.

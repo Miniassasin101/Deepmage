@@ -10,7 +10,7 @@
 
 [sub_resource type="Resource" id="Resource_b375h"]
 script = ExtResource("3_3rr1d")
-duration = 0.488
+duration = 0.207
 timing = 0.6
 metadata/_custom_type_script = "uid://bkgigckslvvpk"
 

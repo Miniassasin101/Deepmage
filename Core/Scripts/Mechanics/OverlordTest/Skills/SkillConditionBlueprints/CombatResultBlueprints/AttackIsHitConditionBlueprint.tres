@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://dit5jcci8wox8"]
+
+[ext_resource type="Script" uid="uid://d4dqskdxsps74" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/CombatResultConditions/CombatResultCondition.gd" id="1_combatresult"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_cbp"]
+
+[sub_resource type="Resource" id="Resource_hit"]
+script = ExtResource("1_combatresult")
+
+[resource]
+script = ExtResource("2_cbp")
+display_name = "Attack Is Hit"
+category_name = "Combat Result"
+prototype = SubResource("Resource_hit")

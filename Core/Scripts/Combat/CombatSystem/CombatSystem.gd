@@ -102,6 +102,12 @@ func declare_attack(action: CombatAction, attacker: Unit, defender: Unit, skill:
 	#await _resolve_attack_gubat_banwa(action, attacker, defender, skill)
 	_resolve_attack_darkest_dungeon(action, attacker, defender, current_combat_event_data.skill)
 
+	# Pre-evaluate BEFORE_HIT_RESOLVES passives now — before any animation begins and before
+	# the reaction is selected. This ensures is_hit is final (e.g. Dodge already flipped it)
+	# when determine_reaction() picks which animation the defender plays.
+	if TurnSystem.instance != null:
+		TurnSystem.instance.evaluate_pre_hit_passives(current_combat_event_data)
+
 	await determine_reaction(current_combat_event_data)
 
 	_debug_dump_current_event()
@@ -204,7 +210,7 @@ func determine_reaction(cd: CombatEventData) -> void:
 	cd.reaction = reaction
 	if reaction == null:
 		return
-	var run: Action = cd.defender.get_action_container().use_action(reaction, cd.defender)
+	var run: Action = cd.defender.get_action_container().use_action(reaction, cd.defender, true)
 	if run == null:
 		push_error("Invalid Reaction on defender")
 	await run.on_action_ended

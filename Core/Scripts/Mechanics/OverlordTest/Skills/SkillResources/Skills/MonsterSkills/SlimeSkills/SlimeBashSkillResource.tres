@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://dlx1tecg07kdn"]
+
+[ext_resource type="Resource" uid="uid://cuudvrampevcg" path="res://Deepmage/Core/Resources/ActionResources/TestAttackActionResource.tres" id="1_clbfa"]
+[ext_resource type="Resource" uid="uid://6qjki6yd3pli" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/MonsterAnimationPackages/SlimeBashPackage.tres" id="2_4w5b3"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="3_qisxv"]
+[ext_resource type="Resource" uid="uid://d11l24rrh3h8q" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/AfflictionEffects/GrantSpeedAfflictionEffectResource.tres" id="4_4uhxo"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="4_wmcxt"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="5_cfa74"]
+[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="6_qruda"]
+[ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="7_o2hak"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="8_6bcuf"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="9_o3wp1"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="10_lywvs"]
+
+[sub_resource type="Resource" id="Resource_eu7gh"]
+script = ExtResource("6_qruda")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_7kb16"]
+script = ExtResource("7_o2hak")
+range_var = 3.0
+metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
+
+[resource]
+resource_name = "SlimeBashSkillResource"
+script = ExtResource("8_6bcuf")
+skill_name = "SlimeBash"
+action = ExtResource("1_clbfa")
+internal_skill_conditions = Array[ExtResource("5_cfa74")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
+animation_package = ExtResource("2_4w5b3")
+effects = Array[ExtResource("3_qisxv")]([ExtResource("4_4uhxo")])
+trait_1 = "Melee"
+trigger_description = "An enemy within rush distance"
+description = Array[String](["Rushes to target before hitting with a slimy strike."])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

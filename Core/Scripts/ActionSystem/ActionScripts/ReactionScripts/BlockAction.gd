@@ -6,11 +6,8 @@ extends Reaction
 @export var spawn_text: String = "Testing"
 @export var text_color: Color = Color.ALICE_BLUE
 @export var scale: float = 1.0
-
 @export var pre_rotation_margin_override: float = 0.12   # ~7 degrees feels nice
-@export var defend_attribute: String = "might"
-
-@export var base_defend_value: int = 3
+@export var rotation_speed: float = 4.0
 
 @export_category("Animation Package")
 @export var block_package: AnimationPackage
@@ -37,7 +34,7 @@ func rotate_towards_target(target: Unit) -> void:
 
 	unit.movement_controller.rotate_unit_towards_target_position(
 		target_pos,
-		4.0,                         # rotation speed
+		rotation_speed,                         # rotation speed
 		pre_rotation_margin_override # your early-start margin
 	)
 	await unit.movement_controller.rotation_precomplete

@@ -89,6 +89,11 @@ var force_miss: bool = false
 # Optional: if you want statuses to modify defense before damage calc
 var pending_defense_value: int = 0				# starts at defender defense attribute
 
+## Skills that fired at BEFORE_HIT_RESOLVES during declare_attack() — before animations start.
+## Populated by TurnSystem.evaluate_pre_hit_passives(). Used by CombatAction to schedule
+## the passive bar slide-in timed to finish right at the hit moment.
+var pre_hit_passive_skills: Array[Skill] = []
+
 # Optional: for debugging
 var pre_roll_notes: Array[String] = []
 

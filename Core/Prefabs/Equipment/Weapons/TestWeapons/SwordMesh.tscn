@@ -11,3 +11,5 @@ size = Vector3(0.12, 1.405, 0.12)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.39544228, 0)
 mesh = SubResource("BoxMesh_ybpq7")
 surface_material_override/0 = ExtResource("1_1vqwv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D" unique_id=1037782731]

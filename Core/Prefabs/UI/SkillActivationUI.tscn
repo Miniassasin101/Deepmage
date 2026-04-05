@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://boy7waxi1xa2y"]
+[gd_scene format=3 uid="uid://boy7waxi1xa2y"]
 
 [ext_resource type="Script" uid="uid://xg5f181qv48j" path="res://Deepmage/Core/Scripts/UI/SkillActivationUI.gd" id="1_rssh0"]
 [ext_resource type="Script" uid="uid://bxdbtvdj45xxp" path="res://Deepmage/Core/Scripts/UI/ActiveSkillBar.gd" id="2_lrl7t"]
@@ -19,7 +19,7 @@ corner_radius_bottom_left = 3
 shadow_size = 5
 shadow_offset = Vector2(-1, 1)
 
-[node name="SkillActivationUI" type="Control" node_paths=PackedStringArray("active_skill_bar", "active_end_timer", "passive_manager", "passive_layer")]
+[node name="SkillActivationUI" type="Control" unique_id=730334069 node_paths=PackedStringArray("active_skill_bar", "active_end_timer", "passive_manager", "passive_layer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,7 +34,7 @@ passive_manager = NodePath("PassiveManager")
 passive_layer = NodePath("PassiveLayer")
 passive_bar_scene = ExtResource("2_sr50n")
 
-[node name="ActiveSkillBar" type="PanelContainer" parent="." node_paths=PackedStringArray("label_node")]
+[node name="ActiveSkillBar" type="PanelContainer" parent="." unique_id=892687517 node_paths=PackedStringArray("label_node")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.3611111
@@ -48,7 +48,7 @@ label_node = NodePath("MarginContainer/Label")
 drift_duration = 0.5
 metadata/_edit_use_anchors_ = true
 
-[node name="MarginContainer" type="MarginContainer" parent="ActiveSkillBar"]
+[node name="MarginContainer" type="MarginContainer" parent="ActiveSkillBar" unique_id=898498037]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 5
@@ -56,14 +56,14 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="Label" type="Label" parent="ActiveSkillBar/MarginContainer"]
+[node name="Label" type="Label" parent="ActiveSkillBar/MarginContainer" unique_id=1841887752]
 layout_mode = 2
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ActiveEndTimer" type="Timer" parent="."]
+[node name="ActiveEndTimer" type="Timer" parent="." unique_id=1685719779]
 
-[node name="PassiveLayer" type="Control" parent="."]
+[node name="PassiveLayer" type="Control" parent="." unique_id=1549065061]
 custom_minimum_size = Vector2(150, 170)
 layout_mode = 1
 anchors_preset = 15
@@ -76,7 +76,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="PassiveManager" type="CanvasLayer" parent="." node_paths=PackedStringArray("bar_parent")]
+[node name="PassiveManager" type="CanvasLayer" parent="." unique_id=903288206 node_paths=PackedStringArray("bar_parent")]
 script = ExtResource("4_sr50n")
 bar_scene = ExtResource("2_sr50n")
 bar_parent = NodePath("../PassiveLayer")

@@ -17,7 +17,6 @@ metadata/_custom_type_script = "uid://da5ua2vuwghvh"
 script = ExtResource("5_g0g1b")
 weapon_type = 3
 visual_scene = ExtResource("6_gjbtm")
-visual_socket = 1
 ui_name = "TestAxe"
 attribute_mods = Array[ExtResource("1_gjbtm")]([SubResource("Resource_gjbtm")])
 metadata/_custom_type_script = "uid://dmefdgovq37tm"

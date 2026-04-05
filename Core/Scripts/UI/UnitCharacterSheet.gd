@@ -175,8 +175,8 @@ func _populate_from_unit(unit: Unit, update_skills: bool = false) -> void:
 		return
 	unit_name_label.text = unit.ui_name
 	
-	magic_class_label.text = unit.character_sheet.class_manager.magic_class.ui_name
-	martial_class_label.text = unit.character_sheet.class_manager.martial_class.ui_name
+	magic_class_label.text = unit.character_sheet.class_manager.magic_class.ui_name if unit.character_sheet.class_manager.magic_class else ""
+	martial_class_label.text = unit.character_sheet.class_manager.martial_class.ui_name if unit.character_sheet.class_manager.martial_class else ""
 	
 	#armor_points_label.text = str(unit.get_attributes_container().get_attribute("armor").get_current_modified_value())\
 	# + "/" + str(unit.get_attributes_container().get_attribute("armor").maximum_value)

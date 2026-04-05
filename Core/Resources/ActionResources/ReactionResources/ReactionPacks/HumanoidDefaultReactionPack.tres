@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://d17457ktsi1g8" path="res://Deepmage/Core/Scripts/ActionSystem/ReactionScripts/ReactionPack.gd" id="1_pack"]
 [ext_resource type="Script" uid="uid://c5n2kh3w6iaim" path="res://Deepmage/Core/Scripts/ActionSystem/ReactionScripts/ReactionRule.gd" id="2_rule"]
-[ext_resource type="Resource" uid="uid://c5dl1dlq1jmiy" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/BlockReactionResource.tres" id="3_block"]
-[ext_resource type="Resource" uid="uid://by016ujd3kbnh" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/EvadeReactionResource.tres" id="4_evade"]
-[ext_resource type="Resource" uid="uid://d2ysyx0gn34ud" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/PassReactionResource.tres" id="5_pass"]
+[ext_resource type="Resource" uid="uid://c5dl1dlq1jmiy" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/HumanoidReactionResources/BlockReactionResource.tres" id="3_block"]
+[ext_resource type="Resource" uid="uid://by016ujd3kbnh" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/HumanoidReactionResources/EvadeReactionResource.tres" id="4_evade"]
+[ext_resource type="Resource" uid="uid://d2ysyx0gn34ud" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/HumanoidReactionResources/PassReactionResource.tres" id="5_pass"]
 
 [sub_resource type="Resource" id="ReactionRule_hit"]
 script = ExtResource("2_rule")

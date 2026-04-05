@@ -58,14 +58,27 @@ func play_package(pack: AnimationPackage) -> void:
 	current_animation = pack.get_anim_name()
 	animation_started.emit(current_animation)
 
-	# 1) Play main clip
+	# 1) Play main clip — fall back to RESET if this unit doesn't have the animation
 	var main_path := _anim_path_for(pack)
+	if !animator.has_animation(main_path):
+		var reset_path := _get_reset_fallback_path()
+		if reset_path != "":
+			push_warning("AnimationController: '%s' not found on '%s' — using RESET fallback." % [main_path, unit.ui_name if unit else str(name)])
+			main_path = reset_path
+			current_animation = &"RESET"
+		else:
+			push_error("AnimationController: '%s' not found on '%s' and no RESET fallback exists — resolving immediately." % [main_path, unit.ui_name if unit else str(name)])
+			is_resolving = true
+			_play_events_for_package(pack)
+			_finish_without_main_animation()
+			return
+
 	is_resolving = true
 	animator.play(main_path)
 
 	# 2) Bake/play events clip
 	_play_events_for_package(pack)
-	
+
 	# 3) Setup Early Signal Timer for smoother action transitions
 	
 
@@ -210,6 +223,28 @@ func _last_effect_time(pack: AnimationPackage) -> float:
 	var grace_amount: float = 0.01
 	
 	return t + grace_amount
+
+## Returns the RESET animation path to use as a fallback.
+## Checks [member current_library]/RESET first, then the unnamed default library.
+## Returns [code]""[/code] if RESET is not found in either location.
+func _get_reset_fallback_path() -> String:
+	var in_lib := _libpath("RESET")
+	if animator.has_animation(in_lib):
+		return in_lib
+	if animator.has_animation("RESET"):
+		return "RESET"
+	return ""
+
+
+## Resolves [member is_resolving] and emits [signal animation_finished] without a main
+## animation playing. Waits for the events animator to finish first so timing effects
+## (hit moment, camera shake, etc.) still fire at the correct times.
+func _finish_without_main_animation() -> void:
+	if event_animator and event_animator.is_playing():
+		await event_animator.animation_finished
+	is_resolving = false
+	animation_finished.emit(current_animation)
+
 
 # Optional helper to build "library/anim" or just "anim" when library == ""
 func _libpath(anim_name: String) -> String:

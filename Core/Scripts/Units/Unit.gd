@@ -22,7 +22,6 @@ enum TurnState {
 @export var character_sheet: CharacterSheet
 @export var movement_controller: MovementController
 @export var animation_controller: AnimationController
-@export var satellite_controller: SatelliteController
 @export var status_controller: StatusController
 @export var tactics_controller: TacticsController
 @export_group("Sockets")
@@ -212,6 +211,9 @@ func change_node_name_to_unit() -> void:
 
 
 func setup_mesh_colors() -> void:
+	if !capsule_visor:
+		return
+		
 	if is_enemy:
 		Utilities.set_color_on_cel_shaded_mesh(capsule_visor, Color.FIREBRICK)
 	else:
@@ -235,12 +237,15 @@ func flash_white(flash_time: float = hit_flash_time) -> void:
 	var unit_meshes: Array[MeshInstance3D] = get_all_unit_meshes()
 	var saved_mat_overrides: Array[StandardMaterial3D] = []
 	for mesh in unit_meshes:
+		if mesh == null: continue
 		saved_mat_overrides.append(mesh.get_material_override())
 		mesh.set_material_override(white_hit_flash_mat)
 
 	await get_tree().create_timer(flash_time).timeout
 
 	for mesh in unit_meshes:
+		if !mesh:
+			continue
 		mesh.set_material_override(saved_mat_overrides.pop_front())
 
 func has_tag(in_tag: String) -> bool:
@@ -251,7 +256,12 @@ func has_tag(in_tag: String) -> bool:
 
 
 func get_all_unit_meshes() -> Array[MeshInstance3D]:
-	return [capsule_body, capsule_visor]
+	var ret_array: Array[MeshInstance3D] = []
+	if capsule_body:
+		ret_array.append(capsule_body)
+	if capsule_visor:
+		ret_array.append(capsule_visor)
+	return ret_array
 
 
 func get_world_position_above_marker() -> Vector3:

@@ -1,7 +1,7 @@
 class_name Weapon
 extends BuildSource
 
-enum WeaponType { UNARMED, SWORD, DAGGER, AXE, SPEAR, MACE, BOW, CROSSBOW, STAFF, ORB, TOME }
+enum WeaponType { UNARMED, SWORD, DAGGER, AXE, SPEAR, MACE, SHIELD, BOW, CROSSBOW, STAFF, ORB, TOME }
 enum SocketSlot  { RIGHT_HAND, LEFT_HAND, ORBITING }
 
 @export_group("Weapon Stats")

@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="AnimationPackage" format=3 uid="uid://6qjki6yd3pli"]
+
+[ext_resource type="Animation" uid="uid://bg211mv7bt0dn" path="res://Deepmage/Core/Resources/AnimationResources/Animations/MonsterTestAnims/SlimeTestAnims/SlimeBash.res" id="1_0iiso"]
+[ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="2_wjvy7"]
+[ext_resource type="Script" uid="uid://bkgigckslvvpk" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="3_qljxk"]
+[ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="4_k7e4h"]
+[ext_resource type="Script" uid="uid://beaqcf4hetaxo" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitMomentAnimationEffect.gd" id="5_dgsha"]
+[ext_resource type="Script" uid="uid://brutb7o0hj6td" path="res://Deepmage/Core/Scripts/Animation/AnimationPackage.gd" id="6_3l20i"]
+[ext_resource type="Script" uid="uid://bf2hv6d83v6fv" path="res://Deepmage/Core/Resources/DataStructures/AnimationSyncProfile.gd" id="7_o2blo"]
+
+[sub_resource type="Resource" id="Resource_b375h"]
+script = ExtResource("3_qljxk")
+duration = 0.207
+timing = 0.42
+metadata/_custom_type_script = "uid://bkgigckslvvpk"
+
+[sub_resource type="Resource" id="Resource_u41mm"]
+script = ExtResource("4_k7e4h")
+timing = 0.4
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_7dtjx"]
+script = ExtResource("5_dgsha")
+timing = 0.44
+metadata/_custom_type_script = "uid://beaqcf4hetaxo"
+
+[sub_resource type="Resource" id="Resource_0iiso"]
+script = ExtResource("7_o2blo")
+markers = Dictionary[String, float]({
+"HIT_END": 0.48,
+"HIT_START": 0.4
+})
+metadata/_custom_type_script = "uid://bf2hv6d83v6fv"
+
+[resource]
+script = ExtResource("6_3l20i")
+name = "SlimeBash"
+animation = ExtResource("1_0iiso")
+animation_effects = Array[ExtResource("2_wjvy7")]([SubResource("Resource_b375h"), SubResource("Resource_u41mm"), SubResource("Resource_7dtjx")])
+sync_profile = SubResource("Resource_0iiso")
+metadata/_custom_type_script = "uid://brutb7o0hj6td"

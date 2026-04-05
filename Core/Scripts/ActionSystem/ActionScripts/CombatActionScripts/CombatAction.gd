@@ -38,6 +38,10 @@ extends Action
 # ---------------------------------------------------------------------------
 var _active_skill: Skill = null
 
+## Keys for passive bar items spawned by _schedule_pre_hit_passive_display.
+## Cleared and closed in _resolve_at_hit_moment_or_timer after do_resolve().
+var _pre_hit_passive_bar_keys: Array[String] = []
+
 
 
 
@@ -108,6 +112,10 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	# 7) Schedule plays with offsets/time-scale (attack always plays)
 	_play_attack_with_delay(_active_skill.animation_package, sync)
 	_play_reaction_with_delay(reaction_anim_pack, sync)
+
+	# 7b) Schedule passive bar slide-in for any BEFORE_HIT_RESOLVES passives that already
+	#     fired at declaration time, timed to finish visible right as the hit lands.
+	_schedule_pre_hit_passive_display(sync)
 
 	# 8) Resolve exactly at the hit moment (keeps the actual rules result)
 	await unit.get_tree().process_frame
@@ -204,11 +212,9 @@ func modify_shake_and_hitstop() -> void:
 # Hit Resolution Timing
 # =========================
 
-## Resolves rules/effects at the correct hit moment: prefer signal from animation, otherwise uses a timer fallback.
-## Fires BEFORE_HIT_RESOLVES chain (passives may modify cd before damage), then applies damage,
-## then fires AFTER_HIT_RESOLVES chain (passives react to the outcome).
-## Both phases play their animations concurrently with the ongoing attack animation, which is
-## fire-and-forget and continues independently on the attacker's AnimationController.
+## Resolves rules/effects at the correct hit moment: prefer signal from animation, otherwise
+## uses a timer fallback. BEFORE_HIT_RESOLVES passives already ran at declaration time, so
+## this function only applies defender hitstop, calls do_resolve(), and closes the passive bars.
 func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
 	var ctrl := unit.animation_controller
 
@@ -218,25 +224,11 @@ func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
 		await ctrl.effects_controller.on_hit_moment
 		var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
 
-		# Phase 2: BEFORE_HIT_RESOLVES — passives can read/modify cd before damage is applied.
-		# (Evade/Dodge Away, Halve Damage, etc.)
-		if TurnSystem.instance != null and cd != null and cd.skill != null:
-			await TurnSystem.instance.open_hit_reactions(
-				SkillTriggerSystem.TriggerPhase.BEFORE_HIT_RESOLVES,
-				cd.skill, cd.attacker, cd.defender, 0)
-
 		if cd != null and cd.defender != null:
 			_apply_defender_hitstop(cd.defender, cd)
 
 		do_resolve()
-
-		# Phase 3: AFTER_HIT_RESOLVES — passives react to the applied outcome.
-		# (Thorny Skin, revenge attacks, etc.)
-		if TurnSystem.instance != null and cd != null and cd.skill != null:
-			await TurnSystem.instance.open_hit_reactions(
-				SkillTriggerSystem.TriggerPhase.AFTER_HIT_RESOLVES,
-				cd.skill, cd.attacker, cd.defender, 0)
-
+		_close_pre_hit_passive_bars()
 		return
 
 	# Fallback: timer to hit-center (attack_delay + center of window).
@@ -253,22 +245,11 @@ func _resolve_at_hit_moment_or_timer(sync: Dictionary) -> void:
 	await unit.get_tree().create_timer(max(0.0, attack_delay + hit_center)).timeout
 	var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
 
-	# Phase 2: BEFORE_HIT_RESOLVES
-	if TurnSystem.instance != null and cd != null and cd.skill != null:
-		await TurnSystem.instance.open_hit_reactions(
-			SkillTriggerSystem.TriggerPhase.BEFORE_HIT_RESOLVES,
-			cd.skill, cd.attacker, cd.defender, 0)
-
 	if cd != null and cd.defender != null:
 		_apply_defender_hitstop(cd.defender, cd)
 
 	do_resolve()
-
-	# Phase 3: AFTER_HIT_RESOLVES
-	if TurnSystem.instance != null and cd != null and cd.skill != null:
-		await TurnSystem.instance.open_hit_reactions(
-			SkillTriggerSystem.TriggerPhase.AFTER_HIT_RESOLVES,
-			cd.skill, cd.attacker, cd.defender, 0)
+	_close_pre_hit_passive_bars()
 
 
 
@@ -462,10 +443,12 @@ func _modify_camera_shake_effect(is_hit: bool, is_graze: bool, effective_damage:
 			effect.strength        = _graze_shake.strength
 		else:
 			effect.is_disabled = true  # miss — no shake
+			
+	# Halve the time and strength if all damage is blocked
 	elif effective_damage == 0:
-		effect.shake_frequency = _block_shake.shake_frequency
-		effect.shake_time      = _block_shake.shake_time
-		effect.strength        = _block_shake.strength
+		#effect.shake_frequency = _block_shake.shake_frequency
+		effect.shake_time      = (effect.shake_time * .75)
+		effect.strength        = (effect.strength * .75)
 	else:
 		#effect.shake_frequency = _hit_shake.shake_frequency
 		#effect.shake_time      = _hit_shake.shake_time
@@ -543,6 +526,75 @@ func _apply_defender_hitstop(target_unit: Unit, cd: CombatEventData) -> void:
 ## Spawns a small text label over the unit with this action's name (UI feedback).
 func spawn_action_name_text() -> void:
 	Utilities.spawn_text_line(unit, action_name)
+
+
+## Schedules the passive bar slide-in for BEFORE_HIT_RESOLVES passives that pre-fired at
+## declaration time. Bars begin sliding so they finish fully visible right at the hit moment.
+## Must be called immediately after _play_attack_with_delay so the timer reference point
+## matches the animation schedule. Fire-and-forget — do NOT await.
+func _schedule_pre_hit_passive_display(sync: Dictionary) -> void:
+	var cd: CombatEventData = CombatSystem.instance.current_combat_event_data
+	if cd == null or cd.pre_hit_passive_skills.is_empty():
+		return
+
+	var manager_ref: PassiveBarManager = null
+	if SkillActivationUI.instance != null:
+		manager_ref = SkillActivationUI.instance.passive_manager
+	if manager_ref == null:
+		return
+
+	# Time from animation-schedule until the hit moment
+	var attack_delay: float = sync.get("attack_delay", 0.0)
+	var attack_center: float = sync.get("attack_center", 0.0)
+	var hit_moment: float = attack_delay + attack_center
+	if use_hit_delay:
+		hit_moment += hit_delay
+
+	# Build the key list now so _close_pre_hit_passive_bars() can find each bar
+	_pre_hit_passive_bar_keys.clear()
+	for skill_item in cd.pre_hit_passive_skills:
+		if skill_item == null:
+			continue
+		_pre_hit_passive_bar_keys.append("prehit_" + str(skill_item.get_instance_id()))
+
+	# Fire-and-forget coroutine — shows bars at the right time without blocking start_action
+	_show_pre_hit_bars_delayed(hit_moment, cd.pre_hit_passive_skills.duplicate(), manager_ref)
+
+
+## Async helper spawned by _schedule_pre_hit_passive_display. Waits until [param delay]
+## seconds before the hit moment (using PassiveBarItem.enter_duration as the lead), then
+## calls PassiveBarManager.add_passive() for each pre-evaluated passive skill so the bar
+## finishes sliding in right as the hit lands.
+@export var pre_hit_bar_lead: float = 0.20   ## Lead time (s) matching PassiveBarItem.enter_duration
+@export var pre_hit_bar_hold: float = 0.60   ## How long (s) the bar stays visible after the hit lands before closing
+func _show_pre_hit_bars_delayed(hit_moment: float, skills: Array[Skill], manager: PassiveBarManager) -> void:
+	var slide_start: float = maxf(0.0, hit_moment - pre_hit_bar_lead)
+	if slide_start > 0.0:
+		await unit.get_tree().create_timer(slide_start).timeout
+	for skill_item: Skill in skills:
+		if skill_item == null:
+			continue
+		var key: String = "prehit_" + str(skill_item.get_instance_id())
+		manager.add_passive(skill_item.skill_name, key)
+
+
+## Closes all passive bars opened by _schedule_pre_hit_passive_display.
+## Waits [member pre_hit_bar_hold] seconds after the hit before starting the exit tween,
+## so the bar stays readable for a moment after the hit lands. Fire-and-forget.
+func _close_pre_hit_passive_bars() -> void:
+	if _pre_hit_passive_bar_keys.is_empty():
+		return
+	var manager_ref: PassiveBarManager = null
+	if SkillActivationUI.instance != null:
+		manager_ref = SkillActivationUI.instance.passive_manager
+	var keys_to_close: Array[String] = _pre_hit_passive_bar_keys.duplicate()
+	_pre_hit_passive_bar_keys.clear()
+	if manager_ref == null:
+		return
+	if pre_hit_bar_hold > 0.0:
+		await unit.get_tree().create_timer(pre_hit_bar_hold).timeout
+	for key in keys_to_close:
+		manager_ref.end_oldest_for_key(key)
 
 
 # =========================

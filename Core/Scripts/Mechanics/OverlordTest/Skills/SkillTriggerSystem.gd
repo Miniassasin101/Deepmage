@@ -4,13 +4,16 @@ extends Node
 
 ## Trigger phases for passive skill reactions.
 ##
-## IMPORTANT: Existing values (0–4) are stored as integers in .tres resource files.
+## IMPORTANT: Existing values (0–5) are stored as integers in .tres resource files.
 ## New phases must always be appended at the END to avoid remapping existing skills.
+##
+## Pre-evaluated phases (TurnSystem.evaluate_pre_hit_passives — no chain, no UI at eval time):
+##   BEFORE_HIT_RESOLVES  — evaluated at declare_attack() before animations begin.
+##                          Effects (ForceMissEffect etc.) apply immediately; passive bar
+##                          display is deferred and timed by CombatAction to finish at the hit moment.
 ##
 ## Reactable phases (go through the chain group in TurnSystem):
 ##   BEFORE_SKILL_USED    — skill declared, before it executes (Shield Ally, counters)
-##   BEFORE_HIT_RESOLVES  — at the hit moment, before damage is applied (Evade, Halve Damage)
-##   AFTER_HIT_RESOLVES   — immediately after damage is applied (Thorny Skin, revenge effects)
 ##   AFTER_SKILL_USED     — after skill fully resolves (follow-up attacks, crit buffs)
 ##
 ## Non-reactable phases (fire() path, no chaining):
@@ -22,8 +25,7 @@ enum TriggerPhase {
 	BEFORE_SKILL_USED,   # 2 — pre-existing
 	AFTER_SKILL_USED,    # 3 — pre-existing
 	ON_ROUND_END,        # 4 — pre-existing
-	BEFORE_HIT_RESOLVES, # 5 — new in Phase 5
-	AFTER_HIT_RESOLVES,  # 6 — new in Phase 5
+	BEFORE_HIT_RESOLVES, # 5 — pre-evaluated at declaration time; see TurnSystem.evaluate_pre_hit_passives
 }
 
 ## Maps the string keys used by fire() call sites to TriggerPhase enum values.
