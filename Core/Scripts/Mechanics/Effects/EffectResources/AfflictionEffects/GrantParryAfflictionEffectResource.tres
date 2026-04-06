@@ -8,7 +8,7 @@
 script = ExtResource("2_bn3ka")
 stat_name = "parry"
 show_floating_text = false
-ui_name = "Parry Down 1"
+ui_name = "Parry Down"
 status_category = 2
 status_level = 1
 expire_timing = 2

@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://drkq5xr15felf"]
+
+[ext_resource type="Script" uid="uid://dyngi1ipggvgb" path="res://Deepmage/Core/Scripts/UI/InitiativeQueueUI.gd" id="1_4486i"]
+[ext_resource type="PackedScene" uid="uid://3p3xt0lymqsd" path="res://Deepmage/Core/Prefabs/UI/UnitStatsBar.tscn" id="2_kn3xu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5ega"]
+bg_color = Color(0.15, 0.15, 0.15, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+shadow_size = 2
+shadow_offset = Vector2(1, 1)
+
+[node name="InitiativeQueueUI" type="Control" unique_id=616849357 node_paths=PackedStringArray("unit_manager", "unit_stats_container", "scroll_container", "panelcontainer")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_4486i")
+unit_manager = NodePath("")
+unit_stats_bar_scene = ExtResource("2_kn3xu")
+unit_stats_container = NodePath("PanelContainer/MarginContainer/ScrollContainer/UnitStatsContainer")
+scroll_container = NodePath("PanelContainer/MarginContainer/ScrollContainer")
+panelcontainer = NodePath("PanelContainer")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=287765529]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.007812499
+anchor_top = 0.32214507
+anchor_right = 0.09406684
+anchor_bottom = 0.59760803
+offset_top = -60.750015
+offset_right = 67.634995
+offset_bottom = 193.54999
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0, 0.5)
+theme_override_styles/panel = SubResource("StyleBoxFlat_o5ega")
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1384214428]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer" unique_id=1602895529]
+custom_minimum_size = Vector2(161, 116.00021)
+layout_mode = 2
+
+[node name="UnitStatsContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/ScrollContainer" unique_id=134663502]
+layout_mode = 2
+size_flags_vertical = 4
+alignment = 1
+
+[node name="UnitStatsBar" parent="PanelContainer/MarginContainer/ScrollContainer/UnitStatsContainer" unique_id=584116863 instance=ExtResource("2_kn3xu")]
+layout_mode = 2
+
+[node name="UnitStatsBar2" parent="PanelContainer/MarginContainer/ScrollContainer/UnitStatsContainer" unique_id=951814441 instance=ExtResource("2_kn3xu")]
+layout_mode = 2
+
+[node name="UnitStatsBar3" parent="PanelContainer/MarginContainer/ScrollContainer/UnitStatsContainer" unique_id=1118855003 instance=ExtResource("2_kn3xu")]
+layout_mode = 2
+
+[node name="UnitStatsBar4" parent="PanelContainer/MarginContainer/ScrollContainer/UnitStatsContainer" unique_id=253308660 instance=ExtResource("2_kn3xu")]
+layout_mode = 2

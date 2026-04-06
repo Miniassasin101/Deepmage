@@ -62,11 +62,20 @@ func _process(delta: float):
 	if hovered_control != null:
 		if Console.is_visible():
 			return
+		var containers: Array[Rect2] = []
+		
 		if UnitCharacterSheetUI.instance.is_open:
 			var rect2: Rect2 = UnitCharacterSheetUI.instance.tactics_manager_ui.conditions_library_ui.get_global_rect()
 			var srect2: Rect2 = UnitCharacterSheetUI.instance.tactics_manager_ui.skills_library_ui.get_global_rect()
-			var mouse_pos: Vector2 = MouseController.instance.mouse_position
-			if rect2.has_point(mouse_pos) or srect2.has_point(mouse_pos):
+			containers.append_array([rect2, srect2])
+		if InitiativeQueueUI.instance.scroll_container.custom_minimum_size.y >= InitiativeQueueUI.instance.max_height:
+			var init_queue_scroll: Rect2 = InitiativeQueueUI.instance.scroll_container.get_global_rect()
+			containers.append(init_queue_scroll)
+		if containers.is_empty():
+			return
+		var mouse_pos: Vector2 = MouseController.instance.mouse_position
+		for r in containers:
+			if r.has_point(mouse_pos):
 				return
 
 

@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="2_7omu2"]
 [ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="2_cpelx"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_qs42l"]
+[ext_resource type="Resource" uid="uid://dhlquh6l821lo" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/FactionBlueprints/IsEnemyConditionBlueprint.tres" id="4_cpfqh"]
 [ext_resource type="Script" uid="uid://daykqau0okf7v" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitOutsideRangeSkillCondition.gd" id="4_h182v"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="5_j3s1b"]
 [ext_resource type="Script" uid="uid://c6hp21lncudiw" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsNotSelfSkillCondition.gd" id="5_qs42l"]
@@ -27,6 +28,7 @@ skill_name = "Rush To Unit"
 action = ExtResource("1_qs42l")
 skill_type = 1
 internal_skill_conditions = Array[ExtResource("2_7omu2")]([SubResource("Resource_sb21c"), SubResource("Resource_7omu2")])
+external_condition_blueprints = Array[ExtResource("2_qs42l")]([ExtResource("4_cpfqh")])
 target_preference_blueprints = Array[ExtResource("2_qs42l")]([ExtResource("9_g1yky")])
 trait_1 = "Movement"
 trigger_description = "When a unit is out of melee range"

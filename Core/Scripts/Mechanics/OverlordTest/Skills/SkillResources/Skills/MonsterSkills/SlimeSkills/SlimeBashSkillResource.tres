@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://d11l24rrh3h8q" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/AfflictionEffects/GrantSpeedAfflictionEffectResource.tres" id="4_4uhxo"]
 [ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="4_wmcxt"]
 [ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="5_cfa74"]
+[ext_resource type="Resource" uid="uid://b2upqb0u2kqj8" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/AfflictionEffects/GrantParryAfflictionEffectResource.tres" id="5_vajki"]
 [ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="6_qruda"]
 [ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="7_o2hak"]
 [ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="8_6bcuf"]
@@ -28,7 +29,7 @@ skill_name = "SlimeBash"
 action = ExtResource("1_clbfa")
 internal_skill_conditions = Array[ExtResource("5_cfa74")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
 animation_package = ExtResource("2_4w5b3")
-effects = Array[ExtResource("3_qisxv")]([ExtResource("4_4uhxo")])
+effects = Array[ExtResource("3_qisxv")]([ExtResource("4_4uhxo"), ExtResource("5_vajki")])
 trait_1 = "Melee"
 trigger_description = "An enemy within rush distance"
 description = Array[String](["Rushes to target before hitting with a slimy strike."])
