@@ -229,9 +229,10 @@ remote_path = NodePath("../GridSystemVisual")
 update_rotation = false
 update_scale = false
 
-[node name="StatusController" type="Node" parent="." unique_id=1554931765 node_paths=PackedStringArray("unit")]
+[node name="StatusController" type="Node" parent="." unique_id=1554931765 node_paths=PackedStringArray("unit", "unit_vfx_manager")]
 script = ExtResource("8_c8upb")
 unit = NodePath("..")
+unit_vfx_manager = NodePath("../UnitVFXManager")
 metadata/_custom_type_script = "uid://ck2buvlnnr6il"
 
 [node name="TacticsController" type="Node" parent="." unique_id=138643258 node_paths=PackedStringArray("unit")]
@@ -242,7 +243,6 @@ current_tactic = SubResource("Resource_k2flo")
 
 [node name="UnitVFXManager" type="Node3D" parent="." unique_id=1682658756 node_paths=PackedStringArray("blessing_effect", "affliction_effect")]
 top_level = true
-visible = false
 script = ExtResource("12_wjf1s")
 blessing_effect = NodePath("BlessingParticleEffect")
 affliction_effect = NodePath("AfflictionParticleEffect")

@@ -29,6 +29,16 @@ enum ExpireTiming { Never, EndOfTurn, EndOfRound, OnUse }
 ## The types of abilities that this status blocks while on a character, Ex: "attack" or "move"
 @export var blocking_tags: Array[StringName] = []
 
+## Base percentage chance (0–100) that this status successfully applies to a target.
+## Used by GrantStatusEffect to roll against the target's matching resistance stat.
+## 100 = always applies (before resistance). 0 = never applies.
+@export var infliction_chance: int = 100
+
+## Which resistance category this status rolls against on the target.
+## Must match a resistance attribute name on the unit (e.g. "debuff_resistance", "fear_resistance").
+## Leave empty to bypass resistance checks and apply unconditionally.
+@export var resistance_category: String = ""
+
 
 var owner: Unit = null
 

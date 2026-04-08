@@ -76,6 +76,25 @@ enum SkillType { ATTACK, SUPPORT, SABOTAGE, SPECIAL}
 @export var mana_cost: int = 0
 @export var magic_type: StringName = &""	# ex: &"fire"
 
+## The elemental or physical affinity of this spell. Drives automatic defense attribute selection.
+## "kinetic"   → contests Parry  (stone, ice, metal — solid, blockable)
+## "energetic" → contests Resist (fire, lightning, acid — energy, not blockable)
+## "hybrid"    → per-spell override; set defense_attribute manually
+## ""          → no affinity; defense_attribute used as-is
+@export var affinity: String = ""
+
+## Warmage: this skill channels power through the equipped weapon rather than projecting outward.
+## Damage uses the (Martial + Channel) / 2 combined prowess formula.
+@export var is_inscribed: bool = false
+
+## Warmage exclusive: this skill buffs the Warmage's own stats rather than targeting enemies.
+## Enforcement spells represent turning magic inward to enhance the caster's combat performance.
+@export var is_enforcement_spell: bool = false
+
+## Warmage exclusive: this skill conjures a physical magical construct delivered via a martial skill.
+## The delivery skill's range determines effective range; damage uses the inscribed formula.
+@export var is_manifestation_spell: bool = false
+
 
 
 @export_group("Description")

@@ -117,8 +117,62 @@ maximum_value = 15
 minimum_value = -100
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
+[sub_resource type="Resource" id="Resource_debuff_res"]
+resource_local_to_scene = true
+resource_name = "DebuffResistance"
+script = ExtResource("1_3o14u")
+attribute_name = "debuff_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_blight_res"]
+resource_local_to_scene = true
+resource_name = "BlightResistance"
+script = ExtResource("1_3o14u")
+attribute_name = "blight_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_bleed_res"]
+resource_local_to_scene = true
+resource_name = "BleedResistance"
+script = ExtResource("1_3o14u")
+attribute_name = "bleed_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_stun_res"]
+resource_local_to_scene = true
+resource_name = "StunResistance"
+script = ExtResource("1_3o14u")
+attribute_name = "stun_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_fear_res"]
+resource_local_to_scene = true
+resource_name = "FearResistance"
+script = ExtResource("1_3o14u")
+attribute_name = "fear_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_move_res"]
+resource_local_to_scene = true
+resource_name = "MoveResistance"
+script = ExtResource("1_3o14u")
+attribute_name = "move_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
 [resource]
 resource_local_to_scene = true
 script = ExtResource("2_pd8jt")
-attributes = Array[ExtResource("1_3o14u")]([SubResource("Resource_piq8p"), SubResource("Resource_36pwq"), SubResource("Resource_udgds"), SubResource("Resource_owgt1"), SubResource("Resource_xv8lw"), SubResource("Resource_ombkl"), SubResource("Resource_ah0vk"), SubResource("Resource_1tw7j"), SubResource("Resource_hwgi2"), SubResource("Resource_ilx3m"), SubResource("Resource_kkljy"), ExtResource("2_d2oba"), ExtResource("3_iqw0a")])
+attributes = Array[ExtResource("1_3o14u")]([SubResource("Resource_piq8p"), SubResource("Resource_36pwq"), SubResource("Resource_udgds"), SubResource("Resource_owgt1"), SubResource("Resource_xv8lw"), SubResource("Resource_ombkl"), SubResource("Resource_ah0vk"), SubResource("Resource_1tw7j"), SubResource("Resource_hwgi2"), SubResource("Resource_ilx3m"), SubResource("Resource_kkljy"), ExtResource("2_d2oba"), ExtResource("3_iqw0a"), SubResource("Resource_debuff_res"), SubResource("Resource_blight_res"), SubResource("Resource_bleed_res"), SubResource("Resource_stun_res"), SubResource("Resource_fear_res"), SubResource("Resource_move_res")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"

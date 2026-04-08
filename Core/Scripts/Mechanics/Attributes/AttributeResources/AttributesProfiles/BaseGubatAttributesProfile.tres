@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AttributesProfile" load_steps=15 format=3 uid="uid://chcmb33h3icuk"]
+[gd_resource type="Resource" script_class="AttributesProfile" format=3 uid="uid://chcmb33h3icuk"]
 
 [ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="1_piq8p"]
 [ext_resource type="Script" uid="uid://dgwgvxp80lmhb" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributesProfile.gd" id="2_36pwq"]
@@ -21,16 +21,6 @@ attribute_name = "speed"
 attribute_type = 2
 current_value = 4
 maximum_value = 4
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_thdnl"]
-resource_local_to_scene = true
-resource_name = "Jump"
-script = ExtResource("1_piq8p")
-attribute_name = "jump"
-attribute_type = 2
-current_value = 2
-maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_udgds"]
@@ -125,8 +115,62 @@ maximum_value = 15
 minimum_value = -100
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
+[sub_resource type="Resource" id="Resource_debuff_res"]
+resource_local_to_scene = true
+resource_name = "DebuffResistance"
+script = ExtResource("1_piq8p")
+attribute_name = "debuff_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_blight_res"]
+resource_local_to_scene = true
+resource_name = "BlightResistance"
+script = ExtResource("1_piq8p")
+attribute_name = "blight_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_bleed_res"]
+resource_local_to_scene = true
+resource_name = "BleedResistance"
+script = ExtResource("1_piq8p")
+attribute_name = "bleed_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_stun_res"]
+resource_local_to_scene = true
+resource_name = "StunResistance"
+script = ExtResource("1_piq8p")
+attribute_name = "stun_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_fear_res"]
+resource_local_to_scene = true
+resource_name = "FearResistance"
+script = ExtResource("1_piq8p")
+attribute_name = "fear_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_move_res"]
+resource_local_to_scene = true
+resource_name = "MoveResistance"
+script = ExtResource("1_piq8p")
+attribute_name = "move_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
 [resource]
 resource_local_to_scene = true
 script = ExtResource("2_36pwq")
-attributes = Array[ExtResource("1_piq8p")]([SubResource("Resource_piq8p"), SubResource("Resource_36pwq"), SubResource("Resource_thdnl"), SubResource("Resource_udgds"), SubResource("Resource_owgt1"), SubResource("Resource_xv8lw"), SubResource("Resource_ombkl"), SubResource("Resource_ah0vk"), SubResource("Resource_1tw7j"), SubResource("Resource_hwgi2"), SubResource("Resource_ilx3m"), SubResource("Resource_kkljy")])
+attributes = Array[ExtResource("1_piq8p")]([SubResource("Resource_piq8p"), SubResource("Resource_36pwq"), SubResource("Resource_udgds"), SubResource("Resource_owgt1"), SubResource("Resource_xv8lw"), SubResource("Resource_ombkl"), SubResource("Resource_ah0vk"), SubResource("Resource_1tw7j"), SubResource("Resource_hwgi2"), SubResource("Resource_ilx3m"), SubResource("Resource_kkljy"), SubResource("Resource_debuff_res"), SubResource("Resource_blight_res"), SubResource("Resource_bleed_res"), SubResource("Resource_stun_res"), SubResource("Resource_fear_res"), SubResource("Resource_move_res")])
 metadata/_custom_type_script = "uid://dgwgvxp80lmhb"

@@ -58,6 +58,10 @@ func use_action(in_action: Action, target: Variant, use_in_action: bool = false)
 	
 	if use_in_action:
 		test_action.setup_action(self)
+	if test_action.unit != unit:
+		test_action.unit = unit
+	if test_action.action_container != self:
+		test_action.action_container = self
 	
 	
 	

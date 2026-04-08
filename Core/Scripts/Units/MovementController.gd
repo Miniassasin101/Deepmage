@@ -116,6 +116,10 @@ func on_stop_moving() -> void:
 ## - `rot_spd`: slerp multiplier (higher = faster).
 ## - `pre_margin_override`: radians remaining at which we'll emit `rotation_precomplete`. Pass < 0 to use the exported default.
 func rotate_unit_towards_target_position(target_position: Vector3, rot_spd: float = 4.0, pre_margin_override: float = -1.0) -> void:
+	var unit_name: String = unit.ui_name
+	var is_downed: bool = unit.status_controller.get_status_by_name("downed") != null
+	if is_downed:
+		pass
 	var dir := (target_position - unit.get_global_position())
 	if dir.length_squared() < 0.0001:
 		# Degenerate case: target is at our position. We consider it instantly complete.

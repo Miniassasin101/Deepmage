@@ -9,7 +9,8 @@ extends MoveAction
 
 
 func start_action(targ_pack: TargetPackage = null) -> void:
-	# IMPORTANT: do NOT call super.start_action() (that would run MoveAction.start_action)
+	# Do NOT call super.start_action() — that would run MoveAction's default
+	# "move to targ_pack.position" flow. Use _start_action_base instead.
 	_start_action_base(targ_pack)
 
 	if unit == null:
@@ -33,100 +34,79 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 
 
 func can_activate_on_target(target_pack: TargetPackage) -> bool:
-	if unit == null:
+	if unit == null or target_pack == null:
 		return false
-	if target_pack == null:
+	# Guard against accidental targeting of another unit.
+	if target_pack.has_tag("unit") and target_pack.unit != unit:
 		return false
-
-	# This action is meant to be used as a self-skill (your skill conditions already enforce that),
-	# but we guard here too so it can't be accidentally targeted at someone else.
-	if target_pack.has_tag("unit"):
-		var target_unit: Unit = target_pack.unit
-		if target_unit != null and target_unit != unit:
-			return false
-
 	return true
 
 
 func _choose_safety_position(targ_pack: TargetPackage) -> Vector3:
-	var candidate_positions: Array[Vector3] = position_sampler.get_candidate_positions(unit)
-	if candidate_positions.is_empty():
+	var candidates: Array[Vector3] = position_sampler.get_candidate_positions(unit)
+	if candidates.is_empty():
 		return Vector3(-1.0, -1.0, -1.0)
 
 	var safe_candidates: Array[Vector3] = []
-	for candidate_position in candidate_positions:
-		if _is_point_safe_from_enemies(candidate_position, unit, safe_distance_from_enemies) and !_is_too_close_to_any_unit(candidate_position):
-			safe_candidates.append(candidate_position)
+	for pos in candidates:
+		if _is_point_safe_from_enemies(pos) and !_is_occupied(pos):
+			safe_candidates.append(pos)
 
-	# If none meet the min safety distance, fall back to the "best available" (farthest from enemies),
-	# while still respecting unit overlap.
+	# If none meet the minimum safety distance, fall back to the farthest
+	# available position that still respects unit overlap.
 	if safe_candidates.is_empty():
-		var fallback_position: Vector3 = _pick_farthest_from_enemies(candidate_positions, unit)
-		if fallback_position != Vector3(-1.0, -1.0, -1.0) and !_is_too_close_to_any_unit(fallback_position):
-			return fallback_position
+		var fallback: Vector3 = _pick_farthest_from_enemies(candidates)
+		if fallback != Vector3(-1.0, -1.0, -1.0) and !_is_occupied(fallback):
+			return fallback
 		return Vector3(-1.0, -1.0, -1.0)
 
-	# Apply ordered preferences (same concept as the old MoveToSafetySkill)
-	var candidate_pool: Array[Vector3] = safe_candidates.duplicate()
-	var source_skill: Skill = null
-	if targ_pack != null:
-		source_skill = targ_pack.get_skill()
+	# Narrow the pool through any ordered position preferences.
+	var pool: Array[Vector3] = safe_candidates.duplicate()
+	var source_skill: Skill  = targ_pack.get_skill() if targ_pack != null else null
 
-	for position_preference in position_preferences:
-		if candidate_pool.size() <= 1:
+	for preference in position_preferences:
+		if pool.size() <= 1:
 			break
-		if position_preference == null:
+		if preference == null:
 			continue
+		var narrowed: Array[Vector3] = preference.apply(source_skill, unit, pool)
+		if !narrowed.is_empty():
+			pool = narrowed
 
-		var narrowed_pool: Array[Vector3] = position_preference.apply(source_skill, unit, candidate_pool)
-		if !narrowed_pool.is_empty():
-			candidate_pool = narrowed_pool
-
-	return candidate_pool.pick_random()
+	return pool.pick_random()
 
 
-func _is_point_safe_from_enemies(point_world: Vector3, owner_unit: Unit, min_distance: float) -> bool:
+# Returns true if no enemy unit is within min_distance of point_world.
+func _is_point_safe_from_enemies(point_world: Vector3) -> bool:
 	if UnitManager.instance == null:
 		return true
-
-	for other_unit in UnitManager.instance.get_all_units():
-		if other_unit == null:
+	for other in UnitManager.instance.get_all_units():
+		if other == null or other == unit:
 			continue
-		if other_unit == owner_unit:
-			continue
-
-		if other_unit.is_enemy != owner_unit.is_enemy:
-			var enemy_distance: float = other_unit.global_transform.origin.distance_to(point_world)
-			if enemy_distance < min_distance:
+		if other.is_enemy != unit.is_enemy:
+			if other.global_transform.origin.distance_to(point_world) < safe_distance_from_enemies:
 				return false
-
 	return true
 
 
-func _pick_farthest_from_enemies(candidate_positions: Array[Vector3], owner_unit: Unit) -> Vector3:
+# Returns the candidate position that maximises distance from the nearest enemy.
+func _pick_farthest_from_enemies(candidates: Array[Vector3]) -> Vector3:
 	if UnitManager.instance == null:
-		return candidate_positions.pick_random()
+		return candidates.pick_random()
 
 	var best_position: Vector3 = Vector3(-1.0, -1.0, -1.0)
-	var best_score: float = -INF
+	var best_score: float      = -INF
 
-	for candidate_position in candidate_positions:
-		var closest_enemy_distance: float = INF
-
-		for other_unit in UnitManager.instance.get_all_units():
-			if other_unit == null:
+	for pos in candidates:
+		var closest_enemy_dist: float = INF
+		for other in UnitManager.instance.get_all_units():
+			if other == null or other == unit or other.is_enemy == unit.is_enemy:
 				continue
-			if other_unit == owner_unit:
-				continue
-			if other_unit.is_enemy == owner_unit.is_enemy:
-				continue
-
-			var enemy_distance: float = other_unit.global_transform.origin.distance_to(candidate_position)
-			if enemy_distance < closest_enemy_distance:
-				closest_enemy_distance = enemy_distance
-
-		if closest_enemy_distance > best_score:
-			best_score = closest_enemy_distance
-			best_position = candidate_position
+			var dist: float = other.global_transform.origin.distance_to(pos)
+			if dist < closest_enemy_dist:
+				closest_enemy_dist = dist
+		if closest_enemy_dist > best_score:
+			best_score     = closest_enemy_dist
+			best_position  = pos
 
 	return best_position

@@ -8,10 +8,6 @@ extends Control
 @export var tactics_manager_ui: TacticsManagerUI = null
 @export var gear_container: GearContainer = null
 
-@export_category("Scenes")
-@export var character_sheet_part_panel_scene: PackedScene  # (Not used for body parts anymore)
-@export var weapon_details_popup_scene: PackedScene = null
-
 @export_category("Labels")
 @export_group("Labels")
 @export var unit_name_label: Label
@@ -30,27 +26,23 @@ extends Control
 @export var speed_label: Label
 @export var unused_label_1: Label
 
-# Attribute Labels
-@export var might_label: Label
-@export var endurance_label: Label
-@export var agility_label: Label
-@export var sense_label: Label
-@export var mind_label: Label
-@export var presence_label: Label
-
-# Skill Labels
+# Skill Attribute Labels
 @export var martial_label: Label
 @export var channel_label: Label
 @export var parry_label: Label
 @export var resist_label: Label
-@export var clash_label: Label
 @export var evade_label: Label
-@export var will_label: Label
+
+# Resistance Labels
+@export var debuff_resistance_label: Label
+@export var blight_resistance_label: Label
+@export var bleed_resistance_label: Label
+@export var stun_resistance_label: Label
+@export var fear_resistance_label: Label
+@export var move_resistance_label: Label
 
 @export_category("Containers")
 @export var status_container: VBoxContainer
-@export var weapons_container: WeaponsContainer
-@export var items_container: HBoxContainer
 @export var tab_container: TabContainer
 
 @export_category("Buttons")
@@ -194,21 +186,20 @@ func _populate_from_unit(unit: Unit, update_skills: bool = false) -> void:
 	unused_label_1.text = ""
 
 
-	might_label.text = _get_attribute_or_na(unit, "might")
-	endurance_label.text = _get_attribute_or_na(unit, "endurance")
-	agility_label.text = _get_attribute_or_na(unit, "agility")
-	sense_label.text = _get_attribute_or_na(unit, "sense")
-	mind_label.text = _get_attribute_or_na(unit, "mind")
-	presence_label.text = _get_attribute_or_na(unit, "presence")
-	
-
+	# Skill Attributes
 	martial_label.text = _get_attribute_or_na(unit, "martial")
 	channel_label.text = _get_attribute_or_na(unit, "channel")
 	parry_label.text = _get_attribute_or_na(unit, "parry")
 	resist_label.text = _get_attribute_or_na(unit, "resist")
-	clash_label.text = _get_attribute_or_na(unit, "clash")
 	evade_label.text = _get_attribute_or_na(unit, "evade")
-	will_label.text = _get_attribute_or_na(unit, "will")
+
+	# Resistances (null-safe until scene nodes are wired in the editor)
+	if debuff_resistance_label: debuff_resistance_label.text = _get_attribute_or_na(unit, "debuff_resistance")
+	if blight_resistance_label: blight_resistance_label.text = _get_attribute_or_na(unit, "blight_resistance")
+	if bleed_resistance_label: bleed_resistance_label.text = _get_attribute_or_na(unit, "bleed_resistance")
+	if stun_resistance_label: stun_resistance_label.text = _get_attribute_or_na(unit, "stun_resistance")
+	if fear_resistance_label: fear_resistance_label.text = _get_attribute_or_na(unit, "fear_resistance")
+	if move_resistance_label: move_resistance_label.text = _get_attribute_or_na(unit, "move_resistance")
 
 	# Triggers the tactics manager to populate itself from the new unit
 	if tactics_manager_ui and update_skills:
@@ -257,18 +248,7 @@ func get_min_max_channel_dmg(unit: Unit) -> String:
 
 
 
-#func populate_weapons_from_unit(unit: Unit) -> void:
-	#if not is_instance_valid(unit) or not is_instance_valid(unit.equipment):
-		#weapons_container.clear_weapons_display()
-		#return
-#
-	#var all_equipped_items = unit.equipment.equipped_items
-	#var equipped_weapons: Array[Weapon] = []
-	#for item in all_equipped_items:
-		#if item is Weapon:
-			#equipped_weapons.append(item as Weapon)
-	#
-	#weapons_container.populate_weapons(equipped_weapons, self)
+
 
 func _get_attribute_or_na(unit: Unit, attribute_name: String) -> String:
 	if not is_instance_valid(unit) or not is_instance_valid(unit.get_attributes_container()):

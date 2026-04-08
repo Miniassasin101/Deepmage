@@ -2,7 +2,6 @@ class_name MoveAction
 extends Action
 
 
-
 @export_category("Action Specific Variables")
 @export var limit_by_speed: bool = false
 
@@ -13,216 +12,138 @@ extends Action
 @export var rotation_acceleration_time:  float = 0.3
 @export var stopping_distance:           float = 0.1
 ## Minimum distance from any unit that the final position can be to avoid overlap.
-@export var unit_avoid_radius: float = 1.6
-@export var unit_avoid_sample_number: int = 15
-@export_group("")
+@export var unit_avoid_radius:        float = 1.6
+@export var unit_avoid_sample_number: int   = 15
 
-
-# Internal state:
-var movement_curve:      Curve3D
-var curve_length:        float
-var current_speed:       float
-var move_rotate_speed:   float
-var acceleration_timer:  float
-var rotation_acceleration_timer: float
-var curve_travel_offset: float
-var is_moving:           bool = false
-
+var movement_curve: Curve3D
+var curve_length:   float
 
 
 func start_action(targ_pack: TargetPackage = null) -> void:
 	super.start_action(targ_pack)
-	var to_pos: Vector3 = targ_pack.position
-	await _begin_movement(to_pos)
+	await _begin_movement(targ_pack.position)
 	end_action()
 
 
+# Allows derived actions to run Action.start_action without triggering
+# MoveAction's default "move to targ_pack.position" flow.
 func _start_action_base(targ_pack: TargetPackage = null) -> void:
-	# Allows derived actions (that extend MoveAction) to run the normal "Action.start_action"
-	# without triggering MoveAction.start_action's default "move to targ_pack.position" flow.
 	super.start_action(targ_pack)
-
-
-func _begin_movement_dep(to_pos: Vector3) -> void:
-
-	#	return
-	var path_pack: PathPackage = PathfindingSystem.instance.get_path_package(to_pos as Vector3, unit, true)
-	movement_curve = path_pack.get_curve_3d_from_path()
-	curve_length    = movement_curve.get_baked_length()
-	
-	# Optional limiting the movement by the speed
-	if limit_by_speed:
-		var unit_speed: float = float(unit.get_attributes_container().get_attribute_current_value("speed"))
-		unit_speed *= 2 # Double as distance units are not a full grid square
-		if curve_length > unit_speed:
-			
-			curve_length = unit_speed
-		
-			CombatLog.instance.add_log("Movement Cut Short For: " + unit.ui_name + " Due to Speed being: " + str(unit_speed))
-	
-	
-	# 2) make movement along curve request
-	var move_controller: MovementController = unit.movement_controller
-	move_controller.animate_movement_along_curve(
-		move_speed, movement_curve, curve_length, acceleration_timer, rotation_acceleration_timer, stopping_distance, rotate_speed)
-	
-	await move_controller.movement_complete
-	
-	_end_movement()
-	
 
 
 func _begin_movement(to_pos: Vector3) -> void:
 	var initial_pack: PathPackage = PathfindingSystem.instance.get_path_package(to_pos, unit, true)
 	movement_curve = initial_pack.get_curve_3d_from_path()
-	curve_length = movement_curve.get_baked_length()
-
-	var max_travel_distance: float = curve_length
+	curve_length   = movement_curve.get_baked_length()
 
 	if limit_by_speed:
-		var attribute_speed: float = float(unit.get_attributes_container().get_attribute_current_value("speed"))
-		var world_units_per_turn: float = attribute_speed * 2.0
-		max_travel_distance = minf(max_travel_distance, world_units_per_turn)
+		var speed_value: float        = float(unit.get_attributes_container().get_attribute_current_value("speed"))
+		var world_units_per_turn: float = speed_value * 2.0
+		_pick_safe_speed_limited_endpoint_for_position(to_pos, world_units_per_turn)
 
-		var _chosen_pack: PathPackage = _pick_safe_speed_limited_endpoint_for_position(
-			to_pos,
-			max_travel_distance
-		)
-		# movement_curve + curve_length set in helper
-
-
-	var move_controller: MovementController = unit.movement_controller
-	move_controller.animate_movement_along_curve(
+	unit.movement_controller.animate_movement_along_curve(
 		move_speed,
 		movement_curve,
 		curve_length,
-		acceleration_timer,            # fix param names to exported values
-		rotation_acceleration_timer,
+		0.0,
+		0.0,
 		stopping_distance,
 		rotate_speed
 	)
-
-	await move_controller.movement_complete
+	await unit.movement_controller.movement_complete
 	_end_movement()
 
 
-
 func _end_movement() -> void:
-	# Loop until move_along_curve_process flips is_moving to false
-	var rounded_curve_length: float = snappedf(curve_length, 0.01)
-	Utilities.spawn_text_line(unit, "Moved: " + str(rounded_curve_length), Color.ALICE_BLUE)
-	
-	
-	#show_unit_move_ranges(unit)
-	#end_action()
-
-func show_unit_move_ranges(in_unit: Unit) -> void:
-	if in_unit == null:
-		return
-	#var speed_val: float = float(in_unit.get_attributes_container().get_attribute_current_value("speed"))
-	#var budget: float = speed_val * 2.0
-
-
-
-
-
+	var rounded: float = snappedf(curve_length, 0.01)
+	Utilities.spawn_text_line(unit, "Moved: " + str(rounded), Color.ALICE_BLUE)
 
 
 func end_action() -> void:
 	super.end_action()
 
 
-
 func can_activate_on_target(target_pack: TargetPackage) -> bool:
-
 	if !target_pack or !target_pack.has_tag("position"):
 		return false
-
-	var target_pos: Vector3 = target_pack.position
-
-	if _is_too_close_to_any_unit(target_pos):
+	if _is_occupied(target_pack.position):
 		return false
-	
 	return true
 
-func _is_too_close_to_any_unit(target_pos: Vector3) -> bool:
-	# Grab every unit in the world
-	for other in UnitManager.instance.get_all_units():
-		# skip ourselves
-		if other == unit:
-			continue
-		# compare distance
-		if other.global_transform.origin.distance_to(target_pos) < unit_avoid_radius:
-			return true
-	return false
 
-
-func _get_blocking_unit_at_position(test_position: Vector3) -> Unit:
-	var nearest_blocker: Unit = null
-	var nearest_dist_sq: float = INF
-	for other_unit in UnitManager.instance.get_all_units():
-		if other_unit == unit:
-			continue
-		var dist_sq: float = other_unit.global_transform.origin.distance_squared_to(test_position)
-		if dist_sq < unit_avoid_radius * unit_avoid_radius:
-			if dist_sq < nearest_dist_sq:
-				nearest_dist_sq = dist_sq
-				nearest_blocker = other_unit
-	return nearest_blocker
-
-
-func _is_point_reachable_within(point_world: Vector3, max_distance: float) -> bool:
-	var path_pack: PathPackage = PathfindingSystem.instance.get_path_package(point_world, unit, true)
-	var path_length: float = path_pack.get_curve_3d_from_path().get_baked_length()
-	return path_length <= max_distance + 0.01
-
-
-func _pick_safe_speed_limited_endpoint_for_position(original_target_position: Vector3, max_distance: float) -> PathPackage:
+# Picks the best endpoint when moving to a position under a speed budget.
+#
+# Priority:
+#   1. Ideal point — speed-clamped along the direct path. Use it if free.
+#   2. Open slot near the blocker — closest unoccupied position around the
+#      blocking unit reachable within budget.
+#   3. Stop short — backtrack along the original path until clear.
+func _pick_safe_speed_limited_endpoint_for_position(target_position: Vector3, max_distance: float) -> void:
 	var pf: PathfindingSystem = PathfindingSystem.instance
-	var path_to_original: PathPackage = pf.get_path_package(original_target_position, unit, true)
-	var original_curve: Curve3D = path_to_original.get_curve_3d_from_path()
-	var clamped_travel: float = minf(max_distance, original_curve.get_baked_length())
-	var tentative_end: Vector3 = original_curve.sample_baked(maxf(clamped_travel, 0.0))
+	var path_to_target: PathPackage = pf.get_path_package(target_position, unit, true)
+	var target_curve: Curve3D  = path_to_target.get_curve_3d_from_path()
+	var clamped_travel: float  = minf(max_distance, target_curve.get_baked_length())
+	var ideal_end: Vector3     = target_curve.sample_baked(maxf(clamped_travel, 0.0))
 
-	var blocker: Unit = _get_blocking_unit_at_position(tentative_end)
+	# Step 1: ideal point is free.
+	var blocker: Unit = _get_blocking_unit_at_position(ideal_end)
 	if blocker == null:
-		movement_curve = original_curve
-		curve_length = clamped_travel
-		return path_to_original
+		movement_curve = target_curve
+		curve_length   = clamped_travel
+		return
 
-	var ring_points: Array[Vector3] = pf.get_radial_points_surrounding_unit(
+	# Step 2: open slot around the blocker.
+	var ring: Array[Vector3] = pf.get_radial_points_surrounding_unit(
 		blocker, unit_avoid_radius, unit_avoid_sample_number
 	)
-	pf.sort_positions_by_distance_inplace(ring_points, original_target_position)
+	pf.sort_positions_by_distance_inplace(ring, target_position)
 
-	for candidate in ring_points:
-		if !_is_too_close_to_any_unit_general(candidate):
-			if _is_point_reachable_within(candidate, max_distance):
-				var path_to_candidate: PathPackage = pf.get_path_package(candidate, unit, true)
-				movement_curve = path_to_candidate.get_curve_3d_from_path()
-				curve_length = movement_curve.get_baked_length()
-				return path_to_candidate
+	for candidate in ring:
+		if !_is_occupied(candidate) and _is_reachable_within(candidate, max_distance):
+			var path: PathPackage = pf.get_path_package(candidate, unit, true)
+			movement_curve = path.get_curve_3d_from_path()
+			curve_length   = movement_curve.get_baked_length()
+			return
 
-	# Fallback: walk backward along original curve
-	var backoff_step: float = 0.15
+	# Step 3: stop short — backtrack until the path is clear.
 	var backoff: float = clamped_travel
 	while backoff > 0.0:
-		var test_point: Vector3 = original_curve.sample_baked(backoff)
-		if _get_blocking_unit_at_position(test_point) == null:
-			movement_curve = original_curve
-			curve_length = backoff
-			return path_to_original
-		backoff -= backoff_step
+		if _get_blocking_unit_at_position(target_curve.sample_baked(backoff)) == null:
+			movement_curve = target_curve
+			curve_length   = backoff
+			return
+		backoff -= 0.15
 
-	movement_curve = original_curve
-	curve_length = 0.0
-	return path_to_original
+	# Last resort: stand still.
+	movement_curve = target_curve
+	curve_length   = 0.0
 
 
-func _is_too_close_to_any_unit_general(test_position: Vector3) -> bool:
-	for other_unit in UnitManager.instance.get_all_units():
-		if other_unit == unit:
+# Returns true if any unit (other than self) occupies pos within unit_avoid_radius.
+func _is_occupied(pos: Vector3) -> bool:
+	for other in UnitManager.instance.get_all_units():
+		if other == unit:
 			continue
-		if other_unit.global_transform.origin.distance_to(test_position) < unit_avoid_radius:
+		if other.global_transform.origin.distance_to(pos) < unit_avoid_radius:
 			return true
 	return false
+
+
+# Returns true if pos is reachable from this unit within max_distance along the nav path.
+func _is_reachable_within(pos: Vector3, max_distance: float) -> bool:
+	var path: PathPackage = PathfindingSystem.instance.get_path_package(pos, unit, true)
+	return path.get_curve_3d_from_path().get_baked_length() <= max_distance + 0.01
+
+
+# Returns the nearest unit occupying pos within unit_avoid_radius, or null if none.
+func _get_blocking_unit_at_position(pos: Vector3) -> Unit:
+	var nearest: Unit     = null
+	var nearest_sq: float = INF
+	for other in UnitManager.instance.get_all_units():
+		if other == unit:
+			continue
+		var dist_sq: float = other.global_transform.origin.distance_squared_to(pos)
+		if dist_sq < unit_avoid_radius * unit_avoid_radius and dist_sq < nearest_sq:
+			nearest_sq = dist_sq
+			nearest    = other
+	return nearest
