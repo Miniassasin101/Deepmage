@@ -37,7 +37,6 @@ skill_type = 1
 skill_trigger = 2
 internal_skill_conditions = Array[ExtResource("5_x5oh8")]([SubResource("Resource_a24gw"), SubResource("Resource_0y8mk"), SubResource("Resource_cpkbh")])
 animation_package = ExtResource("2_rl7io")
-effects = Array[ExtResource("3_50qwp")]([null])
 self_effects = Array[ExtResource("3_50qwp")]([ExtResource("10_rl7io")])
 trigger_description = "When an adjacent ally is attacked"
 metadata/_custom_type_script = "uid://kpyou3fdk30c"

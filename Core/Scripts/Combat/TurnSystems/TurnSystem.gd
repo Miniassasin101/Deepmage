@@ -620,15 +620,17 @@ func _slide_two_units_simultaneously(
 
 	var pack_a: PathPackage = pf.get_path_package(dest_a, unit_a, true)
 	var curve_a: Curve3D    = pack_a.get_curve_3d_from_path()
-	var len_a: float        = curve_a.get_baked_length()
+	var len_a: float        = curve_a.get_baked_length() + 0.15
 
 	var pack_b: PathPackage = pf.get_path_package(dest_b, unit_b, true)
 	var curve_b: Curve3D    = pack_b.get_curve_3d_from_path()
-	var len_b: float        = curve_b.get_baked_length()
+	var len_b: float        = curve_b.get_baked_length() + 0.15
 
 	# Start both; do NOT await here so they run in parallel.
-	unit_a.movement_controller.animate_movement_along_curve(speed, curve_a, len_a, 0.0, 0.0, 0.05, 8.0)
-	unit_b.movement_controller.animate_movement_along_curve(speed, curve_b, len_b, 0.0, 0.0, 0.05, 8.0)
+	# stopping_distance = 0.0: must land exactly at the destination.
+	# Any stopping_distance > 0 causes cumulative drift on repeated swaps.
+	unit_a.movement_controller.animate_movement_along_curve(speed, curve_a, len_a, 0.0, 0.0, 0.0, 1.0)
+	unit_b.movement_controller.animate_movement_along_curve(speed, curve_b, len_b, 0.0, 0.0, 0.0, 1.0)
 
 	await unit_a.movement_controller.movement_complete
 	await unit_b.movement_controller.movement_complete
