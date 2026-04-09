@@ -53,6 +53,16 @@ var use_skill_stack: Array[Unit] = []
 ## Stack of active ChainGroups. Grows with nested passive reactions; shrinks as they resolve.
 var chain_group_stack: Array[ChainGroup] = []
 
+## Set by CoverAction during a BEFORE_SKILL_USED passive to redirect the incoming attack
+## to the covering unit instead of the original target. Consumed once by
+## execute_active_skill_for_unit immediately after declare_skill returns.
+var pending_target_redirect: Unit = null
+
+## Set by CoverAction alongside pending_target_redirect. Stores positions so that
+## at the end of the attacker's turn, both units can be slid back if neither has moved.
+## Keys: cover_unit, ally, cover_swapped_to, ally_swapped_to, cover_return_to, ally_return_to, slide_speed.
+var pending_cover_swap_back: Dictionary = {}
+
 
 # ─── Selection ────────────────────────────────────────────────────────────────
 var selected_unit: Unit = null
@@ -176,6 +186,8 @@ func resort_initiative_mid_round(preserve_current_turn: bool = true) -> void:
 ## RPM makes into TurnSystem). Clears passive-use tracking and updates selection.
 func begin_unit_turn(unit: Unit) -> void:
 	used_p_skill_this_turn.clear()
+	pending_target_redirect = null
+	pending_cover_swap_back = {}
 	set_selected_unit(unit)
 
 
@@ -339,9 +351,20 @@ func execute_active_skill_for_unit(acting_unit: Unit, explicit_skill: Skill = nu
 
 	await declare_skill(chosen_skill, target_unit)
 
-	var did_resolve: bool = await _run_skill_action_core(acting_unit, chosen_skill, target_unit)
+	# A Cover passive may have redirected the attack to a different unit.
+	# Consume the redirect here so the action and all downstream AFTER_SKILL_USED
+	# chains operate against the unit that actually received the attack.
+	var effective_target: Unit = target_unit
+	if pending_target_redirect != null:
+		effective_target = pending_target_redirect
+		pending_target_redirect = null
 
-	await after_skill_used(chosen_skill, target_unit)
+	var did_resolve: bool = await _run_skill_action_core(acting_unit, chosen_skill, effective_target)
+
+	await after_skill_used(chosen_skill, effective_target)
+
+	# If a Cover swap happened and neither unit has moved since, slide them back.
+	await _try_cover_swap_back()
 
 	chosen_skill.end_skill()
 
@@ -552,6 +575,64 @@ func can_select_unit(_to_unit: Unit) -> bool:
 
 
 # ─── PRIVATE HELPERS ──────────────────────────────────────────────────────────
+
+## Slides two units that performed a Cover swap back to their original positions,
+## provided neither has moved since the swap (checked within [param epsilon] world units).
+## Called at the end of every execute_active_skill_for_unit; does nothing when
+## no Cover swap occurred this turn.
+func _try_cover_swap_back() -> void:
+	if pending_cover_swap_back.is_empty():
+		return
+	var data: Dictionary = pending_cover_swap_back
+	pending_cover_swap_back = {}
+
+	var cover_unit: Unit = data.get("cover_unit")
+	var ally: Unit       = data.get("ally")
+	if cover_unit == null or ally == null:
+		return
+
+	var epsilon: float = 0.35  # accounts for nav-mesh snapping drift
+
+	var cover_moved: bool = cover_unit.global_position.distance_to(data["cover_swapped_to"]) > epsilon
+	var ally_moved: bool  = ally.global_position.distance_to(data["ally_swapped_to"])  > epsilon
+	if cover_moved or ally_moved:
+		CombatLog.instance.add_log("Cover swap-back skipped — unit(s) moved since swap.")
+		return
+
+	CombatLog.instance.add_log("Cover swap-back: returning " + cover_unit.ui_name + " and " + ally.ui_name + " to original positions.")
+
+	var slide_speed: float = data.get("slide_speed", 8.0)
+	await _slide_two_units_simultaneously(
+		cover_unit, data["cover_return_to"],
+		ally,       data["ally_return_to"],
+		slide_speed
+	)
+
+
+## Slides two units to their respective destinations simultaneously.
+## Builds a nav path for each unit and fires both animations; waits for the
+## slower one to finish before returning.
+func _slide_two_units_simultaneously(
+		unit_a: Unit, dest_a: Vector3,
+		unit_b: Unit, dest_b: Vector3,
+		speed: float) -> void:
+	var pf: PathfindingSystem = PathfindingSystem.instance
+
+	var pack_a: PathPackage = pf.get_path_package(dest_a, unit_a, true)
+	var curve_a: Curve3D    = pack_a.get_curve_3d_from_path()
+	var len_a: float        = curve_a.get_baked_length()
+
+	var pack_b: PathPackage = pf.get_path_package(dest_b, unit_b, true)
+	var curve_b: Curve3D    = pack_b.get_curve_3d_from_path()
+	var len_b: float        = curve_b.get_baked_length()
+
+	# Start both; do NOT await here so they run in parallel.
+	unit_a.movement_controller.animate_movement_along_curve(speed, curve_a, len_a, 0.0, 0.0, 0.05, 8.0)
+	unit_b.movement_controller.animate_movement_along_curve(speed, curve_b, len_b, 0.0, 0.0, 0.05, 8.0)
+
+	await unit_a.movement_controller.movement_complete
+	await unit_b.movement_controller.movement_complete
+
 
 func _get_passive_manager() -> PassiveBarManager:
 	if SkillActivationUI.instance != null:

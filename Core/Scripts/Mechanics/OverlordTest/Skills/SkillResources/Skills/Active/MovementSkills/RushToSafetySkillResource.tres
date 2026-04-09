@@ -22,6 +22,7 @@ action = ExtResource("1_wbr12")
 skill_type = 1
 internal_skill_conditions = Array[ExtResource("3_6nkai")]([SubResource("Resource_txb4i")])
 external_condition_blueprints = Array[ExtResource("2_txb4i")]([ExtResource("3_txb4i")])
+is_disabled = true
 trait_1 = "Movement"
 trait_2 = "Retreat"
 tags = Array[String](["movement"])

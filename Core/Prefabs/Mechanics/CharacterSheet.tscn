@@ -18,6 +18,7 @@
 [ext_resource type="Resource" uid="uid://chqqqec40qj6a" path="res://Deepmage/Core/Resources/ActionResources/MovementActionResources/MoveToUnitActionResource.tres" id="10_tccs3"]
 [ext_resource type="Resource" uid="uid://br2jiaiufcylm" path="res://Deepmage/Core/Resources/ActionResources/MovementActionResources/TeleportActionResource.tres" id="11_grtb5"]
 [ext_resource type="Resource" uid="uid://dkgox1ly7bfii" path="res://Deepmage/Core/Resources/ActionResources/TextDistanceFromUnitActionResource.tres" id="11_hd7qr"]
+[ext_resource type="Resource" uid="uid://5dg3n1cogg4y" path="res://Deepmage/Core/Resources/ActionResources/MovementActionResources/CoverActionResource.tres" id="19_semri"]
 [ext_resource type="Script" uid="uid://p4bb1ulowyag" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributesContainer.gd" id="25_ui78x"]
 [ext_resource type="Script" uid="uid://0covjvx686p3" path="res://Deepmage/Core/Scripts/Mechanics/Equipment/EquipmentContainer.gd" id="30_vcafi"]
 [ext_resource type="Resource" uid="uid://d0y06uljt6wll" path="res://Deepmage/Core/Resources/Equipment/Weapons/TestWeapons/TestSword.tres" id="31_ucxv2"]
@@ -52,7 +53,7 @@ build_profile = ExtResource("3_p3uej")
 
 [node name="ActionContainer" type="Node" parent="." unique_id=1078997847]
 script = ExtResource("2_o1iyq")
-actions = Array[ExtResource("5_2vu4w")]([ExtResource("6_jxnhy"), ExtResource("7_vcafi"), ExtResource("8_ucxv2"), ExtResource("9_xyrbs"), ExtResource("10_rmt2h"), ExtResource("11_hd7qr"), ExtResource("11_grtb5"), ExtResource("9_ol66b"), ExtResource("7_bl3nt"), ExtResource("10_tccs3"), ExtResource("8_bxkbp"), ExtResource("6_j34fh")])
+actions = Array[ExtResource("5_2vu4w")]([ExtResource("6_jxnhy"), ExtResource("7_vcafi"), ExtResource("8_ucxv2"), ExtResource("19_semri"), ExtResource("9_xyrbs"), ExtResource("10_rmt2h"), ExtResource("11_hd7qr"), ExtResource("11_grtb5"), ExtResource("9_ol66b"), ExtResource("7_bl3nt"), ExtResource("10_tccs3"), ExtResource("8_bxkbp"), ExtResource("6_j34fh")])
 
 [node name="AttributesContainer" type="Node" parent="." unique_id=1511788902 node_paths=PackedStringArray("character_sheet")]
 script = ExtResource("25_ui78x")

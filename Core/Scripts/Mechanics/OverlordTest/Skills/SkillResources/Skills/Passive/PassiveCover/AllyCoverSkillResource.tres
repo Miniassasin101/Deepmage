@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://cvmp0l71ox0jv"]
+
+[ext_resource type="Resource" uid="uid://5dg3n1cogg4y" path="res://Deepmage/Core/Resources/ActionResources/MovementActionResources/CoverActionResource.tres" id="1_xvux4"]
+[ext_resource type="Resource" uid="uid://djrw5nkydvyv6" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BlockPackage.tres" id="2_rl7io"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="3_50qwp"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="4_vlgql"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="5_x5oh8"]
+[ext_resource type="Script" uid="uid://cq6k3vojdsik7" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SkillSourceBasedSkillConditions/IsSourceSkillType.gd" id="6_xtfvf"]
+[ext_resource type="Script" uid="uid://c7ofxaslt34wn" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SourceTargetBasedSkillConditions/IsSourceTargetFaction.gd" id="7_wt4dx"]
+[ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="8_m7uy7"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="9_7usvs"]
+[ext_resource type="Resource" uid="uid://csk0w16e3neuu" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/BlessingEffects/GrantPPBlessingEffectResource.tres" id="10_rl7io"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="10_xcxkl"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="11_bnqor"]
+
+[sub_resource type="Resource" id="Resource_a24gw"]
+script = ExtResource("6_xtfvf")
+metadata/_custom_type_script = "uid://cq6k3vojdsik7"
+
+[sub_resource type="Resource" id="Resource_0y8mk"]
+script = ExtResource("7_wt4dx")
+relation = 1
+metadata/_custom_type_script = "uid://c7ofxaslt34wn"
+
+[sub_resource type="Resource" id="Resource_cpkbh"]
+script = ExtResource("8_m7uy7")
+range_var = 3.0
+metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
+
+[resource]
+resource_name = "AllyCoverSkillResource"
+script = ExtResource("9_7usvs")
+skill_name = "Ally Cover"
+action = ExtResource("1_xvux4")
+skill_category = 1
+skill_type = 1
+skill_trigger = 2
+internal_skill_conditions = Array[ExtResource("5_x5oh8")]([SubResource("Resource_a24gw"), SubResource("Resource_0y8mk"), SubResource("Resource_cpkbh")])
+animation_package = ExtResource("2_rl7io")
+effects = Array[ExtResource("3_50qwp")]([null])
+self_effects = Array[ExtResource("3_50qwp")]([ExtResource("10_rl7io")])
+trigger_description = "When an adjacent ally is attacked"
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

@@ -44,6 +44,7 @@ script = ExtResource("13_8hs7p")
 skill_name = "Single Shot"
 action = ExtResource("1_poohm")
 internal_skill_conditions = Array[ExtResource("10_rmqg6")]([SubResource("Resource_nhirw"), SubResource("Resource_jvs1f")])
+is_disabled = true
 animation_package = ExtResource("1_0fe1o")
 effects = Array[ExtResource("4_s7y6q")]([SubResource("Resource_nsvqn")])
 trait_1 = "Ranged 10"
