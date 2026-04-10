@@ -14,6 +14,7 @@ func start_action(targ_pack: TargetPackage = null) -> void:
 	super.start_action(targ_pack)
 	var targ_unit: Unit = targ_pack.unit
 	Utilities.spawn_text_line(targ_unit, spawn_text + " " + targ_unit.ui_name, text_color, scale)
+	await unit.get_tree().create_timer(1.0).timeout
 	end_action()
 
 

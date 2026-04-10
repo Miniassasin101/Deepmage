@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=9 format=3 uid="uid://co5oaijuf6av2"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://co5oaijuf6av2"]
 
 [ext_resource type="Material" uid="uid://cmuw56hfjjlwd" path="res://Deepmage/Core/Art/Materials/VFXMats/OutlineMaterial.tres" id="1_guskw"]
 [ext_resource type="Shader" uid="uid://bfthsd8j86kte" path="res://Deepmage/Core/Art/Shaders/ShaderMats/Gobotcelshading.gdshader" id="2_k53bb"]
@@ -18,6 +18,7 @@ colors = PackedColorArray(0, 0, 0, 1, 0.0901961, 0.0901961, 0.0901961, 1)
 gradient = SubResource("Gradient_x4yeo")
 
 [sub_resource type="Gradient" id="Gradient_6ofss"]
+offsets = PackedFloat32Array(0.004, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_xdpru"]
 gradient = SubResource("Gradient_6ofss")

@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://r00jkqjfop5o"]
+
+[ext_resource type="Resource" uid="uid://cuudvrampevcg" path="res://Deepmage/Core/Resources/ActionResources/TestAttackActionResource.tres" id="1_fhsta"]
+[ext_resource type="Resource" uid="uid://bxauds4tx6ywm" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/CapsuleSwingPackage.tres" id="2_wk0si"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="3_r4dwe"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="4_jdbmt"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="5_i4dk8"]
+[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="6_60xts"]
+[ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="7_ebp5s"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="8_qd450"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="9_qpgna"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="10_oohiv"]
+
+[sub_resource type="Resource" id="Resource_eu7gh"]
+script = ExtResource("6_60xts")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_7kb16"]
+script = ExtResource("7_ebp5s")
+range_var = 3.0
+metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
+
+[resource]
+resource_name = "SwordSlashSkillResource"
+script = ExtResource("8_qd450")
+skill_name = "Sword Slash"
+action = ExtResource("1_fhsta")
+internal_skill_conditions = Array[ExtResource("5_i4dk8")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
+animation_package = ExtResource("2_wk0si")
+trait_1 = "Melee"
+trait_2 = "Sword"
+description = Array[String](["Rushes to target before slashing with a sword."])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

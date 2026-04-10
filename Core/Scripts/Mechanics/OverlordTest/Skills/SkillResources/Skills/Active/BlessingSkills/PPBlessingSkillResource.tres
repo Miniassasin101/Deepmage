@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://cer41pfcdreno"]
+
+[ext_resource type="Resource" uid="uid://djrw5nkydvyv6" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BlockPackage.tres" id="1_s3xyh"]
+[ext_resource type="Script" uid="uid://crlblfi0eiqt0" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/CombatActionScripts/CombatAction.gd" id="1_vvrql"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_s6s8v"]
+[ext_resource type="Resource" uid="uid://csk0w16e3neuu" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/BlessingEffects/GrantPPBlessingEffectResource.tres" id="5_s3xyh"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="8_u44yq"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="10_1qksk"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="11_2botw"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="12_1vr4q"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="13_hs8gh"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="13_icu0p"]
+
+[sub_resource type="Resource" id="Resource_xhiib"]
+script = ExtResource("1_vvrql")
+action_name = "Status Grant Action"
+metadata/_custom_type_script = "uid://crlblfi0eiqt0"
+
+[resource]
+resource_name = "PpUpSkillResource"
+script = ExtResource("12_1vr4q")
+skill_name = "PP Up"
+action = SubResource("Resource_xhiib")
+skill_type = 1
+base_power = 0
+base_accuracy = 90
+crit_mod = -3
+animation_package = ExtResource("1_s3xyh")
+effects = Array[ExtResource("4_s6s8v")]([ExtResource("5_s3xyh")])
+trigger_description = "Always"
+description = Array[String](["Grants a PP blessing, restoring Passive Points"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

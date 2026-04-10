@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Attribute" load_steps=2 format=3 uid="uid://21dos45b37b2"]
+
+[ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="1_bkupa"]
+
+[resource]
+script = ExtResource("1_bkupa")
+attribute_name = "speed"
+attribute_type = 2
+current_value = 4
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"

@@ -1,0 +1,58 @@
+[gd_scene load_steps=10 format=3 uid="uid://sg0ku24m72it"]
+
+[ext_resource type="Shader" uid="uid://wewt1qhv8k8x" path="res://Deepmage/Core/Art/Shaders/VFXShaders/SimpleBuffShader.tres" id="1_l3wvg"]
+[ext_resource type="Texture2D" uid="uid://cej1tknp6217i" path="res://Deepmage/Core/Art/Textures/VFXTextures/vfx_star_flare_alpha_1024.png" id="2_ynrvw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pxy44"]
+render_priority = 0
+shader = ExtResource("1_l3wvg")
+shader_parameter/Texture_Multiplier = 1.925
+shader_parameter/Main_Texture = ExtResource("2_ynrvw")
+
+[sub_resource type="Curve" id="Curve_qcm0m"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.63569677, 1), -0.05306171, -0.05306171, 0, 0, Vector2(0.99021995, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_gog00"]
+curve = SubResource("Curve_qcm0m")
+
+[sub_resource type="Curve" id="Curve_l3wvg"]
+_data = [Vector2(0, 0.2865854), 0.0, 0.0, 0, 0, Vector2(0.3154034, 0.6280488), 2.0462794, 2.0462794, 0, 0, Vector2(1, 0.8292683), 1.4, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ynrvw"]
+curve = SubResource("Curve_l3wvg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tvb6b"]
+lifetime_randomness = 0.5
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.9
+emission_ring_cone_angle = 0.0
+direction = Vector3(0, 1, 0)
+spread = 5.861
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_max = 0.95
+scale_curve = SubResource("CurveTexture_ynrvw")
+color = Color(0, 1.8358645, 2.0062122, 0.437)
+alpha_curve = SubResource("CurveTexture_gog00")
+
+[sub_resource type="QuadMesh" id="QuadMesh_hjfn1"]
+
+[node name="BlessingParticleEffect" type="Node3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+material_override = SubResource("ShaderMaterial_pxy44")
+cast_shadow = 0
+amount = 16
+lifetime = 2.15
+explosiveness = 0.12
+randomness = 1.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_tvb6b")
+draw_pass_1 = SubResource("QuadMesh_hjfn1")

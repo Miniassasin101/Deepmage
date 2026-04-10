@@ -5,16 +5,31 @@ extends Control
 @export var unit_stats_bar_scene: PackedScene
 @export var unit_stats_container: VBoxContainer
 @export var show_stats_for_all_units: bool = true  # Boolean to control stats bar creation for all units or just player units
-
+@export var scroll_container: ScrollContainer = null
+@export var panelcontainer: PanelContainer = null
+@export_category("UI Settings")
+@export var max_height: float = 650.0
 # Dictionary to store references to each unit's stats bar
 var unit_stats_bars: Dictionary = {}
 var units_to_create_for: Array
 
 var is_first_setup: bool = true
 
+const unit_stats_bar_height: float = 60.1
 
-# Called when the node enters the scene tree for the first time.
+static var instance: InitiativeQueueUI = null
+
+
+
+
+# Called when the node enters the scene tree
 func _ready() -> void:
+	if instance != null:
+		push_error("There's more than one InitiativeQueueUI! - " + str(instance))
+		queue_free()
+		return
+	instance = self
+	
 	#instantiate_initiative_queue()
 	#SignalBus.on_ui_update.connect(_on_update_stats_bars)
 #	SignalBus.on_unit_added.connect(instantiate_initiative_queue)
@@ -62,6 +77,26 @@ func instantiate_initiative_queue(_unit: Unit = null) -> void:
 			
 		
 		is_first_setup = false
+		
+		update_scroll_size()
+
+func update_scroll_size() -> void:
+	if !scroll_container:
+		return
+	
+	var cont_num: int = unit_stats_bars.size()
+	var max_size: float = cont_num * (unit_stats_bar_height + 3.9)
+	max_size = minf(max_height, max_size)
+	
+	
+	#panelcontainer.size.y = max_size + 1
+	scroll_container.custom_minimum_size.y = max_size 
+	#await get_tree().process_frame
+	#panelcontainer.size_flags_changed.emit()
+	#panelcontainer.size.y = max_size + 1
+	#panelcontainer.force_update_transform()
+	
+
 
 
 func _on_update_stats_bars() -> void:
@@ -83,6 +118,8 @@ func on_unit_selected(unit: Unit) -> void:
 	if stats_bar:
 		
 		stats_bar.start_pulse()
+		
+		scroll_container.ensure_control_visible(stats_bar)
 
 
 func on_unit_unselected(unit: Unit) -> void:

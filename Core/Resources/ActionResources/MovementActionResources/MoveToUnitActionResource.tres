@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="MoveToUnitAction" format=3 uid="uid://chqqqec40qj6a"]
+
+[ext_resource type="Script" uid="uid://cpa7repyr1v6o" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/MovementActionScripts/MoveToUnitAction.gd" id="1_40l2l"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_nt77i"]
+[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="3_nt77i"]
+
+[resource]
+script = ExtResource("1_40l2l")
+move_speed = 8.0
+rotate_speed = 2.0
+acceleration_time = 2.0
+rotation_acceleration_time = 2.0
+unit_avoid_radius = 1.6
+action_name = "Move To"
+selection_types = Array[ExtResource("2_nt77i")]([ExtResource("3_nt77i")])
+tags = Array[String](["move_to_unit"])
+metadata/_custom_type_script = "uid://cpa7repyr1v6o"

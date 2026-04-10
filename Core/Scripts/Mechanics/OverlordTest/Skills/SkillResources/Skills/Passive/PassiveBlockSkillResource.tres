@@ -1,0 +1,50 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://q7sv630uw87g"]
+
+[ext_resource type="Resource" uid="uid://2cp5ciqvdei1" path="res://Deepmage/Core/Resources/ActionResources/TestStatusActionResource.tres" id="1_nri5f"]
+[ext_resource type="Resource" uid="uid://djrw5nkydvyv6" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BlockPackage.tres" id="2_3qydp"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="5_4glmv"]
+[ext_resource type="Script" uid="uid://13akgn3nuj34" path="res://Deepmage/Core/Scripts/Mechanics/Effects/GrantBlockEffect.gd" id="6_hmkfa"]
+[ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="9_fkfou"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="10_du607"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="11_0cm66"]
+[ext_resource type="Script" uid="uid://c7ofxaslt34wn" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SourceTargetBasedSkillConditions/IsSourceTargetFaction.gd" id="13_6xt6p"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="13_uymt7"]
+[ext_resource type="Script" uid="uid://cq6k3vojdsik7" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SkillSourceBasedSkillConditions/IsSourceSkillType.gd" id="14_a1x7f"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="14_j8352"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="16_4uvkp"]
+
+[sub_resource type="Resource" id="Resource_ckhw7"]
+script = ExtResource("6_hmkfa")
+use_expire_rule = 2
+ui_name = &"Grant Block"
+metadata/_custom_type_script = "uid://13akgn3nuj34"
+
+[sub_resource type="Resource" id="Resource_a1x7f"]
+script = ExtResource("13_6xt6p")
+relation = 0
+metadata/_custom_type_script = "uid://c7ofxaslt34wn"
+
+[sub_resource type="Resource" id="Resource_4uvkp"]
+script = ExtResource("14_a1x7f")
+metadata/_custom_type_script = "uid://cq6k3vojdsik7"
+
+[sub_resource type="Resource" id="Resource_vprm7"]
+script = ExtResource("9_fkfou")
+metadata/_custom_type_script = "uid://clbt58mwsvag8"
+
+[resource]
+resource_name = "PassiveBlockSkillResource"
+script = ExtResource("13_uymt7")
+skill_name = "Passive Block"
+action = ExtResource("1_nri5f")
+skill_category = 1
+skill_type = 1
+skill_trigger = 2
+internal_skill_conditions = Array[ExtResource("11_0cm66")]([SubResource("Resource_a1x7f"), SubResource("Resource_4uvkp"), SubResource("Resource_vprm7")])
+is_disabled = true
+animation_package = ExtResource("2_3qydp")
+effects = Array[ExtResource("5_4glmv")]([SubResource("Resource_ckhw7")])
+trait_1 = "Block"
+trigger_description = "When an ally uses an attack skill"
+description = Array[String](["Grants Block when an ally makes an attack"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

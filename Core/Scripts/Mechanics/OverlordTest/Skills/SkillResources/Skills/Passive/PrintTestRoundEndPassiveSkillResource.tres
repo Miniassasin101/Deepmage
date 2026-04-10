@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://d20yndixbku1c"]
+
+[ext_resource type="Script" uid="uid://doahtvq8r205k" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextOnUnitAction.gd" id="1_rndend"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_jscx3"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_rndend"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="3_hivwr"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="3_rndend"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="4_bulxf"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="4_rndend"]
+[ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="5_bulxf"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="5_rndend"]
+
+[sub_resource type="Resource" id="Resource_rndend"]
+script = ExtResource("1_rndend")
+text_color = Color(1, 0.6, 0, 1)
+action_name = "Unit Text"
+metadata/_custom_type_script = "uid://doahtvq8r205k"
+
+[sub_resource type="Resource" id="Resource_tfw8t"]
+script = ExtResource("5_bulxf")
+metadata/_custom_type_script = "uid://clbt58mwsvag8"
+
+[resource]
+resource_name = "PrintTestRoundEndSkillResource"
+script = ExtResource("3_rndend")
+skill_name = "Print Test Round End"
+action = SubResource("Resource_rndend")
+skill_category = 1
+skill_type = 1
+skill_trigger = 4
+internal_skill_conditions = Array[ExtResource("4_bulxf")]([SubResource("Resource_tfw8t")])
+trigger_description = "At the end of each round"
+description = Array[String](["Test skill: spawns floating text at the end of every round"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

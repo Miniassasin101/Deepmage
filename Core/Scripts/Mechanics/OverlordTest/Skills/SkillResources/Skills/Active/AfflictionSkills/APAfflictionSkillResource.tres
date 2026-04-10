@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://d0l0d2lkclppa"]
+
+[ext_resource type="Resource" uid="uid://djrw5nkydvyv6" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BlockPackage.tres" id="1_crxj2"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_3tn85"]
+[ext_resource type="Resource" uid="uid://bnjnadgm1ljvs" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/AfflictionEffects/GrantAPAfflictionEffectResource.tres" id="5_otisw"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="10_ysiak"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="11_8ee5e"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="12_uewkj"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="13_q57qg"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="13_vrrth"]
+
+[resource]
+resource_name = "ApDownSkillResource"
+script = ExtResource("12_uewkj")
+skill_name = "AP Down"
+skill_type = 2
+base_power = 0
+base_accuracy = 90
+crit_mod = -3
+animation_package = ExtResource("1_crxj2")
+effects = Array[ExtResource("4_3tn85")]([ExtResource("5_otisw")])
+trigger_description = "Always"
+description = Array[String](["Inflicts an AP affliction on the target, draining Action Points"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://btpd752w5e6sb"]
+
+[ext_resource type="Script" uid="uid://p2fgdkkcix2b" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/AttributeBasedSkillConditions/IsGenericAttributeValueSkillCondition.gd" id="1_qjxps"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_2j5g5"]
+
+[sub_resource type="Resource" id="Resource_sfxmr"]
+script = ExtResource("1_qjxps")
+attribute_name = "passive_points"
+metadata/_custom_type_script = "uid://p2fgdkkcix2b"
+
+[resource]
+script = ExtResource("2_2j5g5")
+display_name = "Is PP 0"
+category_name = "AP & PP"
+prototype = SubResource("Resource_sfxmr")
+metadata/_custom_type_script = "uid://c7jeogqcvfh22"

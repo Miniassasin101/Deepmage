@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://c5np6f0dokpy1"]
+
+[ext_resource type="Resource" uid="uid://djrw5nkydvyv6" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BlockPackage.tres" id="1_subkq"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_eiayq"]
+[ext_resource type="Resource" uid="uid://tr41qw80tt6u" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/AfflictionEffects/GrantPotencyAfflictionEffectResource.tres" id="5_kkqdb"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="11_hbiwu"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="12_lc404"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="13_4j8q0"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="13_fnhdk"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="14_7bltf"]
+
+[resource]
+resource_name = "PotencyDownSkillResource"
+script = ExtResource("13_4j8q0")
+skill_name = "Potency Down"
+skill_type = 2
+base_accuracy = 90
+crit_mod = -3
+animation_package = ExtResource("1_subkq")
+effects = Array[ExtResource("4_eiayq")]([ExtResource("5_kkqdb")])
+trait_1 = "Damage Down"
+trigger_description = "Always"
+description = Array[String](["Inflicts a Potency affliction on the target, reducing damage dealt"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

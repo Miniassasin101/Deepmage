@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://dpshmhy50ni0c"]
+
+[ext_resource type="Resource" uid="uid://dccj02olf2ba7" path="res://Deepmage/Core/Resources/ActionResources/TestLongAttackActionResource.tres" id="1_xmud2"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="2_8a14e"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="7_3bovv"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="7_24fjk"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="8_a6wnq"]
+[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="9_nunal"]
+[ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="10_f8wxo"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="11_x6pry"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="12_10k4e"]
+
+[sub_resource type="Resource" id="Resource_eu7gh"]
+script = ExtResource("9_nunal")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_3bovv"]
+script = ExtResource("10_f8wxo")
+range_var = 3.0
+metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
+
+[resource]
+resource_name = "LongBashSkillResource"
+script = ExtResource("11_x6pry")
+skill_name = "Long Bash"
+action = ExtResource("1_xmud2")
+skill_cost = 2
+internal_skill_conditions = Array[ExtResource("8_a6wnq")]([SubResource("Resource_eu7gh"), SubResource("Resource_3bovv")])
+base_power = 200
+base_accuracy = 90
+crit_mod = 5
+trait_1 = "Melee"
+trait_2 = "Heavy"
+trigger_description = "When an enemy is within range 3"
+description = Array[String](["Moves towards then Bashes a unit in range 5", "Deals Heavy Damage"])
+tags = Array[String](["pierce"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

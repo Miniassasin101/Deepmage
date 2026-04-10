@@ -1,332 +1,80 @@
-[gd_scene load_steps=64 format=3 uid="uid://14nkak1a1qkg"]
+[gd_scene format=3 uid="uid://14nkak1a1qkg"]
 
 [ext_resource type="Script" uid="uid://ceujy1qm0i6o6" path="res://Deepmage/Core/Scripts/Units/CharacterSheet.gd" id="1_rgld4"]
 [ext_resource type="Script" uid="uid://cusgogua72ojh" path="res://Deepmage/Core/Scripts/ActionSystem/ActionContainer.gd" id="2_o1iyq"]
-[ext_resource type="Script" uid="uid://cvislitkwpg12" path="res://Deepmage/Core/Scripts/ActionSystem/Action.gd" id="3_qntpm"]
-[ext_resource type="Script" uid="uid://bl34p0y06cyys" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/MoveAction.gd" id="4_lqkdn"]
-[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="5_p3ymn"]
-[ext_resource type="Script" uid="uid://doahtvq8r205k" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextOnUnitAction.gd" id="6_p3uej"]
-[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="7_0fy5k"]
-[ext_resource type="Script" uid="uid://4mdy4qyk2p8b" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextOnGroundAction.gd" id="8_txd4g"]
-[ext_resource type="Script" uid="uid://bjhah2xmsklrq" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/TeleportAction.gd" id="9_e2vah"]
-[ext_resource type="Resource" uid="uid://dkgox1ly7bfii" path="res://Deepmage/Core/Resources/ActionResources/TextDistanceFromUnitActionResource.tres" id="10_wrqbw"]
-[ext_resource type="Resource" uid="uid://chqqqec40qj6a" path="res://Deepmage/Core/Resources/ActionResources/MoveToUnitActionResource.tres" id="11_t0b1j"]
-[ext_resource type="Resource" uid="uid://cuudvrampevcg" path="res://Deepmage/Core/Resources/ActionResources/TestAttackActionResource.tres" id="12_x34uj"]
-[ext_resource type="Resource" uid="uid://dccj02olf2ba7" path="res://Deepmage/Core/Resources/ActionResources/TestLongAttackActionResource.tres" id="13_704ky"]
-[ext_resource type="Resource" uid="uid://by016ujd3kbnh" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/EvadeReactionResource.tres" id="14_6wat7"]
-[ext_resource type="Resource" uid="uid://c5dl1dlq1jmiy" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/BlockReactionResource.tres" id="15_8ookq"]
-[ext_resource type="Resource" uid="uid://d2ysyx0gn34ud" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/PassReactionResource.tres" id="16_fpm4q"]
-[ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="17_ic4q3"]
-[ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="18_yrgef"]
-[ext_resource type="Script" uid="uid://dfqq4lgq8fr27" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="19_4lshk"]
-[ext_resource type="Script" uid="uid://beaqcf4hetaxo" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitMomentAnimationEffect.gd" id="20_jw4gy"]
-[ext_resource type="Script" uid="uid://brutb7o0hj6td" path="res://Deepmage/Core/Scripts/Animation/AnimationPackage.gd" id="21_8e77q"]
-[ext_resource type="Script" uid="uid://bf2hv6d83v6fv" path="res://Deepmage/Core/Resources/DataStructures/AnimationSyncProfile.gd" id="22_t600r"]
-[ext_resource type="Script" uid="uid://caggmbav8c0ky" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/AttackAction.gd" id="23_qnrxa"]
-[ext_resource type="Resource" uid="uid://dci1vghxdl7pd" path="res://Deepmage/Core/Resources/ActionResources/TestRangedAttackActionResource.tres" id="24_2en3j"]
-[ext_resource type="Resource" uid="uid://gol0peu7b8bs" path="res://Deepmage/Core/Resources/ActionResources/SpellActionResources/SpellActionTest.tres" id="25_tccs3"]
+[ext_resource type="Resource" uid="uid://cdkwk7budcsou" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeResources/AttributesProfiles/BaseDarkestAttributesProfile.tres" id="2_semri"]
+[ext_resource type="Resource" uid="uid://cruv3h07wplnu" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildProfileResources/MercenaryBuildProfile.tres" id="3_p3uej"]
+[ext_resource type="Script" uid="uid://qgvfrtjfoen4" path="res://Deepmage/Core/Resources/DataStructures/GearPreset.gd" id="3_rmt2h"]
+[ext_resource type="Script" uid="uid://cvislitkwpg12" path="res://Deepmage/Core/Scripts/ActionSystem/Action.gd" id="5_2vu4w"]
+[ext_resource type="Resource" uid="uid://ksqbtp5sydrf" path="res://Deepmage/Core/Resources/ActionResources/UseActionResources/UseFirstSkillActionResource.tres" id="6_j34fh"]
+[ext_resource type="Resource" uid="uid://c5dl1dlq1jmiy" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/HumanoidReactionResources/BlockReactionResource.tres" id="6_jxnhy"]
+[ext_resource type="Resource" uid="uid://ckf4jaulgujk1" path="res://Deepmage/Core/Resources/ActionResources/MovementActionResources/RushActionResource.tres" id="7_bl3nt"]
+[ext_resource type="Resource" uid="uid://by016ujd3kbnh" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/HumanoidReactionResources/EvadeReactionResource.tres" id="7_vcafi"]
+[ext_resource type="Resource" uid="uid://8vem57wbteya" path="res://Deepmage/Core/Resources/ActionResources/MovementActionResources/RushToUnitActionResource.tres" id="8_bxkbp"]
+[ext_resource type="Resource" uid="uid://d2ysyx0gn34ud" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/HumanoidReactionResources/PassReactionResource.tres" id="8_ucxv2"]
+[ext_resource type="Resource" uid="uid://cgy0lblu8p8qy" path="res://Deepmage/Core/Resources/ActionResources/MovementActionResources/MoveActionResource.tres" id="9_ol66b"]
+[ext_resource type="Resource" uid="uid://bx6gwu1suvqij" path="res://Deepmage/Core/Resources/ActionResources/SpawnTextActionResource.tres" id="9_xyrbs"]
+[ext_resource type="Resource" uid="uid://ddqim6sn7cqll" path="res://Deepmage/Core/Resources/ActionResources/SpawnTextOnUnitActionResource.tres" id="10_rmt2h"]
+[ext_resource type="Resource" uid="uid://chqqqec40qj6a" path="res://Deepmage/Core/Resources/ActionResources/MovementActionResources/MoveToUnitActionResource.tres" id="10_tccs3"]
+[ext_resource type="Resource" uid="uid://br2jiaiufcylm" path="res://Deepmage/Core/Resources/ActionResources/MovementActionResources/TeleportActionResource.tres" id="11_grtb5"]
+[ext_resource type="Resource" uid="uid://dkgox1ly7bfii" path="res://Deepmage/Core/Resources/ActionResources/TextDistanceFromUnitActionResource.tres" id="11_hd7qr"]
+[ext_resource type="Resource" uid="uid://5dg3n1cogg4y" path="res://Deepmage/Core/Resources/ActionResources/MovementActionResources/CoverActionResource.tres" id="19_semri"]
 [ext_resource type="Script" uid="uid://p4bb1ulowyag" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributesContainer.gd" id="25_ui78x"]
-[ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="26_7mv87"]
-[ext_resource type="Resource" uid="uid://056wlunxgtlm" path="res://Deepmage/Core/Resources/ActionResources/SpellActionResources/SpellLaunchSatelliteActionTestResource.tres" id="26_grtb5"]
-
-[sub_resource type="Resource" id="Resource_lsp3f"]
-script = ExtResource("5_p3ymn")
-name = &"ground"
-is_true = true
-metadata/_custom_type_script = "uid://cihsn5lxnlupk"
-
-[sub_resource type="Resource" id="Resource_1oy7d"]
-script = ExtResource("4_lqkdn")
-move_speed = 10.0
-unit_avoid_radius = 1.6
-action_name = "Move Test"
-selection_types = Array[ExtResource("5_p3ymn")]([SubResource("Resource_lsp3f")])
-metadata/_custom_type_script = "uid://bl34p0y06cyys"
-
-[sub_resource type="Resource" id="Resource_aemtr"]
-script = ExtResource("6_p3uej")
-text_color = Color(9.62615e-08, 0.519219, 0.80859, 1)
-action_name = "Unit Text"
-selection_types = Array[ExtResource("5_p3ymn")]([ExtResource("7_0fy5k")])
-metadata/_custom_type_script = "uid://doahtvq8r205k"
-
-[sub_resource type="Resource" id="Resource_b3sv1"]
-script = ExtResource("8_txd4g")
-text_color = Color(0.941176, 0.972549, 1, 1)
-spawn_text_at_pos = true
-action_name = "Ground Text"
-selection_types = Array[ExtResource("5_p3ymn")]([SubResource("Resource_lsp3f")])
-metadata/_custom_type_script = "uid://4mdy4qyk2p8b"
-
-[sub_resource type="Resource" id="Resource_2qo7v"]
-script = ExtResource("5_p3ymn")
-name = &"ground"
-is_true = true
-metadata/_custom_type_script = "uid://cihsn5lxnlupk"
-
-[sub_resource type="Resource" id="Resource_mt7xe"]
-script = ExtResource("9_e2vah")
-unit_avoid_radius = 1.6
-action_name = "Teleport"
-selection_types = Array[ExtResource("5_p3ymn")]([SubResource("Resource_2qo7v")])
-metadata/_custom_type_script = "uid://bjhah2xmsklrq"
-
-[sub_resource type="Animation" id="Animation_byeww"]
-resource_name = "CapsuleBash"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Rig:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.491667, 0.608333, 0.633333, 1),
-"transitions": PackedFloat32Array(1, -2, 2, 1, -2),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, -0.821176), Vector3(0, 0, 0.607738), Vector3(0, 0, 0.784142), Vector3(0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Rig:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.491667, 0.608333, 0.633333, 1),
-"transitions": PackedFloat32Array(1, -2, 2, 1, -2),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.381005, 0, 0), Vector3(0.329466, 0, 0), Vector3(0.442701, 0, 0), Vector3(0, 0, 0)]
-}
-
-[sub_resource type="Resource" id="Resource_7dtjx"]
-script = ExtResource("18_yrgef")
-timing = 0.55
-metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
-
-[sub_resource type="Resource" id="Resource_4cqq6"]
-script = ExtResource("19_4lshk")
-duration = 0.308
-timing = 0.6
-metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
-
-[sub_resource type="Resource" id="Resource_lv0cn"]
-script = ExtResource("20_jw4gy")
-timing = 0.61
-metadata/_custom_type_script = "uid://beaqcf4hetaxo"
-
-[sub_resource type="Resource" id="Resource_fux2u"]
-script = ExtResource("22_t600r")
-markers = Dictionary[String, float]({
-"HIT_END": 0.65,
-"HIT_START": 0.55
-})
-metadata/_custom_type_script = "uid://bf2hv6d83v6fv"
-
-[sub_resource type="Resource" id="Resource_30gbb"]
-script = ExtResource("21_8e77q")
-name = "CapsuleBash"
-animation = SubResource("Animation_byeww")
-animation_effects = Array[ExtResource("17_ic4q3")]([SubResource("Resource_7dtjx"), SubResource("Resource_4cqq6"), SubResource("Resource_lv0cn")])
-sync_profile = SubResource("Resource_fux2u")
-metadata/_custom_type_script = "uid://brutb7o0hj6td"
-
-[sub_resource type="Resource" id="Resource_pcmaa"]
-script = ExtResource("18_yrgef")
-timing = 0.55
-metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
-
-[sub_resource type="Resource" id="Resource_eiy75"]
-script = ExtResource("19_4lshk")
-duration = 0.349
-timing = 0.6
-metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
-
-[sub_resource type="Resource" id="Resource_pkdr8"]
-script = ExtResource("18_yrgef")
-strength = 0.1
-shake_time = 0.3
-timing = 0.55
-metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
-
-[sub_resource type="Resource" id="Resource_46hdo"]
-script = ExtResource("19_4lshk")
-duration = 0.349
-timing = 0.6
-metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
-
-[sub_resource type="Resource" id="Resource_yf7ro"]
-script = ExtResource("18_yrgef")
-timing = 0.55
-metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
-
-[sub_resource type="Resource" id="Resource_d5psw"]
-script = ExtResource("19_4lshk")
-duration = 0.349
-timing = 0.6
-metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
-
-[sub_resource type="Resource" id="Resource_bqf7c"]
-script = ExtResource("23_qnrxa")
-animation_package = SubResource("Resource_30gbb")
-hit_anim_effect = SubResource("Resource_yf7ro")
-graze_anim_effect = SubResource("Resource_pkdr8")
-block_anim_effect = SubResource("Resource_pcmaa")
-hit_stop_effect = SubResource("Resource_d5psw")
-graze_stop_effect = SubResource("Resource_46hdo")
-block_stop_effect = SubResource("Resource_eiy75")
-attack_range = 20.0
-hit_delay = 1.5
-use_hit_delay = true
-action_name = "Shoot Action"
-selection_types = Array[ExtResource("5_p3ymn")]([ExtResource("7_0fy5k")])
-tags = Array[String](["melee", "attack"])
-metadata/_custom_type_script = "uid://caggmbav8c0ky"
-
-[sub_resource type="Resource" id="Resource_grtb5"]
-resource_name = "HealthAttributeResource"
-script = ExtResource("26_7mv87")
-attribute_name = "health"
-attribute_type = 2
-current_value = 9
-maximum_value = 10
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_jxnhy"]
-resource_name = "PostureAttributeResource"
-script = ExtResource("26_7mv87")
-attribute_name = "posture"
-attribute_type = 2
-current_value = 10
-maximum_value = 10
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_vcafi"]
-resource_name = "StrainAttributeResource"
-script = ExtResource("26_7mv87")
-attribute_name = "strain"
-attribute_type = 2
-current_value = 10
-maximum_value = 10
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_ucxv2"]
-resource_name = "ArmorAttributeResource"
-script = ExtResource("26_7mv87")
-attribute_name = "armor"
-attribute_type = 2
-current_value = 1
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_xyrbs"]
-resource_name = "MartialAttributeResource"
-script = ExtResource("26_7mv87")
-attribute_name = "martial"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_rmt2h"]
-resource_name = "ChannelAttributeResource"
-script = ExtResource("26_7mv87")
-attribute_name = "channel"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
+[ext_resource type="Script" uid="uid://0covjvx686p3" path="res://Deepmage/Core/Scripts/Mechanics/Equipment/EquipmentContainer.gd" id="30_vcafi"]
+[ext_resource type="Resource" uid="uid://d0y06uljt6wll" path="res://Deepmage/Core/Resources/Equipment/Weapons/TestWeapons/TestSword.tres" id="31_ucxv2"]
+[ext_resource type="Resource" uid="uid://w3sejjaa4agb" path="res://Deepmage/Core/Resources/Equipment/Weapons/TestWeapons/TestAxe.tres" id="32_xyrbs"]
+[ext_resource type="Resource" uid="uid://bmj6imcyymbx4" path="res://Deepmage/Core/Resources/Equipment/Weapons/TestWeapons/TestShield.tres" id="34_hd7qr"]
+[ext_resource type="Script" uid="uid://wnokk4hycw83" path="res://Deepmage/Core/Scripts/Mechanics/Classes/ClassManager.gd" id="35_semri"]
+[ext_resource type="Script" uid="uid://d3crcpqyvdwur" path="res://Deepmage/Core/Scripts/Mechanics/Magic/MagicController.gd" id="36_dpcrq"]
+[ext_resource type="Resource" uid="uid://r1voosghl6ll" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Ancestries/HumanAncestry.tres" id="36_lqkdn"]
+[ext_resource type="Resource" uid="uid://7yrn2ntt7uqi" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Backgrounds/FarmerBackground.tres" id="37_p3ymn"]
+[ext_resource type="Resource" uid="uid://k7d8t137f3gh" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/MartialClasses/MercenaryClass.tres" id="38_p3uej"]
+[ext_resource type="Resource" uid="uid://bq1qqcyxh3qbv" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/MagicClasses/ElementalistClass.tres" id="39_0fy5k"]
+[ext_resource type="Script" uid="uid://rwvfoi4t15v8" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSource.gd" id="40_txd4g"]
+[ext_resource type="Resource" uid="uid://dukkccof7qwkn" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Feats/ToughFeat.tres" id="41_e2vah"]
+[ext_resource type="Resource" uid="uid://d2ndq1y5okkfk" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Gear/HeadbandGear.tres" id="42_wrqbw"]
+[ext_resource type="Resource" uid="uid://dcmueyhnuimld" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Gear/BracersGear.tres" id="43_t0b1j"]
+[ext_resource type="Resource" uid="uid://bbh5ijxuf1wuf" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Rank/Rank.tres" id="44_p3ymn"]
 
 [sub_resource type="Resource" id="Resource_hd7qr"]
-resource_name = "ClashAttributeResource"
-script = ExtResource("26_7mv87")
-attribute_name = "clash"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
+script = ExtResource("3_rmt2h")
+metadata/_custom_type_script = "uid://qgvfrtjfoen4"
 
-[sub_resource type="Resource" id="Resource_semri"]
-resource_name = "EvadeAttributeResource"
-script = ExtResource("26_7mv87")
-attribute_name = "evade"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_dpcrq"]
-resource_name = "WillAttributeResource"
-script = ExtResource("26_7mv87")
-attribute_name = "will"
-attribute_type = 1
-current_value = 3
-maximum_value = 3
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_m2aod"]
-resource_name = "MightAttributeResource"
-script = ExtResource("26_7mv87")
-attribute_name = "might"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_uowym"]
-resource_name = "EnduranceAttributeResource"
-script = ExtResource("26_7mv87")
-attribute_name = "endurance"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_bxxpl"]
-resource_name = "AgilityAttributeResource"
-script = ExtResource("26_7mv87")
-attribute_name = "agility"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_fujxc"]
-resource_name = "SenseAttributeResource"
-script = ExtResource("26_7mv87")
-attribute_name = "sense"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_rgld4"]
-resource_name = "MindAttributeResource"
-script = ExtResource("26_7mv87")
-attribute_name = "mind"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_o1iyq"]
-resource_name = "PresenceAttributeResource"
-script = ExtResource("26_7mv87")
-attribute_name = "presence"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_qntpm"]
-resource_name = "ManaAttributeResource"
-script = ExtResource("26_7mv87")
-attribute_name = "mana"
-current_value = 10
-maximum_value = 10
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[node name="CharacterSheet" type="Node" node_paths=PackedStringArray("action_container", "attributes_container")]
+[node name="CharacterSheet" type="Node" unique_id=1198739603 node_paths=PackedStringArray("action_container", "attributes_container", "magic_controller", "class_manager", "equipment_container")]
 script = ExtResource("1_rgld4")
 action_container = NodePath("ActionContainer")
 attributes_container = NodePath("AttributesContainer")
+magic_controller = NodePath("MagicController")
+class_manager = NodePath("ClassManager")
+equipment_container = NodePath("EquipmentContainer")
+attributes_profile = ExtResource("2_semri")
+gear_preset = SubResource("Resource_hd7qr")
+build_profile = ExtResource("3_p3uej")
 
-[node name="ActionContainer" type="Node" parent="."]
+[node name="ActionContainer" type="Node" parent="." unique_id=1078997847]
 script = ExtResource("2_o1iyq")
-actions = Array[ExtResource("3_qntpm")]([SubResource("Resource_1oy7d"), SubResource("Resource_aemtr"), SubResource("Resource_b3sv1"), SubResource("Resource_mt7xe"), ExtResource("10_wrqbw"), ExtResource("11_t0b1j"), ExtResource("12_x34uj"), ExtResource("13_704ky"), ExtResource("14_6wat7"), ExtResource("15_8ookq"), ExtResource("16_fpm4q"), SubResource("Resource_bqf7c"), ExtResource("24_2en3j"), ExtResource("25_tccs3"), ExtResource("26_grtb5")])
+actions = Array[ExtResource("5_2vu4w")]([ExtResource("6_jxnhy"), ExtResource("7_vcafi"), ExtResource("8_ucxv2"), ExtResource("19_semri"), ExtResource("9_xyrbs"), ExtResource("10_rmt2h"), ExtResource("11_hd7qr"), ExtResource("11_grtb5"), ExtResource("9_ol66b"), ExtResource("7_bl3nt"), ExtResource("10_tccs3"), ExtResource("8_bxkbp"), ExtResource("6_j34fh")])
 
-[node name="AttributesContainer" type="Node" parent="."]
+[node name="AttributesContainer" type="Node" parent="." unique_id=1511788902 node_paths=PackedStringArray("character_sheet")]
 script = ExtResource("25_ui78x")
-starting_attributes = Array[ExtResource("26_7mv87")]([SubResource("Resource_grtb5"), SubResource("Resource_jxnhy"), SubResource("Resource_vcafi"), SubResource("Resource_ucxv2"), SubResource("Resource_xyrbs"), SubResource("Resource_rmt2h"), SubResource("Resource_hd7qr"), SubResource("Resource_semri"), SubResource("Resource_dpcrq"), SubResource("Resource_m2aod"), SubResource("Resource_uowym"), SubResource("Resource_bxxpl"), SubResource("Resource_fujxc"), SubResource("Resource_rgld4"), SubResource("Resource_o1iyq"), SubResource("Resource_qntpm")])
+character_sheet = NodePath("..")
+
+[node name="ClassManager" type="Node" parent="." unique_id=621877034 node_paths=PackedStringArray("character_sheet", "magic_controller")]
+script = ExtResource("35_semri")
+character_sheet = NodePath("..")
+magic_controller = NodePath("../MagicController")
+race = ExtResource("36_lqkdn")
+background = ExtResource("37_p3ymn")
+martial_class = ExtResource("38_p3uej")
+magic_class = ExtResource("39_0fy5k")
+feats = Array[ExtResource("40_txd4g")]([ExtResource("41_e2vah")])
+gear_sources = Array[ExtResource("40_txd4g")]([ExtResource("42_wrqbw"), ExtResource("43_t0b1j")])
+progression = ExtResource("44_p3ymn")
+
+[node name="MagicController" type="Node" parent="." unique_id=1291920677]
+script = ExtResource("36_dpcrq")
+
+[node name="EquipmentContainer" type="Node" parent="." unique_id=1319926146]
+script = ExtResource("30_vcafi")
+carried_gear = Array[ExtResource("40_txd4g")]([ExtResource("31_ucxv2"), ExtResource("32_xyrbs"), ExtResource("34_hd7qr")])
+metadata/_custom_type_script = "uid://0covjvx686p3"

@@ -8,14 +8,14 @@ extends SlidePanelContainer
 @export var accuracy_pool_label: Label    # hook to your AccuracyLabel
 @export var target_successes_label: Label # hook to your DifficultyLabel
 
-func get_damage_preview(attack: AttackAction, attacker: Unit, target: Unit) -> Dictionary:
+func get_damage_preview(attack: CombatAction, attacker: Unit, target: Unit) -> Dictionary:
 	if attack == null or attacker == null or target == null:
 		return {"min": 0, "max": 0}
 
 	var att := attacker.get_attributes_container()
 	var tgt := target.get_attributes_container()
 	
-	var tgt_hp_att: Attribute = tgt.get_attribute("health")
+	var tgt_hp_att: Attribute = tgt.get_attribute("posture")
 	var tgt_curr_hp: int = tgt_hp_att.get_current_modified_value()
 	var tgt_max_hp: int = tgt_hp_att.get_max_value()
 	
@@ -26,7 +26,7 @@ func get_damage_preview(attack: AttackAction, attacker: Unit, target: Unit) -> D
 		dmg_attr = att.get_attribute_current_value(attack.damage_attribute)
 
 	var defense := tgt.get_defence() if tgt != null else 0
-	var base := attack.base_damage
+	var base := 0#attack.base_damage
 
 	var max_dmg := maxi(0, base + dmg_attr - defense)
 	var min_dmg := 1  # adjust if/when you add true spread
@@ -35,14 +35,14 @@ func get_damage_preview(attack: AttackAction, attacker: Unit, target: Unit) -> D
 	
 	return {"min": min_dmg, "max": max_dmg}
 
-func fill_from_attack(attack: AttackAction, attacker: Unit, target: Unit) -> void:
+func fill_from_attack(attack: CombatAction, attacker: Unit, target: Unit) -> void:
 	if attack == null or attacker == null or target == null:
 		clear(); return
 
 	if attack_name_label: attack_name_label.text = attack.action_name
 
 	var att := attacker.get_attributes_container()
-	var acc_names := attack.get_accuracy_attributes()
+	var acc_names: Array[String] = [""]#attack.get_accuracy_attributes()
 	var acc_attr := acc_names[0] if acc_names.size() >= 1 else ""
 	var acc_skill := acc_names[acc_names.size()-1] if acc_names.size() >= 2 else ""
 	var acc_val := 0

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="GrantStatusEffect" format=3 uid="uid://dvb77lteh8p8b"]
+
+[ext_resource type="Script" uid="uid://c8s5omyjs8xrw" path="res://Deepmage/Core/Scripts/Mechanics/Effects/GrantStatusEffect.gd" id="1_7d1or"]
+[ext_resource type="Script" uid="uid://cs3vn027f1kbm" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/StatusScripts/Blessings/GenericGainBlessing.gd" id="2_7d1or"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="3_utx31"]
+
+[sub_resource type="Resource" id="Resource_jhtri"]
+script = ExtResource("2_7d1or")
+stat_name = "evade"
+ui_name = "Evade Up"
+status_category = 1
+status_level = 5
+expire_timing = 2
+metadata/_custom_type_script = "uid://cs3vn027f1kbm"
+
+[resource]
+script = ExtResource("1_7d1or")
+status = SubResource("Resource_jhtri")
+ui_name = &"Evade Gain"
+metadata/_custom_type_script = "uid://c8s5omyjs8xrw"

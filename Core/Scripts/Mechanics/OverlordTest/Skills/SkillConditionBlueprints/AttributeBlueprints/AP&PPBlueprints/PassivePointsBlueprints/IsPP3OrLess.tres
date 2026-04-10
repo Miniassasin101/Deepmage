@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://cvj6fqtr1eisp"]
+
+[ext_resource type="Script" uid="uid://do3s5c8g376ye" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/AttributeBasedSkillConditions/IsGenericAttributeValueOrLessSkillCondition.gd" id="1_pqwwj"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_j6q5a"]
+
+[sub_resource type="Resource" id="Resource_4spae"]
+script = ExtResource("1_pqwwj")
+attribute_name = "passive_points"
+value = 3
+metadata/_custom_type_script = "uid://do3s5c8g376ye"
+
+[resource]
+script = ExtResource("2_j6q5a")
+display_name = "Is PP 3 or less"
+category_name = "AP & PP"
+prototype = SubResource("Resource_4spae")
+metadata/_custom_type_script = "uid://c7jeogqcvfh22"

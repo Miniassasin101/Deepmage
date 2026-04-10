@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="MoveToSafetySkill" format=3 uid="uid://cdo13j8uua6g3"]
+
+[ext_resource type="Resource" uid="uid://ckf4jaulgujk1" path="res://Deepmage/Core/Resources/ActionResources/MovementActionResources/RushActionResource.tres" id="1_w7c8i"]
+[ext_resource type="Script" uid="uid://bj28140wrmaiv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/PositionPreferences/PositionPreference.gd" id="2_4wppd"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_t0s1t"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="2_tkbui"]
+[ext_resource type="Script" uid="uid://dk20xdie5t8dr" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/PositionPreferences/MaximizeMinEnemyDistancePreference.gd" id="4_cb0v1"]
+[ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="4_w7c8i"]
+[ext_resource type="Script" uid="uid://canbipd5camsd" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Samplers/RetreatRingSampler.gd" id="5_g2640"]
+[ext_resource type="Script" uid="uid://c57p01pt3qmue" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/MoveToSafetySkill.gd" id="6_4h6h1"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="7_fi227"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="9_j7ar7"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="11_iqdr3"]
+
+[sub_resource type="Resource" id="Resource_j7ar7"]
+script = ExtResource("4_w7c8i")
+metadata/_custom_type_script = "uid://clbt58mwsvag8"
+
+[sub_resource type="Resource" id="Resource_o8y13"]
+script = ExtResource("4_cb0v1")
+metadata/_custom_type_script = "uid://dk20xdie5t8dr"
+
+[sub_resource type="Resource" id="Resource_rfnuq"]
+script = ExtResource("5_g2640")
+metadata/_custom_type_script = "uid://canbipd5camsd"
+
+[resource]
+resource_name = "RushToSafetySkillResource"
+script = ExtResource("6_4h6h1")
+position_sampler = SubResource("Resource_rfnuq")
+position_preferences = Array[ExtResource("2_4wppd")]([SubResource("Resource_o8y13")])
+skill_name = "Rush To Safety"
+action = ExtResource("1_w7c8i")
+skill_type = 1
+internal_skill_conditions = Array[ExtResource("7_fi227")]([SubResource("Resource_j7ar7")])
+trait_1 = "Movement"
+trait_2 = "Retreat"
+trait_3 = "Trait 1"
+tags = Array[String](["movement"])
+metadata/_custom_type_script = "uid://c57p01pt3qmue"

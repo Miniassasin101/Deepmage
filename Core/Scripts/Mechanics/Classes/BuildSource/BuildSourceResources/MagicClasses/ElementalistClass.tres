@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="BuildSource" format=3 uid="uid://bq1qqcyxh3qbv"]
+
+[ext_resource type="Script" uid="uid://da5ua2vuwghvh" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeMod.gd" id="1_pvd6m"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="2_8vwas"]
+[ext_resource type="Resource" uid="uid://daqruigl8pvlm" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/BallThrowSkill.tres" id="3_s221u"]
+[ext_resource type="Resource" uid="uid://mupav8mwmhw7" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/BlessingSkills/ChannelBlessingSkillResource.tres" id="4_lokaf"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="5_7mgrk"]
+[ext_resource type="Script" uid="uid://4kjhyfv8hn7" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/StatusScripts/Special/ManaCostDiscountStatus.gd" id="6_8vwas"]
+[ext_resource type="Script" uid="uid://rwvfoi4t15v8" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSource.gd" id="6_oj16q"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="7_s221u"]
+
+[sub_resource type="Resource" id="Resource_1e0ev"]
+resource_name = "ChannelUp1"
+script = ExtResource("1_pvd6m")
+attribute_name = &"channel"
+flat = 1
+metadata/_custom_type_script = "uid://da5ua2vuwghvh"
+
+[sub_resource type="Resource" id="Resource_kahqn"]
+resource_name = "ResistUp1"
+script = ExtResource("1_pvd6m")
+attribute_name = &"resist"
+flat = 1
+metadata/_custom_type_script = "uid://da5ua2vuwghvh"
+
+[sub_resource type="Resource" id="Resource_s221u"]
+script = ExtResource("6_8vwas")
+magic_type_filter = &"fire"
+ui_name = "FireEfficiency"
+status_category = 3
+metadata/_custom_type_script = "uid://4kjhyfv8hn7"
+
+[resource]
+script = ExtResource("6_oj16q")
+ui_name = "Elementalist"
+tags = ["class", "magic", "elementalist"]
+grant_skills = Array[ExtResource("2_8vwas")]([ExtResource("3_s221u"), ExtResource("4_lokaf")])
+grant_statuses = Array[ExtResource("5_7mgrk")]([SubResource("Resource_s221u")])
+attribute_mods = Array[ExtResource("1_pvd6m")]([SubResource("Resource_1e0ev"), SubResource("Resource_kahqn")])
+metadata/_custom_type_script = "uid://rwvfoi4t15v8"

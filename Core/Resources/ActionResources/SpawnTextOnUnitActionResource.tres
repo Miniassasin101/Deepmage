@@ -5,10 +5,6 @@
 
 [resource]
 script = ExtResource("1_pvici")
-spawn_text = "Testing"
 text_color = Color(0.941176, 0.972549, 1, 1)
-scale = 1.0
-action_name = "none"
-selection_types = Array[ExtResource("2_d7wka")]([])
-tags = Array[String]([])
+action_name = "Unit Text"
 metadata/_custom_type_script = "uid://doahtvq8r205k"

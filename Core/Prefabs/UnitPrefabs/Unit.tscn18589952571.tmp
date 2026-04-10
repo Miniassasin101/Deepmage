@@ -1,0 +1,716 @@
+[gd_scene load_steps=28 format=3 uid="uid://2h1a1e1r8hc2"]
+
+[ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
+[ext_resource type="Material" uid="uid://caeve0dltuafr" path="res://Deepmage/Core/Art/Materials/WhiteHitFXMaterial.tres" id="2_rlwmm"]
+[ext_resource type="PackedScene" uid="uid://14nkak1a1qkg" path="res://Deepmage/Core/Prefabs/Mechanics/CharacterSheet.tscn" id="2_t3ejk"]
+[ext_resource type="PackedScene" uid="uid://cwusixosbj5vk" path="res://Deepmage/Core/Prefabs/UI/3D/SquareVisual.tscn" id="3_0qgfu"]
+[ext_resource type="Script" uid="uid://dcltq1auxqj26" path="res://Deepmage/Core/Scripts/Units/MovementController.gd" id="3_1oy7d"]
+[ext_resource type="Script" uid="uid://h4o2321q5l0u" path="res://Deepmage/Core/Scripts/Animation/AnimationController.gd" id="3_sxvrp"]
+[ext_resource type="AnimationLibrary" uid="uid://oosve5txyoqs" path="res://Deepmage/Core/Resources/AnimationResources/AnimationLibraries/TestAnimationLibraries/CapsuleAnims.res" id="4_7ehp6"]
+[ext_resource type="Animation" uid="uid://dl5c4nb4fybhk" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/BackHitReaction.res" id="4_dg5hf"]
+[ext_resource type="Script" uid="uid://c2aqj40trpjeq" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/EffectsController.gd" id="4_s3v1t"]
+[ext_resource type="Resource" uid="uid://ceu3eynl7qehx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/RushToUnitSkillResource.tres" id="5_kflht"]
+[ext_resource type="Script" uid="uid://br2ouvjnr5mbk" path="res://Deepmage/Core/Scripts/Projectile/SatelliteController.gd" id="9_aemtr"]
+[ext_resource type="PackedScene" uid="uid://2ba8bs3ad48b" path="res://Deepmage/Core/Prefabs/VFX/SatelliteCarrier.tscn" id="10_lsp3f"]
+[ext_resource type="Script" uid="uid://ck2buvlnnr6il" path="res://Deepmage/Core/Scripts/Mechanics/Tokens/TokenController.gd" id="11_1um36"]
+[ext_resource type="Script" uid="uid://bt62wkw6goum8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/TacticsController.gd" id="14_b3sv1"]
+[ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestAttackSkillResource.tres" id="16_kflht"]
+[ext_resource type="Script" uid="uid://bubf25btsnnfv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Tactic.gd" id="17_7o6ql"]
+
+[sub_resource type="GDScript" id="GDScript_2qo7v"]
+script/source = "@tool
+class_name Unit
+extends Node3D
+
+
+enum TurnState {
+	OUTSIDE_COMBAT,
+	IN_QUEUE,
+	TURN_STARTED,
+	TURN_ENDED
+}
+ 
+
+@export_category(\"References\")
+@export_group(\"Refs\")
+@export var above_head_marker: Marker3D
+@export var nav_agent: NavigationAgent3D
+@export var death_vfx_scene: PackedScene
+@export var capsule_body: MeshInstance3D
+@export var capsule_visor: MeshInstance3D
+@export var selection_visual: SelectionSquareVisual
+@export var character_sheet: CharacterSheet
+@export var movement_controller: MovementController
+@export var animation_controller: AnimationController
+@export var satellite_controller: SatelliteController
+@export var token_controller: TokenController
+@export var tactics_controller: TacticsController
+@export_group(\"Sockets\")
+@export var left_hand_socket: Marker3D
+@export var right_hand_socket: Marker3D
+@export_group(\"\")
+
+
+@export_category(\"Prefabs\")
+@export var character_sheet_packed_scene: PackedScene = null
+
+
+@export_category(\"Tactics\")
+@export var starting_tactic: Tactic = null
+
+@export_category(\"Unique Aspects\")
+
+@export var ui_name: String = \"Unit\":
+	set(val):
+		ui_name = val
+		change_node_name_to_unit()
+
+@export var is_enemy: bool = false
+@export var visor_color: Color = Color.ALICE_BLUE
+
+@export_category(\"Visual Modifiers\")
+@export var white_hit_flash_mat: StandardMaterial3D
+@export var hit_flash_time: float = 0.3
+
+@export_category(\"Tags\")
+@export var tags: Array[String] = []
+
+
+
+var turn_state: TurnState = TurnState.OUTSIDE_COMBAT
+
+
+
+
+
+func _ready() -> void:
+	if Engine.is_editor_hint():
+		if not get_parent() is UnitManager:
+			print_debug(\"Parent is not UnitManager\")
+			return
+		if !character_sheet_packed_scene:
+			print(\"Packed Scene Not Found\")
+			return
+		if character_sheet:
+			print_debug(\"Character sheet already found\")
+			return
+		#var char_sheet: CharacterSheet = character_sheet_packed_scene.instantiate() as CharacterSheet
+
+		#add_child(char_sheet)
+		#char_sheet.set_owner(get_tree().edited_scene_root)
+		#character_sheet = char_sheet
+		#print(\"added child\")
+		property_list_changed.connect(change_node_name_to_unit)
+		return
+	setup_navigation()
+	call_deferred(\"setup_mesh_colors\")
+
+
+# FIXME: Placeholder
+func is_alive() -> bool:
+	
+	return true
+
+
+
+func change_node_name_to_unit() -> void:
+	if !Engine.is_editor_hint():
+		return
+	if (ui_name != \"Unit\") and (get_name() != ui_name):
+		if ui_name.is_empty():
+			set_name(\"Unit\")
+		else:
+			set_name(ui_name)
+		print(\"name changed to \" + name)
+
+
+func setup_mesh_colors() -> void:
+	if is_enemy:
+		Utilities.set_color_on_cel_shaded_mesh(capsule_visor, Color.FIREBRICK)
+	else:
+		Utilities.set_color_on_cel_shaded_mesh(capsule_visor, Color.SKY_BLUE)
+	
+	Utilities.set_color_on_cel_shaded_mesh(capsule_body, visor_color)
+
+
+func setup_navigation() -> void:
+	if !nav_agent:
+		nav_agent = find_child(\"NavigationAgent3D\")
+
+
+func set_movement_target(movement_target: Vector3):
+	nav_agent.set_target_position(movement_target)
+	
+
+func flash_white(flash_time: float = hit_flash_time) -> void:
+	var unit_meshes: Array[MeshInstance3D] = get_all_unit_meshes()
+	var saved_mat_overrides: Array[StandardMaterial3D] = []
+	for mesh in unit_meshes:
+		saved_mat_overrides.append(mesh.get_material_override())
+		mesh.set_material_override(white_hit_flash_mat)
+
+	await get_tree().create_timer(flash_time).timeout
+
+	for mesh in unit_meshes:
+		mesh.set_material_override(saved_mat_overrides.pop_front())
+
+func has_tag(in_tag: String) -> bool:
+	if tags.has(in_tag.to_lower()):
+		return true
+	return false
+
+
+
+func get_all_unit_meshes() -> Array[MeshInstance3D]:
+	return [capsule_body, capsule_visor]
+
+
+func get_world_position_above_marker() -> Vector3:
+	return above_head_marker.global_position if above_head_marker else Vector3.ZERO
+
+func get_action_container() -> ActionContainer:
+	return character_sheet.action_container
+
+
+func get_attributes_container() -> AttributesContainer:
+	return character_sheet.get_attributes_container()
+"
+
+[sub_resource type="GDScript" id="GDScript_51q8q"]
+script/source = "@tool
+class_name Skill
+extends Resource
+
+signal on_skill_ended
+
+enum SkillCategory { ACTIVE, PASSIVE, FREE}
+enum SkillType { ATTACK, SUPPORT, SABOTAGE, SPECIAL}
+
+@export var skill_name: String = \"None\":
+	set(val):
+		skill_name = val
+		change_resource_name_to_skill()
+
+## The underlying action that the skill uses, and contains most of the operational logic
+@export var action: Action = null
+
+## Determines which resource is required to use the skill.
+@export var skill_category: SkillCategory = SkillCategory.ACTIVE
+
+@export var skill_type: SkillType = SkillType.ATTACK
+
+@export var skill_trigger: SkillTriggerSystem.TriggerPhase = SkillTriggerSystem.TriggerPhase.NONE
+
+## How many active points or passive points need to be spent to activate this skill.
+@export var skill_cost: int = 1 # AP or PP cost
+
+## Skill conditions that are inherent to the skill and not editable by players.
+@export var internal_skill_conditions: Array[SkillCondition] = []
+
+## Skill conditions that are fully editable by players.
+@export var external_skill_conditions: Array[SkillCondition] = []
+
+@export var external_condition_blueprints: Array[ConditionBlueprint] = []
+@export var target_preference_blueprints: Array[ConditionBlueprint] = []
+
+## Type of lighter skill condition that will narrow down the pool of unit targets, but never to zero.
+@export var target_preferences: Array[TargetPreference] = []
+
+@export var is_disabled: bool = false
+
+@export_group(\"Description\")
+@export var trait_1: String = \"Trait 1\"
+@export var trait_2: String = \"Trait 2\"
+@export var trait_3: String = \"Trait 3\"
+
+
+## Series of lines describing the behavior and/or effect of the skill.
+@export var description: Array[String] = []
+
+## Mark the skill in various ways so other combat elements know how to interact with it.
+@export var tags: Array[String] = []
+
+
+
+## Unit that owns the skill (set by Tactic when duplicating/assigning).
+var unit: Unit = null
+
+func _init() -> void:
+	if Engine.is_editor_hint():
+		change_resource_name_to_skill()
+
+# -----------------------------------------------------------------------------
+# Public API
+# -----------------------------------------------------------------------------
+func set_unit(in_unit: Unit) -> void:
+	unit = in_unit
+	# TODO: Consider asserting non-null in release builds to catch setup bugs.
+
+
+func activate_skill() -> void:
+	var chosen_target: Unit = get_random_valid_unit()
+	if !chosen_target:
+		push_error(\"No random unit in skills found\")
+		return
+
+	CombatLog.instance.add_log(\"Random Skill Unit: \" + chosen_target.ui_name)
+
+	# 1) DECLARE → opens BEFORE_SKILL_USED chains
+	TurnSystem.instance.declare_skill(self, chosen_target)
+
+	# 2) USE the underlying Action
+	if action:
+		var temp_action: Action = unit.character_sheet.action_container.use_action(action, chosen_target)
+		await temp_action.on_action_ended
+
+	# 3) END → opens AFTER_SKILL_USED chains
+	TurnSystem.instance.after_skill_used(self, chosen_target)
+
+	# 4) Finish
+	end_skill()
+
+
+
+
+func change_resource_name_to_skill() -> void:
+	if !Engine.is_editor_hint():
+		return
+	var temp_skill_name: String = skill_name.to_pascal_case() if skill_name != \"\" else \"Unnamed\"
+	var temp_resource_name: String = temp_skill_name + \"SkillResource\"
+	set_name(temp_resource_name)
+
+
+func end_skill() -> void:
+	# Broadcast completion so action callers can resume.
+	on_skill_ended.emit()
+
+
+func can_activate_skill() -> bool:
+	# Quick guards for missing components.
+	if !action:
+		return false
+	if !unit:
+		return false
+	
+	if is_disabled:
+		return false
+	
+	if !check_ap_pp():
+		return false
+	
+	# True if at least one target unit satisfies all conditions.
+	if check_conditions_against_units():
+		return true
+
+	return false
+
+# Checks to see if the unit has enough action points or passive points to cover the cost of the skill
+func check_ap_pp() -> bool:
+	var points_name: String = \"None\"
+	
+	match skill_category:
+		SkillCategory.ACTIVE:
+			points_name = \"active_points\"
+		SkillCategory.PASSIVE:
+			points_name = \"passive_points\"
+		_:
+			points_name = \"active_points\" # or whatever default you want for FREE
+	
+	var points_attribute: Attribute = unit.get_attributes_container().get_attribute(points_name)
+	if !points_attribute:
+		return false
+	
+	var curr_val: int = points_attribute.get_current_modified_value()
+	
+	if curr_val < skill_cost:
+		return false
+	
+	
+	return true
+
+
+
+func can_trigger_passive_skill(t_phase: SkillTriggerSystem.TriggerPhase, ctx: Dictionary) -> bool:
+	if skill_category != SkillCategory.PASSIVE:
+		return false
+	
+	if t_phase == SkillTriggerSystem.TriggerPhase.NONE or t_phase != skill_trigger:
+		return false
+	
+	
+	
+	return true
+	
+
+
+
+# -----------------------------------------------------------------------------
+# Targeting helpers
+# -----------------------------------------------------------------------------
+## Returns a random valid unit or null if none are available.
+func get_random_valid_unit() -> Unit:
+	var chosen_unit: Unit = null
+	var valid_units: Array[Unit] = get_all_valid_units()
+	chosen_unit = select_preferred_target(valid_units)
+	return chosen_unit
+	# TODO: Consider excluding self as applicable, or add a \"self-target\" tag/condition.
+
+
+## Applies ordered preferences only if there is more than one valid target.
+## If preferences cannot break ties, falls back to random among remaining.
+func select_preferred_target(valid_units: Array[Unit]) -> Unit:
+	if valid_units.is_empty():
+		return null
+
+	if valid_units.size() == 1:
+		return valid_units[0]
+
+	var pool: Array[Unit] = valid_units.duplicate()
+
+	if target_preferences.size() > 0:
+		for pref in target_preferences:
+			# Narrow only if more than one remains.
+			if pool.size() > 1 and pref:
+				var narrowed: Array[Unit] = pref.apply(self, pool)
+				# Safety: Do not accept an empty result; keep prior pool if so.
+				if narrowed.size() > 0:
+					pool = narrowed
+
+	# If we still have more than one, choose randomly (predictable with seeded RNG if desired).
+	return pool.pick_random()
+
+
+## Builds a list of all units that pass every condition in get_all_skill_conditions.
+func get_all_valid_units() -> Array[Unit]:
+	var all_units: Array[Unit] = UnitManager.instance.get_all_units()
+	var valid_units: Array[Unit] = []
+
+	for test_unit in all_units:
+		var conditions_passed: bool = true
+
+		for condition in get_all_skill_conditions():
+			if !condition:
+				continue
+			if !condition.check_condition(self, test_unit):
+				conditions_passed = false
+				break
+
+		if conditions_passed:
+			valid_units.append(test_unit)
+
+	return valid_units
+	# TODO: Cache and invalidate per-turn to avoid repeated global scans.
+	# TODO: Support multi-step filters (e.g., prefilter faction, then range, then custom).
+
+
+## Returns true if at least one unit passes all conditions.
+func check_conditions_against_units() -> bool:
+	var valid_units: Array[Unit] = get_all_valid_units()
+	return !valid_units.is_empty()
+
+
+## Returns a combination of the internal and external skill conditions.
+func get_all_skill_conditions() -> Array[SkillCondition]:
+	var all_skill_cond: Array[SkillCondition] = []
+	# Internal (live, non-editable)
+	all_skill_cond.append_array(internal_skill_conditions)
+	# External from blueprints
+	all_skill_cond.append_array(get_external_skill_conditions())
+	return all_skill_cond
+
+
+func get_external_skill_conditions() -> Array[SkillCondition]:
+	var out_list: Array[SkillCondition] = []
+	for bp in external_condition_blueprints:
+		if bp != null:
+			var inst: SkillCondition = bp.instantiate_condition()
+			if inst != null:
+				out_list.append(inst)
+	return out_list
+
+
+
+func get_target_preferences() -> Array[TargetPreference]:
+	var out_list: Array[TargetPreference] = []
+	for bp in target_preference_blueprints:
+		if bp != null:
+			var inst: SkillCondition = bp.instantiate_condition()
+			var pref: TargetPreference = inst as TargetPreference
+			if pref != null:
+				out_list.append(pref)
+	return out_list
+
+
+func get_external_condition_blueprints() -> Array[ConditionBlueprint]:
+	return external_condition_blueprints
+
+func get_target_preference_blueprints() -> Array[ConditionBlueprint]:
+	return target_preference_blueprints
+
+# -----------------------------------------------------------------------------
+# Tags helpers
+# -----------------------------------------------------------------------------
+func has_tag(in_tag: String) -> bool:
+	in_tag = in_tag.to_lower()
+	# Case-insensitive tag check (lowercasing the input tag).
+	if tags.has(in_tag):
+		return true
+	return false
+
+
+func has_any_tag(in_tags: Array[String]) -> bool:
+	# Returns true if any of the provided tags is present on this skill.
+	for candidate_tag in in_tags:
+		if tags.has(candidate_tag.to_lower()):
+			return true
+	return false
+	# TODO: Use a Set for tags to speed up membership queries if tag counts grow.
+"
+
+[sub_resource type="Resource" id="Resource_3f60d"]
+script = ExtResource("17_7o6ql")
+active_skills = Array[SubResource("GDScript_51q8q")]([ExtResource("16_kflht"), ExtResource("5_kflht"), ExtResource("16_kflht"), ExtResource("5_kflht")])
+metadata/_custom_type_script = "uid://bubf25btsnnfv"
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ohquw"]
+lightmap_size_hint = Vector2i(17, 14)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0qgfu"]
+size = Vector3(0.725, 0.2, 0.325)
+
+[sub_resource type="SphereMesh" id="SphereMesh_1um36"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0qgfu"]
+size = Vector3(1, 1.69678, 1)
+
+[sub_resource type="Animation" id="Animation_sxvrp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Rig:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Rig:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "position_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Rig")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Rig/LeftHandMesh:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.713219, 1.02331, 0.140477)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Rig/LeftHandMesh:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3.30775e-05, -8.00054e-05, -0.000265496)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Rig/RightHandMesh:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.723787, 1.02331, 0.140477)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Rig/RightHandMesh:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7ehp6"]
+_data = {
+&"RESET": SubResource("Animation_sxvrp")
+}
+
+[sub_resource type="Resource" id="Resource_0xpoi"]
+script = ExtResource("17_7o6ql")
+metadata/_custom_type_script = "uid://bubf25btsnnfv"
+
+[sub_resource type="Resource" id="Resource_kflht"]
+script = ExtResource("17_7o6ql")
+metadata/_custom_type_script = "uid://bubf25btsnnfv"
+
+[node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual", "movement_controller", "animation_controller", "satellite_controller", "token_controller", "tactics_controller", "left_hand_socket", "right_hand_socket")]
+script = SubResource("GDScript_2qo7v")
+character_sheet_packed_scene = ExtResource("2_t3ejk")
+starting_tactic = SubResource("Resource_3f60d")
+white_hit_flash_mat = ExtResource("2_rlwmm")
+hit_flash_time = 0.2
+tags = Array[String]([""])
+above_head_marker = NodePath("AboveHeadMarker")
+nav_agent = NodePath("NavigationAgent3D")
+capsule_body = NodePath("Rig/MeshInstance3D")
+capsule_visor = NodePath("Rig/MeshInstance3D/MeshInstance3D")
+selection_visual = NodePath("SelectionSquareRoot/GridSystemVisual")
+movement_controller = NodePath("MovementController")
+animation_controller = NodePath("AnimationController")
+satellite_controller = NodePath("SatelliteController")
+token_controller = NodePath("TokenController")
+tactics_controller = NodePath("TacticsController")
+left_hand_socket = NodePath("Rig/LeftHandMesh/LeftHandSocket")
+right_hand_socket = NodePath("Rig/RightHandMesh/RightHandSocket")
+
+[node name="Rig" type="Node3D" parent="."]
+transform = Transform3D(0.852131, 0, 0, 0, 0.852131, 0, 0, 0, 0.852131, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Rig"]
+transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 1.014, 0)
+rotation_edit_mode = 1
+mesh = SubResource("CapsuleMesh_ohquw")
+surface_material_override/0 = ExtResource("1_cc6tg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Rig/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.423313, 0.411077)
+mesh = SubResource("BoxMesh_0qgfu")
+surface_material_override/0 = ExtResource("1_cc6tg")
+
+[node name="LeftHandMesh" type="MeshInstance3D" parent="Rig"]
+transform = Transform3D(0.29999995, 7.9648e-05, -2.400162e-05, -7.9648795e-05, 0.29999995, -9.92325e-06, 2.399898e-05, 9.929621e-06, 0.3, 0.713219, 1.02331, 0.140477)
+mesh = SubResource("SphereMesh_1um36")
+surface_material_override/0 = ExtResource("1_cc6tg")
+
+[node name="LeftHandSocket" type="Marker3D" parent="Rig/LeftHandMesh"]
+gizmo_extents = 0.8
+
+[node name="RightHandMesh" type="MeshInstance3D" parent="Rig"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -0.723787, 1.02331, 0.140477)
+mesh = SubResource("SphereMesh_1um36")
+surface_material_override/0 = ExtResource("1_cc6tg")
+
+[node name="RightHandSocket" type="Marker3D" parent="Rig/RightHandMesh"]
+gizmo_extents = 0.8
+
+[node name="UnitArea3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.854524, 0)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UnitArea3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0065918, 0)
+shape = SubResource("BoxShape3D_0qgfu")
+
+[node name="AboveHeadMarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79278, 0)
+
+[node name="AnimationController" type="Node" parent="." node_paths=PackedStringArray("unit", "animator", "event_animator", "effects_controller")]
+script = ExtResource("3_sxvrp")
+unit = NodePath("..")
+animator = NodePath("../AnimationPlayer")
+event_animator = NodePath("EventAnimator")
+effects_controller = NodePath("EffectsController")
+current_library = "CapsuleAnims"
+hit_reaction_anim = ExtResource("4_dg5hf")
+
+[node name="EffectsController" type="Node" parent="AnimationController" node_paths=PackedStringArray("unit", "animation_controller")]
+script = ExtResource("4_s3v1t")
+unit = NodePath("../..")
+animation_controller = NodePath("..")
+
+[node name="EventAnimator" type="AnimationPlayer" parent="AnimationController"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_7ehp6"),
+&"CapsuleAnims": ExtResource("4_7ehp6")
+}
+
+[node name="SatelliteController" type="Node3D" parent="." node_paths=PackedStringArray("spawn_markers")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.283377, 0)
+script = ExtResource("9_aemtr")
+satellite_prefab = ExtResource("10_lsp3f")
+spawn_markers = [NodePath("SpawnMarker1"), NodePath("SpawnMarker2"), NodePath("SpawnMarker3"), NodePath("SpawnMarker4"), NodePath("SpawnMarker5"), NodePath("SpawnMarker6")]
+
+[node name="SpawnMarker1" type="Marker3D" parent="SatelliteController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8481349, 0.1903224, 0)
+
+[node name="SpawnMarker2" type="Marker3D" parent="SatelliteController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.82162154, 0.1903224, 0)
+
+[node name="SpawnMarker3" type="Marker3D" parent="SatelliteController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6864845, 0.60697126, -0.23070657)
+
+[node name="SpawnMarker4" type="Marker3D" parent="SatelliteController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6599712, 0.60697126, -0.23070657)
+
+[node name="SpawnMarker5" type="Marker3D" parent="SatelliteController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4062649, 0.9591547, -0.37589395)
+
+[node name="SpawnMarker6" type="Marker3D" parent="SatelliteController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.37975156, 0.9591547, -0.37589395)
+
+[node name="MovementController" type="Node" parent="." node_paths=PackedStringArray("unit")]
+script = ExtResource("3_1oy7d")
+unit = NodePath("..")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+debug_enabled = true
+
+[node name="SelectionSquareRoot" type="Node3D" parent="."]
+
+[node name="GridSystemVisual" parent="SelectionSquareRoot" instance=ExtResource("3_0qgfu")]
+transform = Transform3D(1.505, 0, 0, 0, 1.505, 0, 0, 0, 1.505, 0, 0, 0)
+top_level = true
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="SelectionSquareRoot"]
+remote_path = NodePath("../GridSystemVisual")
+update_rotation = false
+update_scale = false
+
+[node name="TokenController" type="Node" parent="." node_paths=PackedStringArray("unit")]
+script = ExtResource("11_1um36")
+unit = NodePath("..")
+metadata/_custom_type_script = "uid://ck2buvlnnr6il"
+
+[node name="TacticsController" type="Node" parent="." node_paths=PackedStringArray("unit")]
+script = ExtResource("14_b3sv1")
+unit = NodePath("..")
+starting_tactic = SubResource("Resource_0xpoi")
+current_tactic = SubResource("Resource_kflht")

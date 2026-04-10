@@ -1,7 +1,8 @@
-[gd_scene load_steps=92 format=3 uid="uid://b08xisrcbfyhj"]
+[gd_scene format=3 uid="uid://b08xisrcbfyhj"]
 
 [ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
 [ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
+[ext_resource type="Script" uid="uid://dlggn8t3b5dp3" path="res://Deepmage/Core/Scripts/Utility/PauseManager.gd" id="2_04ue1"]
 [ext_resource type="Script" uid="uid://d00flrde4n8v4" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugConsoleController.gd" id="2_swo3b"]
 [ext_resource type="Environment" uid="uid://c7cx2thxig2w6" path="res://Deepmage/Core/Resources/Environment/Lighting/TestEnvironment1.tres" id="3_gh8or"]
 [ext_resource type="Script" uid="uid://csywy3ienecb4" path="res://Deepmage/Core/Prefabs/LevelPrefabs/ProjectileConsole.gd" id="3_s0dbn"]
@@ -14,27 +15,74 @@
 [ext_resource type="Script" uid="uid://b3vsba7uy6t7o" path="res://Deepmage/Core/Scripts/Combat/TurnSystems/TurnSystem.gd" id="10_k2c3k"]
 [ext_resource type="PackedScene" uid="uid://8oord2o1icck" path="res://Deepmage/Core/Prefabs/UI/CharacterLogQueue.tscn" id="10_lf0eb"]
 [ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="10_p6f6u"]
+[ext_resource type="Script" uid="uid://dgwgvxp80lmhb" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributesProfile.gd" id="11_6kl6n"]
 [ext_resource type="Script" uid="uid://brh8qmh2c4g8f" path="res://Deepmage/Core/Scripts/Combat/CombatSystem/CombatSystem.gd" id="11_g7q3m"]
 [ext_resource type="Script" uid="uid://1miy676tt71s" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UnitManager.gd" id="11_lf0eb"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="12_f2qps"]
 [ext_resource type="Script" uid="uid://xwiyhnl8erp1" path="res://Deepmage/Core/Scripts/Pathfinding/PathfindingSystem.gd" id="12_fnj5h"]
 [ext_resource type="PackedScene" uid="uid://2h1a1e1r8hc2" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.tscn" id="12_k2c3k"]
 [ext_resource type="Script" uid="uid://ian5eam30p0l" path="res://addons/curvemesh3d/curvemesh3d.gd" id="13_wbm0i"]
 [ext_resource type="Curve" uid="uid://b1kq6l63y7lb6" path="res://Deepmage/Core/MathPrefabs/Curves/Level.tres" id="14_calw8"]
 [ext_resource type="Texture2D" uid="uid://duu0wfs3dasnn" path="res://Deepmage/Core/Art/Textures/EnvironmentTextures/GroundTextures/PolygonPrototype_Texture_Grid_08.png" id="14_tflrs"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="14_v8epg"]
 [ext_resource type="Script" uid="uid://hbm8nks1et3p" path="res://Deepmage/Core/Scripts/UI/TurnSystemUI.gd" id="15_ex7fh"]
 [ext_resource type="Script" uid="uid://cby42fxiu4cv5" path="res://Deepmage/Core/Scripts/UI/ActionSystemUI.gd" id="15_j7436"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="15_k6sm3"]
 [ext_resource type="Script" uid="uid://dyngi1ipggvgb" path="res://Deepmage/Core/Scripts/UI/InitiativeQueueUI.gd" id="16_2uyvs"]
 [ext_resource type="Script" uid="uid://cc6pcq4yohj7m" path="res://Deepmage/Core/Scripts/Projectile/PathBuilder3D.gd" id="16_dfmjn"]
 [ext_resource type="PackedScene" uid="uid://3p3xt0lymqsd" path="res://Deepmage/Core/Prefabs/UI/UnitStatsBar.tscn" id="16_ecsph"]
-[ext_resource type="Script" uid="uid://cjhhvf5ub04kj" path="res://Deepmage/Core/Prefabs/UI/FPSLabel.gd" id="16_ex7fh"]
+[ext_resource type="Script" uid="uid://cjhhvf5ub04kj" path="res://Deepmage/Core/Scripts/UI/FPSLabel.gd" id="16_ex7fh"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="16_hja2s"]
 [ext_resource type="PackedScene" uid="uid://psdfsrnutgxe" path="res://Deepmage/Core/Prefabs/UI/ActionButtonUI.tscn" id="16_tko1n"]
+[ext_resource type="Resource" uid="uid://dhlquh6l821lo" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/FactionBlueprints/IsEnemyConditionBlueprint.tres" id="17_ebomw"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="18_hymmt"]
+[ext_resource type="Resource" uid="uid://8vem57wbteya" path="res://Deepmage/Core/Resources/ActionResources/MovementActionResources/RushToUnitActionResource.tres" id="19_v4iap"]
+[ext_resource type="Script" uid="uid://daykqau0okf7v" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitOutsideRangeSkillCondition.gd" id="20_8v6vh"]
+[ext_resource type="Script" uid="uid://c6hp21lncudiw" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsNotSelfSkillCondition.gd" id="21_11ubm"]
 [ext_resource type="PackedScene" uid="uid://cdifkxjoiv0eq" path="res://Deepmage/Core/Prefabs/UI/TopHPBar.tscn" id="21_xyav6"]
+[ext_resource type="Resource" uid="uid://r00jkqjfop5o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/AttackSkills/SwordSlashSkillResource.tres" id="22_04ue1"]
 [ext_resource type="PackedScene" uid="uid://cqqsm2gpif3dw" path="res://Deepmage/Core/Prefabs/UI/UnitCharacterSheet.tscn" id="22_gh8or"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="23_04ue1"]
+[ext_resource type="Script" uid="uid://bubf25btsnnfv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Tactic.gd" id="24_5lfvx"]
+[ext_resource type="Script" uid="uid://285qbhvjqa08" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/ReactionScripts/PassAction.gd" id="25_gam6i"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="26_7g53y"]
+[ext_resource type="Script" uid="uid://c1pcudui7e5qp" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillTriggerSystem.gd" id="26_qdwhh"]
 [ext_resource type="PackedScene" uid="uid://bt5idkoxachxk" path="res://Deepmage/Core/Prefabs/UI/CombatLog.tscn" id="27_2gnov"]
+[ext_resource type="Script" uid="uid://c5n2kh3w6iaim" path="res://Deepmage/Core/Scripts/ActionSystem/ReactionScripts/ReactionRule.gd" id="27_05afn"]
+[ext_resource type="Resource" uid="uid://w3sejjaa4agb" path="res://Deepmage/Core/Resources/Equipment/Weapons/TestWeapons/TestAxe.tres" id="28_e15dp"]
+[ext_resource type="Resource" uid="uid://c5dl1dlq1jmiy" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/HumanoidReactionResources/BlockReactionResource.tres" id="28_rfnuq"]
+[ext_resource type="Script" uid="uid://qgvfrtjfoen4" path="res://Deepmage/Core/Resources/DataStructures/GearPreset.gd" id="29_c2k8n"]
+[ext_resource type="Resource" uid="uid://2cp5ciqvdei1" path="res://Deepmage/Core/Resources/ActionResources/TestStatusActionResource.tres" id="29_f0670"]
+[ext_resource type="Resource" uid="uid://by016ujd3kbnh" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/HumanoidReactionResources/EvadeReactionResource.tres" id="29_ufsey"]
+[ext_resource type="Resource" uid="uid://bmj6imcyymbx4" path="res://Deepmage/Core/Resources/Equipment/Weapons/TestWeapons/TestShield.tres" id="30_c2k8n"]
+[ext_resource type="Resource" uid="uid://djrw5nkydvyv6" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BlockPackage.tres" id="30_ebomw"]
+[ext_resource type="Script" uid="uid://d17457ktsi1g8" path="res://Deepmage/Core/Scripts/ActionSystem/ReactionScripts/ReactionPack.gd" id="30_o24kd"]
+[ext_resource type="Script" uid="uid://13akgn3nuj34" path="res://Deepmage/Core/Scripts/Mechanics/Effects/GrantBlockEffect.gd" id="31_04ue1"]
+[ext_resource type="Script" uid="uid://c7ofxaslt34wn" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SourceTargetBasedSkillConditions/IsSourceTargetFaction.gd" id="32_cb3j6"]
+[ext_resource type="Script" uid="uid://cq6k3vojdsik7" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SkillSourceBasedSkillConditions/IsSourceSkillType.gd" id="33_e15dp"]
+[ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="34_f0670"]
+[ext_resource type="Resource" uid="uid://q7sv630uw87g" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PassiveBlockSkillResource.tres" id="36_cb3j6"]
+[ext_resource type="Resource" uid="uid://d12flfcjn7vie" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildProfileResources/DuelistBuildProfile.tres" id="37_cb3j6"]
+[ext_resource type="Resource" uid="uid://mictyfww6h2x" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/MovementSkills/RushToSafetySkillResource.tres" id="38_c2k8n"]
+[ext_resource type="Resource" uid="uid://ctauxicitono6" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildProfileResources/ArcherBuildProfile.tres" id="38_e15dp"]
+[ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/AttackSkills/TestAttackSkillResource.tres" id="39_5lfvx"]
+[ext_resource type="Resource" uid="uid://bf0acaf6mm6gy" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestArcherSkills/SingleShotSkill.tres" id="40_0fvkv"]
+[ext_resource type="PackedScene" uid="uid://cp0xpj4sdvngd" path="res://Deepmage/Core/Prefabs/UnitPrefabs/EnemyUnitPrefabs/TestEnemies/TestSlimeUnit.tscn" id="41_hja2s"]
+[ext_resource type="Resource" uid="uid://dkeoolmv8jjeq" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/SkillLibraries/SkillLibraryResource.tres" id="42_5lfvx"]
+[ext_resource type="Resource" uid="uid://dlx1tecg07kdn" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/MonsterSkills/SlimeSkills/SlimeBashSkillResource.tres" id="42_6odjx"]
+[ext_resource type="Script" uid="uid://rwvfoi4t15v8" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSource.gd" id="42_yl67w"]
+[ext_resource type="Script" uid="uid://da5ua2vuwghvh" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeMod.gd" id="43_6odjx"]
+[ext_resource type="Resource" uid="uid://cucaqplnm0re3" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/ConditionLibraries/ConditionLibraryResource.tres" id="43_f0670"]
+[ext_resource type="Resource" uid="uid://ceu3eynl7qehx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/MovementSkills/RushToUnitSkillResource.tres" id="44_lk7si"]
+[ext_resource type="Script" uid="uid://bwf8gcb7vcxa0" path="res://Deepmage/Core/Scripts/Mechanics/Classes/LevelRankBuildSource.gd" id="45_8pahp"]
+[ext_resource type="Script" uid="uid://ceyv1b0lbsbfv" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildProfile.gd" id="46_8hoel"]
+[ext_resource type="PackedScene" uid="uid://boy7waxi1xa2y" path="res://Deepmage/Core/Prefabs/UI/SkillActivationUI.tscn" id="48_iq36j"]
+[ext_resource type="Script" uid="uid://dr67xmhcxhifl" path="res://Deepmage/Core/Scripts/Navigation/MoveRangeRingRenderer.gd" id="49_ebomw"]
+[ext_resource type="Script" uid="uid://bwvg6p8mhrer7" path="res://Deepmage/Core/Prefabs/LevelPrefabs/EquipmentConsole.gd" id="eq_console_1"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_lf0eb"]
-vertices = PackedVector3Array(18.0943, 6.89649, -29.4356, 18.3443, 6.64649, -40.6856, 7.0943, 6.64649, -40.6856, 7.0943, 6.89649, -29.4356, 19.5943, 6.89649, -29.4356, 19.8443, 6.89649, -27.6856, 44.5943, 6.89649, -27.4356, 44.5943, 6.64649, -40.6856, 0.594299, 0.39649, 25.5644, 0.844299, 0.39649, 22.8144, -0.655701, 0.39649, 22.8144, -4.9057, 0.39649, 25.5644, -0.905701, 0.39649, 21.5644, 9.3443, 0.39649, 21.3144, 6.3443, 5.39649, -23.1856, 4.94107, 0.39649, -14.5243, 6.9443, 0.39649, -14.2856, 6.8443, 0.89649, -15.7689, 6.0943, 6.64649, -25.4356, 6.5943, 6.89649, -25.4356, 6.5943, 12.1465, -34.6856, -18.6557, 12.1465, -34.6856, -7.14053, 10.3965, -32.2068, 9.5943, 0.39649, 22.0644, 18.8443, 0.39649, 22.0644, 18.8443, 5.39649, -23.1856, 18.8443, 0.39649, -14.4275, 18.8443, 0.89649, -15.8872, 16.8548, 0.39649, -14.2101, 16.8646, 1.64649, -17.1639, -18.6557, 0.39649, 26.3144, -5.1557, 0.39649, 26.3144, -18.6557, 9.89649, -30.7501, -18.6557, 0.39649, -15.0082, -14.6806, 8.64649, -29.2007, 3.3259, 1.64649, -17.1993, 7.0943, 6.89649, -25.1856, 19.0943, 7.14649, -26.1856, 18.8443, 12.1465, -34.6856, 7.84472, 6.89649, -26.1761, 19.5943, 6.89649, -26.1856, 19.5943, 7.64649, -3.1856, 44.5943, 7.64649, -3.1856, 7.0943, 7.64649, -3.1856, -18.6557, -1.35351, -11.6856, -18.6557, -6.85351, -2.4356, 18.8443, -6.85351, -2.4356, 18.8443, -1.35351, -11.6856, 9.36067, -6.35351, -3.70807, 5.3443, 0.39649, 25.8144, 9.3443, 0.39649, 22.8144, 5.0943, 0.39649, 27.0644, 3.5943, 0.39649, 27.0644, 3.8443, 0.39649, 44.8144, 18.8443, 0.39649, 44.8144, -4.9057, 0.39649, 27.0644, -18.6557, 0.39649, 44.8144, -3.6557, 0.39649, 44.8144, -3.4057, 0.39649, 27.0644)
-polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(4, 0, 1), PackedInt32Array(4, 1, 5), PackedInt32Array(5, 1, 6), PackedInt32Array(6, 1, 7), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(14, 17, 15), PackedInt32Array(15, 17, 16), PackedInt32Array(15, 16, 13), PackedInt32Array(15, 13, 12), PackedInt32Array(12, 10, 11), PackedInt32Array(20, 22, 21), PackedInt32Array(21, 22, 18), PackedInt32Array(18, 20, 19), PackedInt32Array(20, 18, 22), PackedInt32Array(25, 29, 14), PackedInt32Array(14, 29, 17), PackedInt32Array(17, 28, 16), PackedInt32Array(16, 28, 13), PackedInt32Array(13, 24, 23), PackedInt32Array(24, 28, 26), PackedInt32Array(26, 28, 27), PackedInt32Array(27, 29, 25), PackedInt32Array(29, 28, 17), PackedInt32Array(28, 24, 13), PackedInt32Array(28, 29, 27), PackedInt32Array(11, 31, 30), PackedInt32Array(18, 34, 21), PackedInt32Array(21, 34, 32), PackedInt32Array(32, 34, 33), PackedInt32Array(33, 12, 30), PackedInt32Array(30, 12, 11), PackedInt32Array(12, 33, 15), PackedInt32Array(15, 35, 14), PackedInt32Array(14, 35, 18), PackedInt32Array(18, 35, 34), PackedInt32Array(34, 35, 33), PackedInt32Array(33, 35, 15), PackedInt32Array(37, 39, 38), PackedInt32Array(38, 39, 20), PackedInt32Array(20, 39, 19), PackedInt32Array(19, 39, 36), PackedInt32Array(36, 39, 37), PackedInt32Array(40, 5, 41), PackedInt32Array(41, 5, 6), PackedInt32Array(41, 6, 42), PackedInt32Array(37, 40, 36), PackedInt32Array(36, 40, 43), PackedInt32Array(43, 40, 41), PackedInt32Array(46, 48, 47), PackedInt32Array(47, 48, 44), PackedInt32Array(44, 48, 45), PackedInt32Array(45, 48, 46), PackedInt32Array(8, 9, 49), PackedInt32Array(49, 9, 50), PackedInt32Array(53, 52, 51), PackedInt32Array(49, 50, 51), PackedInt32Array(51, 50, 24), PackedInt32Array(51, 24, 53), PackedInt32Array(53, 24, 54), PackedInt32Array(50, 23, 24), PackedInt32Array(31, 55, 30), PackedInt32Array(30, 55, 56), PackedInt32Array(56, 55, 57), PackedInt32Array(55, 58, 57), PackedInt32Array(58, 52, 57), PackedInt32Array(57, 52, 53)]
+vertices = PackedVector3Array(-2.6557007, 0.3526907, -7.6557007, -0.6557007, 0.3526907, -7.6557007, -0.6557007, 0.3526907, -18.6557, -18.6557, 0.3526907, -6.1557007, -2.9057007, 0.3526907, -5.9057007, -18.6557, 0.3526907, -18.6557, 1.3442993, 0.3526907, -7.6557007, 1.5942993, 0.3526907, -5.4057007, 18.5943, 0.3526907, -5.4057007, 18.5943, 0.3526907, -18.6557, -3.9057007, 0.3526907, 6.3442993, 0.09429932, 0.3526907, 6.5942993, -0.15570068, 0.3526907, -3.1557007, -2.9057007, 0.3526907, -3.4057007, -4.4057007, 0.3526907, 8.094299, -18.6557, 0.3526907, 8.094299, 1.5942993, 0.3526907, -3.4057007, 3.8442993, 0.3526907, 6.5942993, 4.3442993, 0.3526907, 8.094299, 18.5943, 0.3526907, 8.094299, 4.0942993, 0.3526907, 9.094299, 18.5943, 0.3526907, 44.8443, -4.1557007, 0.3526907, 9.094299, -18.6557, 0.3526907, 44.8443)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(0, 4, 3), PackedInt32Array(3, 5, 0), PackedInt32Array(0, 5, 2), PackedInt32Array(6, 1, 2), PackedInt32Array(8, 7, 6), PackedInt32Array(2, 9, 6), PackedInt32Array(6, 9, 8), PackedInt32Array(13, 12, 10), PackedInt32Array(10, 12, 11), PackedInt32Array(10, 14, 13), PackedInt32Array(13, 14, 4), PackedInt32Array(4, 14, 15), PackedInt32Array(4, 15, 3), PackedInt32Array(12, 16, 11), PackedInt32Array(11, 16, 17), PackedInt32Array(17, 16, 18), PackedInt32Array(18, 16, 7), PackedInt32Array(18, 7, 19), PackedInt32Array(19, 7, 8), PackedInt32Array(18, 19, 20), PackedInt32Array(20, 19, 21), PackedInt32Array(14, 22, 15), PackedInt32Array(15, 22, 23), PackedInt32Array(20, 21, 22), PackedInt32Array(22, 21, 23)]
 geometry_source_geometry_mode = 2
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_rcno3"]
@@ -42,413 +90,930 @@ geometry_source_geometry_mode = 2
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_avqdt"]
 data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
 
-[sub_resource type="Resource" id="Resource_ncdyc"]
-resource_name = "HealthAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "health"
-attribute_type = 2
-current_value = 9
-maximum_value = 10
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
+[sub_resource type="BoxMesh" id="BoxMesh_f0670"]
 
-[sub_resource type="Resource" id="Resource_w1smv"]
-resource_name = "PostureAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "posture"
-attribute_type = 2
-current_value = 10
-maximum_value = 10
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
+[sub_resource type="BoxShape3D" id="BoxShape3D_ebomw"]
 
-[sub_resource type="Resource" id="Resource_4j4u3"]
-resource_name = "StrainAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "strain"
-attribute_type = 2
-current_value = 10
-maximum_value = 10
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
+[sub_resource type="Resource" id="Resource_sb21c"]
+script = ExtResource("20_8v6vh")
+range_var = 2.1
+metadata/_custom_type_script = "uid://daykqau0okf7v"
 
-[sub_resource type="Resource" id="Resource_5r8ps"]
-resource_name = "ArmorAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "armor"
-attribute_type = 2
-current_value = 1
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
+[sub_resource type="Resource" id="Resource_7omu2"]
+script = ExtResource("21_11ubm")
+metadata/_custom_type_script = "uid://c6hp21lncudiw"
 
-[sub_resource type="Resource" id="Resource_qsjt4"]
-resource_name = "MartialAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "martial"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
+[sub_resource type="Resource" id="Resource_idaqs"]
+resource_name = "RushToUnitSkillResource"
+script = ExtResource("12_f2qps")
+skill_name = "Rush To Unit"
+action = ExtResource("19_v4iap")
+skill_type = 1
+internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_sb21c"), SubResource("Resource_7omu2")])
+external_condition_blueprints = Array[ExtResource("14_v8epg")]([ExtResource("17_ebomw")])
+uses_weapon = null
+extra_damage_components = null
+trait_1 = "Movement"
+tags = Array[String](["movement"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
-[sub_resource type="Resource" id="Resource_6kl6n"]
-resource_name = "ChannelAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "channel"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
+[sub_resource type="Resource" id="Resource_tkd6a"]
+script = ExtResource("24_5lfvx")
+active_skills = Array[ExtResource("12_f2qps")]([ExtResource("22_04ue1"), SubResource("Resource_idaqs")])
+passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("36_cb3j6")])
+metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
-[sub_resource type="Resource" id="Resource_336d5"]
-resource_name = "ClashAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "clash"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
+[sub_resource type="Resource" id="Resource_02pk8"]
+script = ExtResource("26_7g53y")
+name = &"button"
+is_true = true
+metadata/_custom_type_script = "uid://cihsn5lxnlupk"
 
-[sub_resource type="Resource" id="Resource_x4bhx"]
-resource_name = "EvadeAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "evade"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
+[sub_resource type="Resource" id="Resource_lvqmw"]
+script = ExtResource("25_gam6i")
+text_color = Color(0.941176, 0.972549, 1, 1)
+action_name = "Pass"
+selection_types = Array[ExtResource("26_7g53y")]([SubResource("Resource_02pk8")])
+tags = Array[String](["reaction"])
+metadata/_custom_type_script = "uid://285qbhvjqa08"
 
-[sub_resource type="Resource" id="Resource_m1qim"]
-resource_name = "WillAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "will"
-attribute_type = 1
-current_value = 3
-maximum_value = 3
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
+[sub_resource type="Resource" id="Resource_2412l"]
+script = ExtResource("27_05afn")
+match_outcomes = Array[int]([1, 3])
+reaction_action = ExtResource("28_rfnuq")
+priority = 5
 
-[sub_resource type="Resource" id="Resource_p6f6u"]
-resource_name = "MightAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "might"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
+[sub_resource type="Resource" id="Resource_iljam"]
+script = ExtResource("27_05afn")
+match_outcomes = Array[int]([2, 4])
+reaction_action = ExtResource("29_ufsey")
+priority = 5
 
-[sub_resource type="Resource" id="Resource_51q8q"]
-resource_name = "EnduranceAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "endurance"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_allnq"]
-resource_name = "AgilityAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "agility"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_qdwhh"]
-resource_name = "SenseAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "sense"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_862d3"]
-resource_name = "MindAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "mind"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_22ak0"]
-resource_name = "PresenceAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "presence"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_cel8m"]
-resource_name = "ManaAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "mana"
-current_value = 10
-maximum_value = 10
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_sgxdm"]
-resource_name = "HealthAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "health"
-attribute_type = 2
-current_value = 10
-maximum_value = 10
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_f2qps"]
-resource_name = "PostureAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "posture"
-attribute_type = 2
-current_value = 10
-maximum_value = 10
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_iq36j"]
-resource_name = "StrainAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "strain"
-attribute_type = 2
-current_value = 10
-maximum_value = 10
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_v8epg"]
-resource_name = "ArmorAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "armor"
-attribute_type = 2
-current_value = 1
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_k6sm3"]
-resource_name = "MartialAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "martial"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_bvt28"]
-resource_name = "ChannelAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "channel"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_23xud"]
-resource_name = "ClashAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "clash"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_hymmt"]
-resource_name = "EvadeAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "evade"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_v4iap"]
-resource_name = "WillAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "will"
-attribute_type = 1
-current_value = 3
-maximum_value = 3
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_8v6vh"]
-resource_name = "MightAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "might"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_11ubm"]
-resource_name = "EnduranceAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "endurance"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_w01yd"]
-resource_name = "AgilityAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "agility"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_00nvd"]
-resource_name = "SenseAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "sense"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_5lfvx"]
-resource_name = "MindAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "mind"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_f0670"]
-resource_name = "PresenceAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "presence"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_ebomw"]
-resource_name = "ManaAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "mana"
-current_value = 10
-maximum_value = 10
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_04ue1"]
-resource_name = "HealthAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "health"
-attribute_type = 2
-current_value = 10
-maximum_value = 10
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_cb3j6"]
-resource_name = "PostureAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "posture"
-attribute_type = 2
-current_value = 10
-maximum_value = 10
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_e15dp"]
-resource_name = "StrainAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "strain"
-attribute_type = 2
-current_value = 10
-maximum_value = 10
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_c2k8n"]
-resource_name = "ArmorAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "armor"
-attribute_type = 2
-current_value = 1
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_hja2s"]
-resource_name = "MartialAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "martial"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_f3uqp"]
-resource_name = "ChannelAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "channel"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_0fvkv"]
-resource_name = "ClashAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "clash"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_dpue3"]
-resource_name = "EvadeAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "evade"
-attribute_type = 1
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_mpmhl"]
-resource_name = "WillAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "will"
-attribute_type = 1
-current_value = 3
-maximum_value = 3
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_yl67w"]
-resource_name = "MightAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "might"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
+[sub_resource type="Resource" id="Resource_oxqfr"]
+script = ExtResource("30_o24kd")
+rules = Array[ExtResource("27_05afn")]([SubResource("Resource_2412l"), SubResource("Resource_iljam")])
+fallback_reaction = SubResource("Resource_lvqmw")
 
 [sub_resource type="Resource" id="Resource_6odjx"]
-resource_name = "EnduranceAttributeResource"
+resource_local_to_scene = true
+resource_name = "Posture"
 script = ExtResource("10_p6f6u")
-attribute_name = "endurance"
-current_value = 2
-maximum_value = 2
+attribute_name = "posture"
+attribute_type = 2
+current_value = 20
+maximum_value = 20
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_lk7si"]
-resource_name = "AgilityAttributeResource"
+resource_local_to_scene = true
+resource_name = "Speed"
 script = ExtResource("10_p6f6u")
-attribute_name = "agility"
-current_value = 2
-maximum_value = 2
+attribute_name = "speed"
+attribute_type = 2
+current_value = 4
+maximum_value = 4
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_8pahp"]
-resource_name = "SenseAttributeResource"
+resource_local_to_scene = true
+resource_name = "Evade"
 script = ExtResource("10_p6f6u")
-attribute_name = "sense"
-current_value = 2
-maximum_value = 2
-metadata/_custom_type_script = "uid://7vw8btajjq0q"
-
-[sub_resource type="Resource" id="Resource_8hoel"]
-resource_name = "MindAttributeResource"
-script = ExtResource("10_p6f6u")
-attribute_name = "mind"
-current_value = 2
-maximum_value = 2
+attribute_name = "evade"
+attribute_type = 2
+maximum_value = 0
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
 [sub_resource type="Resource" id="Resource_jiskd"]
-resource_name = "PresenceAttributeResource"
+resource_local_to_scene = true
+resource_name = "Martial"
 script = ExtResource("10_p6f6u")
-attribute_name = "presence"
+attribute_name = "martial"
+attribute_type = 1
 current_value = 2
 maximum_value = 2
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
-[sub_resource type="Resource" id="Resource_rx2vc"]
-resource_name = "ManaAttributeResource"
+[sub_resource type="Resource" id="Resource_7g53y"]
+resource_local_to_scene = true
+resource_name = "Channel"
+script = ExtResource("10_p6f6u")
+attribute_name = "channel"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_05afn"]
+resource_local_to_scene = true
+resource_name = "Parry"
+script = ExtResource("10_p6f6u")
+attribute_name = "parry"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_rfnuq"]
+resource_local_to_scene = true
+resource_name = "Resist"
+script = ExtResource("10_p6f6u")
+attribute_name = "resist"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_ufsey"]
+resource_local_to_scene = true
+resource_name = "Mana"
 script = ExtResource("10_p6f6u")
 attribute_name = "mana"
+attribute_type = 2
 current_value = 10
 maximum_value = 10
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_o24kd"]
+resource_local_to_scene = true
+resource_name = "ActivePoints"
+script = ExtResource("10_p6f6u")
+attribute_name = "active_points"
+attribute_type = 2
+current_value = 2
+base_value = 2
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_utj8h"]
+resource_local_to_scene = true
+resource_name = "PassivePoints"
+script = ExtResource("10_p6f6u")
+attribute_name = "passive_points"
+attribute_type = 2
+current_value = 4
+base_value = 4
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_73fol"]
+resource_local_to_scene = true
+resource_name = "Initiative"
+script = ExtResource("10_p6f6u")
+attribute_name = "initiative"
+attribute_type = 2
+current_value = 15
+maximum_value = 15
+minimum_value = -100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_q6bko"]
+resource_local_to_scene = true
+resource_name = "Accuracy"
+script = ExtResource("10_p6f6u")
+attribute_name = "accuracy"
+attribute_type = 2
+maximum_value = 0
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_a4tjr"]
+resource_local_to_scene = true
+resource_name = "Critical"
+script = ExtResource("10_p6f6u")
+attribute_name = "critical"
+attribute_type = 2
+maximum_value = 0
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_pwtg8"]
+resource_local_to_scene = true
+resource_name = "DebuffResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "debuff_resistance"
+attribute_type = 1
+current_value = 50
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_dydjx"]
+resource_local_to_scene = true
+resource_name = "BlightResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "blight_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_2gvhv"]
+resource_local_to_scene = true
+resource_name = "BleedResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "bleed_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_src6p"]
+resource_local_to_scene = true
+resource_name = "StunResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "stun_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_o8y13"]
+resource_local_to_scene = true
+resource_name = "FearResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "fear_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_g2rko"]
+resource_local_to_scene = true
+resource_name = "MoveResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "move_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_su0wa"]
+resource_local_to_scene = true
+script = ExtResource("11_6kl6n")
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_6odjx"), SubResource("Resource_lk7si"), SubResource("Resource_8pahp"), SubResource("Resource_jiskd"), SubResource("Resource_7g53y"), SubResource("Resource_05afn"), SubResource("Resource_rfnuq"), SubResource("Resource_ufsey"), SubResource("Resource_o24kd"), SubResource("Resource_utj8h"), SubResource("Resource_73fol"), SubResource("Resource_q6bko"), SubResource("Resource_a4tjr"), SubResource("Resource_pwtg8"), SubResource("Resource_dydjx"), SubResource("Resource_2gvhv"), SubResource("Resource_src6p"), SubResource("Resource_o8y13"), SubResource("Resource_g2rko")])
+metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
+
+[sub_resource type="Resource" id="Resource_gam6i"]
+script = ExtResource("29_c2k8n")
+main_weapon = ExtResource("28_e15dp")
+sub_weapon = ExtResource("30_c2k8n")
+metadata/_custom_type_script = "uid://qgvfrtjfoen4"
+
+[sub_resource type="Resource" id="Resource_ckhw7"]
+script = ExtResource("31_04ue1")
+use_expire_rule = 2
+ui_name = &"Grant Block"
+metadata/_custom_type_script = "uid://13akgn3nuj34"
+
+[sub_resource type="Resource" id="Resource_a1x7f"]
+script = ExtResource("32_cb3j6")
+relation = 0
+metadata/_custom_type_script = "uid://c7ofxaslt34wn"
+
+[sub_resource type="Resource" id="Resource_4uvkp"]
+script = ExtResource("33_e15dp")
+metadata/_custom_type_script = "uid://cq6k3vojdsik7"
+
+[sub_resource type="Resource" id="Resource_rx2vc"]
+script = ExtResource("34_f0670")
+metadata/_custom_type_script = "uid://clbt58mwsvag8"
+
+[sub_resource type="Resource" id="Resource_8hoel"]
+resource_name = "PassiveBlockSkillResource"
+script = ExtResource("12_f2qps")
+skill_name = "Passive Block"
+action = ExtResource("29_f0670")
+skill_category = 1
+skill_type = 1
+skill_trigger = 2
+internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_a1x7f"), SubResource("Resource_4uvkp"), SubResource("Resource_rx2vc")])
+is_disabled = true
+animation_package = ExtResource("30_ebomw")
+uses_weapon = null
+extra_damage_components = null
+effects = Array[ExtResource("23_04ue1")]([SubResource("Resource_ckhw7")])
+trait_1 = "Block"
+trigger_description = "When an ally uses an attack skill"
+description = Array[String](["Grants Block when an ally makes an attack"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"
+
+[sub_resource type="Resource" id="Resource_k6sm3"]
+script = ExtResource("24_5lfvx")
+active_skills = Array[ExtResource("12_f2qps")]([ExtResource("40_0fvkv"), ExtResource("39_5lfvx"), SubResource("Resource_idaqs"), ExtResource("38_c2k8n")])
+passive_skills = Array[ExtResource("12_f2qps")]([SubResource("Resource_8hoel")])
+metadata/_custom_type_script = "uid://bubf25btsnnfv"
+
+[sub_resource type="Resource" id="Resource_pv265"]
+script = ExtResource("25_gam6i")
+text_color = Color(0.941176, 0.972549, 1, 1)
+action_name = "Pass"
+selection_types = Array[ExtResource("26_7g53y")]([SubResource("Resource_02pk8")])
+tags = Array[String](["reaction"])
+metadata/_custom_type_script = "uid://285qbhvjqa08"
+
+[sub_resource type="Resource" id="Resource_tyoue"]
+script = ExtResource("27_05afn")
+match_outcomes = Array[int]([1, 3])
+reaction_action = ExtResource("28_rfnuq")
+priority = 5
+
+[sub_resource type="Resource" id="Resource_g2ujg"]
+script = ExtResource("27_05afn")
+match_outcomes = Array[int]([2, 4])
+reaction_action = ExtResource("29_ufsey")
+priority = 5
+
+[sub_resource type="Resource" id="Resource_h7gr6"]
+script = ExtResource("30_o24kd")
+rules = Array[ExtResource("27_05afn")]([SubResource("Resource_tyoue"), SubResource("Resource_g2ujg")])
+fallback_reaction = SubResource("Resource_pv265")
+
+[sub_resource type="Resource" id="Resource_lwd1i"]
+resource_local_to_scene = true
+resource_name = "Posture"
+script = ExtResource("10_p6f6u")
+attribute_name = "posture"
+attribute_type = 2
+current_value = 20
+maximum_value = 20
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_4dv0c"]
+resource_local_to_scene = true
+resource_name = "Speed"
+script = ExtResource("10_p6f6u")
+attribute_name = "speed"
+attribute_type = 2
+current_value = 4
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_ub3kf"]
+resource_local_to_scene = true
+resource_name = "Evade"
+script = ExtResource("10_p6f6u")
+attribute_name = "evade"
+attribute_type = 2
+maximum_value = 0
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_p6sl4"]
+resource_local_to_scene = true
+resource_name = "Martial"
+script = ExtResource("10_p6f6u")
+attribute_name = "martial"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_j6cut"]
+resource_local_to_scene = true
+resource_name = "Channel"
+script = ExtResource("10_p6f6u")
+attribute_name = "channel"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_qtrpl"]
+resource_local_to_scene = true
+resource_name = "Parry"
+script = ExtResource("10_p6f6u")
+attribute_name = "parry"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_8wfs1"]
+resource_local_to_scene = true
+resource_name = "Resist"
+script = ExtResource("10_p6f6u")
+attribute_name = "resist"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_wan3k"]
+resource_local_to_scene = true
+resource_name = "Mana"
+script = ExtResource("10_p6f6u")
+attribute_name = "mana"
+attribute_type = 2
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_ol02q"]
+resource_local_to_scene = true
+resource_name = "ActivePoints"
+script = ExtResource("10_p6f6u")
+attribute_name = "active_points"
+attribute_type = 2
+current_value = 2
+base_value = 2
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_avl6w"]
+resource_local_to_scene = true
+resource_name = "PassivePoints"
+script = ExtResource("10_p6f6u")
+attribute_name = "passive_points"
+attribute_type = 2
+current_value = 2
+base_value = 2
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_3ixwr"]
+resource_local_to_scene = true
+resource_name = "Initiative"
+script = ExtResource("10_p6f6u")
+attribute_name = "initiative"
+attribute_type = 2
+current_value = 15
+maximum_value = 15
+minimum_value = -100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_ody2n"]
+resource_local_to_scene = true
+resource_name = "Accuracy"
+script = ExtResource("10_p6f6u")
+attribute_name = "accuracy"
+attribute_type = 2
+maximum_value = 0
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_2qjkf"]
+resource_local_to_scene = true
+resource_name = "Critical"
+script = ExtResource("10_p6f6u")
+attribute_name = "critical"
+attribute_type = 2
+maximum_value = 0
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_5ddj0"]
+resource_local_to_scene = true
+resource_name = "DebuffResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "debuff_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_knq6r"]
+resource_local_to_scene = true
+resource_name = "BlightResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "blight_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_68abb"]
+resource_local_to_scene = true
+resource_name = "BleedResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "bleed_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_0gv3y"]
+resource_local_to_scene = true
+resource_name = "StunResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "stun_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_mt8ep"]
+resource_local_to_scene = true
+resource_name = "FearResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "fear_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_t1is0"]
+resource_local_to_scene = true
+resource_name = "MoveResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "move_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_guc2f"]
+resource_local_to_scene = true
+script = ExtResource("11_6kl6n")
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_lwd1i"), SubResource("Resource_4dv0c"), SubResource("Resource_ub3kf"), SubResource("Resource_p6sl4"), SubResource("Resource_j6cut"), SubResource("Resource_qtrpl"), SubResource("Resource_8wfs1"), SubResource("Resource_wan3k"), SubResource("Resource_ol02q"), SubResource("Resource_avl6w"), SubResource("Resource_3ixwr"), SubResource("Resource_ody2n"), SubResource("Resource_2qjkf"), SubResource("Resource_5ddj0"), SubResource("Resource_knq6r"), SubResource("Resource_68abb"), SubResource("Resource_0gv3y"), SubResource("Resource_mt8ep"), SubResource("Resource_t1is0")])
+metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
+
+[sub_resource type="Resource" id="Resource_mrc0n"]
+script = ExtResource("24_5lfvx")
+active_skills = Array[ExtResource("12_f2qps")]([ExtResource("42_6odjx"), ExtResource("44_lk7si")])
+metadata/_custom_type_script = "uid://bubf25btsnnfv"
+
+[sub_resource type="Resource" id="Resource_gdrlf"]
+resource_local_to_scene = true
+resource_name = "Posture"
+script = ExtResource("10_p6f6u")
+attribute_name = "posture"
+attribute_type = 2
+current_value = 20
+maximum_value = 20
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_yxhqu"]
+resource_local_to_scene = true
+resource_name = "Speed"
+script = ExtResource("10_p6f6u")
+attribute_name = "speed"
+attribute_type = 2
+current_value = 4
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_wsem0"]
+resource_local_to_scene = true
+resource_name = "Evade"
+script = ExtResource("10_p6f6u")
+attribute_name = "evade"
+attribute_type = 2
+current_value = 1
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_6836y"]
+resource_local_to_scene = true
+resource_name = "Martial"
+script = ExtResource("10_p6f6u")
+attribute_name = "martial"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_eixr0"]
+resource_local_to_scene = true
+resource_name = "Channel"
+script = ExtResource("10_p6f6u")
+attribute_name = "channel"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_k8h5i"]
+resource_local_to_scene = true
+resource_name = "Parry"
+script = ExtResource("10_p6f6u")
+attribute_name = "parry"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_o7bkt"]
+resource_local_to_scene = true
+resource_name = "Resist"
+script = ExtResource("10_p6f6u")
+attribute_name = "resist"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_yao5x"]
+resource_local_to_scene = true
+resource_name = "Mana"
+script = ExtResource("10_p6f6u")
+attribute_name = "mana"
+attribute_type = 2
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_4uu1a"]
+resource_local_to_scene = true
+resource_name = "ActivePoints"
+script = ExtResource("10_p6f6u")
+attribute_name = "active_points"
+attribute_type = 2
+current_value = 2
+base_value = 2
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_0who7"]
+resource_local_to_scene = true
+resource_name = "PassivePoints"
+script = ExtResource("10_p6f6u")
+attribute_name = "passive_points"
+attribute_type = 2
+current_value = 2
+base_value = 2
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_2t4m3"]
+resource_local_to_scene = true
+resource_name = "Initiative"
+script = ExtResource("10_p6f6u")
+attribute_name = "initiative"
+attribute_type = 2
+current_value = 15
+maximum_value = 15
+minimum_value = -100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_b6n5b"]
+resource_local_to_scene = true
+resource_name = "Accuracy"
+script = ExtResource("10_p6f6u")
+attribute_name = "accuracy"
+attribute_type = 2
+maximum_value = 0
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_k2i8o"]
+resource_local_to_scene = true
+resource_name = "Critical"
+script = ExtResource("10_p6f6u")
+attribute_name = "critical"
+attribute_type = 2
+maximum_value = 0
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_2ippr"]
+resource_local_to_scene = true
+resource_name = "DebuffResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "debuff_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_0u7jk"]
+resource_local_to_scene = true
+resource_name = "BlightResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "blight_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_my5sl"]
+resource_local_to_scene = true
+resource_name = "BleedResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "bleed_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_mk0gu"]
+resource_local_to_scene = true
+resource_name = "StunResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "stun_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_iimu8"]
+resource_local_to_scene = true
+resource_name = "FearResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "fear_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_dwax0"]
+resource_local_to_scene = true
+resource_name = "MoveResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "move_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_6ujme"]
+resource_local_to_scene = true
+script = ExtResource("11_6kl6n")
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_gdrlf"), SubResource("Resource_yxhqu"), SubResource("Resource_wsem0"), SubResource("Resource_6836y"), SubResource("Resource_eixr0"), SubResource("Resource_k8h5i"), SubResource("Resource_o7bkt"), SubResource("Resource_yao5x"), SubResource("Resource_4uu1a"), SubResource("Resource_0who7"), SubResource("Resource_2t4m3"), SubResource("Resource_b6n5b"), SubResource("Resource_k2i8o"), SubResource("Resource_2ippr"), SubResource("Resource_0u7jk"), SubResource("Resource_my5sl"), SubResource("Resource_mk0gu"), SubResource("Resource_iimu8"), SubResource("Resource_dwax0")])
+metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
+
+[sub_resource type="Resource" id="Resource_eoitt"]
+script = ExtResource("45_8pahp")
+ui_name = "Rank"
+tags = ["rank"]
+grant_skills = Array[ExtResource("12_f2qps")]([ExtResource("44_lk7si")])
+metadata/_custom_type_script = "uid://bwf8gcb7vcxa0"
+
+[sub_resource type="Resource" id="Resource_cihb7"]
+script = ExtResource("42_yl67w")
+ui_name = "Slime"
+tags = ["race", "human"]
+metadata/_custom_type_script = "uid://rwvfoi4t15v8"
+
+[sub_resource type="Resource" id="Resource_t17d6"]
+script = ExtResource("46_8hoel")
+ui_name = "Slime"
+race = SubResource("Resource_cihb7")
+progression = SubResource("Resource_eoitt")
+metadata/_custom_type_script = "uid://ceyv1b0lbsbfv"
+
+[sub_resource type="Resource" id="Resource_hhxx0"]
+resource_local_to_scene = true
+resource_name = "Posture"
+script = ExtResource("10_p6f6u")
+attribute_name = "posture"
+attribute_type = 2
+current_value = 20
+maximum_value = 20
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_lm6a8"]
+resource_local_to_scene = true
+resource_name = "Speed"
+script = ExtResource("10_p6f6u")
+attribute_name = "speed"
+attribute_type = 2
+current_value = 4
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_kyy67"]
+resource_local_to_scene = true
+resource_name = "Evade"
+script = ExtResource("10_p6f6u")
+attribute_name = "evade"
+attribute_type = 2
+current_value = 1
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_7mtuj"]
+resource_local_to_scene = true
+resource_name = "Martial"
+script = ExtResource("10_p6f6u")
+attribute_name = "martial"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_hixxn"]
+resource_local_to_scene = true
+resource_name = "Channel"
+script = ExtResource("10_p6f6u")
+attribute_name = "channel"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_3pvsi"]
+resource_local_to_scene = true
+resource_name = "Parry"
+script = ExtResource("10_p6f6u")
+attribute_name = "parry"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_44u5q"]
+resource_local_to_scene = true
+resource_name = "Resist"
+script = ExtResource("10_p6f6u")
+attribute_name = "resist"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_6qfim"]
+resource_local_to_scene = true
+resource_name = "Mana"
+script = ExtResource("10_p6f6u")
+attribute_name = "mana"
+attribute_type = 2
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_xwlf7"]
+resource_local_to_scene = true
+resource_name = "ActivePoints"
+script = ExtResource("10_p6f6u")
+attribute_name = "active_points"
+attribute_type = 2
+current_value = 2
+base_value = 2
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_7xv74"]
+resource_local_to_scene = true
+resource_name = "PassivePoints"
+script = ExtResource("10_p6f6u")
+attribute_name = "passive_points"
+attribute_type = 2
+current_value = 2
+base_value = 2
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_dasv8"]
+resource_local_to_scene = true
+resource_name = "Initiative"
+script = ExtResource("10_p6f6u")
+attribute_name = "initiative"
+attribute_type = 2
+current_value = 15
+maximum_value = 15
+minimum_value = -100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_3xdcy"]
+resource_local_to_scene = true
+resource_name = "Accuracy"
+script = ExtResource("10_p6f6u")
+attribute_name = "accuracy"
+attribute_type = 2
+maximum_value = 0
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_megh3"]
+resource_local_to_scene = true
+resource_name = "Critical"
+script = ExtResource("10_p6f6u")
+attribute_name = "critical"
+attribute_type = 2
+maximum_value = 0
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_jrwbl"]
+resource_local_to_scene = true
+resource_name = "DebuffResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "debuff_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_p443e"]
+resource_local_to_scene = true
+resource_name = "BlightResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "blight_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_4djt7"]
+resource_local_to_scene = true
+resource_name = "BleedResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "bleed_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_3y46e"]
+resource_local_to_scene = true
+resource_name = "StunResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "stun_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_uyhmq"]
+resource_local_to_scene = true
+resource_name = "FearResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "fear_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_08qql"]
+resource_local_to_scene = true
+resource_name = "MoveResistance"
+script = ExtResource("10_p6f6u")
+attribute_name = "move_resistance"
+attribute_type = 1
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_smcih"]
+resource_local_to_scene = true
+script = ExtResource("11_6kl6n")
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_hhxx0"), SubResource("Resource_lm6a8"), SubResource("Resource_kyy67"), SubResource("Resource_7mtuj"), SubResource("Resource_hixxn"), SubResource("Resource_3pvsi"), SubResource("Resource_44u5q"), SubResource("Resource_6qfim"), SubResource("Resource_xwlf7"), SubResource("Resource_7xv74"), SubResource("Resource_dasv8"), SubResource("Resource_3xdcy"), SubResource("Resource_megh3"), SubResource("Resource_jrwbl"), SubResource("Resource_p443e"), SubResource("Resource_4djt7"), SubResource("Resource_3y46e"), SubResource("Resource_uyhmq"), SubResource("Resource_08qql")])
+metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xyav6"]
 albedo_color = Color(1, 0, 0.183333, 1)
@@ -467,6 +1032,8 @@ point_count = 2
 albedo_color = Color(0, 0.615686, 0.882353, 1)
 roughness = 0.5
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_04ue1"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gh8or"]
 bg_color = Color(0.0264, 0.0294, 0.03, 0.945098)
 border_width_left = 2
@@ -478,6 +1045,20 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 shadow_size = 5
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_04ue1"]
+bg_color = Color(0.0264, 0.0294, 0.03, 0.945098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_color = Color(0, 0, 0, 0.498039)
+shadow_size = 2
 shadow_offset = Vector2(-1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5ega"]
@@ -520,29 +1101,55 @@ color = Color(0.6, 0.6, 0.6, 1)
 grow_begin = 0.0
 grow_end = 0.0
 
-[node name="Level" type="Node3D"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lr3jy"]
+bg_color = Color(0.15, 0.15, 0.15, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+shadow_size = 2
+shadow_offset = Vector2(1, 1)
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+[node name="Level" type="Node3D" unique_id=1219432357]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=766749461]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.19, 0)
 navigation_mesh = SubResource("NavigationMesh_lf0eb")
 
-[node name="DebugSettings" type="Node" parent="."]
-script = ExtResource("1_uoqcs")
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="NavigationRegion3D" unique_id=746239551 groups=["navigation_mesh_source_group"]]
+height = 2.23
+vertices = PackedVector3Array(1.0616996, 0, -3.8036938, 0.97278094, 0, -7.0195866, -2.3320305, 0, -7.064046, -2.2134717, 0, -3.848153)
+affect_navigation_mesh = true
 
-[node name="DebugConsoleController" type="Node" parent="."]
+[node name="DebugSettings" type="Node" parent="." unique_id=860420328]
+script = ExtResource("1_uoqcs")
+allow_all_skills_in_tactics = true
+
+[node name="PauseManager" type="Node" parent="." unique_id=1578127748]
+script = ExtResource("2_04ue1")
+metadata/_custom_type_script = "uid://dlggn8t3b5dp3"
+
+[node name="DebugConsoleController" type="Node" parent="." unique_id=2097953097]
 script = ExtResource("2_swo3b")
 
-[node name="ProjectileConsole" type="Node" parent="DebugConsoleController"]
+[node name="ProjectileConsole" type="Node" parent="DebugConsoleController" unique_id=667036119]
 script = ExtResource("3_s0dbn")
 
-[node name="Environment" type="Node3D" parent="."]
+[node name="EquipmentConsole" type="Node" parent="DebugConsoleController" unique_id=348291047]
+script = ExtResource("eq_console_1")
 
-[node name="Lighting" type="Node3D" parent="Environment"]
+[node name="Environment" type="Node3D" parent="." unique_id=571982712]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment/Lighting"]
+[node name="Lighting" type="Node3D" parent="Environment" unique_id=1594270375]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment/Lighting" unique_id=1153282071]
 environment = ExtResource("3_gh8or")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment/Lighting"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment/Lighting" unique_id=492766432]
 transform = Transform3D(0.624316, -0.517834, 0.584874, -0.358336, 0.475453, 0.803455, -0.694136, -0.711191, 0.111274, -5.04075, 2.35, -0.618277)
 light_energy = 0.634
 shadow_enabled = true
@@ -551,7 +1158,7 @@ directional_shadow_mode = 1
 directional_shadow_split_1 = 0.505
 directional_shadow_max_distance = 27.1
 
-[node name="Floor" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
+[node name="Floor" type="MeshInstance3D" parent="Environment" unique_id=431883841 groups=["navigation_mesh_source_group"]]
 transform = Transform3D(19.1557, 0, 0, 0, 19.1557, 0, 0, 0, 19.1557, 0, 0, 0)
 cast_shadow = 0
 gi_mode = 0
@@ -559,44 +1166,14 @@ mesh = SubResource("PlaneMesh_rcno3")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("1_mu4i6")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor" unique_id=1105322896]
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor/StaticBody3D" unique_id=1052528948]
 shape = SubResource("ConcavePolygonShape3D_avqdt")
 
-[node name="Floor5" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
-transform = Transform3D(19.1557, 0, 0, 0, 16.5134, -9.70813, 0, 9.70813, 16.5134, 0, 2.10462, -18.5208)
-cast_shadow = 0
-gi_mode = 0
-mesh = SubResource("PlaneMesh_rcno3")
-skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("1_mu4i6")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor5"]
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor5/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_avqdt")
-
-[node name="Floor6" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
-transform = Transform3D(19.1557, 0, 0, 0, 19.1489, 0.510796, 0, -0.510796, 19.1489, 25.8751, 6.7017, -22.0367)
-cast_shadow = 0
-gi_mode = 0
-mesh = SubResource("PlaneMesh_rcno3")
-skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("1_mu4i6")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor6"]
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor6/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_avqdt")
-
-[node name="Floor2" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
+[node name="Floor2" type="MeshInstance3D" parent="Environment" unique_id=1780659943 groups=["navigation_mesh_source_group"]]
 transform = Transform3D(19.1557, 0, 0, 0, 19.1557, 0, 0, 0, 19.1557, 0, 0, 26.1053)
 cast_shadow = 0
 gi_mode = 0
@@ -604,104 +1181,136 @@ mesh = SubResource("PlaneMesh_rcno3")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("1_mu4i6")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor2"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor2" unique_id=1325592668]
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor2/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor2/StaticBody3D" unique_id=622745532]
 shape = SubResource("ConcavePolygonShape3D_avqdt")
 
-[node name="Floor3" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
-transform = Transform3D(4.64512, 0, 0, 0, 0.951019, 4.54672, 0, -4.54672, 0.951019, 0, 0, 26.1053)
+[node name="Floor5" type="MeshInstance3D" parent="Environment" unique_id=111470562 groups=["navigation_mesh_source_group"]]
+transform = Transform3D(3.1501377, 0, 0, 0, 3.1501374, 0, 0, 0, 3.1501374, -0.61448956, 0, -5.455774)
 cast_shadow = 0
 gi_mode = 0
-mesh = SubResource("PlaneMesh_rcno3")
+mesh = SubResource("BoxMesh_f0670")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("1_mu4i6")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor3"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor5" unique_id=1511030196]
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor3/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_avqdt")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor5/StaticBody3D" unique_id=212681]
+shape = SubResource("BoxShape3D_ebomw")
 
-[node name="Floor4" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
-transform = Transform3D(4.64512, 0, 0, 0, 0.951019, 4.54672, 0, -4.54672, 0.951019, 4.3175, 0, 21.8595)
+[node name="Floor6" type="MeshInstance3D" parent="Environment" unique_id=123953287 groups=["navigation_mesh_source_group"]]
+transform = Transform3D(5.8820868, 0, 0, 0, -7.314209e-08, -2.5884905, 0, 1.6732959, -1.13146505e-07, 0.2025876, 0.6306863, 7.751465)
 cast_shadow = 0
 gi_mode = 0
-mesh = SubResource("PlaneMesh_rcno3")
+mesh = SubResource("BoxMesh_f0670")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("1_mu4i6")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor4"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor6" unique_id=1108963542]
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor4/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_avqdt")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor6/StaticBody3D" unique_id=236740697]
+shape = SubResource("BoxShape3D_ebomw")
 
-[node name="Camera" parent="." instance=ExtResource("3_wbgr3")]
+[node name="CameraController" parent="." unique_id=866476987 instance=ExtResource("3_wbgr3")]
+process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.735, 1.03, 0.84)
 
-[node name="UnitManager" type="Node" parent="."]
+[node name="UnitManager" type="Node" parent="." unique_id=2132993533]
 script = ExtResource("11_lf0eb")
 
-[node name="Ruby" parent="UnitManager" node_paths=PackedStringArray("character_sheet") instance=ExtResource("12_k2c3k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
-character_sheet = NodePath("CharacterSheet")
-ui_name = "Ruby"
-visor_color = Color(0.73, 0.2993, 0.306478, 1)
-
-[node name="CharacterSheet" parent="UnitManager/Ruby" instance=ExtResource("9_srkvl")]
-attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_ncdyc"), SubResource("Resource_w1smv"), SubResource("Resource_4j4u3"), SubResource("Resource_5r8ps"), SubResource("Resource_qsjt4"), SubResource("Resource_6kl6n"), SubResource("Resource_336d5"), SubResource("Resource_x4bhx"), SubResource("Resource_m1qim"), SubResource("Resource_p6f6u"), SubResource("Resource_51q8q"), SubResource("Resource_allnq"), SubResource("Resource_qdwhh"), SubResource("Resource_862d3"), SubResource("Resource_22ak0"), SubResource("Resource_cel8m")])
-
-[node name="Azure" parent="UnitManager" node_paths=PackedStringArray("character_sheet") instance=ExtResource("12_k2c3k")]
-character_sheet = NodePath("CharacterSheet2")
+[node name="Azure" parent="UnitManager" unique_id=2054325409 instance=ExtResource("12_k2c3k")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.2450175, 0, 1.0568509)
+starting_tactic = SubResource("Resource_tkd6a")
+reaction_pack = SubResource("Resource_oxqfr")
 ui_name = "Azure"
-is_enemy = true
-visor_color = Color(0.3818, 0.62831, 0.83, 1)
+visor_color = Color(0, 0.55250007, 0.85, 1)
 
-[node name="CharacterSheet2" parent="UnitManager/Azure" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
+[node name="CharacterSheet" parent="UnitManager/Azure" unique_id=1450461724 node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
 unit = NodePath("..")
-attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_sgxdm"), SubResource("Resource_f2qps"), SubResource("Resource_iq36j"), SubResource("Resource_v8epg"), SubResource("Resource_k6sm3"), SubResource("Resource_bvt28"), SubResource("Resource_23xud"), SubResource("Resource_hymmt"), SubResource("Resource_v4iap"), SubResource("Resource_8v6vh"), SubResource("Resource_11ubm"), SubResource("Resource_w01yd"), SubResource("Resource_00nvd"), SubResource("Resource_5lfvx"), SubResource("Resource_f0670"), SubResource("Resource_ebomw")])
+attributes_profile = SubResource("Resource_su0wa")
+gear_preset = SubResource("Resource_gam6i")
+build_profile = ExtResource("37_cb3j6")
 
-[node name="Marigold" parent="UnitManager" node_paths=PackedStringArray("character_sheet") instance=ExtResource("12_k2c3k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.68029)
-character_sheet = NodePath("CharacterSheet4")
-ui_name = "Marigold"
-visor_color = Color(0.8832, 0.9, 0.396, 1)
+[node name="Verdant" parent="UnitManager" unique_id=976159200 instance=ExtResource("12_k2c3k")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6.189094, 0, 2.8778234)
+starting_tactic = SubResource("Resource_k6sm3")
+reaction_pack = SubResource("Resource_h7gr6")
+ui_name = "Verdant"
+visor_color = Color(0, 0.54, 0.261, 1)
 
-[node name="CharacterSheet4" parent="UnitManager/Marigold" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
+[node name="CharacterSheet" parent="UnitManager/Verdant" unique_id=84813627 node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
 unit = NodePath("..")
-attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_04ue1"), SubResource("Resource_cb3j6"), SubResource("Resource_e15dp"), SubResource("Resource_c2k8n"), SubResource("Resource_hja2s"), SubResource("Resource_f3uqp"), SubResource("Resource_0fvkv"), SubResource("Resource_dpue3"), SubResource("Resource_mpmhl"), SubResource("Resource_yl67w"), SubResource("Resource_6odjx"), SubResource("Resource_lk7si"), SubResource("Resource_8pahp"), SubResource("Resource_8hoel"), SubResource("Resource_jiskd"), SubResource("Resource_rx2vc")])
+attributes_profile = SubResource("Resource_guc2f")
+build_profile = ExtResource("38_e15dp")
 
-[node name="MouseController" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_avqdt")]
-camera = NodePath("../Camera/CamOrigin/SpringArm3D/fCamera")
+[node name="Slime1" parent="UnitManager" unique_id=1966507239 instance=ExtResource("41_hja2s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.038853, 0, 0)
+starting_tactic = SubResource("Resource_mrc0n")
+ui_name = "Slime1"
 
-[node name="Label3D" type="Label3D" parent="MouseController/MouseVisual" index="0"]
+[node name="CharacterSheet" parent="UnitManager/Slime1" unique_id=1198739603 node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
+unit = NodePath("..")
+attributes_profile = SubResource("Resource_6ujme")
+build_profile = SubResource("Resource_t17d6")
+
+[node name="Slime2" parent="UnitManager" unique_id=1527460440 instance=ExtResource("41_hja2s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6248264, 0, 3.4388719)
+starting_tactic = SubResource("Resource_mrc0n")
+ui_name = "Slime2"
+
+[node name="CharacterSheet" parent="UnitManager/Slime2" unique_id=653353530 node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
+unit = NodePath("..")
+attributes_profile = SubResource("Resource_smcih")
+build_profile = SubResource("Resource_t17d6")
+
+[node name="MouseController" parent="." unique_id=1614539325 node_paths=PackedStringArray("camera") instance=ExtResource("4_avqdt")]
+process_mode = 3
+camera = NodePath("../CameraController/CamOrigin/SpringArm3D/fCamera")
+
+[node name="Label3D" type="Label3D" parent="MouseController/MouseVisual" index="0" unique_id=1117958800]
 
 [node name="UnitActionRay" parent="MouseController" index="1"]
 collision_mask = 2
 
-[node name="UnitActionSystem" type="Node" parent="." node_paths=PackedStringArray("test_unit")]
+[node name="UnitActionSystem" type="Node" parent="." unique_id=696304431]
+process_mode = 3
 script = ExtResource("9_lf0eb")
-test_unit = NodePath("../UnitManager/Ruby")
 
-[node name="TurnSystem" type="Node" parent="." node_paths=PackedStringArray("unit_manager")]
+[node name="TurnSystem" type="Node" parent="." unique_id=2080096656 node_paths=PackedStringArray("unit_manager", "skill_trigger_system")]
 script = ExtResource("10_k2c3k")
 unit_manager = NodePath("../UnitManager")
+skill_trigger_system = NodePath("../CombatSystem/SkillTriggerSystem")
 
-[node name="CombatSystem" type="Node" parent="."]
+[node name="CombatSystem" type="Node" parent="." unique_id=214833121 node_paths=PackedStringArray("skill_trigger_system")]
 script = ExtResource("11_g7q3m")
+combat_debug_enabled = true
+skill_trigger_system = NodePath("SkillTriggerSystem")
+fallback_skill = ExtResource("39_5lfvx")
+skill_library = ExtResource("42_5lfvx")
+condition_library = ExtResource("43_f0670")
 
-[node name="PathfindingSystem" type="Node" parent="." node_paths=PackedStringArray("nav_region_3d")]
+[node name="SkillTriggerSystem" type="Node" parent="CombatSystem" unique_id=464332895 node_paths=PackedStringArray("combat_system")]
+script = ExtResource("26_qdwhh")
+combat_system = NodePath("..")
+metadata/_custom_type_script = "uid://c1pcudui7e5qp"
+
+[node name="PathfindingSystem" type="Node" parent="." unique_id=1863656797 node_paths=PackedStringArray("nav_region_3d", "curvemesh")]
 script = ExtResource("12_fnj5h")
 nav_region_3d = NodePath("../NavigationRegion3D")
+curvemesh = NodePath("CurveMesh3D")
 radius_curve = ExtResource("14_calw8")
 debug_curve_material = SubResource("StandardMaterial3D_xyav6")
+move_range_cell_size = 0.53
+move_range_snap_threshold = 0.08
 
-[node name="CurveMesh3D" type="Path3D" parent="PathfindingSystem"]
+[node name="CurveMesh3D" type="Path3D" parent="PathfindingSystem" unique_id=296220856]
 visible = false
 curve = SubResource("Curve3D_calw8")
 script = ExtResource("13_wbm0i")
@@ -709,16 +1318,24 @@ radius_profile = ExtResource("14_calw8")
 material = SubResource("StandardMaterial3D_gh8or")
 metadata/_custom_type_script = "uid://ian5eam30p0l"
 
-[node name="PathBuilder3D" type="Node" parent="PathfindingSystem"]
+[node name="PathBuilder3D" type="Node" parent="PathfindingSystem" unique_id=855802096]
 script = ExtResource("16_dfmjn")
 metadata/_custom_type_script = "uid://cc6pcq4yohj7m"
 
-[node name="UILayer" type="CanvasLayer" parent="."]
+[node name="MoveRangeRingRenderer" type="Node3D" parent="PathfindingSystem" unique_id=1612162380]
+script = ExtResource("49_ebomw")
+radius_profile = ExtResource("14_calw8")
+material = SubResource("StandardMaterial3D_04ue1")
+fade_duration = 2.0
+metadata/_custom_type_script = "uid://dr67xmhcxhifl"
+
+[node name="UILayer" type="CanvasLayer" parent="." unique_id=2054529626]
+process_mode = 3
 script = ExtResource("5_jtghi")
 text_controller_scene = ExtResource("9_ccwc0")
 character_log_queue_scene = ExtResource("10_lf0eb")
 
-[node name="ActionSystemUI" type="Control" parent="UILayer" node_paths=PackedStringArray("turn_system_ui", "initiative_queue_ui", "top_hp_bar", "action_button_hbox")]
+[node name="ActionSystemUI" type="Control" parent="UILayer" unique_id=711513529 node_paths=PackedStringArray("turn_system_ui", "top_hp_bar", "paused_label", "action_button_hbox")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -730,12 +1347,12 @@ size_flags_vertical = 3
 mouse_filter = 2
 script = ExtResource("15_j7436")
 turn_system_ui = NodePath("../TurnSystemUI")
-initiative_queue_ui = NodePath("../InitiativeQueueUI")
 top_hp_bar = NodePath("TopHPBar")
+paused_label = NodePath("PausedLabel")
 action_button_hbox = NodePath("PanelContainer/MarginContainer/ActionButtonHbox")
 action_button_prefab = ExtResource("16_tko1n")
 
-[node name="PanelContainer" type="PanelContainer" parent="UILayer/ActionSystemUI"]
+[node name="PanelContainer" type="PanelContainer" parent="UILayer/ActionSystemUI" unique_id=777746179]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -748,23 +1365,64 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_gh8or")
 
-[node name="MarginContainer" type="MarginContainer" parent="UILayer/ActionSystemUI/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/ActionSystemUI/PanelContainer" unique_id=2028367859]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="ActionButtonHbox" type="HBoxContainer" parent="UILayer/ActionSystemUI/PanelContainer/MarginContainer"]
+[node name="ActionButtonHbox" type="HBoxContainer" parent="UILayer/ActionSystemUI/PanelContainer/MarginContainer" unique_id=154634856]
 layout_mode = 2
 
-[node name="ActionButtonUI" parent="UILayer/ActionSystemUI/PanelContainer/MarginContainer/ActionButtonHbox" instance=ExtResource("16_tko1n")]
+[node name="ActionButtonUI" parent="UILayer/ActionSystemUI/PanelContainer/MarginContainer/ActionButtonHbox" unique_id=1057004249 instance=ExtResource("16_tko1n")]
 layout_mode = 2
 
-[node name="TopHPBar" parent="UILayer/ActionSystemUI" instance=ExtResource("21_xyav6")]
+[node name="TopHPBar" parent="UILayer/ActionSystemUI" unique_id=2028794705 instance=ExtResource("21_xyav6")]
 layout_mode = 1
+enable_slide_preview = null
 
-[node name="TurnSystemUI" type="Control" parent="UILayer" node_paths=PackedStringArray("turn_system", "combat_system", "end_turn_container", "end_turn_button", "turn_phase_label", "round_counter_label", "cycle_counter_label", "movement_gait_label")]
+[node name="ControlsLabel" type="Label" parent="UILayer/ActionSystemUI" unique_id=1010957174]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.035
+anchor_bottom = 0.043
+offset_left = 323.0
+offset_top = 592.0
+offset_right = 927.68
+offset_bottom = 592.136
+scale = Vector2(0.74275184, 0.74275184)
+text = "Start game: \"N\" | Character Sheet: Hover Unit + \"C\" | Tactics Menu: Hover Unit + \"T\""
+horizontal_alignment = 1
+
+[node name="PausedLabel" type="PanelContainer" parent="UILayer/ActionSystemUI" unique_id=769706828]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5989583
+anchor_top = 0.037037037
+anchor_right = 0.7036025
+anchor_bottom = 0.099000014
+offset_right = -0.5500488
+offset_bottom = 0.18132782
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_04ue1")
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/ActionSystemUI/PausedLabel" unique_id=626905464]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 7
+
+[node name="AttackNameLabel" type="Label" parent="UILayer/ActionSystemUI/PausedLabel/MarginContainer" unique_id=768149379]
+layout_mode = 2
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="TurnSystemUI" type="Control" parent="UILayer" unique_id=839039460 node_paths=PackedStringArray("turn_system", "combat_system", "end_turn_container", "end_turn_button", "turn_phase_label", "round_counter_label", "cycle_counter_label", "movement_gait_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -782,7 +1440,7 @@ round_counter_label = NodePath("TurnCountContainer/VBoxContainer/MarginContainer
 cycle_counter_label = NodePath("TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer2/CycleCounterLabel")
 movement_gait_label = NodePath("TurnCountContainer/VBoxContainer/MarginContainer3/MovementGaitLabel")
 
-[node name="EndTurnContainer" type="PanelContainer" parent="UILayer/TurnSystemUI"]
+[node name="EndTurnContainer" type="PanelContainer" parent="UILayer/TurnSystemUI" unique_id=743458304]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -796,18 +1454,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_o5ega")
 
-[node name="MarginContainer" type="MarginContainer" parent="UILayer/TurnSystemUI/EndTurnContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/TurnSystemUI/EndTurnContainer" unique_id=1586232719]
 layout_mode = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="EndTurnButton" type="Button" parent="UILayer/TurnSystemUI/EndTurnContainer/MarginContainer"]
+[node name="EndTurnButton" type="Button" parent="UILayer/TurnSystemUI/EndTurnContainer/MarginContainer" unique_id=1364083822]
 layout_mode = 2
-text = "END TURN"
+text = "START TURN"
 
-[node name="TurnCountContainer" type="PanelContainer" parent="UILayer/TurnSystemUI"]
+[node name="TurnCountContainer" type="PanelContainer" parent="UILayer/TurnSystemUI" unique_id=2061781383]
 visible = false
 layout_mode = 1
 anchors_preset = 5
@@ -823,69 +1481,69 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_2uyvs")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/TurnSystemUI/TurnCountContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/TurnSystemUI/TurnCountContainer" unique_id=1670759592]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer" unique_id=61421550]
 layout_mode = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer" unique_id=2065171669]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=325847895]
 layout_mode = 2
 
-[node name="RoundCounterLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer"]
+[node name="RoundCounterLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer" unique_id=1116357713]
 layout_mode = 2
 text = "Round 1
 "
 label_settings = SubResource("LabelSettings_bwm3i")
 horizontal_alignment = 1
 
-[node name="VSeparator" type="VSeparator" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=441329293]
 layout_mode = 2
 theme_override_constants/separation = 4
 theme_override_styles/separator = SubResource("StyleBoxLine_8hl20")
 
-[node name="MarginContainer2" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=842381777]
 layout_mode = 2
 
-[node name="CycleCounterLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer2"]
+[node name="CycleCounterLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer2" unique_id=1480407194]
 layout_mode = 2
 text = "Cycle 1
 "
 label_settings = SubResource("LabelSettings_bwm3i")
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer" unique_id=550496991]
 layout_mode = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_a6kyb")
 
-[node name="MarginContainer2" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer" unique_id=1493193334]
 layout_mode = 2
 
-[node name="TurnPhaseLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer2"]
+[node name="TurnPhaseLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer2" unique_id=1089336410]
 layout_mode = 2
 text = "Combat Phase
 "
 label_settings = SubResource("LabelSettings_bwm3i")
 horizontal_alignment = 1
 
-[node name="MarginContainer3" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer"]
+[node name="MarginContainer3" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer" unique_id=1592583597]
 layout_mode = 2
 
-[node name="MovementGaitLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer3"]
+[node name="MovementGaitLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer3" unique_id=1359223533]
 layout_mode = 2
 text = "Movement Gait"
 label_settings = SubResource("LabelSettings_bwm3i")
 horizontal_alignment = 1
 
-[node name="InitiativeQueueUI" type="Control" parent="UILayer" node_paths=PackedStringArray("unit_manager", "unit_stats_container")]
+[node name="InitiativeQueueUI" type="Control" parent="UILayer" unique_id=616849357 node_paths=PackedStringArray("unit_manager", "unit_stats_container", "scroll_container", "panelcontainer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -896,40 +1554,62 @@ mouse_filter = 2
 script = ExtResource("16_2uyvs")
 unit_manager = NodePath("../../UnitManager")
 unit_stats_bar_scene = ExtResource("16_ecsph")
-unit_stats_container = NodePath("PanelContainer/MarginContainer/UnitStatsContainer")
+unit_stats_container = NodePath("AspectRatioContainer/PanelContainer/MarginContainer/ScrollContainer/UnitStatsContainer")
+scroll_container = NodePath("AspectRatioContainer/PanelContainer/MarginContainer/ScrollContainer")
+panelcontainer = NodePath("AspectRatioContainer/PanelContainer")
+max_height = 500.0
 
-[node name="PanelContainer" type="PanelContainer" parent="UILayer/InitiativeQueueUI"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
+[node name="AspectRatioContainer" type="MarginContainer" parent="UILayer/InitiativeQueueUI" unique_id=803209536]
+layout_mode = 0
 offset_left = 5.0
-offset_top = -64.0
-offset_right = 201.0
-offset_bottom = 63.0
-grow_vertical = 2
-scale = Vector2(0.725, 0.725)
-theme_override_styles/panel = SubResource("StyleBoxFlat_o5ega")
+offset_top = 28.0
+offset_right = 105.815
+offset_bottom = 628.0
 
-[node name="MarginContainer" type="MarginContainer" parent="UILayer/InitiativeQueueUI/PanelContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="UILayer/InitiativeQueueUI/AspectRatioContainer" unique_id=287765529]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_lr3jy")
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/InitiativeQueueUI/AspectRatioContainer/PanelContainer" unique_id=1384214428]
 layout_mode = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="UnitStatsContainer" type="VBoxContainer" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UILayer/InitiativeQueueUI/AspectRatioContainer/PanelContainer/MarginContainer" unique_id=1602895529]
+custom_minimum_size = Vector2(0, 60.54)
+layout_mode = 2
+follow_focus = true
+
+[node name="UnitStatsContainer" type="VBoxContainer" parent="UILayer/InitiativeQueueUI/AspectRatioContainer/PanelContainer/MarginContainer/ScrollContainer" unique_id=134663502]
+layout_mode = 2
+size_flags_vertical = 4
+alignment = 1
+
+[node name="UnitStatsBar" parent="UILayer/InitiativeQueueUI/AspectRatioContainer/PanelContainer/MarginContainer/ScrollContainer/UnitStatsContainer" unique_id=584116863 instance=ExtResource("16_ecsph")]
 layout_mode = 2
 
-[node name="UnitStatsBar" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer/UnitStatsContainer" instance=ExtResource("16_ecsph")]
+[node name="UnitStatsBar2" parent="UILayer/InitiativeQueueUI/AspectRatioContainer/PanelContainer/MarginContainer/ScrollContainer/UnitStatsContainer" unique_id=951814441 instance=ExtResource("16_ecsph")]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="UILayer"]
+[node name="UnitStatsBar3" parent="UILayer/InitiativeQueueUI/AspectRatioContainer/PanelContainer/MarginContainer/ScrollContainer/UnitStatsContainer" unique_id=1118855003 instance=ExtResource("16_ecsph")]
+layout_mode = 2
+
+[node name="UnitStatsBar4" parent="UILayer/InitiativeQueueUI/AspectRatioContainer/PanelContainer/MarginContainer/ScrollContainer/UnitStatsContainer" unique_id=253308660 instance=ExtResource("16_ecsph")]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UILayer" unique_id=2054676736]
 offset_right = 40.0
 offset_bottom = 23.0
 script = ExtResource("16_ex7fh")
 
-[node name="UnitCharacterSheetUI" parent="UILayer" node_paths=PackedStringArray("mouse_controller", "pathfinding") instance=ExtResource("22_gh8or")]
+[node name="UnitCharacterSheetUI" parent="UILayer" unique_id=1495672384 node_paths=PackedStringArray("mouse_controller", "pathfinding") instance=ExtResource("22_gh8or")]
+process_mode = 3
+visible = false
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 684.0
@@ -937,8 +1617,12 @@ offset_bottom = 433.0
 mouse_controller = NodePath("../../MouseController")
 pathfinding = NodePath("../../PathfindingSystem")
 
-[node name="CombatLog" parent="UILayer" instance=ExtResource("27_2gnov")]
-max_logs = 15
+[node name="CombatLog" parent="UILayer" unique_id=1862601541 instance=ExtResource("27_2gnov")]
+max_logs = 40
+change_amount = 240
+test_num = 40.0
+
+[node name="SkillActivationUI" parent="UILayer" unique_id=163543297 instance=ExtResource("48_iq36j")]
 
 [connection signal="pressed" from="UILayer/TurnSystemUI/EndTurnContainer/MarginContainer/EndTurnButton" to="UILayer/TurnSystemUI" method="_on_end_turn_button_pressed"]
 

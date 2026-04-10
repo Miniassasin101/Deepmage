@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://cydsteik7ba0m"]
+
+[ext_resource type="Script" uid="uid://daykqau0okf7v" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitOutsideRangeSkillCondition.gd" id="1_hnxvn"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_70dgx"]
+
+[sub_resource type="Resource" id="Resource_g1ivx"]
+script = ExtResource("1_hnxvn")
+range_var = 20.0
+metadata/_custom_type_script = "uid://daykqau0okf7v"
+
+[resource]
+script = ExtResource("2_70dgx")
+display_name = "Outside Range 20"
+category_name = "Outside Range"
+prototype = SubResource("Resource_g1ivx")
+metadata/_custom_type_script = "uid://c7jeogqcvfh22"

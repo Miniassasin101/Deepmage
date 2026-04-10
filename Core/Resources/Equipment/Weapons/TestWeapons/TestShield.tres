@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://bmj6imcyymbx4"]
+
+[ext_resource type="Script" uid="uid://da5ua2vuwghvh" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeMod.gd" id="1_vcngp"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="2_jrjr3"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="3_3a1qs"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_w882c"]
+[ext_resource type="Script" uid="uid://dmefdgovq37tm" path="res://Deepmage/Core/Scripts/Mechanics/Equipment/Weapon.gd" id="5_ja5t6"]
+[ext_resource type="PackedScene" uid="uid://ceraxr0sj51wj" path="res://Deepmage/Core/Prefabs/Equipment/Weapons/TestWeapons/ShieldMesh.tscn" id="6_vcngp"]
+
+[sub_resource type="Resource" id="Resource_jrjr3"]
+script = ExtResource("1_vcngp")
+attribute_name = &"parry"
+flat = 2
+metadata/_custom_type_script = "uid://da5ua2vuwghvh"
+
+[resource]
+script = ExtResource("5_ja5t6")
+weapon_type = 6
+damage_min = 2
+damage_max = 3
+visual_scene = ExtResource("6_vcngp")
+visual_socket = 1
+ui_name = "TestShield"
+attribute_mods = Array[ExtResource("1_vcngp")]([SubResource("Resource_jrjr3")])
+metadata/_custom_type_script = "uid://dmefdgovq37tm"

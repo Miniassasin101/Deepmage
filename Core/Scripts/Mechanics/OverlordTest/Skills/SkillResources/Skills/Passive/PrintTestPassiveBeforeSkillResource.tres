@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://blfxs1u2ff33y"]
+
+[ext_resource type="Script" uid="uid://doahtvq8r205k" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextOnUnitAction.gd" id="1_rf7l2"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_tqwa6"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="3_251pa"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="3_nvk64"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="4_nvk64"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="5_187we"]
+[ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="5_tqwa6"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="6_n0ad2"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="7_5o586"]
+
+[sub_resource type="Resource" id="Resource_2ykmg"]
+script = ExtResource("1_rf7l2")
+text_color = Color(0.941176, 0.972549, 1, 1)
+action_name = "Unit Text"
+metadata/_custom_type_script = "uid://doahtvq8r205k"
+
+[sub_resource type="Resource" id="Resource_tfw8t"]
+script = ExtResource("5_tqwa6")
+metadata/_custom_type_script = "uid://clbt58mwsvag8"
+
+[resource]
+resource_name = "PrintTestBeforeSkillResource"
+script = ExtResource("5_187we")
+skill_name = "Print Test Before"
+action = SubResource("Resource_2ykmg")
+skill_category = 1
+skill_type = 1
+skill_trigger = 2
+internal_skill_conditions = Array[ExtResource("4_nvk64")]([SubResource("Resource_tfw8t")])
+trigger_description = "After a skill resolves"
+description = Array[String](["Test skill: spawns floating text after a skill finishes resolving"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

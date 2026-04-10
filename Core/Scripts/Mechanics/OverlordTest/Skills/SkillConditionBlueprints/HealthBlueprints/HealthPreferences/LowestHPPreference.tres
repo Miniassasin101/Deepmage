@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://bbq3mnqde65jw"]
+
+[ext_resource type="Script" uid="uid://brdj6bm0hkeej" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreferenceScripts/HealthTargetPreferences/LowestHPPreference.gd" id="1_figtl"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_s4u0w"]
+
+[sub_resource type="Resource" id="Resource_m2kue"]
+script = ExtResource("1_figtl")
+metadata/_custom_type_script = "uid://brdj6bm0hkeej"
+
+[resource]
+script = ExtResource("2_s4u0w")
+display_name = "Prioritize Lowest HP"
+category_name = "Health Preference"
+prototype = SubResource("Resource_m2kue")
+metadata/_custom_type_script = "uid://c7jeogqcvfh22"

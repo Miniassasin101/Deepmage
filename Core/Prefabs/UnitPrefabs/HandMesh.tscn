@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://drs7f1jxh80a8"]
+
+[ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_vvi81"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_1um36"]
+
+[node name="CapsuleMeshPivot" type="Node3D" unique_id=1574490777]
+
+[node name="LeftHandMesh" type="MeshInstance3D" parent="." unique_id=1000899004]
+transform = Transform3D(0.29999995, 7.9648016e-05, -2.4001625e-05, -7.964881e-05, 0.29999995, -9.923251e-06, 2.3998986e-05, 9.929622e-06, 0.3, 0, 0, 0)
+mesh = SubResource("SphereMesh_1um36")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_vvi81")

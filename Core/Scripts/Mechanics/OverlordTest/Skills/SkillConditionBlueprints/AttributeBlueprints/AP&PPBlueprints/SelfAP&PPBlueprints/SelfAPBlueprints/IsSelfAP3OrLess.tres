@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://kjn1elvgamuk"]
+
+[ext_resource type="Script" uid="uid://c2otyv6w6tjjn" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/AttributeBasedSkillConditions/IsSelfGenericAttributeValueOrLessSkillCondition.gd" id="1_8vdwj"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_8f6a2"]
+
+[sub_resource type="Resource" id="Resource_ut6ea"]
+script = ExtResource("1_8vdwj")
+attribute_name = "active_points"
+value = 3
+metadata/_custom_type_script = "uid://c2otyv6w6tjjn"
+
+[resource]
+script = ExtResource("2_8f6a2")
+display_name = "Is Self AP 3 or less"
+category_name = "AP & PP"
+prototype = SubResource("Resource_ut6ea")
+metadata/_custom_type_script = "uid://c7jeogqcvfh22"

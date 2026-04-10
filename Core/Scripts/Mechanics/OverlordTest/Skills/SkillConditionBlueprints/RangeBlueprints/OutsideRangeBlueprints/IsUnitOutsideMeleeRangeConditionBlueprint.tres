@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://bir4qb8puo7g"]
+
+[ext_resource type="Script" uid="uid://daykqau0okf7v" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitOutsideRangeSkillCondition.gd" id="1_bsgcp"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_i6gsv"]
+
+[sub_resource type="Resource" id="Resource_g1ivx"]
+script = ExtResource("1_bsgcp")
+range_var = 2.1
+metadata/_custom_type_script = "uid://daykqau0okf7v"
+
+[resource]
+script = ExtResource("2_i6gsv")
+display_name = "Is Not Adjacent"
+category_name = "Outside Range"
+prototype = SubResource("Resource_g1ivx")
+metadata/_custom_type_script = "uid://c7jeogqcvfh22"

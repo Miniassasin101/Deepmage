@@ -1,0 +1,604 @@
+[gd_scene format=3 uid="uid://bdohbmjso32gu"]
+
+[ext_resource type="Script" uid="uid://jnvq5p6s7a2f" path="res://Deepmage/Core/Scripts/UI/TacticsManagerUI.gd" id="1_27dc7"]
+[ext_resource type="Script" uid="uid://nhsyq3d75icn" path="res://addons/ReorderableContainer/reorderable_vbox.gd" id="1_qrecu"]
+[ext_resource type="PackedScene" uid="uid://c3xpwrrdt3fa2" path="res://Deepmage/Core/Prefabs/UI/TacticsSkillBar.tscn" id="2_vnc2f"]
+[ext_resource type="PackedScene" uid="uid://b5llnjbns47vs" path="res://Deepmage/Core/Prefabs/UI/PopupPanelUI.tscn" id="4_gljm4"]
+[ext_resource type="PackedScene" uid="uid://d2tvg6j8l70gh" path="res://Deepmage/Core/Prefabs/UI/LibrarySkillBar.tscn" id="4_msis2"]
+[ext_resource type="PackedScene" uid="uid://dj4gvfc3kie4s" path="res://Deepmage/Core/Prefabs/UI/ConditionsUIPrefabs/ConditionsLibraryUI.tscn" id="5_il0hb"]
+[ext_resource type="PackedScene" uid="uid://bsucdxii8yb25" path="res://Deepmage/Core/Prefabs/UI/SkillsLibraryUI.tscn" id="5_l7pw0"]
+[ext_resource type="Script" uid="uid://dxs26fse2rs4f" path="res://Deepmage/Core/Scripts/UI/SkillDescriptionUi.gd" id="6_uwyv1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_irwtu"]
+bg_color = Color(0.0704, 0.0784, 0.08, 0.81960785)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_size = 5
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dmaep"]
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l7pw0"]
+bg_color = Color(0.35583323, 0.66065955, 0.9958727, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qrecu"]
+bg_color = Color(0.2112, 0.2352, 0.24, 0.5411765)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+expand_margin_left = 3.0
+expand_margin_right = 3.0
+shadow_size = 5
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vnc2f"]
+bg_color = Color(0.2112, 0.2352, 0.24, 0.5411765)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+expand_margin_left = 3.0
+expand_margin_right = 2.0
+shadow_size = 3
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_27dc7"]
+bg_color = Color(0.68, 0.0816, 0.09157318, 0.5411765)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.75, 0.75, 0.75, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_size = 3
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_vnc2f"]
+content_margin_left = 4.0
+content_margin_top = 0.0
+content_margin_right = 4.0
+content_margin_bottom = 0.0
+color = Color(0.5, 0.5, 0.5, 0.65882355)
+grow_begin = -4.0
+grow_end = -4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_msis2"]
+bg_color = Color(0.123200014, 0.67298007, 0.77, 0.5411765)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_size = 3
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gljm4"]
+bg_color = Color(0.2112, 0.2352, 0.24, 0.5411765)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+shadow_size = 3
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ymxwp"]
+bg_color = Color(0.07, 0.07, 0.07, 0.8039216)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.121999994, 0.5042667, 0.61, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_size = 5
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aocsb"]
+bg_color = Color(0.25, 0.25, 0.25, 0.7294118)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.121999994, 0.5042667, 0.61, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_size = 5
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_annvs"]
+bg_color = Color(0.056291588, 0.056291603, 0.056291595, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.121999994, 0.5042667, 0.61, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gljm4"]
+font_size = 15
+
+[sub_resource type="LabelSettings" id="LabelSettings_uwyv1"]
+font_size = 13
+font_color = Color(0.63, 0.8951667, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_rqjwo"]
+font_size = 14
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_mh71v"]
+font_size = 13
+font_color = Color(1, 0.22000003, 0.22000003, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xnslb"]
+font_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_il0hb"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="TacticsManagerUI" type="PanelContainer" unique_id=724099892 node_paths=PackedStringArray("tactics_header_label", "conditions_header_hbox", "active_skills_rvbox", "passive_skills_rvbox", "skill_description_ui", "conditions_library_ui", "skills_library_ui", "help_button")]
+custom_minimum_size = Vector2(727.3884, 446)
+anchors_preset = -1
+anchor_left = 0.00086805556
+anchor_top = 0.0015432099
+anchor_right = 0.49652773
+anchor_bottom = 0.54183644
+offset_right = 156.38849
+offset_bottom = 95.889984
+scale = Vector2(0.785, 0.785)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_irwtu")
+script = ExtResource("1_27dc7")
+tactics_header_label = NodePath("MarginContainer/VBoxContainer2/HeaderVBoxContainer/MarginContainer/HBoxContainer/TacticsHeaderLabel")
+conditions_header_hbox = NodePath("MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer/ConditionsHeaderHBoxContainer")
+active_skills_rvbox = NodePath("MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox")
+passive_skills_rvbox = NodePath("MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/PassiveSkillsReorderableVBox")
+skill_description_ui = NodePath("MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI")
+conditions_library_ui = NodePath("MarginContainer/VBoxContainer2/SkillsStylizedPanel2/MarginContainer/FoldableContainer/ConditionsLibraryUI")
+skills_library_ui = NodePath("MarginContainer/VBoxContainer2/SkillsStylizedPanel/MarginContainer/FoldableContainer/SkillsLibraryUI")
+help_button = NodePath("MarginContainer/VBoxContainer2/HeaderVBoxContainer/MarginContainer/HBoxContainer/MarginContainer/PanelContainer/HelpButton")
+tactics_skill_bar_prefab = ExtResource("2_vnc2f")
+library_skill_bar_prefab = ExtResource("4_msis2")
+help_window_scene = ExtResource("4_gljm4")
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=208111141]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer" unique_id=1665003172]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HeaderVBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2" unique_id=1950873653]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer" unique_id=1214265873]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/MarginContainer" unique_id=1934825829]
+layout_mode = 2
+
+[node name="TacticsHeaderLabel" type="Label" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/MarginContainer/HBoxContainer" unique_id=1491404324]
+layout_mode = 2
+text = "Tactics"
+label_settings = SubResource("LabelSettings_dmaep")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/MarginContainer/HBoxContainer" unique_id=320568194]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/MarginContainer/HBoxContainer/MarginContainer" unique_id=769414356]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_l7pw0")
+
+[node name="HelpButton" type="Button" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/MarginContainer/HBoxContainer/MarginContainer/PanelContainer" unique_id=916292989]
+layout_mode = 2
+text = "Help"
+
+[node name="HeadersStylizedPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer" unique_id=91070946]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qrecu")
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel" unique_id=78905157]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_right = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2" unique_id=356685514]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer" unique_id=336308254]
+custom_minimum_size = Vector2(181, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.36
+theme_override_constants/separation = 9
+
+[node name="PriorityHeaderLabel" type="Label" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer/HBoxContainer" unique_id=1415585910]
+visible = false
+custom_minimum_size = Vector2(43, 0)
+layout_mode = 2
+text = "Order"
+label_settings = SubResource("LabelSettings_dmaep")
+
+[node name="SkillHeaderLabel" type="Label" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer/HBoxContainer" unique_id=2069134392]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "      Skill"
+label_settings = SubResource("LabelSettings_dmaep")
+horizontal_alignment = 1
+
+[node name="ConditionsHeaderHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer" unique_id=1597465971]
+layout_mode = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="ConditionHeaderLabel" type="Label" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer/ConditionsHeaderHBoxContainer" unique_id=738720345]
+custom_minimum_size = Vector2(131.92, 0)
+layout_mode = 2
+text = "Condition 1"
+label_settings = SubResource("LabelSettings_dmaep")
+horizontal_alignment = 1
+
+[node name="ConditionHeaderLabel2" type="Label" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer/ConditionsHeaderHBoxContainer" unique_id=1901170831]
+custom_minimum_size = Vector2(131.92, 0)
+layout_mode = 2
+text = "Condition 2"
+label_settings = SubResource("LabelSettings_dmaep")
+horizontal_alignment = 1
+
+[node name="ConditionHeaderLabel3" type="Label" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/HeadersStylizedPanel/MarginContainer2/HBoxContainer/ConditionsHeaderHBoxContainer" unique_id=1207322852]
+custom_minimum_size = Vector2(131.92, 0)
+layout_mode = 2
+text = "Condition 3"
+label_settings = SubResource("LabelSettings_dmaep")
+horizontal_alignment = 1
+
+[node name="SkillsStylizedPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer" unique_id=890898250]
+process_mode = 3
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vnc2f")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel" unique_id=1033007150]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer" unique_id=1511831522]
+layout_mode = 2
+theme_override_constants/separation = 7
+
+[node name="ActiveSkillsReorderableVBox" type="Container" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer" unique_id=1775069125]
+process_mode = 1
+custom_minimum_size = Vector2(0, 104)
+layout_mode = 2
+script = ExtResource("1_qrecu")
+is_vertical = true
+metadata/_custom_type_script = "uid://nhsyq3d75icn"
+
+[node name="TacticsSkillBar" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox" unique_id=386566642 instance=ExtResource("2_vnc2f")]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_27dc7")
+
+[node name="TacticsSkillBar2" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox" unique_id=606668394 instance=ExtResource("2_vnc2f")]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_27dc7")
+
+[node name="TacticsSkillBar3" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox" unique_id=623544881 instance=ExtResource("2_vnc2f")]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_27dc7")
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer" unique_id=1191795457]
+layout_mode = 2
+theme_override_constants/separation = -1
+theme_override_styles/separator = SubResource("StyleBoxLine_vnc2f")
+
+[node name="PassiveSkillsReorderableVBox" type="Container" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer" unique_id=1101398095]
+process_mode = 1
+custom_minimum_size = Vector2(0, 104)
+layout_mode = 2
+script = ExtResource("1_qrecu")
+is_vertical = true
+metadata/_custom_type_script = "uid://nhsyq3d75icn"
+
+[node name="TacticsSkillBar" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/PassiveSkillsReorderableVBox" unique_id=2049016397 instance=ExtResource("2_vnc2f")]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_msis2")
+
+[node name="TacticsSkillBar2" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/PassiveSkillsReorderableVBox" unique_id=652102040 instance=ExtResource("2_vnc2f")]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_msis2")
+
+[node name="TacticsSkillBar3" parent="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/PassiveSkillsReorderableVBox" unique_id=666899638 instance=ExtResource("2_vnc2f")]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_msis2")
+
+[node name="SkillDescriptionUIPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer2" unique_id=85495727]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gljm4")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel" unique_id=1820979091]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 5
+
+[node name="SkillDescriptionUI" type="PanelContainer" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer" unique_id=1068768652 node_paths=PackedStringArray("skill_name_label", "points_label", "potency_label", "damage_type_label", "hit_rate_label", "skill_type_label", "triggering_conditions_label", "flavor_description_label", "skill_stats_container", "skill_name_container")]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ymxwp")
+script = ExtResource("6_uwyv1")
+skill_name_label = NodePath("MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/SkillNameContainer/MarginContainer/SkillNameLabel")
+points_label = NodePath("MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/SkillNameContainer/MarginContainer/PointsLabel")
+potency_label = NodePath("MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/Label2")
+damage_type_label = NodePath("MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2/Label2")
+hit_rate_label = NodePath("MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2/Label2")
+skill_type_label = NodePath("MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer/Label2")
+triggering_conditions_label = NodePath("MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/Label")
+flavor_description_label = NodePath("MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/Label2")
+skill_stats_container = NodePath("MarginContainer/HBoxContainer/SkillStatsContainer")
+skill_name_container = NodePath("MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/SkillNameContainer")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI" unique_id=1968387769]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer" unique_id=196005852]
+layout_mode = 2
+
+[node name="SkillStatsContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer" unique_id=433029874]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.56
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_aocsb")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer" unique_id=73819327]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer" unique_id=186669107]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SkillNameContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer" unique_id=52447740]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_annvs")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/SkillNameContainer" unique_id=1244676265]
+custom_minimum_size = Vector2(110.15, 0)
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 0
+
+[node name="SkillNameLabel" type="Label" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/SkillNameContainer/MarginContainer" unique_id=1588089673]
+layout_mode = 2
+text = "Skill Name"
+label_settings = SubResource("LabelSettings_gljm4")
+horizontal_alignment = 1
+
+[node name="PointsLabel" type="Label" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/SkillNameContainer/MarginContainer" unique_id=586055395]
+layout_mode = 2
+text = "◆◆◇"
+label_settings = SubResource("LabelSettings_uwyv1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer" unique_id=1063369620]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=445795053]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1325589385]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=968250674]
+layout_mode = 2
+text = "Potency:"
+label_settings = SubResource("LabelSettings_rqjwo")
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1011935794]
+layout_mode = 2
+text = "100"
+label_settings = SubResource("LabelSettings_rqjwo")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=760004388]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=1230289188]
+layout_mode = 2
+text = "Dmg:"
+label_settings = SubResource("LabelSettings_rqjwo")
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=1966994310]
+layout_mode = 2
+text = "Impact"
+label_settings = SubResource("LabelSettings_rqjwo")
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1733673227]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=815268691]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=1956434283]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2" unique_id=314223287]
+layout_mode = 2
+text = "Hit Rate:"
+label_settings = SubResource("LabelSettings_rqjwo")
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2" unique_id=235456885]
+layout_mode = 2
+text = "100"
+label_settings = SubResource("LabelSettings_rqjwo")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=347065965]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer" unique_id=1553874082]
+layout_mode = 2
+text = "Type:"
+label_settings = SubResource("LabelSettings_rqjwo")
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/SkillStatsContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer" unique_id=840785858]
+layout_mode = 2
+text = "Support"
+label_settings = SubResource("LabelSettings_rqjwo")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer" unique_id=1960169565]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/MarginContainer" unique_id=2020283550]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1573003962]
+layout_mode = 2
+text = "Triggering Conditions or Requirements"
+label_settings = SubResource("LabelSettings_mh71v")
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer2/SkillDescriptionUIPanel/MarginContainer/SkillDescriptionUI/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=569874121]
+layout_mode = 2
+text = "Flavor description of how the spell works"
+label_settings = SubResource("LabelSettings_xnslb")
+
+[node name="SkillsStylizedPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer2" unique_id=571839561]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vnc2f")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel" unique_id=2009572548]
+layout_mode = 2
+theme_override_constants/margin_left = -2
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = -2
+theme_override_constants/margin_bottom = 5
+
+[node name="FoldableContainer" type="FoldableContainer" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel/MarginContainer" unique_id=2089688854]
+custom_minimum_size = Vector2(624, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.99, 0.99, 0.99, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_styles/focus = SubResource("StyleBoxFlat_il0hb")
+title = "Skills Library"
+
+[node name="SkillsLibraryUI" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel/MarginContainer/FoldableContainer" unique_id=546789931 node_paths=PackedStringArray("tactics_manager_ui") instance=ExtResource("5_l7pw0")]
+layout_mode = 2
+tactics_manager_ui = NodePath("../../../../../..")
+
+[node name="SkillsStylizedPanel2" type="PanelContainer" parent="MarginContainer/VBoxContainer2" unique_id=1168035922]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vnc2f")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel2" unique_id=163002084]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 5
+
+[node name="FoldableContainer" type="FoldableContainer" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel2/MarginContainer" unique_id=1070705151]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_il0hb")
+title = "Conditions Library"
+
+[node name="ConditionsLibraryUI" parent="MarginContainer/VBoxContainer2/SkillsStylizedPanel2/MarginContainer/FoldableContainer" unique_id=706908823 instance=ExtResource("5_il0hb")]
+layout_mode = 2
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/HeaderVBoxContainer/MarginContainer/HBoxContainer/MarginContainer/PanelContainer/HelpButton" to="." method="on_help_button_pressed"]
+[connection signal="sort_children" from="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox" to="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/ActiveSkillsReorderableVBox" method="_on_sort_children"]
+[connection signal="sort_children" from="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/PassiveSkillsReorderableVBox" to="MarginContainer/VBoxContainer2/HeaderVBoxContainer/SkillsStylizedPanel/MarginContainer/VBoxContainer/PassiveSkillsReorderableVBox" method="_on_sort_children"]

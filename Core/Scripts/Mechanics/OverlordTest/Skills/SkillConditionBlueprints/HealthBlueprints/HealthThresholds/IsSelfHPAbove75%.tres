@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://brhhiwl8lu30f"]
+
+[ext_resource type="Script" uid="uid://7cg477oy0l70" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/HealthBasedSkillConditions/Thresholds/SelfHPPercentAboveSkillCondition.gd" id="1_eprvd"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_8s876"]
+
+[sub_resource type="Resource" id="Resource_8s876"]
+script = ExtResource("1_eprvd")
+metadata/_custom_type_script = "uid://7cg477oy0l70"
+
+[resource]
+script = ExtResource("2_8s876")
+display_name = "Is Self HP > 75%"
+category_name = "Health"
+prototype = SubResource("Resource_8s876")
+metadata/_custom_type_script = "uid://c7jeogqcvfh22"

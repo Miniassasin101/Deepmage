@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://cs2c272bpyv80"]
+
+[ext_resource type="Resource" uid="uid://djrw5nkydvyv6" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BlockPackage.tres" id="1_b62le"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_5bxgg"]
+[ext_resource type="Resource" uid="uid://ltwgv77vrtrj" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/AfflictionEffects/GrantInitiativeAfflictionEffectResource.tres" id="5_fnp2y"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="10_hm8rk"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="11_risox"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="12_gaoxs"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="13_cguu8"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="13_nq0q6"]
+
+[resource]
+resource_name = "InitiativeDownSkillResource"
+script = ExtResource("12_gaoxs")
+skill_name = "Initiative Down"
+skill_type = 2
+base_accuracy = 90
+crit_mod = -3
+animation_package = ExtResource("1_b62le")
+effects = Array[ExtResource("4_5bxgg")]([ExtResource("5_fnp2y")])
+trigger_description = "Always"
+description = Array[String](["Inflicts an Initiative affliction on the target, reducing turn order priority"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

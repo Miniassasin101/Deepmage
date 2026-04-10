@@ -1,0 +1,198 @@
+[gd_scene format=3 uid="uid://bmrhj0h8vm07x"]
+
+[ext_resource type="Script" uid="uid://br160ipf6x38c" path="res://Deepmage/Core/Scripts/UI/GearContainer.gd" id="gc_script"]
+[ext_resource type="Script" uid="uid://80uwcrmmah84" path="res://Deepmage/Core/Scripts/UI/GearPickerPanel.gd" id="picker_script"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_o07at"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o07at"]
+bg_color = Color(0.13319641, 0.13319641, 0.13319635, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="GearContainer" type="MarginContainer" unique_id=1420525434 node_paths=PackedStringArray("main_button", "sub_button", "armor_button", "accessory_button_1", "accessory_button_2", "gear_picker")]
+custom_minimum_size = Vector2(435, 227)
+offset_right = 435.0
+offset_bottom = 227.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+script = ExtResource("gc_script")
+main_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer/HBoxContainer2/MainButton")
+sub_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer2/HBoxContainer3/SubButton")
+armor_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer3/HBoxContainer4/ArmorButton")
+accessory_button_1 = NodePath("PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer4/HBoxContainer5/Accessory1Button")
+accessory_button_2 = NodePath("PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer5/HBoxContainer/Accessory2Button")
+gear_picker = NodePath("GearPickerPanel")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1357432744]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1463374846]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1724334939]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=389920022]
+layout_mode = 2
+text = "Gear"
+label_settings = SubResource("LabelSettings_o07at")
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=800043933]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=606249526]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=530216110]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o07at")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer" unique_id=589466491]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer/HBoxContainer2" unique_id=729183829]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Main"
+horizontal_alignment = 1
+
+[node name="MainButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer/HBoxContainer2" unique_id=876446629]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Empty"
+
+[node name="PanelContainer2" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1327767150]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o07at")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer2" unique_id=941203511]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer2/HBoxContainer3" unique_id=967513226]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Sub"
+horizontal_alignment = 1
+
+[node name="SubButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer2/HBoxContainer3" unique_id=782502209]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Empty"
+
+[node name="PanelContainer3" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=636835388]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o07at")
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer3" unique_id=2049947034]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer3/HBoxContainer4" unique_id=1242667991]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Armor"
+horizontal_alignment = 1
+
+[node name="ArmorButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer3/HBoxContainer4" unique_id=1287971526]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Empty"
+
+[node name="PanelContainer4" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=662737725]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o07at")
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer4" unique_id=463701525]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer4/HBoxContainer5" unique_id=798669474]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Accessory 1"
+horizontal_alignment = 1
+
+[node name="Accessory1Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer4/HBoxContainer5" unique_id=671739254]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Empty"
+
+[node name="PanelContainer5" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1476370156]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o07at")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer5" unique_id=988347044]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer5/HBoxContainer" unique_id=1950138462]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Accessory 2"
+horizontal_alignment = 1
+
+[node name="Accessory2Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/PanelContainer5/HBoxContainer" unique_id=531650313]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Empty"
+
+[node name="GearPickerPanel" type="PanelContainer" parent="." unique_id=912837461 node_paths=PackedStringArray("title_label", "item_list_container")]
+visible = false
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+script = ExtResource("picker_script")
+title_label = NodePath("MarginContainer/VBoxContainer/TitleLabel")
+item_list_container = NodePath("MarginContainer/VBoxContainer/ScrollContainer/ItemListContainer")
+duration = 0.1
+target_ease = 2
+drift_amount = Vector2(450, 0)
+drift_duration = 0.2
+
+[node name="MarginContainer" type="MarginContainer" parent="GearPickerPanel" unique_id=834726193]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GearPickerPanel/MarginContainer" unique_id=293847162]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TitleLabel" type="Label" parent="GearPickerPanel/MarginContainer/VBoxContainer" unique_id=748392015]
+layout_mode = 2
+text = "Select Item"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="GearPickerPanel/MarginContainer/VBoxContainer" unique_id=562837401]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="GearPickerPanel/MarginContainer/VBoxContainer" unique_id=193847562]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ItemListContainer" type="VBoxContainer" parent="GearPickerPanel/MarginContainer/VBoxContainer/ScrollContainer" unique_id=847261938]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2

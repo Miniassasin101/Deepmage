@@ -1,0 +1,71 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://cb88hwdib4xj"]
+
+[ext_resource type="Animation" uid="uid://bolvfij56gevt" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/BlockAnim.res" id="1_q8kpt"]
+[ext_resource type="Resource" uid="uid://2cp5ciqvdei1" path="res://Deepmage/Core/Resources/ActionResources/TestStatusActionResource.tres" id="1_qevq0"]
+[ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="2_qevq0"]
+[ext_resource type="Script" uid="uid://brutb7o0hj6td" path="res://Deepmage/Core/Scripts/Animation/AnimationPackage.gd" id="3_4liih"]
+[ext_resource type="Script" uid="uid://bf2hv6d83v6fv" path="res://Deepmage/Core/Resources/DataStructures/AnimationSyncProfile.gd" id="4_8mov8"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="5_cvswd"]
+[ext_resource type="Script" uid="uid://13akgn3nuj34" path="res://Deepmage/Core/Scripts/Mechanics/Effects/GrantBlockEffect.gd" id="6_4bjy0"]
+[ext_resource type="Resource" uid="uid://csk0w16e3neuu" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/BlessingEffects/GrantPPBlessingEffectResource.tres" id="7_qevq0"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="10_rrhfo"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="11_ihang"]
+[ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="12_56fyy"]
+[ext_resource type="Script" uid="uid://c7ofxaslt34wn" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SourceTargetBasedSkillConditions/IsSourceTargetFaction.gd" id="13_tw388"]
+[ext_resource type="Script" uid="uid://cq6k3vojdsik7" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SkillSourceBasedSkillConditions/IsSourceSkillType.gd" id="14_qml7l"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="15_mw55q"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="16_2avt2"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="17_4liih"]
+
+[sub_resource type="Resource" id="Resource_wdfje"]
+script = ExtResource("4_8mov8")
+markers = Dictionary[String, float]({
+"HIT_END": 0.4,
+"HIT_START": 0.27,
+"REACT_OFF": 0.4,
+"REACT_ON": 0.27
+})
+metadata/_custom_type_script = "uid://bf2hv6d83v6fv"
+
+[sub_resource type="Resource" id="Resource_3dyvf"]
+script = ExtResource("3_4liih")
+name = "UnarmedBlock"
+animation = ExtResource("1_q8kpt")
+sync_profile = SubResource("Resource_wdfje")
+metadata/_custom_type_script = "uid://brutb7o0hj6td"
+
+[sub_resource type="Resource" id="Resource_ckhw7"]
+script = ExtResource("6_4bjy0")
+use_expire_rule = 2
+ui_name = &"Grant Block"
+metadata/_custom_type_script = "uid://13akgn3nuj34"
+
+[sub_resource type="Resource" id="Resource_4rg85"]
+script = ExtResource("12_56fyy")
+metadata/_custom_type_script = "uid://clbt58mwsvag8"
+
+[sub_resource type="Resource" id="Resource_a1x7f"]
+script = ExtResource("13_tw388")
+relation = 0
+metadata/_custom_type_script = "uid://c7ofxaslt34wn"
+
+[sub_resource type="Resource" id="Resource_4uvkp"]
+script = ExtResource("14_qml7l")
+metadata/_custom_type_script = "uid://cq6k3vojdsik7"
+
+[resource]
+resource_name = "PpUpBlockSkillResource"
+script = ExtResource("15_mw55q")
+skill_name = "PP Up Block"
+action = ExtResource("1_qevq0")
+skill_category = 1
+skill_type = 1
+skill_trigger = 2
+internal_skill_conditions = Array[ExtResource("11_ihang")]([SubResource("Resource_4rg85"), SubResource("Resource_a1x7f"), SubResource("Resource_4uvkp")])
+animation_package = SubResource("Resource_3dyvf")
+effects = Array[ExtResource("5_cvswd")]([SubResource("Resource_ckhw7"), ExtResource("7_qevq0")])
+trait_1 = "Block"
+trait_2 = "PP Up"
+trigger_description = "When an ally uses an attack skill"
+description = Array[String](["Grants Block and a PP blessing when an ally makes an attack"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

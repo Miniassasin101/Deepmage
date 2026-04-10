@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://dsi8iyp5n8l2"]
+
+[ext_resource type="Script" uid="uid://cpk5t6274clio" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SourceTargetUnitBasedSkillConditions/IsSourceUserFaction.gd" id="1_g8uio"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_lsj43"]
+
+[sub_resource type="Resource" id="Resource_lgq3g"]
+script = ExtResource("1_g8uio")
+relation = 1
+metadata/_custom_type_script = "uid://cpk5t6274clio"
+
+[resource]
+script = ExtResource("2_lsj43")
+display_name = "Is Source User Ally"
+category_name = "Skill Use"
+prototype = SubResource("Resource_lgq3g")
+metadata/_custom_type_script = "uid://c7jeogqcvfh22"

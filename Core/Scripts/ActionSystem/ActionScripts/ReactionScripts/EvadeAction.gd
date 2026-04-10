@@ -2,7 +2,6 @@ class_name EvadeAction
 extends Reaction
 
 
-
 @export_category("Action Variables")
 @export var spawn_text: String = "Testing"
 @export var text_color: Color = Color.ALICE_BLUE
@@ -18,15 +17,13 @@ extends Reaction
 func start_action(targ_pack: TargetPackage = null) -> void:
 	super.start_action(targ_pack)
 	#Utilities.spawn_text_line(unit, spawn_text, text_color)
-	
+
 	var attacking_unit: Unit = CombatSystem.instance.current_combat_event_data.attacker
-	
+
 	if attacking_unit:
 		await rotate_towards_target(attacking_unit)
-	
+
 	end_action()
-
-
 
 
 func end_action() -> void:
@@ -40,28 +37,8 @@ func get_reaction_latency() -> float:
 	return reaction_latency
 
 
-func resolve_reaction() -> void:
-	var cbevent: CombatEventData = CombatSystem.instance.current_combat_event_data
-	
-	if !cbevent:
-		return
-	
-	if !cbevent.is_success:
-		cbevent.is_hit = false
-		print_debug("Evasion SUCCESS")
-		CombatLog.instance.add_log(unit.ui_name + " Evaded Successfully")
-	else:
-		CombatLog.instance.add_log(unit.ui_name + " Failed Evasion")
-	
-
-
-
-
-
 func can_activate() -> bool:
 	return true
-
-
 
 
 func rotate_towards_target(target: Unit) -> void:

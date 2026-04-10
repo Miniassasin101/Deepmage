@@ -23,8 +23,6 @@ var event_library: AnimationLibrary = null
 var _restore_speed_on_finish := 1.0
 var _override_speed := 1.0
 
-# cache: events animation name -> Animation (so we build once)
-var _event_anim_cache: Dictionary = {}
 
 func _ready() -> void:
 	if animator:
@@ -60,17 +58,37 @@ func play_package(pack: AnimationPackage) -> void:
 	current_animation = pack.get_anim_name()
 	animation_started.emit(current_animation)
 
-	# 1) Play main clip
+	# 1) Play main clip — fall back to RESET if this unit doesn't have the animation
 	var main_path := _anim_path_for(pack)
+	if !animator.has_animation(main_path):
+		var reset_path := _get_reset_fallback_path()
+		if reset_path != "":
+			push_warning("AnimationController: '%s' not found on '%s' — using RESET fallback." % [main_path, unit.ui_name if unit else str(name)])
+			main_path = reset_path
+			current_animation = &"RESET"
+		else:
+			push_error("AnimationController: '%s' not found on '%s' and no RESET fallback exists — resolving immediately." % [main_path, unit.ui_name if unit else str(name)])
+			is_resolving = true
+			_play_events_for_package(pack)
+			_finish_without_main_animation()
+			return
+
 	is_resolving = true
 	animator.play(main_path)
 
 	# 2) Bake/play events clip
 	_play_events_for_package(pack)
 
+	# 3) Setup Early Signal Timer for smoother action transitions
+	
+
 func play_package_timed(pack: AnimationPackage, delay: float = 0.0, speed_scale: float = 1.0) -> void:
 	if pack == null:
 		return
+	# Mark resolving immediately so callers that check is_resolving during the
+	# delay window (e.g. wait_for_animation_resolve on a ranged reaction) don't
+	# see a false gap and skip the await.
+	is_resolving = true
 	_override_speed = speed_scale
 	_restore_speed_on_finish = 1.0
 	_start_after_delay(pack, delay)
@@ -102,29 +120,37 @@ func _anim_path_for(package: AnimationPackage) -> String:
 	return _libpath(t_name)
 
 
-func _on_anim_finished(anim_name: StringName) -> void:
-	var matches := false
-	if anim_name.ends_with("/" + str(current_animation)): matches = true
-	elif anim_name == current_animation: matches = true
+func get_anim_time_left() -> float:
+	if !animator.is_playing():
+		return 0.0
+		
+	var time_left: float = animator.current_animation_length - animator.current_animation_position
+	return time_left
 
-	if matches:
-		# stop events player too
-		if event_animator and event_animator.is_playing():
-			#event_animator.stop()
-			pass
-		animator.speed_scale = _restore_speed_on_finish
-		animation_finished.emit(current_animation)
+
+func _on_anim_finished(anim_name: StringName) -> void:
+	# Ignore completions from hit-reaction or any other non-package animation.
+	var matches := anim_name.ends_with("/" + str(current_animation)) or anim_name == current_animation
+	if not matches:
+		return
 	
+	
+	
+	animator.speed_scale = _restore_speed_on_finish
+
+	# Wait for the event animator before declaring the package done,
+	# so listeners receive the signal only after all effects have fired.
 	if event_animator and event_animator.is_playing():
 		await event_animator.animation_finished
-	
+
 	if event_library:
 		for anim in event_library.get_animation_list():
 			event_library.remove_animation(anim)
-	
+
 	is_resolving = false
-	
-	animation_finished.emit()
+
+	# Single emit, once both animators are truly finished.
+	animation_finished.emit(current_animation)
 
 # Called by method keys on the events animation
 func _on_event_key(effect: AnimationEffect) -> void:
@@ -138,81 +164,54 @@ func _play_events_for_package(pack: AnimationPackage) -> void:
 	if event_animator == null:
 		return
 
-	var ev_name := _ensure_events_animation(pack) # builds and registers in library if missing
+	var ev_name := _ensure_events_animation(pack)
 
-	# keep players in lock-step
+	# Keep players in lock-step, then fire and forget.
+	# _on_anim_finished is the single place that waits for event_animator.
 	event_animator.speed_scale = animator.speed_scale
-
 	event_animator.play(ev_name)
-	# update immediately so first key at t=0 fires if present
-	event_animator.advance(0)
-	
-	await event_animator.animation_finished
+	event_animator.advance(0)  # flush any key at t=0 immediately
 
 
 func _ensure_events_animation(pack: AnimationPackage) -> StringName:
 	var ename := StringName(pack.get_anim_name() + "__events")
 
-	# already present in player?
-	if event_animator.has_animation(ename):
-		#return ename
-		pass
-	# built and cached but not yet registered?
-	if _event_anim_cache.has(ename):
-		#_register_events_anim(ename, _event_anim_cache[ename])
-		#return ename
-		pass
-
-	# Build fresh
+	# Always build fresh: instanced_animation_effects are duplicated and mutated
+	# each attack (by modify_shake_and_hitstop), so any cached Animation would
+	# hold stale effect references and fire wrong durations/settings.
 	var anim := Animation.new()
 	anim.loop_mode = Animation.LOOP_NONE
 
-	# Length: at least main length or last effect + small pad
 	var main_len := pack.animation.length
 	var last_fx := _last_effect_time(pack)
 	anim.length = maxf(main_len, last_fx + 0.01)
 
-	# 1) Method track that calls back into this controller
+	# Method track — calls _on_event_key(effect) at each effect's timing.
 	var track := anim.add_track(Animation.TYPE_METHOD)
-	anim.track_set_path(track, NodePath("."))  # "." resolves to AnimationController (event_animator's root_node parent)
+	anim.track_set_path(track, NodePath("."))
 	for fx in pack.get_instanced_animation_effects():
-		var method_details: Dictionary = {
-			"method": "_on_event_key",
-			"args": [fx]
-			}
+		anim.track_insert_key(track, fx.timing, {"method": "_on_event_key", "args": [fx]})
 
-		anim.track_insert_key(track, fx.timing, method_details)
-		pass
-
-	# 2) Optional: add named markers for sync/debug (HIT/REACT/PEAK)
+	# Named markers for sync/debug (HIT_START, HIT_END, REACT_ON, REACT_OFF, PEAK).
 	if pack.has_method("marker_time"):
-		var labels := [&"HIT_START", &"HIT_END", &"REACT_ON", &"REACT_OFF", &"PEAK"]
-		for label in labels:
+		for label in [&"HIT_START", &"HIT_END", &"REACT_ON", &"REACT_OFF", &"PEAK"]:
 			var t := float(pack.marker_time(label))
 			if t >= 0.0:
 				anim.add_marker(StringName(label), t)
 
-	# Cache & register into the default library of the event_animator
-	_event_anim_cache[ename] = anim
 	_register_events_anim(ename, anim)
 	return ename
 
 func _register_events_anim(in_name: StringName, anim: Animation) -> void:
-	# Ensure default library exists and add the animation there
-	var lib: AnimationLibrary = null#event_animator.get_animation_library("default")
 	for library in event_animator.get_animation_library_list():
 		event_animator.remove_animation_library(library)
 
-
 	if !event_animator.has_animation_library(""):
-		lib = AnimationLibrary.new()
+		var lib := AnimationLibrary.new()
 		event_animator.add_animation_library("", lib)
 		event_library = lib
 
-		pass
-	else:
-		lib = event_library
-	lib.add_animation(in_name, anim)
+	event_library.add_animation(in_name, anim)
 
 
 func _last_effect_time(pack: AnimationPackage) -> float:
@@ -225,6 +224,28 @@ func _last_effect_time(pack: AnimationPackage) -> float:
 	
 	return t + grace_amount
 
+## Returns the RESET animation path to use as a fallback.
+## Checks [member current_library]/RESET first, then the unnamed default library.
+## Returns [code]""[/code] if RESET is not found in either location.
+func _get_reset_fallback_path() -> String:
+	var in_lib := _libpath("RESET")
+	if animator.has_animation(in_lib):
+		return in_lib
+	if animator.has_animation("RESET"):
+		return "RESET"
+	return ""
+
+
+## Resolves [member is_resolving] and emits [signal animation_finished] without a main
+## animation playing. Waits for the events animator to finish first so timing effects
+## (hit moment, camera shake, etc.) still fire at the correct times.
+func _finish_without_main_animation() -> void:
+	if event_animator and event_animator.is_playing():
+		await event_animator.animation_finished
+	is_resolving = false
+	animation_finished.emit(current_animation)
+
+
 # Optional helper to build "library/anim" or just "anim" when library == ""
 func _libpath(anim_name: String) -> String:
 	return anim_name if current_library == "" else current_library + "/" + anim_name
@@ -233,10 +254,18 @@ func _libpath(anim_name: String) -> String:
 func play_hit_reaction(flash_white: bool = true) -> void:
 	if !hit_reaction_anim:
 		return
-	
+
 	var h_r_name: StringName = hit_reaction_anim.resource_name
-	
+
 	if flash_white:
 		unit.flash_white()
-		
+
+	# If a package animation (e.g. block) is currently playing, it is about to
+	# be interrupted. Stop the event animator so its stale events are discarded,
+	# then update current_animation so _on_anim_finished can match the hit
+	# reaction when it finishes and correctly emit animation_finished.
+	if event_animator and event_animator.is_playing():
+		event_animator.stop()
+	current_animation = h_r_name
+
 	await play_animation_by_name(h_r_name)

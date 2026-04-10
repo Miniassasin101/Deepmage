@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://daqruigl8pvlm"]
+
+[ext_resource type="Resource" uid="uid://dci1vghxdl7pd" path="res://Deepmage/Core/Resources/ActionResources/TestRangedAttackActionResource.tres" id="1_n6j73"]
+[ext_resource type="Resource" uid="uid://uwibxof05smc" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BallThrowPackage.tres" id="1_v103h"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_u337n"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="8_pue87"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="8_rn01h"]
+[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="9_554sh"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="11_op8wp"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="12_gs1dv"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="13_u337n"]
+
+[sub_resource type="Resource" id="Resource_nhirw"]
+script = ExtResource("9_554sh")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[resource]
+resource_name = "BallThrowSkillResource"
+script = ExtResource("11_op8wp")
+skill_name = "Ball Throw"
+action = ExtResource("1_n6j73")
+internal_skill_conditions = Array[ExtResource("8_pue87")]([SubResource("Resource_nhirw")])
+animation_package = ExtResource("1_v103h")
+trait_1 = "Ranged 10"
+trigger_description = "When an enemy is in range"
+description = Array[String](["Throws a ball at an enemy in range"])
+tags = Array[String](["ranged"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

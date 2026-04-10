@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Attribute" load_steps=2 format=3]
+
+[ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="1_blightres"]
+
+[resource]
+script = ExtResource("1_blightres")
+attribute_name = "blight_resistance"
+attribute_type = 1
+current_value = 0
+maximum_value = 100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"

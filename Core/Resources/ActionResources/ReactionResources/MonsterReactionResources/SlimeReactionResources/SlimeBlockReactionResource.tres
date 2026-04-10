@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="BlockAction" format=3 uid="uid://bnkjvlvt1sfv1"]
+
+[ext_resource type="Resource" uid="uid://dm4u5y1lciy68" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/MonsterAnimationPackages/SlimeBlockPackage.tres" id="1_ea1i1"]
+[ext_resource type="Script" uid="uid://6qs4p4pind1l" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/ReactionScripts/BlockAction.gd" id="2_wy0qt"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="3_vf8nb"]
+
+[sub_resource type="Resource" id="Resource_ef270"]
+script = ExtResource("3_vf8nb")
+name = &"button"
+is_true = true
+metadata/_custom_type_script = "uid://cihsn5lxnlupk"
+
+[resource]
+script = ExtResource("2_wy0qt")
+spawn_text = "Block"
+text_color = Color(0.941176, 0.972549, 1, 1)
+block_package = ExtResource("1_ea1i1")
+action_name = "SlimeBlock"
+selection_types = Array[ExtResource("3_vf8nb")]([SubResource("Resource_ef270")])
+tags = Array[String](["reaction"])
+metadata/_custom_type_script = "uid://6qs4p4pind1l"

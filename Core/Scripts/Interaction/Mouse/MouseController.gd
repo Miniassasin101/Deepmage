@@ -67,7 +67,7 @@ func _ready() -> void:
 
 
 # Called every frame
-func _physics_process(_delta: float) -> void:
+func _process(_delta: float) -> void:
 	# Update mouse position
 	adjust_mouse_position()
 	

@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://ceu3eynl7qehx"]
+
+[ext_resource type="Resource" uid="uid://8vem57wbteya" path="res://Deepmage/Core/Resources/ActionResources/MovementActionResources/RushToUnitActionResource.tres" id="1_qs42l"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="2_7omu2"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="2_cpelx"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_qs42l"]
+[ext_resource type="Resource" uid="uid://dhlquh6l821lo" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/FactionBlueprints/IsEnemyConditionBlueprint.tres" id="4_cpfqh"]
+[ext_resource type="Script" uid="uid://daykqau0okf7v" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitOutsideRangeSkillCondition.gd" id="4_h182v"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="5_j3s1b"]
+[ext_resource type="Script" uid="uid://c6hp21lncudiw" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsNotSelfSkillCondition.gd" id="5_qs42l"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="6_wnjc1"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="7_e77ag"]
+[ext_resource type="Resource" uid="uid://cbqv20ttbdyux" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionBlueprints/RangeBlueprints/ClosestFurthestTargetBlueprints/ClosestTargetPreferenceBlueprint.tres" id="9_g1yky"]
+
+[sub_resource type="Resource" id="Resource_sb21c"]
+script = ExtResource("4_h182v")
+range_var = 2.1
+metadata/_custom_type_script = "uid://daykqau0okf7v"
+
+[sub_resource type="Resource" id="Resource_7omu2"]
+script = ExtResource("5_qs42l")
+metadata/_custom_type_script = "uid://c6hp21lncudiw"
+
+[resource]
+resource_name = "RushToUnitSkillResource"
+script = ExtResource("5_j3s1b")
+skill_name = "Rush To Unit"
+action = ExtResource("1_qs42l")
+skill_type = 1
+internal_skill_conditions = Array[ExtResource("2_7omu2")]([SubResource("Resource_sb21c"), SubResource("Resource_7omu2")])
+external_condition_blueprints = Array[ExtResource("2_qs42l")]([ExtResource("4_cpfqh")])
+target_preference_blueprints = Array[ExtResource("2_qs42l")]([ExtResource("9_g1yky")])
+trait_1 = "Movement"
+trigger_description = "When a unit is out of melee range"
+description = Array[String](["Rushes towards a unit that is out of melee range"])
+tags = Array[String](["movement"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

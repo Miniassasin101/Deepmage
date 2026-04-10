@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="BuildSource" format=3 uid="uid://brg0snp7f1j02"]
+
+[ext_resource type="Script" uid="uid://da5ua2vuwghvh" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeMod.gd" id="1_vfimv"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="2_k0ba1"]
+[ext_resource type="Resource" uid="uid://c2p3ox34ub580" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PassiveBlessings/PassiveCriticalBlessingSkillResource.tres" id="3_q1k5i"]
+[ext_resource type="Resource" uid="uid://bf0acaf6mm6gy" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestArcherSkills/SingleShotSkill.tres" id="4_vfimv"]
+[ext_resource type="Resource" uid="uid://mictyfww6h2x" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/MovementSkills/RushToSafetySkillResource.tres" id="5_vfimv"]
+[ext_resource type="Resource" uid="uid://rjed6kq3ufww" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PassiveAttacks/PursuitShotSkillResource.tres" id="6_k0ba1"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="6_mrk0r"]
+[ext_resource type="Script" uid="uid://rwvfoi4t15v8" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSource.gd" id="7_teuhn"]
+
+[sub_resource type="Resource" id="Resource_hw2fm"]
+resource_name = "MartialUp1"
+script = ExtResource("1_vfimv")
+attribute_name = &"martial"
+flat = 2
+metadata/_custom_type_script = "uid://da5ua2vuwghvh"
+
+[sub_resource type="Resource" id="Resource_i2uo5"]
+script = ExtResource("1_vfimv")
+attribute_name = &"critical"
+flat = 20
+metadata/_custom_type_script = "uid://da5ua2vuwghvh"
+
+[resource]
+script = ExtResource("7_teuhn")
+ui_name = "Archer"
+tags = ["class", "martial", "archer"]
+grant_skills = Array[ExtResource("2_k0ba1")]([ExtResource("3_q1k5i"), ExtResource("4_vfimv"), ExtResource("5_vfimv"), ExtResource("6_k0ba1")])
+attribute_mods = Array[ExtResource("1_vfimv")]([SubResource("Resource_hw2fm"), SubResource("Resource_i2uo5")])
+metadata/_custom_type_script = "uid://rwvfoi4t15v8"

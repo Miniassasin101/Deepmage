@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://bl1m4mqnvktcq"]
+
+[ext_resource type="Script" uid="uid://crlblfi0eiqt0" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/CombatActionScripts/CombatAction.gd" id="1_1qeuf"]
+[ext_resource type="Resource" uid="uid://djrw5nkydvyv6" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BlockPackage.tres" id="1_8ldef"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_7ac1r"]
+[ext_resource type="Resource" uid="uid://wcdie0i35cc6" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/BlessingEffects/GrantParryBlessingEffectResource.tres" id="5_8ldef"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="8_beit4"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="10_e1opc"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="11_grgr0"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="12_vw0dg"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="13_gr2lf"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="13_w4elf"]
+
+[sub_resource type="Resource" id="Resource_xhiib"]
+script = ExtResource("1_1qeuf")
+action_name = "Status Grant Action"
+metadata/_custom_type_script = "uid://crlblfi0eiqt0"
+
+[resource]
+resource_name = "ParryUpSkillResource"
+script = ExtResource("12_vw0dg")
+skill_name = "Parry Up"
+action = SubResource("Resource_xhiib")
+skill_type = 1
+base_power = 0
+base_accuracy = 90
+crit_mod = -3
+animation_package = ExtResource("1_8ldef")
+effects = Array[ExtResource("4_7ac1r")]([ExtResource("5_8ldef")])
+trigger_description = "Always"
+description = Array[String](["Grants a Parry blessing, increasing defense"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

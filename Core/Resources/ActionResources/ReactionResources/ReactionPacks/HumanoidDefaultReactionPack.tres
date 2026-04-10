@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ReactionPack" format=3 uid="uid://dn7yq5p8tqv2k"]
+
+[ext_resource type="Script" uid="uid://d17457ktsi1g8" path="res://Deepmage/Core/Scripts/ActionSystem/ReactionScripts/ReactionPack.gd" id="1_pack"]
+[ext_resource type="Script" uid="uid://c5n2kh3w6iaim" path="res://Deepmage/Core/Scripts/ActionSystem/ReactionScripts/ReactionRule.gd" id="2_rule"]
+[ext_resource type="Resource" uid="uid://c5dl1dlq1jmiy" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/HumanoidReactionResources/BlockReactionResource.tres" id="3_block"]
+[ext_resource type="Resource" uid="uid://by016ujd3kbnh" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/HumanoidReactionResources/EvadeReactionResource.tres" id="4_evade"]
+[ext_resource type="Resource" uid="uid://d2ysyx0gn34ud" path="res://Deepmage/Core/Resources/ActionResources/ReactionResources/HumanoidReactionResources/PassReactionResource.tres" id="5_pass"]
+
+[sub_resource type="Resource" id="ReactionRule_hit"]
+script = ExtResource("2_rule")
+match_outcomes = Array[int]([1, 3])
+reaction_action = ExtResource("3_block")
+priority = 5
+
+[sub_resource type="Resource" id="ReactionRule_miss"]
+script = ExtResource("2_rule")
+match_outcomes = Array[int]([2, 4])
+reaction_action = ExtResource("4_evade")
+priority = 5
+
+[resource]
+script = ExtResource("1_pack")
+rules = Array[ExtResource("2_rule")]([SubResource("ReactionRule_hit"), SubResource("ReactionRule_miss")])
+fallback_reaction = ExtResource("5_pass")

@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=3 uid="uid://42ic7pxe3du5"]
+
+[ext_resource type="Script" uid="uid://bud7qfkyewojn" path="res://Deepmage/Core/Scripts/UI/ConditionSlot.gd" id="1_v6hb6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ayeww"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.7372549)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_bjaet"]
+font_size = 12
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
+
+[node name="ConditionSlot" type="PanelContainer" node_paths=PackedStringArray("title_label")]
+custom_minimum_size = Vector2(163, 0)
+offset_right = 158.0
+offset_bottom = 23.0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_ayeww")
+script = ExtResource("1_v6hb6")
+title_label = NodePath("MarginContainer/Label")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_right = 3
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 1
+text = "Most Enemies in <1 Range"
+label_settings = SubResource("LabelSettings_bjaet")
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 1
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

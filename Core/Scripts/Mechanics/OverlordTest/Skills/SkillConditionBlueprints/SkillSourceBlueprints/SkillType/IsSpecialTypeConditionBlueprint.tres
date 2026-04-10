@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://cly4evm55s25s"]
+
+[ext_resource type="Script" uid="uid://cq6k3vojdsik7" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SkillSourceBasedSkillConditions/IsSourceSkillType.gd" id="1_pjuvv"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_y5v55"]
+
+[sub_resource type="Resource" id="Resource_pjuvv"]
+script = ExtResource("1_pjuvv")
+required_type = 3
+metadata/_custom_type_script = "uid://cq6k3vojdsik7"
+
+[resource]
+script = ExtResource("2_y5v55")
+display_name = "Is Special"
+category_name = "Skill Use"
+prototype = SubResource("Resource_pjuvv")
+metadata/_custom_type_script = "uid://c7jeogqcvfh22"

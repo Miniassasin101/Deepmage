@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://bo5oyd0vu6smj"]
+
+[ext_resource type="Script" uid="uid://dwm82frmyqof1" path="res://Deepmage/Core/Scripts/UI/ConditionChip.gd" id="1_1ef8p"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ef8p"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_syp6n"]
+font_size = 13
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[node name="ConditionChip" type="PanelContainer" node_paths=PackedStringArray("name_label")]
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_1ef8p")
+script = ExtResource("1_1ef8p")
+name_label = NodePath("NameLabel")
+
+[node name="NameLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(89, 0)
+layout_mode = 2
+text = "CondChip"
+label_settings = SubResource("LabelSettings_syp6n")
+horizontal_alignment = 1
+vertical_alignment = 1

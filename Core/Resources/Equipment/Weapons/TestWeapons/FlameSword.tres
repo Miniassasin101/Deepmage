@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://dvjkt0kytvdc3"]
+
+[ext_resource type="Script" uid="uid://dmefdgovq37tm" path="res://Deepmage/Core/Scripts/Mechanics/Equipment/Weapon.gd" id="1_flmsw"]
+[ext_resource type="Script" uid="uid://da5ua2vuwghvh" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeMod.gd" id="1_y3f3h"]
+[ext_resource type="Script" path="res://Deepmage/Core/Scripts/Combat/CombatSystem/DamageComponent.gd" id="2_flmsw"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="3_atmwl"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="4_bbx4g"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="5_ii3oy"]
+[ext_resource type="PackedScene" uid="uid://cxopyo10mr75w" path="res://Deepmage/Core/Prefabs/Equipment/Weapons/TestWeapons/SwordMesh.tscn" id="7_m1vqq"]
+
+[sub_resource type="Resource" id="Resource_flame"]
+script = ExtResource("2_flmsw")
+prowess_attribute = "channel"
+defense_attribute = "resist"
+
+[resource]
+script = ExtResource("1_flmsw")
+damage_min = 4
+damage_max = 8
+visual_scene = ExtResource("7_m1vqq")
+enchantment_components = Array[ExtResource("2_flmsw")]([SubResource("Resource_flame")])
+ui_name = "Flame Sword"
+metadata/_custom_type_script = "uid://dmefdgovq37tm"

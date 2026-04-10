@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="LevelRankBuildSource" format=3 uid="uid://bbh5ijxuf1wuf"]
+
+[ext_resource type="Script" uid="uid://da5ua2vuwghvh" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeMod.gd" id="1_nho4t"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="2_r87hq"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="3_r8hmy"]
+[ext_resource type="Resource" uid="uid://ceu3eynl7qehx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/MovementSkills/RushToUnitSkillResource.tres" id="3_r87hq"]
+[ext_resource type="Script" uid="uid://bwf8gcb7vcxa0" path="res://Deepmage/Core/Scripts/Mechanics/Classes/LevelRankBuildSource.gd" id="4_pfkt5"]
+
+[resource]
+script = ExtResource("4_pfkt5")
+ui_name = "Rank"
+tags = ["rank"]
+grant_skills = Array[ExtResource("2_r87hq")]([ExtResource("3_r87hq")])
+metadata/_custom_type_script = "uid://bwf8gcb7vcxa0"

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://c3h6pgypgi6tr"]
+
+[ext_resource type="Script" uid="uid://1e0vvjn7te7n" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreferenceScripts/AttributeTargetPreferences/HighestAttributeValuePreference.gd" id="1_j512p"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_hgvcd"]
+
+[sub_resource type="Resource" id="Resource_q0vmg"]
+script = ExtResource("1_j512p")
+attribute_name = "active_points"
+metadata/_custom_type_script = "uid://1e0vvjn7te7n"
+
+[resource]
+script = ExtResource("2_hgvcd")
+display_name = "Prioritize Most AP"
+category_name = "AP & PP"
+prototype = SubResource("Resource_q0vmg")
+metadata/_custom_type_script = "uid://c7jeogqcvfh22"

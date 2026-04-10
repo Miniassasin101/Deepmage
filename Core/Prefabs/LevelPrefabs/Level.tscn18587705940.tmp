@@ -1,0 +1,1355 @@
+[gd_scene load_steps=111 format=3 uid="uid://b08xisrcbfyhj"]
+
+[ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
+[ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
+[ext_resource type="Script" uid="uid://d00flrde4n8v4" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugConsoleController.gd" id="2_swo3b"]
+[ext_resource type="Environment" uid="uid://c7cx2thxig2w6" path="res://Deepmage/Core/Resources/Environment/Lighting/TestEnvironment1.tres" id="3_gh8or"]
+[ext_resource type="Script" uid="uid://csywy3ienecb4" path="res://Deepmage/Core/Prefabs/LevelPrefabs/ProjectileConsole.gd" id="3_s0dbn"]
+[ext_resource type="PackedScene" uid="uid://du3efvmcdx31a" path="res://Deepmage/Core/Prefabs/Cameras/Camera.tscn" id="3_wbgr3"]
+[ext_resource type="PackedScene" uid="uid://bauq6rq7jnnvw" path="res://Deepmage/Core/Prefabs/InteractionPrefabs/MouseController.tscn" id="4_avqdt"]
+[ext_resource type="Script" uid="uid://dsmekjbchblby" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UILayer.gd" id="5_jtghi"]
+[ext_resource type="PackedScene" uid="uid://bf575s2vrxvov" path="res://Deepmage/Core/Prefabs/UI/TextController.tscn" id="9_ccwc0"]
+[ext_resource type="Script" uid="uid://brupu7akvtuia" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UnitActionSystem.gd" id="9_lf0eb"]
+[ext_resource type="PackedScene" uid="uid://14nkak1a1qkg" path="res://Deepmage/Core/Prefabs/Mechanics/CharacterSheet.tscn" id="9_srkvl"]
+[ext_resource type="Script" uid="uid://b3vsba7uy6t7o" path="res://Deepmage/Core/Scripts/Combat/TurnSystems/TurnSystem.gd" id="10_k2c3k"]
+[ext_resource type="PackedScene" uid="uid://8oord2o1icck" path="res://Deepmage/Core/Prefabs/UI/CharacterLogQueue.tscn" id="10_lf0eb"]
+[ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="10_p6f6u"]
+[ext_resource type="Script" uid="uid://dgwgvxp80lmhb" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributesProfile.gd" id="11_6kl6n"]
+[ext_resource type="Resource" uid="uid://daqruigl8pvlm" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/BallThrowSkill.tres" id="11_f0670"]
+[ext_resource type="Script" uid="uid://brh8qmh2c4g8f" path="res://Deepmage/Core/Scripts/Combat/CombatSystem/CombatSystem.gd" id="11_g7q3m"]
+[ext_resource type="Script" uid="uid://1miy676tt71s" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UnitManager.gd" id="11_lf0eb"]
+[ext_resource type="Script" uid="uid://xwiyhnl8erp1" path="res://Deepmage/Core/Scripts/Pathfinding/PathfindingSystem.gd" id="12_fnj5h"]
+[ext_resource type="PackedScene" uid="uid://2h1a1e1r8hc2" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.tscn" id="12_k2c3k"]
+[ext_resource type="Resource" uid="uid://cdo13j8uua6g3" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/RushToSafetySkill.tres" id="12_qsjt4"]
+[ext_resource type="Script" uid="uid://ian5eam30p0l" path="res://addons/curvemesh3d/curvemesh3d.gd" id="13_wbm0i"]
+[ext_resource type="Curve" uid="uid://b1kq6l63y7lb6" path="res://Deepmage/Core/MathPrefabs/Curves/Level.tres" id="14_calw8"]
+[ext_resource type="Texture2D" uid="uid://duu0wfs3dasnn" path="res://Deepmage/Core/Art/Textures/EnvironmentTextures/GroundTextures/PolygonPrototype_Texture_Grid_08.png" id="14_tflrs"]
+[ext_resource type="Script" uid="uid://hbm8nks1et3p" path="res://Deepmage/Core/Scripts/UI/TurnSystemUI.gd" id="15_ex7fh"]
+[ext_resource type="Script" uid="uid://cby42fxiu4cv5" path="res://Deepmage/Core/Scripts/UI/ActionSystemUI.gd" id="15_j7436"]
+[ext_resource type="Script" uid="uid://dyngi1ipggvgb" path="res://Deepmage/Core/Scripts/UI/InitiativeQueueUI.gd" id="16_2uyvs"]
+[ext_resource type="Script" uid="uid://cc6pcq4yohj7m" path="res://Deepmage/Core/Scripts/Projectile/PathBuilder3D.gd" id="16_dfmjn"]
+[ext_resource type="PackedScene" uid="uid://3p3xt0lymqsd" path="res://Deepmage/Core/Prefabs/UI/UnitStatsBar.tscn" id="16_ecsph"]
+[ext_resource type="Script" uid="uid://cjhhvf5ub04kj" path="res://Deepmage/Core/Scripts/UI/FPSLabel.gd" id="16_ex7fh"]
+[ext_resource type="PackedScene" uid="uid://psdfsrnutgxe" path="res://Deepmage/Core/Prefabs/UI/ActionButtonUI.tscn" id="16_tko1n"]
+[ext_resource type="Resource" uid="uid://cjuqlljs4k7uy" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PrintTestPassiveSkillResource.tres" id="18_allnq"]
+[ext_resource type="PackedScene" uid="uid://cdifkxjoiv0eq" path="res://Deepmage/Core/Prefabs/UI/TopHPBar.tscn" id="21_xyav6"]
+[ext_resource type="PackedScene" uid="uid://cqqsm2gpif3dw" path="res://Deepmage/Core/Prefabs/UI/UnitCharacterSheet.tscn" id="22_gh8or"]
+[ext_resource type="Script" uid="uid://bubf25btsnnfv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Tactic.gd" id="24_w01yd"]
+[ext_resource type="Script" uid="uid://c1pcudui7e5qp" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillTriggerSystem.gd" id="26_qdwhh"]
+[ext_resource type="PackedScene" uid="uid://bt5idkoxachxk" path="res://Deepmage/Core/Prefabs/UI/CombatLog.tscn" id="27_2gnov"]
+[ext_resource type="Resource" uid="uid://ceu3eynl7qehx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/RushToUnitSkillResource.tres" id="30_hymmt"]
+[ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Active/TestAttackSkillResource.tres" id="31_f3uqp"]
+[ext_resource type="Resource" uid="uid://dkeoolmv8jjeq" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/SkillLibraries/SkillLibraryResource.tres" id="42_5lfvx"]
+[ext_resource type="Resource" uid="uid://cucaqplnm0re3" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/ConditionLibraries/ConditionLibraryResource.tres" id="43_f0670"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_lf0eb"]
+vertices = PackedVector3Array(-18.6557, 0.5, -18.6557, -18.6557, 0.5, 44.8443, 18.5943, 0.5, 44.8443, 18.5943, 0.5, -18.6557)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+geometry_source_geometry_mode = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_rcno3"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_avqdt"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="GDScript" id="GDScript_51q8q"]
+script/source = "@tool
+class_name Skill
+extends Resource
+
+signal on_skill_ended
+
+enum SkillCategory { ACTIVE, PASSIVE, FREE}
+enum SkillType { ATTACK, SUPPORT, SABOTAGE, SPECIAL}
+
+@export var skill_name: String = \"None\":
+	set(val):
+		skill_name = val
+		change_resource_name_to_skill()
+
+## The underlying action that the skill uses, and contains most of the operational logic
+@export var action: Action = null
+
+## Determines which resource is required to use the skill.
+@export var skill_category: SkillCategory = SkillCategory.ACTIVE
+
+@export var skill_type: SkillType = SkillType.ATTACK
+
+@export var skill_trigger: SkillTriggerSystem.TriggerPhase = SkillTriggerSystem.TriggerPhase.NONE
+
+## How many active points or passive points need to be spent to activate this skill.
+@export var skill_cost: int = 1 # AP or PP cost
+
+## Skill conditions that are inherent to the skill and not editable by players.
+@export var internal_skill_conditions: Array[SkillCondition] = []
+
+## Skill conditions that are fully editable by players.
+@export var external_skill_conditions: Array[SkillCondition] = []
+
+@export var external_condition_blueprints: Array[ConditionBlueprint] = []
+@export var target_preference_blueprints: Array[ConditionBlueprint] = []
+
+## Type of lighter skill condition that will narrow down the pool of unit targets, but never to zero.
+@export var target_preferences: Array[TargetPreference] = []
+
+@export var is_disabled: bool = false
+
+@export_group(\"Description\")
+@export var trait_1: String = \"Trait 1\"
+@export var trait_2: String = \"Trait 2\"
+@export var trait_3: String = \"Trait 3\"
+
+
+## Series of lines describing the behavior and/or effect of the skill.
+@export var description: Array[String] = []
+
+## Mark the skill in various ways so other combat elements know how to interact with it.
+@export var tags: Array[String] = []
+
+
+
+## Unit that owns the skill (set by Tactic when duplicating/assigning).
+var unit: Unit = null
+
+func _init() -> void:
+	if Engine.is_editor_hint():
+		change_resource_name_to_skill()
+
+# -----------------------------------------------------------------------------
+# Public API
+# -----------------------------------------------------------------------------
+func set_unit(in_unit: Unit) -> void:
+	unit = in_unit
+	# TODO: Consider asserting non-null in release builds to catch setup bugs.
+
+
+func activate_skill() -> void:
+	var chosen_target: Unit = get_random_valid_unit()
+	if !chosen_target:
+		push_error(\"No random unit in skills found\")
+		return
+
+	CombatLog.instance.add_log(\"Random Skill Unit: \" + chosen_target.ui_name)
+
+	# 1) DECLARE → opens BEFORE_SKILL_USED chains
+	TurnSystem.instance.declare_skill(self, chosen_target)
+
+	# 2) USE the underlying Action
+	if action:
+		var temp_action: Action = unit.character_sheet.action_container.use_action(action, chosen_target)
+		await temp_action.on_action_ended
+
+	# 3) END → opens AFTER_SKILL_USED chains
+	TurnSystem.instance.after_skill_used(self, chosen_target)
+
+	# 4) Finish
+	end_skill()
+
+
+
+
+func change_resource_name_to_skill() -> void:
+	if !Engine.is_editor_hint():
+		return
+	var temp_skill_name: String = skill_name.to_pascal_case() if skill_name != \"\" else \"Unnamed\"
+	var temp_resource_name: String = temp_skill_name + \"SkillResource\"
+	set_name(temp_resource_name)
+
+
+func end_skill() -> void:
+	# Broadcast completion so action callers can resume.
+	on_skill_ended.emit()
+
+
+func can_activate_skill() -> bool:
+	# Quick guards for missing components.
+	if !action:
+		return false
+	if !unit:
+		return false
+	
+	if is_disabled:
+		return false
+	
+	if !check_ap_pp():
+		return false
+	
+	# True if at least one target unit satisfies all conditions.
+	if check_conditions_against_units():
+		return true
+
+	return false
+
+# Checks to see if the unit has enough action points or passive points to cover the cost of the skill
+func check_ap_pp() -> bool:
+	var points_name: String = \"None\"
+	
+	match skill_category:
+		SkillCategory.ACTIVE:
+			points_name = \"active_points\"
+		SkillCategory.PASSIVE:
+			points_name = \"passive_points\"
+		_:
+			points_name = \"active_points\" # or whatever default you want for FREE
+	
+	var points_attribute: Attribute = unit.get_attributes_container().get_attribute(points_name)
+	if !points_attribute:
+		return false
+	
+	var curr_val: int = points_attribute.get_current_modified_value()
+	
+	if curr_val < skill_cost:
+		return false
+	
+	
+	return true
+
+
+
+func can_trigger_passive_skill(t_phase: SkillTriggerSystem.TriggerPhase, ctx: Dictionary) -> bool:
+	if skill_category != SkillCategory.PASSIVE:
+		return false
+	
+	if t_phase == SkillTriggerSystem.TriggerPhase.NONE or t_phase != skill_trigger:
+		return false
+	
+	
+	
+	return true
+	
+
+
+
+# -----------------------------------------------------------------------------
+# Targeting helpers
+# -----------------------------------------------------------------------------
+## Returns a random valid unit or null if none are available.
+func get_random_valid_unit() -> Unit:
+	var chosen_unit: Unit = null
+	var valid_units: Array[Unit] = get_all_valid_units()
+	chosen_unit = select_preferred_target(valid_units)
+	return chosen_unit
+	# TODO: Consider excluding self as applicable, or add a \"self-target\" tag/condition.
+
+
+## Applies ordered preferences only if there is more than one valid target.
+## If preferences cannot break ties, falls back to random among remaining.
+func select_preferred_target(valid_units: Array[Unit]) -> Unit:
+	if valid_units.is_empty():
+		return null
+
+	if valid_units.size() == 1:
+		return valid_units[0]
+
+	var pool: Array[Unit] = valid_units.duplicate()
+
+	if target_preferences.size() > 0:
+		for pref in target_preferences:
+			# Narrow only if more than one remains.
+			if pool.size() > 1 and pref:
+				var narrowed: Array[Unit] = pref.apply(self, pool)
+				# Safety: Do not accept an empty result; keep prior pool if so.
+				if narrowed.size() > 0:
+					pool = narrowed
+
+	# If we still have more than one, choose randomly (predictable with seeded RNG if desired).
+	return pool.pick_random()
+
+
+## Builds a list of all units that pass every condition in get_all_skill_conditions.
+func get_all_valid_units() -> Array[Unit]:
+	var all_units: Array[Unit] = UnitManager.instance.get_all_units()
+	var valid_units: Array[Unit] = []
+
+	for test_unit in all_units:
+		var conditions_passed: bool = true
+
+		for condition in get_all_skill_conditions():
+			if !condition:
+				continue
+			if !condition.check_condition(self, test_unit):
+				conditions_passed = false
+				break
+
+		if conditions_passed:
+			valid_units.append(test_unit)
+
+	return valid_units
+	# TODO: Cache and invalidate per-turn to avoid repeated global scans.
+	# TODO: Support multi-step filters (e.g., prefilter faction, then range, then custom).
+
+
+## Returns true if at least one unit passes all conditions.
+func check_conditions_against_units() -> bool:
+	var valid_units: Array[Unit] = get_all_valid_units()
+	return !valid_units.is_empty()
+
+
+## Returns a combination of the internal and external skill conditions.
+func get_all_skill_conditions() -> Array[SkillCondition]:
+	var all_skill_cond: Array[SkillCondition] = []
+	# Internal (live, non-editable)
+	all_skill_cond.append_array(internal_skill_conditions)
+	# External from blueprints
+	all_skill_cond.append_array(get_external_skill_conditions())
+	return all_skill_cond
+
+
+func get_external_skill_conditions() -> Array[SkillCondition]:
+	var out_list: Array[SkillCondition] = []
+	for bp in external_condition_blueprints:
+		if bp != null:
+			var inst: SkillCondition = bp.instantiate_condition()
+			if inst != null:
+				out_list.append(inst)
+	return out_list
+
+
+
+func get_target_preferences() -> Array[TargetPreference]:
+	var out_list: Array[TargetPreference] = []
+	for bp in target_preference_blueprints:
+		if bp != null:
+			var inst: SkillCondition = bp.instantiate_condition()
+			var pref: TargetPreference = inst as TargetPreference
+			if pref != null:
+				out_list.append(pref)
+	return out_list
+
+
+func get_external_condition_blueprints() -> Array[ConditionBlueprint]:
+	return external_condition_blueprints
+
+func get_target_preference_blueprints() -> Array[ConditionBlueprint]:
+	return target_preference_blueprints
+
+# -----------------------------------------------------------------------------
+# Tags helpers
+# -----------------------------------------------------------------------------
+func has_tag(in_tag: String) -> bool:
+	in_tag = in_tag.to_lower()
+	# Case-insensitive tag check (lowercasing the input tag).
+	if tags.has(in_tag):
+		return true
+	return false
+
+
+func has_any_tag(in_tags: Array[String]) -> bool:
+	# Returns true if any of the provided tags is present on this skill.
+	for candidate_tag in in_tags:
+		if tags.has(candidate_tag.to_lower()):
+			return true
+	return false
+	# TODO: Use a Set for tags to speed up membership queries if tag counts grow.
+"
+
+[sub_resource type="Resource" id="Resource_bvt28"]
+script = ExtResource("24_w01yd")
+active_skills = Array[SubResource("GDScript_51q8q")]([ExtResource("12_qsjt4"), ExtResource("11_f0670"), ExtResource("30_hymmt")])
+metadata/_custom_type_script = "uid://bubf25btsnnfv"
+
+[sub_resource type="Resource" id="Resource_8v6vh"]
+resource_local_to_scene = true
+resource_name = "Posture"
+script = ExtResource("10_p6f6u")
+attribute_name = "posture"
+attribute_type = 2
+current_value = 20
+maximum_value = 20
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_11ubm"]
+resource_local_to_scene = true
+resource_name = "Speed"
+script = ExtResource("10_p6f6u")
+attribute_name = "speed"
+attribute_type = 2
+current_value = 4
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_w01yd"]
+resource_local_to_scene = true
+resource_name = "Jump"
+script = ExtResource("10_p6f6u")
+attribute_name = "jump"
+attribute_type = 2
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_00nvd"]
+resource_local_to_scene = true
+resource_name = "Evade"
+script = ExtResource("10_p6f6u")
+attribute_name = "evade"
+attribute_type = 2
+current_value = 1
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_5lfvx"]
+resource_local_to_scene = true
+resource_name = "Martial"
+script = ExtResource("10_p6f6u")
+attribute_name = "martial"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_f0670"]
+resource_local_to_scene = true
+resource_name = "Channel"
+script = ExtResource("10_p6f6u")
+attribute_name = "channel"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_ebomw"]
+resource_local_to_scene = true
+resource_name = "Parry"
+script = ExtResource("10_p6f6u")
+attribute_name = "parry"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_04ue1"]
+resource_local_to_scene = true
+resource_name = "Resist"
+script = ExtResource("10_p6f6u")
+attribute_name = "resist"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_cb3j6"]
+resource_local_to_scene = true
+resource_name = "Mana"
+script = ExtResource("10_p6f6u")
+attribute_name = "mana"
+attribute_type = 2
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_e15dp"]
+resource_local_to_scene = true
+resource_name = "ActivePoints"
+script = ExtResource("10_p6f6u")
+attribute_name = "active_points"
+attribute_type = 2
+current_value = 2
+base_value = 2
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_c2k8n"]
+resource_local_to_scene = true
+resource_name = "PassivePoints"
+script = ExtResource("10_p6f6u")
+attribute_name = "passive_points"
+attribute_type = 2
+current_value = 2
+base_value = 2
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_hja2s"]
+resource_local_to_scene = true
+resource_name = "Initiative"
+script = ExtResource("10_p6f6u")
+attribute_name = "initiative"
+attribute_type = 2
+current_value = 13
+maximum_value = 13
+minimum_value = -100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_v8epg"]
+resource_local_to_scene = true
+script = ExtResource("11_6kl6n")
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_8v6vh"), SubResource("Resource_11ubm"), SubResource("Resource_w01yd"), SubResource("Resource_00nvd"), SubResource("Resource_5lfvx"), SubResource("Resource_f0670"), SubResource("Resource_ebomw"), SubResource("Resource_04ue1"), SubResource("Resource_cb3j6"), SubResource("Resource_e15dp"), SubResource("Resource_c2k8n"), SubResource("Resource_hja2s")])
+metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
+
+[sub_resource type="Resource" id="Resource_gam6i"]
+script = ExtResource("24_w01yd")
+active_skills = Array[SubResource("GDScript_51q8q")]([ExtResource("31_f3uqp"), ExtResource("12_qsjt4"), ExtResource("11_f0670"), ExtResource("30_hymmt"), ExtResource("18_allnq")])
+metadata/_custom_type_script = "uid://bubf25btsnnfv"
+
+[sub_resource type="Resource" id="Resource_f3uqp"]
+resource_local_to_scene = true
+resource_name = "Posture"
+script = ExtResource("10_p6f6u")
+attribute_name = "posture"
+attribute_type = 2
+current_value = 20
+maximum_value = 20
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_0fvkv"]
+resource_local_to_scene = true
+resource_name = "Speed"
+script = ExtResource("10_p6f6u")
+attribute_name = "speed"
+attribute_type = 2
+current_value = 4
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_dpue3"]
+resource_local_to_scene = true
+resource_name = "Jump"
+script = ExtResource("10_p6f6u")
+attribute_name = "jump"
+attribute_type = 2
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_mpmhl"]
+resource_local_to_scene = true
+resource_name = "Evade"
+script = ExtResource("10_p6f6u")
+attribute_name = "evade"
+attribute_type = 2
+current_value = 1
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_yl67w"]
+resource_local_to_scene = true
+resource_name = "Martial"
+script = ExtResource("10_p6f6u")
+attribute_name = "martial"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_6odjx"]
+resource_local_to_scene = true
+resource_name = "Channel"
+script = ExtResource("10_p6f6u")
+attribute_name = "channel"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_lk7si"]
+resource_local_to_scene = true
+resource_name = "Parry"
+script = ExtResource("10_p6f6u")
+attribute_name = "parry"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_73fol"]
+resource_local_to_scene = true
+resource_name = "Resist"
+script = ExtResource("10_p6f6u")
+attribute_name = "resist"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_a4tjr"]
+resource_local_to_scene = true
+resource_name = "Mana"
+script = ExtResource("10_p6f6u")
+attribute_name = "mana"
+attribute_type = 2
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_pwtg8"]
+resource_local_to_scene = true
+resource_name = "ActivePoints"
+script = ExtResource("10_p6f6u")
+attribute_name = "active_points"
+attribute_type = 2
+current_value = 2
+base_value = 2
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_src6p"]
+resource_local_to_scene = true
+resource_name = "PassivePoints"
+script = ExtResource("10_p6f6u")
+attribute_name = "passive_points"
+attribute_type = 2
+current_value = 2
+base_value = 2
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_o8y13"]
+resource_local_to_scene = true
+resource_name = "Initiative"
+script = ExtResource("10_p6f6u")
+attribute_name = "initiative"
+attribute_type = 2
+current_value = 14
+maximum_value = 14
+minimum_value = -100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_rfnuq"]
+resource_local_to_scene = true
+script = ExtResource("11_6kl6n")
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_f3uqp"), SubResource("Resource_0fvkv"), SubResource("Resource_dpue3"), SubResource("Resource_mpmhl"), SubResource("Resource_yl67w"), SubResource("Resource_6odjx"), SubResource("Resource_lk7si"), SubResource("Resource_73fol"), SubResource("Resource_a4tjr"), SubResource("Resource_pwtg8"), SubResource("Resource_src6p"), SubResource("Resource_o8y13")])
+metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
+
+[sub_resource type="Resource" id="Resource_jiskd"]
+script = ExtResource("24_w01yd")
+active_skills = Array[SubResource("GDScript_51q8q")]([ExtResource("31_f3uqp"), ExtResource("11_f0670"), ExtResource("30_hymmt"), ExtResource("31_f3uqp"), ExtResource("30_hymmt")])
+passive_skills = Array[SubResource("GDScript_51q8q")]([ExtResource("18_allnq")])
+metadata/_custom_type_script = "uid://bubf25btsnnfv"
+
+[sub_resource type="Resource" id="Resource_g2rko"]
+resource_local_to_scene = true
+resource_name = "Posture"
+script = ExtResource("10_p6f6u")
+attribute_name = "posture"
+attribute_type = 2
+current_value = 20
+maximum_value = 20
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_su0wa"]
+resource_local_to_scene = true
+resource_name = "Speed"
+script = ExtResource("10_p6f6u")
+attribute_name = "speed"
+attribute_type = 2
+current_value = 4
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_lwd1i"]
+resource_local_to_scene = true
+resource_name = "Jump"
+script = ExtResource("10_p6f6u")
+attribute_name = "jump"
+attribute_type = 2
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_4dv0c"]
+resource_local_to_scene = true
+resource_name = "Evade"
+script = ExtResource("10_p6f6u")
+attribute_name = "evade"
+attribute_type = 2
+current_value = 1
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_ub3kf"]
+resource_local_to_scene = true
+resource_name = "Martial"
+script = ExtResource("10_p6f6u")
+attribute_name = "martial"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_p6sl4"]
+resource_local_to_scene = true
+resource_name = "Channel"
+script = ExtResource("10_p6f6u")
+attribute_name = "channel"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_j6cut"]
+resource_local_to_scene = true
+resource_name = "Parry"
+script = ExtResource("10_p6f6u")
+attribute_name = "parry"
+attribute_type = 1
+current_value = 7
+maximum_value = 7
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_qtrpl"]
+resource_local_to_scene = true
+resource_name = "Resist"
+script = ExtResource("10_p6f6u")
+attribute_name = "resist"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_8wfs1"]
+resource_local_to_scene = true
+resource_name = "Mana"
+script = ExtResource("10_p6f6u")
+attribute_name = "mana"
+attribute_type = 2
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_wan3k"]
+resource_local_to_scene = true
+resource_name = "ActivePoints"
+script = ExtResource("10_p6f6u")
+attribute_name = "active_points"
+attribute_type = 2
+current_value = 2
+base_value = 2
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_ol02q"]
+resource_local_to_scene = true
+resource_name = "PassivePoints"
+script = ExtResource("10_p6f6u")
+attribute_name = "passive_points"
+attribute_type = 2
+current_value = 2
+base_value = 2
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_avl6w"]
+resource_local_to_scene = true
+resource_name = "Initiative"
+script = ExtResource("10_p6f6u")
+attribute_name = "initiative"
+attribute_type = 2
+current_value = 10
+maximum_value = 10
+minimum_value = -100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_iq36j"]
+resource_local_to_scene = true
+script = ExtResource("11_6kl6n")
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_g2rko"), SubResource("Resource_su0wa"), SubResource("Resource_lwd1i"), SubResource("Resource_4dv0c"), SubResource("Resource_ub3kf"), SubResource("Resource_p6sl4"), SubResource("Resource_j6cut"), SubResource("Resource_qtrpl"), SubResource("Resource_8wfs1"), SubResource("Resource_wan3k"), SubResource("Resource_ol02q"), SubResource("Resource_avl6w")])
+metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
+
+[sub_resource type="Resource" id="Resource_rx2vc"]
+script = ExtResource("24_w01yd")
+active_skills = Array[SubResource("GDScript_51q8q")]([ExtResource("31_f3uqp"), ExtResource("30_hymmt"), ExtResource("18_allnq")])
+metadata/_custom_type_script = "uid://bubf25btsnnfv"
+
+[sub_resource type="Resource" id="Resource_3ixwr"]
+resource_local_to_scene = true
+resource_name = "Posture"
+script = ExtResource("10_p6f6u")
+attribute_name = "posture"
+attribute_type = 2
+current_value = 20
+maximum_value = 20
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_ody2n"]
+resource_local_to_scene = true
+resource_name = "Speed"
+script = ExtResource("10_p6f6u")
+attribute_name = "speed"
+attribute_type = 2
+current_value = 4
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_2qjkf"]
+resource_local_to_scene = true
+resource_name = "Jump"
+script = ExtResource("10_p6f6u")
+attribute_name = "jump"
+attribute_type = 2
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_5ddj0"]
+resource_local_to_scene = true
+resource_name = "Evade"
+script = ExtResource("10_p6f6u")
+attribute_name = "evade"
+attribute_type = 2
+current_value = 1
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_knq6r"]
+resource_local_to_scene = true
+resource_name = "Martial"
+script = ExtResource("10_p6f6u")
+attribute_name = "martial"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_68abb"]
+resource_local_to_scene = true
+resource_name = "Channel"
+script = ExtResource("10_p6f6u")
+attribute_name = "channel"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_0gv3y"]
+resource_local_to_scene = true
+resource_name = "Parry"
+script = ExtResource("10_p6f6u")
+attribute_name = "parry"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_mt8ep"]
+resource_local_to_scene = true
+resource_name = "Resist"
+script = ExtResource("10_p6f6u")
+attribute_name = "resist"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_t1is0"]
+resource_local_to_scene = true
+resource_name = "Mana"
+script = ExtResource("10_p6f6u")
+attribute_name = "mana"
+attribute_type = 2
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_guc2f"]
+resource_local_to_scene = true
+resource_name = "ActivePoints"
+script = ExtResource("10_p6f6u")
+attribute_name = "active_points"
+attribute_type = 2
+current_value = 2
+base_value = 2
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_gdrlf"]
+resource_local_to_scene = true
+resource_name = "PassivePoints"
+script = ExtResource("10_p6f6u")
+attribute_name = "passive_points"
+attribute_type = 2
+current_value = 2
+base_value = 2
+maximum_value = 4
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_yxhqu"]
+resource_local_to_scene = true
+resource_name = "Initiative"
+script = ExtResource("10_p6f6u")
+attribute_name = "initiative"
+attribute_type = 2
+current_value = 12
+maximum_value = 12
+minimum_value = -100
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_8pahp"]
+resource_local_to_scene = true
+script = ExtResource("11_6kl6n")
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_3ixwr"), SubResource("Resource_ody2n"), SubResource("Resource_2qjkf"), SubResource("Resource_5ddj0"), SubResource("Resource_knq6r"), SubResource("Resource_68abb"), SubResource("Resource_0gv3y"), SubResource("Resource_mt8ep"), SubResource("Resource_t1is0"), SubResource("Resource_guc2f"), SubResource("Resource_gdrlf"), SubResource("Resource_yxhqu")])
+metadata/_custom_type_script = "uid://dgwgvxp80lmhb"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xyav6"]
+albedo_color = Color(1, 0, 0.183333, 1)
+albedo_texture = ExtResource("14_tflrs")
+roughness = 0.8
+
+[sub_resource type="Curve3D" id="Curve3D_calw8"]
+bake_interval = 0.1
+_data = {
+"points": PackedVector3Array(0.6, 0.46, 0, 0.6, 0.46, 0, 0, 0, 0, -0.6, -0.46, 0, -0.6, -0.46, 0, 0, 1, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gh8or"]
+albedo_color = Color(0, 0.615686, 0.882353, 1)
+roughness = 0.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gh8or"]
+bg_color = Color(0.0264, 0.0294, 0.03, 0.945098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_size = 5
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5ega"]
+bg_color = Color(0.15, 0.15, 0.15, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+shadow_size = 2
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2uyvs"]
+bg_color = Color(0.15, 0.15, 0.15, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+shadow_size = 2
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_bwm3i"]
+font_size = 21
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_8hl20"]
+color = Color(0.601223, 0.601223, 0.601223, 1)
+grow_begin = 2.0
+grow_end = 7.0
+vertical = true
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_a6kyb"]
+color = Color(0.6, 0.6, 0.6, 1)
+grow_begin = 0.0
+grow_end = 0.0
+
+[node name="Level" type="Node3D"]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+navigation_mesh = SubResource("NavigationMesh_lf0eb")
+
+[node name="DebugSettings" type="Node" parent="."]
+script = ExtResource("1_uoqcs")
+
+[node name="DebugConsoleController" type="Node" parent="."]
+script = ExtResource("2_swo3b")
+
+[node name="ProjectileConsole" type="Node" parent="DebugConsoleController"]
+script = ExtResource("3_s0dbn")
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="Lighting" type="Node3D" parent="Environment"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment/Lighting"]
+environment = ExtResource("3_gh8or")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment/Lighting"]
+transform = Transform3D(0.624316, -0.517834, 0.584874, -0.358336, 0.475453, 0.803455, -0.694136, -0.711191, 0.111274, -5.04075, 2.35, -0.618277)
+light_energy = 0.634
+shadow_enabled = true
+shadow_bias = 0.4
+directional_shadow_mode = 1
+directional_shadow_split_1 = 0.505
+directional_shadow_max_distance = 27.1
+
+[node name="Floor" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
+transform = Transform3D(19.1557, 0, 0, 0, 19.1557, 0, 0, 0, 19.1557, 0, 0, 0)
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("PlaneMesh_rcno3")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_mu4i6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_avqdt")
+
+[node name="Floor2" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
+transform = Transform3D(19.1557, 0, 0, 0, 19.1557, 0, 0, 0, 19.1557, 0, 0, 26.1053)
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("PlaneMesh_rcno3")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_mu4i6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor2"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_avqdt")
+
+[node name="Camera" parent="." instance=ExtResource("3_wbgr3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.735, 1.03, 0.84)
+
+[node name="UnitManager" type="Node" parent="."]
+script = ExtResource("11_lf0eb")
+
+[node name="Azure" parent="UnitManager" node_paths=PackedStringArray("character_sheet") instance=ExtResource("12_k2c3k")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8, 0, 0)
+starting_tactic = SubResource("Resource_bvt28")
+tags = Array[String]([])
+ui_name = "Azure"
+is_enemy = true
+visor_color = Color(0.3818, 0.62831, 0.83, 1)
+character_sheet = NodePath("CharacterSheet")
+
+[node name="CharacterSheet" parent="UnitManager/Azure" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
+unit = NodePath("..")
+attributes_profile = SubResource("Resource_v8epg")
+
+[node name="Verdant" parent="UnitManager" node_paths=PackedStringArray("character_sheet") instance=ExtResource("12_k2c3k")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.0376267, 0, 0)
+starting_tactic = SubResource("Resource_gam6i")
+tags = Array[String]([])
+ui_name = "Verdant"
+is_enemy = true
+visor_color = Color(0.247, 0.65, 0.30744994, 1)
+character_sheet = NodePath("CharacterSheet")
+
+[node name="CharacterSheet" parent="UnitManager/Verdant" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
+unit = NodePath("..")
+attributes_profile = SubResource("Resource_rfnuq")
+
+[node name="Marigold" parent="UnitManager" node_paths=PackedStringArray("character_sheet") instance=ExtResource("12_k2c3k")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 1.8972347)
+starting_tactic = SubResource("Resource_jiskd")
+tags = Array[String]([])
+ui_name = "Marigold"
+visor_color = Color(0.8832, 0.9, 0.396, 1)
+character_sheet = NodePath("CharacterSheet")
+
+[node name="CharacterSheet" parent="UnitManager/Marigold" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
+unit = NodePath("..")
+attributes_profile = SubResource("Resource_iq36j")
+
+[node name="Ruby" parent="UnitManager" node_paths=PackedStringArray("character_sheet") instance=ExtResource("12_k2c3k")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, -2.076848)
+starting_tactic = SubResource("Resource_rx2vc")
+ui_name = "Ruby"
+visor_color = Color(0.73, 0.2993, 0.306478, 1)
+character_sheet = NodePath("CharacterSheet")
+
+[node name="CharacterSheet" parent="UnitManager/Ruby" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
+unit = NodePath("..")
+attributes_profile = SubResource("Resource_8pahp")
+
+[node name="MouseController" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_avqdt")]
+camera = NodePath("../Camera/CamOrigin/SpringArm3D/fCamera")
+
+[node name="Label3D" type="Label3D" parent="MouseController/MouseVisual" index="0"]
+
+[node name="UnitActionRay" parent="MouseController" index="1"]
+collision_mask = 2
+
+[node name="UnitActionSystem" type="Node" parent="."]
+script = ExtResource("9_lf0eb")
+
+[node name="TurnSystem" type="Node" parent="." node_paths=PackedStringArray("unit_manager", "skill_trigger_system")]
+script = ExtResource("10_k2c3k")
+unit_manager = NodePath("../UnitManager")
+skill_trigger_system = NodePath("../CombatSystem/SkillTriggerSystem")
+
+[node name="CombatSystem" type="Node" parent="." node_paths=PackedStringArray("skill_trigger_system")]
+script = ExtResource("11_g7q3m")
+combat_debug_enabled = true
+skill_trigger_system = NodePath("SkillTriggerSystem")
+skill_library = ExtResource("42_5lfvx")
+condition_library = ExtResource("43_f0670")
+
+[node name="SkillTriggerSystem" type="Node" parent="CombatSystem" node_paths=PackedStringArray("combat_system")]
+script = ExtResource("26_qdwhh")
+combat_system = NodePath("..")
+metadata/_custom_type_script = "uid://c1pcudui7e5qp"
+
+[node name="PathfindingSystem" type="Node" parent="." node_paths=PackedStringArray("nav_region_3d")]
+script = ExtResource("12_fnj5h")
+nav_region_3d = NodePath("../NavigationRegion3D")
+radius_curve = ExtResource("14_calw8")
+debug_curve_material = SubResource("StandardMaterial3D_xyav6")
+
+[node name="CurveMesh3D" type="Path3D" parent="PathfindingSystem"]
+visible = false
+curve = SubResource("Curve3D_calw8")
+script = ExtResource("13_wbm0i")
+radius_profile = ExtResource("14_calw8")
+material = SubResource("StandardMaterial3D_gh8or")
+metadata/_custom_type_script = "uid://ian5eam30p0l"
+
+[node name="PathBuilder3D" type="Node" parent="PathfindingSystem"]
+script = ExtResource("16_dfmjn")
+metadata/_custom_type_script = "uid://cc6pcq4yohj7m"
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+script = ExtResource("5_jtghi")
+text_controller_scene = ExtResource("9_ccwc0")
+character_log_queue_scene = ExtResource("10_lf0eb")
+
+[node name="ActionSystemUI" type="Control" parent="UILayer" node_paths=PackedStringArray("turn_system_ui", "initiative_queue_ui", "top_hp_bar", "action_button_hbox")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("15_j7436")
+turn_system_ui = NodePath("../TurnSystemUI")
+initiative_queue_ui = NodePath("../InitiativeQueueUI")
+top_hp_bar = NodePath("TopHPBar")
+action_button_hbox = NodePath("PanelContainer/MarginContainer/ActionButtonHbox")
+action_button_prefab = ExtResource("16_tko1n")
+
+[node name="PanelContainer" type="PanelContainer" parent="UILayer/ActionSystemUI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.898
+anchor_right = 0.5
+anchor_bottom = 0.898
+offset_top = -3.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_gh8or")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/ActionSystemUI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ActionButtonHbox" type="HBoxContainer" parent="UILayer/ActionSystemUI/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ActionButtonUI" parent="UILayer/ActionSystemUI/PanelContainer/MarginContainer/ActionButtonHbox" instance=ExtResource("16_tko1n")]
+layout_mode = 2
+
+[node name="TopHPBar" parent="UILayer/ActionSystemUI" instance=ExtResource("21_xyav6")]
+layout_mode = 1
+
+[node name="TurnSystemUI" type="Control" parent="UILayer" node_paths=PackedStringArray("turn_system", "combat_system", "end_turn_container", "end_turn_button", "turn_phase_label", "round_counter_label", "cycle_counter_label", "movement_gait_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("15_ex7fh")
+turn_system = NodePath("../../TurnSystem")
+combat_system = NodePath("../../CombatSystem")
+end_turn_container = NodePath("EndTurnContainer")
+end_turn_button = NodePath("EndTurnContainer/MarginContainer/EndTurnButton")
+turn_phase_label = NodePath("TurnCountContainer/VBoxContainer/MarginContainer2/TurnPhaseLabel")
+round_counter_label = NodePath("TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/RoundCounterLabel")
+cycle_counter_label = NodePath("TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer2/CycleCounterLabel")
+movement_gait_label = NodePath("TurnCountContainer/VBoxContainer/MarginContainer3/MovementGaitLabel")
+
+[node name="EndTurnContainer" type="PanelContainer" parent="UILayer/TurnSystemUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -108.0
+offset_top = 14.0
+offset_right = -12.0
+offset_bottom = 51.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_o5ega")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/TurnSystemUI/EndTurnContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="EndTurnButton" type="Button" parent="UILayer/TurnSystemUI/EndTurnContainer/MarginContainer"]
+layout_mode = 2
+text = "END TURN"
+
+[node name="TurnCountContainer" type="PanelContainer" parent="UILayer/TurnSystemUI"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -40.0
+offset_top = 9.0
+offset_right = 49.0
+offset_bottom = 78.0
+grow_horizontal = 2
+scale = Vector2(0.730678, 0.730678)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_2uyvs")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/TurnSystemUI/TurnCountContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="RoundCounterLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "Round 1
+"
+label_settings = SubResource("LabelSettings_bwm3i")
+horizontal_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+theme_override_styles/separator = SubResource("StyleBoxLine_8hl20")
+
+[node name="MarginContainer2" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="CycleCounterLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+text = "Cycle 1
+"
+label_settings = SubResource("LabelSettings_bwm3i")
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxLine_a6kyb")
+
+[node name="MarginContainer2" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TurnPhaseLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+text = "Combat Phase
+"
+label_settings = SubResource("LabelSettings_bwm3i")
+horizontal_alignment = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MovementGaitLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+text = "Movement Gait"
+label_settings = SubResource("LabelSettings_bwm3i")
+horizontal_alignment = 1
+
+[node name="InitiativeQueueUI" type="Control" parent="UILayer" node_paths=PackedStringArray("unit_manager", "unit_stats_container")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("16_2uyvs")
+unit_manager = NodePath("../../UnitManager")
+unit_stats_bar_scene = ExtResource("16_ecsph")
+unit_stats_container = NodePath("PanelContainer/MarginContainer/UnitStatsContainer")
+
+[node name="PanelContainer" type="PanelContainer" parent="UILayer/InitiativeQueueUI"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 5.0
+offset_top = -15.9999695
+offset_right = 201.0
+offset_bottom = 114.00003
+grow_vertical = 2
+scale = Vector2(0.725, 0.725)
+theme_override_styles/panel = SubResource("StyleBoxFlat_o5ega")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/InitiativeQueueUI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="UnitStatsContainer" type="VBoxContainer" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="UnitStatsBar" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer/UnitStatsContainer" instance=ExtResource("16_ecsph")]
+layout_mode = 2
+
+[node name="UnitStatsBar2" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer/UnitStatsContainer" instance=ExtResource("16_ecsph")]
+visible = false
+layout_mode = 2
+
+[node name="UnitStatsBar3" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer/UnitStatsContainer" instance=ExtResource("16_ecsph")]
+visible = false
+layout_mode = 2
+
+[node name="UnitStatsBar4" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer/UnitStatsContainer" instance=ExtResource("16_ecsph")]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UILayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("16_ex7fh")
+
+[node name="UnitCharacterSheetUI" parent="UILayer" node_paths=PackedStringArray("mouse_controller", "pathfinding") instance=ExtResource("22_gh8or")]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 684.0
+offset_bottom = 433.0
+mouse_controller = NodePath("../../MouseController")
+pathfinding = NodePath("../../PathfindingSystem")
+
+[node name="CombatLog" parent="UILayer" instance=ExtResource("27_2gnov")]
+max_logs = 40
+change_amount = 240
+test_num = 40.0
+
+[connection signal="pressed" from="UILayer/TurnSystemUI/EndTurnContainer/MarginContainer/EndTurnButton" to="UILayer/TurnSystemUI" method="_on_end_turn_button_pressed"]
+
+[editable path="MouseController"]

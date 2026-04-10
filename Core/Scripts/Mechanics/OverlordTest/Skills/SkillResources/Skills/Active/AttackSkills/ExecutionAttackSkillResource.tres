@@ -1,0 +1,53 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://ma8esgmd7q1j"]
+
+[ext_resource type="Resource" uid="uid://8mq08eqitt0g" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/CapsuleBashPackage.tres" id="1_kmve8"]
+[ext_resource type="Resource" uid="uid://cuudvrampevcg" path="res://Deepmage/Core/Resources/ActionResources/TestAttackActionResource.tres" id="1_ldnaa"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_f8l8j"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="8_mk2e7"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="9_5co8x"]
+[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsEnemySkillCondition.gd" id="10_e7d3p"]
+[ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/RangeBasedSkillConditions/IsUnitInRangeSkillCondition.gd" id="11_rhvgd"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="12_wj387"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="13_2n67h"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="13_5mwhy"]
+[ext_resource type="Script" uid="uid://d32i8j73e5kei" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/StatusScripts/Blessings/SkillBlessings/ExecutionBlessing.gd" id="14_f8l8j"]
+[ext_resource type="Script" uid="uid://0w3jiadl53qn" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/HealthBasedSkillConditions/Thresholds/HPPercentBelowSkillCondition.gd" id="15_f8l8j"]
+
+[sub_resource type="Resource" id="Resource_eu7gh"]
+script = ExtResource("10_e7d3p")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_7kb16"]
+script = ExtResource("11_rhvgd")
+range_var = 3.0
+metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
+
+[sub_resource type="Resource" id="Resource_f8l8j"]
+script = ExtResource("10_e7d3p")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_2ljo2"]
+script = ExtResource("15_f8l8j")
+metadata/_custom_type_script = "uid://0w3jiadl53qn"
+
+[sub_resource type="Resource" id="Resource_4pxkg"]
+script = ExtResource("14_f8l8j")
+ui_name = "Execution Blessing"
+status_category = 1
+status_level = 1
+expire_timing = 3
+trigger_conditions = Array[ExtResource("9_5co8x")]([SubResource("Resource_f8l8j"), SubResource("Resource_2ljo2")])
+metadata/_custom_type_script = "uid://d32i8j73e5kei"
+
+[resource]
+resource_name = "ExecutionSkillResource"
+script = ExtResource("12_wj387")
+skill_name = "Execution"
+action = ExtResource("1_ldnaa")
+internal_skill_conditions = Array[ExtResource("9_5co8x")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
+animation_package = ExtResource("1_kmve8")
+skill_modifying_statuses = Array[ExtResource("13_5mwhy")]([SubResource("Resource_4pxkg")])
+trait_1 = "Melee"
+trigger_description = "When an enemy is within range 3"
+description = Array[String](["Moves towards then Bashes a unit in range 5"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

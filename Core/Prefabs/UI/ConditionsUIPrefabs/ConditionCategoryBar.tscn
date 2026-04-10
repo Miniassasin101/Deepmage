@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://dvy3w41iuhqe1"]
+
+[ext_resource type="Script" uid="uid://cc1h70ulwghaf" path="res://Deepmage/Core/Prefabs/UI/ConditionsUIPrefabs/ConditionCategoryBar.gd" id="1_q55ry"]
+[ext_resource type="StyleBox" uid="uid://bke4dqop88370" path="res://Deepmage/Core/Art/StyleBoxes/CategoryConditionBarUnhighlightedStylebox.tres" id="2_qcynm"]
+[ext_resource type="StyleBox" uid="uid://bd21d1dy13vxc" path="res://Deepmage/Core/Art/StyleBoxes/CategoryConditionBarHighlightedStylebox.tres" id="3_1pcwd"]
+[ext_resource type="StyleBox" uid="uid://dpvcxugkbtqrj" path="res://Deepmage/Core/Art/StyleBoxes/CategoryConditionBarSelectedStylebox.tres" id="4_1r5ce"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lhytx"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.08235294)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 8
+corner_detail = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_srs5m"]
+font_size = 14
+outline_color = Color(0, 0, 0, 1)
+
+[node name="ConditionCategoryBar" type="PanelContainer" node_paths=PackedStringArray("category_label", "highlight_container")]
+custom_minimum_size = Vector2(0, 20)
+theme_override_styles/panel = SubResource("StyleBoxFlat_lhytx")
+script = ExtResource("1_q55ry")
+category_label = NodePath("PanelContainer/Label")
+highlight_container = NodePath("PanelContainer")
+style_box_unhighlighted_texture = ExtResource("2_qcynm")
+style_box_highlighted_texture = ExtResource("3_1pcwd")
+style_box_selected_texture = ExtResource("4_1r5ce")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+clip_contents = true
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = ExtResource("4_1r5ce")
+
+[node name="Label" type="Label" parent="PanelContainer"]
+layout_mode = 2
+mouse_filter = 1
+text = "Condition Category"
+label_settings = SubResource("LabelSettings_srs5m")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

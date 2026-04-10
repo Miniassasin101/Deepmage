@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/jerem/AppData/Roaming/Claude/local-agent-mode-sessions/skills-plugin/a0e88870-887e-46b2-92ce-f35b4ce813b6/6214a25c-7033-4b9a-949c-3319443c7d50/skills/docx/**)",
+      "Bash(python scripts/office/unpack.py \"C:\\\\Users\\\\jerem\\\\Downloads\\\\DeepmageOverlord_RefactorRoadmap.docx\" unpacked/)",
+      "Bash(xargs grep -l \"do_resolve\\\\|HitResolver\\\\|DamageCalculator\")",
+      "Bash(pandoc --track-changes=all \"C:\\\\Users\\\\jerem\\\\Downloads\\\\DeepmageOverlord_RefactorRoadmap.docx\" -o /tmp/roadmap.md)",
+      "Read(//tmp/**)",
+      "Bash(mkdir -p roadmap_unpack)",
+      "Bash(python \"C:\\\\Users\\\\jerem\\\\AppData\\\\Roaming\\\\Claude\\\\local-agent-mode-sessions\\\\skills-plugin\\\\a0e88870-887e-46b2-92ce-f35b4ce813b6\\\\6214a25c-7033-4b9a-949c-3319443c7d50\\\\skills\\\\docx\\\\scripts\\\\office\\\\unpack.py\" \"C:\\\\Users\\\\jerem\\\\Downloads\\\\DeepmageOverlord_RefactorRoadmap.docx\" /tmp/roadmap_unpack)",
+      "Bash(python3 \"C:\\\\Users\\\\jerem\\\\AppData\\\\Roaming\\\\Claude\\\\local-agent-mode-sessions\\\\skills-plugin\\\\a0e88870-887e-46b2-92ce-f35b4ce813b6\\\\6214a25c-7033-4b9a-949c-3319443c7d50\\\\skills\\\\docx\\\\scripts\\\\office\\\\unpack.py\" \"C:\\\\Users\\\\jerem\\\\Downloads\\\\DeepmageOverlord_RefactorRoadmap.docx\" /tmp/roadmap_unpack)",
+      "Bash(unzip -o \"C:/Users/jerem/Downloads/DeepmageOverlord_RefactorRoadmap.docx\" word/document.xml -d roadmap_raw)",
+      "Bash(pandoc --track-changes=all \"C:\\\\Users\\\\jerem\\\\Downloads\\\\DeepmageOverlord_RefactorRoadmap.docx\" -o output.md)",
+      "Bash(python scripts/office/unpack.py \"C:\\\\Users\\\\jerem\\\\Downloads\\\\DeepmageOverlord_RefactorRoadmap.docx\" unpacked_roadmap/)",
+      "Bash(xargs wc -l)",
+      "Bash(del \"C:\\\\Users\\\\jerem\\\\Saved Games\\\\Godot\\\\Deepmage\\\\DeepmageOverlord\\\\Deepmage\\\\Core\\\\Scripts\\\\Combat\\\\CombatSystem\\\\GubatCombatSystem.gd\")",
+      "Bash(xargs grep -l \"get_first_valid_passive_skill_with_context\")"
+    ]
+  }
+}

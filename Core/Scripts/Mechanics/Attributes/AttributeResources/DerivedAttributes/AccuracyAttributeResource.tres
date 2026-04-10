@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Attribute" load_steps=2 format=3 uid="uid://0w1biehlwyj0"]
+
+[ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="1_j4cgi"]
+
+[resource]
+resource_local_to_scene = true
+resource_name = "Accuracy"
+script = ExtResource("1_j4cgi")
+attribute_name = "accuracy"
+attribute_type = 2
+maximum_value = 0
+metadata/_custom_type_script = "uid://7vw8btajjq0q"

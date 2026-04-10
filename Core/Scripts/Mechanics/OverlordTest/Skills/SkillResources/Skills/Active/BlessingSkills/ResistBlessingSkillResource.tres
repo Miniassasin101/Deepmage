@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://c8fhtx0galhvd"]
+
+[ext_resource type="Script" uid="uid://crlblfi0eiqt0" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/CombatActionScripts/CombatAction.gd" id="1_3egwq"]
+[ext_resource type="Resource" uid="uid://djrw5nkydvyv6" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BlockPackage.tres" id="1_m4r48"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_biydw"]
+[ext_resource type="Resource" uid="uid://dckxjxfolijdo" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/BlessingEffects/GrantResistBlessingEffectResource.tres" id="5_m4r48"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="8_nv8bn"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="10_er6pt"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="11_hpndc"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="12_0jxln"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="13_6fwl8"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="13_e8vuh"]
+
+[sub_resource type="Resource" id="Resource_xhiib"]
+script = ExtResource("1_3egwq")
+action_name = "Status Grant Action"
+metadata/_custom_type_script = "uid://crlblfi0eiqt0"
+
+[resource]
+resource_name = "ResistUpSkillResource"
+script = ExtResource("12_0jxln")
+skill_name = "Resist Up"
+action = SubResource("Resource_xhiib")
+skill_type = 1
+base_power = 0
+crit_mod = -3
+animation_package = ExtResource("1_m4r48")
+effects = Array[ExtResource("4_biydw")]([ExtResource("5_m4r48")])
+trigger_description = "Always"
+description = Array[String](["Grants a Resist blessing, increasing magical resistance"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

@@ -1,0 +1,321 @@
+[gd_scene load_steps=45 format=3 uid="uid://2h1a1e1r8hc2"]
+
+[ext_resource type="Material" uid="uid://co5oaijuf6av2" path="res://Deepmage/Core/Art/Materials/GrayscaleCelShadedMat.tres" id="1_cc6tg"]
+[ext_resource type="Script" uid="uid://byevnkq30m4mb" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.gd" id="1_ohquw"]
+[ext_resource type="Material" uid="uid://caeve0dltuafr" path="res://Deepmage/Core/Art/Materials/WhiteHitFXMaterial.tres" id="2_rlwmm"]
+[ext_resource type="PackedScene" uid="uid://14nkak1a1qkg" path="res://Deepmage/Core/Prefabs/Mechanics/CharacterSheet.tscn" id="2_t3ejk"]
+[ext_resource type="PackedScene" uid="uid://cwusixosbj5vk" path="res://Deepmage/Core/Prefabs/UI/3D/SquareVisual.tscn" id="3_0qgfu"]
+[ext_resource type="Script" uid="uid://dcltq1auxqj26" path="res://Deepmage/Core/Scripts/Units/MovementController.gd" id="3_1oy7d"]
+[ext_resource type="Script" uid="uid://h4o2321q5l0u" path="res://Deepmage/Core/Scripts/Animation/AnimationController.gd" id="3_sxvrp"]
+[ext_resource type="AnimationLibrary" uid="uid://oosve5txyoqs" path="res://Deepmage/Core/Resources/AnimationResources/AnimationLibraries/TestAnimationLibraries/CapsuleAnims.res" id="4_7ehp6"]
+[ext_resource type="Animation" uid="uid://dl5c4nb4fybhk" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/BackHitReaction.res" id="4_dg5hf"]
+[ext_resource type="Script" uid="uid://c2aqj40trpjeq" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/EffectsController.gd" id="4_s3v1t"]
+[ext_resource type="Script" uid="uid://br2ouvjnr5mbk" path="res://Deepmage/Core/Prefabs/UnitPrefabs/SatelliteController.gd" id="9_aemtr"]
+[ext_resource type="PackedScene" uid="uid://2ba8bs3ad48b" path="res://Deepmage/Core/Prefabs/VFX/SatelliteCarrier.tscn" id="10_lsp3f"]
+[ext_resource type="Script" uid="uid://ck2buvlnnr6il" path="res://Deepmage/Core/Scripts/Mechanics/Tokens/TokenController.gd" id="11_1um36"]
+[ext_resource type="Script" uid="uid://bt62wkw6goum8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/TacticsController.gd" id="14_b3sv1"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="15_mt7xe"]
+[ext_resource type="Resource" uid="uid://c74afabw0rnw0" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResource/TestAttackSkillResource.tres" id="16_kflht"]
+[ext_resource type="Script" uid="uid://cpa7repyr1v6o" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/MoveToUnitAction.gd" id="16_sne6a"]
+[ext_resource type="Script" uid="uid://bubf25btsnnfv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Tactic.gd" id="17_7o6ql"]
+[ext_resource type="Resource" uid="uid://cuudvrampevcg" path="res://Deepmage/Core/Resources/ActionResources/TestAttackActionResource.tres" id="17_hq0j0"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="17_pksos"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="18_sne6a"]
+[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="18_sxvrp"]
+[ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IsWithinRangeSkillCondition.gd" id="19_pksos"]
+[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IsEnemySkillCondition.gd" id="20_sxvrp"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="21_7ehp6"]
+[ext_resource type="Script" uid="uid://xw1q3xji7lhr" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IsFullHealthSkillCondition.gd" id="21_1343x"]
+[ext_resource type="Script" uid="uid://csqgchb51x8ra" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreferenceScripts/HighestHPPercentPreference.gd" id="22_1343x"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ohquw"]
+lightmap_size_hint = Vector2i(17, 14)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0qgfu"]
+size = Vector3(0.725, 0.2, 0.325)
+
+[sub_resource type="SphereMesh" id="SphereMesh_1um36"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0qgfu"]
+size = Vector3(1, 1.69678, 1)
+
+[sub_resource type="Animation" id="Animation_sxvrp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Rig:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Rig:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "position_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Rig")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Rig/LeftHandMesh:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.713219, 1.02331, 0.140477)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Rig/LeftHandMesh:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3.30775e-05, -8.00054e-05, -0.000265496)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Rig/RightHandMesh:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.723787, 1.02331, 0.140477)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Rig/RightHandMesh:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7ehp6"]
+_data = {
+&"RESET": SubResource("Animation_sxvrp")
+}
+
+[sub_resource type="Resource" id="Resource_whesq"]
+script = ExtResource("19_pksos")
+metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
+
+[sub_resource type="Resource" id="Resource_q2c7t"]
+script = ExtResource("20_sxvrp")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_sxvrp"]
+script = ExtResource("21_1343x")
+metadata/_custom_type_script = "uid://xw1q3xji7lhr"
+
+[sub_resource type="Resource" id="Resource_ibn4v"]
+script = ExtResource("22_1343x")
+metadata/_custom_type_script = "uid://csqgchb51x8ra"
+
+[sub_resource type="Resource" id="Resource_7ehp6"]
+script = ExtResource("15_mt7xe")
+skill_name = "Bash"
+action = ExtResource("17_hq0j0")
+skill_conditions = Array[ExtResource("18_sne6a")]([SubResource("Resource_whesq"), SubResource("Resource_q2c7t"), SubResource("Resource_sxvrp")])
+target_preferences = Array[ExtResource("21_7ehp6")]([SubResource("Resource_ibn4v")])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"
+
+[sub_resource type="Resource" id="Resource_ccdyu"]
+script = ExtResource("16_sne6a")
+move_speed = 10.0
+unit_avoid_radius = 1.6
+action_name = "Move To"
+selection_types = Array[ExtResource("17_pksos")]([ExtResource("18_sxvrp")])
+tags = Array[String](["move_to_unit"])
+metadata/_custom_type_script = "uid://cpa7repyr1v6o"
+
+[sub_resource type="Resource" id="Resource_4yeyf"]
+script = ExtResource("20_sxvrp")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_s3v1t"]
+script = ExtResource("21_1343x")
+metadata/_custom_type_script = "uid://xw1q3xji7lhr"
+
+[sub_resource type="Resource" id="Resource_t7uvv"]
+script = ExtResource("15_mt7xe")
+skill_name = "Move To"
+action = SubResource("Resource_ccdyu")
+skill_conditions = Array[ExtResource("18_sne6a")]([SubResource("Resource_4yeyf"), SubResource("Resource_s3v1t")])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"
+
+[sub_resource type="Resource" id="Resource_j6nn7"]
+script = ExtResource("17_7o6ql")
+active_skills = Array[ExtResource("15_mt7xe")]([SubResource("Resource_7ehp6"), SubResource("Resource_t7uvv"), ExtResource("16_kflht")])
+metadata/_custom_type_script = "uid://bubf25btsnnfv"
+
+[sub_resource type="Resource" id="Resource_kflht"]
+script = ExtResource("17_7o6ql")
+metadata/_custom_type_script = "uid://bubf25btsnnfv"
+
+[node name="Unit" type="Node3D" node_paths=PackedStringArray("above_head_marker", "nav_agent", "capsule_body", "capsule_visor", "selection_visual", "movement_controller", "animation_controller", "satellite_controller", "token_controller", "tactics_controller", "left_hand_socket", "right_hand_socket")]
+script = ExtResource("1_ohquw")
+above_head_marker = NodePath("AboveHeadMarker")
+nav_agent = NodePath("NavigationAgent3D")
+capsule_body = NodePath("Rig/MeshInstance3D")
+capsule_visor = NodePath("Rig/MeshInstance3D/MeshInstance3D")
+selection_visual = NodePath("SelectionSquareRoot/GridSystemVisual")
+movement_controller = NodePath("MovementController")
+animation_controller = NodePath("AnimationController")
+satellite_controller = NodePath("SatelliteController")
+token_controller = NodePath("TokenController")
+tactics_controller = NodePath("TacticsController")
+left_hand_socket = NodePath("Rig/LeftHandMesh/LeftHandSocket")
+right_hand_socket = NodePath("Rig/RightHandMesh/RightHandSocket")
+character_sheet_packed_scene = ExtResource("2_t3ejk")
+speed = 15
+white_hit_flash_mat = ExtResource("2_rlwmm")
+hit_flash_time = 0.2
+tags = Array[String]([""])
+
+[node name="Rig" type="Node3D" parent="."]
+transform = Transform3D(0.852131, 0, 0, 0, 0.852131, 0, 0, 0, 0.852131, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Rig"]
+transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 1.014, 0)
+rotation_edit_mode = 1
+mesh = SubResource("CapsuleMesh_ohquw")
+surface_material_override/0 = ExtResource("1_cc6tg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Rig/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.423313, 0.411077)
+mesh = SubResource("BoxMesh_0qgfu")
+surface_material_override/0 = ExtResource("1_cc6tg")
+
+[node name="LeftHandMesh" type="MeshInstance3D" parent="Rig"]
+transform = Transform3D(0.29999995, 7.9648e-05, -2.400162e-05, -7.9648795e-05, 0.29999995, -9.92325e-06, 2.399898e-05, 9.929621e-06, 0.3, 0.713219, 1.02331, 0.140477)
+mesh = SubResource("SphereMesh_1um36")
+surface_material_override/0 = ExtResource("1_cc6tg")
+
+[node name="LeftHandSocket" type="Marker3D" parent="Rig/LeftHandMesh"]
+gizmo_extents = 0.8
+
+[node name="RightHandMesh" type="MeshInstance3D" parent="Rig"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -0.723787, 1.02331, 0.140477)
+mesh = SubResource("SphereMesh_1um36")
+surface_material_override/0 = ExtResource("1_cc6tg")
+
+[node name="RightHandSocket" type="Marker3D" parent="Rig/RightHandMesh"]
+gizmo_extents = 0.8
+
+[node name="UnitArea3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.854524, 0)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UnitArea3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0065918, 0)
+shape = SubResource("BoxShape3D_0qgfu")
+
+[node name="AboveHeadMarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79278, 0)
+
+[node name="AnimationController" type="Node" parent="." node_paths=PackedStringArray("unit", "animator", "event_animator", "effects_controller")]
+script = ExtResource("3_sxvrp")
+unit = NodePath("..")
+animator = NodePath("../AnimationPlayer")
+event_animator = NodePath("EventAnimator")
+effects_controller = NodePath("EffectsController")
+current_library = "CapsuleAnims"
+hit_reaction_anim = ExtResource("4_dg5hf")
+
+[node name="EffectsController" type="Node" parent="AnimationController" node_paths=PackedStringArray("unit", "animation_controller")]
+script = ExtResource("4_s3v1t")
+unit = NodePath("../..")
+animation_controller = NodePath("..")
+
+[node name="EventAnimator" type="AnimationPlayer" parent="AnimationController"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_7ehp6"),
+&"CapsuleAnims": ExtResource("4_7ehp6")
+}
+
+[node name="SatelliteController" type="Node3D" parent="." node_paths=PackedStringArray("spawn_markers")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.283377, 0)
+script = ExtResource("9_aemtr")
+satellite_prefab = ExtResource("10_lsp3f")
+spawn_markers = [NodePath("SpawnMarker1"), NodePath("SpawnMarker2"), NodePath("SpawnMarker3"), NodePath("SpawnMarker4"), NodePath("SpawnMarker5"), NodePath("SpawnMarker6")]
+
+[node name="SpawnMarker1" type="Marker3D" parent="SatelliteController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8481349, 0.1903224, 0)
+
+[node name="SpawnMarker2" type="Marker3D" parent="SatelliteController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.82162154, 0.1903224, 0)
+
+[node name="SpawnMarker3" type="Marker3D" parent="SatelliteController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6864845, 0.60697126, -0.23070657)
+
+[node name="SpawnMarker4" type="Marker3D" parent="SatelliteController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6599712, 0.60697126, -0.23070657)
+
+[node name="SpawnMarker5" type="Marker3D" parent="SatelliteController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4062649, 0.9591547, -0.37589395)
+
+[node name="SpawnMarker6" type="Marker3D" parent="SatelliteController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.37975156, 0.9591547, -0.37589395)
+
+[node name="MovementController" type="Node" parent="." node_paths=PackedStringArray("unit")]
+script = ExtResource("3_1oy7d")
+unit = NodePath("..")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+debug_enabled = true
+
+[node name="SelectionSquareRoot" type="Node3D" parent="."]
+
+[node name="GridSystemVisual" parent="SelectionSquareRoot" instance=ExtResource("3_0qgfu")]
+transform = Transform3D(1.505, 0, 0, 0, 1.505, 0, 0, 0, 1.505, 0, 0, 0)
+top_level = true
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="SelectionSquareRoot"]
+remote_path = NodePath("../GridSystemVisual")
+update_rotation = false
+update_scale = false
+
+[node name="TokenController" type="Node" parent="." node_paths=PackedStringArray("unit")]
+script = ExtResource("11_1um36")
+unit = NodePath("..")
+metadata/_custom_type_script = "uid://ck2buvlnnr6il"
+
+[node name="TacticsController" type="Node" parent="." node_paths=PackedStringArray("unit")]
+script = ExtResource("14_b3sv1")
+unit = NodePath("..")
+starting_tactic = SubResource("Resource_j6nn7")
+current_tactic = SubResource("Resource_kflht")

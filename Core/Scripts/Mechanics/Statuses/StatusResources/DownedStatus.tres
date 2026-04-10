@@ -1,0 +1,9 @@
+[gd_resource type="DownedStatus" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/StatusScripts/Special/DownedStatus.gd" id="1_downed"]
+
+[resource]
+script = ExtResource("1_downed")
+ui_name = "Downed"
+status_category = 3
+expire_timing = 0

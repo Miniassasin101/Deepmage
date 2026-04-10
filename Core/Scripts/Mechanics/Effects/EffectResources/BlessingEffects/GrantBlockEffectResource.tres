@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="GrantBlockEffect" load_steps=2 format=3 uid="uid://bi1bg1c7ldp7x"]
+
+[ext_resource type="Script" uid="uid://13akgn3nuj34" path="res://Deepmage/Core/Scripts/Mechanics/Effects/GrantBlockEffect.gd" id="1_i5yap"]
+
+[resource]
+script = ExtResource("1_i5yap")
+block_value = 3
+use_expire_rule = 2
+ui_name = &"Grant Block"
+metadata/_custom_type_script = "uid://13akgn3nuj34"

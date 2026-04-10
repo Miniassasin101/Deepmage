@@ -1,0 +1,1022 @@
+[gd_scene load_steps=134 format=3 uid="uid://b08xisrcbfyhj"]
+
+[ext_resource type="Material" uid="uid://deg3xriliawnr" path="res://Deepmage/Core/Art/Shaders/ShaderMats/GridMat.tres" id="1_mu4i6"]
+[ext_resource type="Script" uid="uid://dnn3fjo7nsrn3" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugSettings.gd" id="1_uoqcs"]
+[ext_resource type="Script" uid="uid://d00flrde4n8v4" path="res://Deepmage/Core/Prefabs/LevelPrefabs/DebugConsoleController.gd" id="2_swo3b"]
+[ext_resource type="Environment" uid="uid://c7cx2thxig2w6" path="res://Deepmage/Core/Resources/Environment/Lighting/TestEnvironment1.tres" id="3_gh8or"]
+[ext_resource type="Script" uid="uid://csywy3ienecb4" path="res://Deepmage/Core/Prefabs/LevelPrefabs/ProjectileConsole.gd" id="3_s0dbn"]
+[ext_resource type="PackedScene" uid="uid://du3efvmcdx31a" path="res://Deepmage/Core/Prefabs/Cameras/Camera.tscn" id="3_wbgr3"]
+[ext_resource type="PackedScene" uid="uid://bauq6rq7jnnvw" path="res://Deepmage/Core/Prefabs/InteractionPrefabs/MouseController.tscn" id="4_avqdt"]
+[ext_resource type="Script" uid="uid://dsmekjbchblby" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UILayer.gd" id="5_jtghi"]
+[ext_resource type="PackedScene" uid="uid://bf575s2vrxvov" path="res://Deepmage/Core/Prefabs/UI/TextController.tscn" id="9_ccwc0"]
+[ext_resource type="Script" uid="uid://brupu7akvtuia" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UnitActionSystem.gd" id="9_lf0eb"]
+[ext_resource type="PackedScene" uid="uid://14nkak1a1qkg" path="res://Deepmage/Core/Prefabs/Mechanics/CharacterSheet.tscn" id="9_srkvl"]
+[ext_resource type="Script" uid="uid://b3vsba7uy6t7o" path="res://Deepmage/Core/Scripts/Combat/TurnSystems/TurnSystem.gd" id="10_k2c3k"]
+[ext_resource type="PackedScene" uid="uid://8oord2o1icck" path="res://Deepmage/Core/Prefabs/UI/CharacterLogQueue.tscn" id="10_lf0eb"]
+[ext_resource type="Script" uid="uid://7vw8btajjq0q" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/Attribute.gd" id="10_p6f6u"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="11_22ak0"]
+[ext_resource type="Script" uid="uid://brh8qmh2c4g8f" path="res://Deepmage/Core/Scripts/Combat/CombatSystem/CombatSystem.gd" id="11_g7q3m"]
+[ext_resource type="Script" uid="uid://1miy676tt71s" path="res://Deepmage/Core/Prefabs/LevelPrefabs/UnitManager.gd" id="11_lf0eb"]
+[ext_resource type="Script" uid="uid://bl34p0y06cyys" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/MoveAction.gd" id="12_cel8m"]
+[ext_resource type="Script" uid="uid://xwiyhnl8erp1" path="res://Deepmage/Core/Scripts/Pathfinding/PathfindingSystem.gd" id="12_fnj5h"]
+[ext_resource type="PackedScene" uid="uid://2h1a1e1r8hc2" path="res://Deepmage/Core/Prefabs/UnitPrefabs/Unit.tscn" id="12_k2c3k"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="13_sgxdm"]
+[ext_resource type="Script" uid="uid://ian5eam30p0l" path="res://addons/curvemesh3d/curvemesh3d.gd" id="13_wbm0i"]
+[ext_resource type="Curve" uid="uid://b1kq6l63y7lb6" path="res://Deepmage/Core/MathPrefabs/Curves/Level.tres" id="14_calw8"]
+[ext_resource type="Script" uid="uid://bj28140wrmaiv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/PositionPreferences/PositionPreference.gd" id="14_f2qps"]
+[ext_resource type="Texture2D" uid="uid://duu0wfs3dasnn" path="res://Deepmage/Core/Art/Textures/EnvironmentTextures/GroundTextures/PolygonPrototype_Texture_Grid_08.png" id="14_tflrs"]
+[ext_resource type="Script" uid="uid://hbm8nks1et3p" path="res://Deepmage/Core/Scripts/UI/TurnSystemUI.gd" id="15_ex7fh"]
+[ext_resource type="Script" uid="uid://dk20xdie5t8dr" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/PositionPreferences/MaximizeMinEnemyDistancePreference.gd" id="15_iq36j"]
+[ext_resource type="Script" uid="uid://cby42fxiu4cv5" path="res://Deepmage/Core/Scripts/UI/ActionSystemUI.gd" id="15_j7436"]
+[ext_resource type="Script" uid="uid://dyngi1ipggvgb" path="res://Deepmage/Core/Scripts/UI/InitiativeQueueUI.gd" id="16_2uyvs"]
+[ext_resource type="Script" uid="uid://cc6pcq4yohj7m" path="res://Deepmage/Core/Scripts/Projectile/PathBuilder3D.gd" id="16_dfmjn"]
+[ext_resource type="PackedScene" uid="uid://3p3xt0lymqsd" path="res://Deepmage/Core/Prefabs/UI/UnitStatsBar.tscn" id="16_ecsph"]
+[ext_resource type="Script" uid="uid://cjhhvf5ub04kj" path="res://Deepmage/Core/Prefabs/UI/FPSLabel.gd" id="16_ex7fh"]
+[ext_resource type="PackedScene" uid="uid://psdfsrnutgxe" path="res://Deepmage/Core/Prefabs/UI/ActionButtonUI.tscn" id="16_tko1n"]
+[ext_resource type="Script" uid="uid://cwhwg184xsckd" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/PositionPreferences/MinimizePathLengthPreference.gd" id="16_v8epg"]
+[ext_resource type="Script" uid="uid://canbipd5camsd" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Samplers/RetreatRingSampler.gd" id="17_k6sm3"]
+[ext_resource type="Script" uid="uid://c57p01pt3qmue" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/MoveToSafetySkill.gd" id="18_bvt28"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="19_23xud"]
+[ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IsSelfSkillCondition.gd" id="20_hymmt"]
+[ext_resource type="Script" uid="uid://devt7ks3mmyfv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IsAnyEnemyInRangeSkillCondition.gd" id="21_v4iap"]
+[ext_resource type="PackedScene" uid="uid://cdifkxjoiv0eq" path="res://Deepmage/Core/Prefabs/UI/TopHPBar.tscn" id="21_xyav6"]
+[ext_resource type="Script" uid="uid://cv63cki4l8n4" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SelfHasReachableSafePositionCondition.gd" id="22_8v6vh"]
+[ext_resource type="PackedScene" uid="uid://cqqsm2gpif3dw" path="res://Deepmage/Core/Prefabs/UI/UnitCharacterSheet.tscn" id="22_gh8or"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="23_11ubm"]
+[ext_resource type="Resource" uid="uid://uwibxof05smc" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BallThrowPackage.tres" id="24_k6sm3"]
+[ext_resource type="Script" uid="uid://bubf25btsnnfv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Tactic.gd" id="24_w01yd"]
+[ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="25_bvt28"]
+[ext_resource type="Script" uid="uid://dfqq4lgq8fr27" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="26_23xud"]
+[ext_resource type="PackedScene" uid="uid://bt5idkoxachxk" path="res://Deepmage/Core/Prefabs/UI/CombatLog.tscn" id="27_2gnov"]
+[ext_resource type="PackedScene" uid="uid://kybquhg07l5i" path="res://Deepmage/Core/Prefabs/VFX/TestBall.tscn" id="27_hymmt"]
+[ext_resource type="Script" uid="uid://nqjg83o6epyn" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/AttackActionScripts/RangedAttackAction.gd" id="28_v4iap"]
+[ext_resource type="Resource" uid="uid://q2jms5gufitg" path="res://Deepmage/Core/Resources/NamedBooleanResources/UnitBool.tres" id="29_8v6vh"]
+[ext_resource type="Script" uid="uid://2nsctaj2mk50" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IsEnemySkillCondition.gd" id="30_23xud"]
+[ext_resource type="Script" uid="uid://cs0g4gcahkb0o" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IsUnitInRangeSkillCondition.gd" id="31_hymmt"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_lf0eb"]
+vertices = PackedVector3Array(-18.6557, 0.5, -18.6557, -18.6557, 0.5, 44.8443, 18.5943, 0.5, 44.8443, 18.5943, 0.5, -18.6557)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+geometry_source_geometry_mode = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_rcno3"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_avqdt"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="Resource" id="Resource_ncdyc"]
+resource_name = "HealthAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "health"
+attribute_type = 2
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_w1smv"]
+resource_name = "PostureAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "posture"
+attribute_type = 2
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_4j4u3"]
+resource_name = "StrainAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "strain"
+attribute_type = 2
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_5r8ps"]
+resource_name = "ArmorAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "armor"
+attribute_type = 2
+current_value = 1
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_qsjt4"]
+resource_name = "MartialAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "martial"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_6kl6n"]
+resource_name = "ChannelAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "channel"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_336d5"]
+resource_name = "ClashAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "clash"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_x4bhx"]
+resource_name = "EvadeAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "evade"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_m1qim"]
+resource_name = "WillAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "will"
+attribute_type = 1
+current_value = 3
+maximum_value = 3
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_p6f6u"]
+resource_name = "MightAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "might"
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_51q8q"]
+resource_name = "EnduranceAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "endurance"
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_allnq"]
+resource_name = "AgilityAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "agility"
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_qdwhh"]
+resource_name = "SenseAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "sense"
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_862d3"]
+resource_name = "MindAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "mind"
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_22ak0"]
+resource_name = "PresenceAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "presence"
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_cel8m"]
+resource_name = "ManaAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "mana"
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_src6p"]
+script = ExtResource("13_sgxdm")
+name = &"position"
+metadata/_custom_type_script = "uid://cihsn5lxnlupk"
+
+[sub_resource type="Resource" id="Resource_gam6i"]
+script = ExtResource("12_cel8m")
+action_name = "Move Test"
+selection_types = Array[ExtResource("13_sgxdm")]([SubResource("Resource_src6p")])
+metadata/_custom_type_script = "uid://bl34p0y06cyys"
+
+[sub_resource type="Resource" id="Resource_7g53y"]
+script = ExtResource("15_iq36j")
+metadata/_custom_type_script = "uid://dk20xdie5t8dr"
+
+[sub_resource type="Resource" id="Resource_05afn"]
+script = ExtResource("16_v8epg")
+metadata/_custom_type_script = "uid://cwhwg184xsckd"
+
+[sub_resource type="Resource" id="Resource_rfnuq"]
+script = ExtResource("17_k6sm3")
+metadata/_custom_type_script = "uid://canbipd5camsd"
+
+[sub_resource type="Resource" id="Resource_ufsey"]
+script = ExtResource("20_hymmt")
+metadata/_custom_type_script = "uid://clbt58mwsvag8"
+
+[sub_resource type="Resource" id="Resource_o24kd"]
+script = ExtResource("21_v4iap")
+range_var = 6.0
+metadata/_custom_type_script = "uid://devt7ks3mmyfv"
+
+[sub_resource type="Resource" id="Resource_utj8h"]
+script = ExtResource("22_8v6vh")
+sampler = SubResource("Resource_rfnuq")
+metadata/_custom_type_script = "uid://cv63cki4l8n4"
+
+[sub_resource type="Resource" id="Resource_73fol"]
+script = ExtResource("18_bvt28")
+position_sampler = SubResource("Resource_rfnuq")
+position_preferences = Array[ExtResource("14_f2qps")]([SubResource("Resource_7g53y"), SubResource("Resource_05afn")])
+skill_name = "Move To Safety"
+action = SubResource("Resource_gam6i")
+skill_conditions = Array[ExtResource("19_23xud")]([SubResource("Resource_ufsey"), SubResource("Resource_o24kd"), SubResource("Resource_utj8h")])
+metadata/_custom_type_script = "uid://c57p01pt3qmue"
+
+[sub_resource type="Resource" id="Resource_gi5u1"]
+script = ExtResource("25_bvt28")
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_n7lae"]
+script = ExtResource("26_23xud")
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_1qm4u"]
+script = ExtResource("25_bvt28")
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_jyvkj"]
+script = ExtResource("26_23xud")
+duration = 0.0
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_2qrjt"]
+script = ExtResource("25_bvt28")
+shake_time = 0.3
+metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
+
+[sub_resource type="Resource" id="Resource_rtscm"]
+script = ExtResource("26_23xud")
+metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+
+[sub_resource type="Resource" id="Resource_a4tjr"]
+script = ExtResource("28_v4iap")
+projectile_scene = ExtResource("27_hymmt")
+projectile_speed = 40.0
+carrier_arc_height = 1.0
+animation_package = ExtResource("24_k6sm3")
+hit_anim_effect = SubResource("Resource_2qrjt")
+graze_anim_effect = SubResource("Resource_1qm4u")
+block_anim_effect = SubResource("Resource_gi5u1")
+hit_stop_effect = SubResource("Resource_rtscm")
+graze_stop_effect = SubResource("Resource_jyvkj")
+block_stop_effect = SubResource("Resource_n7lae")
+attack_range = 100.0
+action_name = "Throw Ball"
+selection_types = Array[ExtResource("13_sgxdm")]([ExtResource("29_8v6vh")])
+tags = Array[String](["melee", "attack"])
+metadata/_custom_type_script = "uid://nqjg83o6epyn"
+
+[sub_resource type="Resource" id="Resource_dydjx"]
+script = ExtResource("30_23xud")
+metadata/_custom_type_script = "uid://2nsctaj2mk50"
+
+[sub_resource type="Resource" id="Resource_2gvhv"]
+script = ExtResource("31_hymmt")
+range_var = 20.0
+metadata/_custom_type_script = "uid://cs0g4gcahkb0o"
+
+[sub_resource type="Resource" id="Resource_pwtg8"]
+script = ExtResource("11_22ak0")
+skill_name = "Throw"
+action = SubResource("Resource_a4tjr")
+skill_conditions = Array[ExtResource("19_23xud")]([SubResource("Resource_dydjx"), SubResource("Resource_2gvhv"), null])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"
+
+[sub_resource type="Resource" id="Resource_q6bko"]
+script = ExtResource("24_w01yd")
+active_skills = Array[ExtResource("11_22ak0")]([SubResource("Resource_73fol"), SubResource("Resource_pwtg8")])
+metadata/_custom_type_script = "uid://bubf25btsnnfv"
+
+[sub_resource type="Resource" id="Resource_sgxdm"]
+resource_name = "HealthAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "health"
+attribute_type = 2
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_f2qps"]
+resource_name = "PostureAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "posture"
+attribute_type = 2
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_iq36j"]
+resource_name = "StrainAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "strain"
+attribute_type = 2
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_v8epg"]
+resource_name = "ArmorAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "armor"
+attribute_type = 2
+current_value = 1
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_k6sm3"]
+resource_name = "MartialAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "martial"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_bvt28"]
+resource_name = "ChannelAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "channel"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_23xud"]
+resource_name = "ClashAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "clash"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_hymmt"]
+resource_name = "EvadeAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "evade"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_v4iap"]
+resource_name = "WillAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "will"
+attribute_type = 1
+current_value = 3
+maximum_value = 3
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_8v6vh"]
+resource_name = "MightAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "might"
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_11ubm"]
+resource_name = "EnduranceAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "endurance"
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_w01yd"]
+resource_name = "AgilityAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "agility"
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_00nvd"]
+resource_name = "SenseAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "sense"
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_5lfvx"]
+resource_name = "MindAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "mind"
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_f0670"]
+resource_name = "PresenceAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "presence"
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_ebomw"]
+resource_name = "ManaAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "mana"
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_04ue1"]
+resource_name = "HealthAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "health"
+attribute_type = 2
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_cb3j6"]
+resource_name = "PostureAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "posture"
+attribute_type = 2
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_e15dp"]
+resource_name = "StrainAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "strain"
+attribute_type = 2
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_c2k8n"]
+resource_name = "ArmorAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "armor"
+attribute_type = 2
+current_value = 1
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_hja2s"]
+resource_name = "MartialAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "martial"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_f3uqp"]
+resource_name = "ChannelAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "channel"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_0fvkv"]
+resource_name = "ClashAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "clash"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_dpue3"]
+resource_name = "EvadeAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "evade"
+attribute_type = 1
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_mpmhl"]
+resource_name = "WillAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "will"
+attribute_type = 1
+current_value = 3
+maximum_value = 3
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_yl67w"]
+resource_name = "MightAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "might"
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_6odjx"]
+resource_name = "EnduranceAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "endurance"
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_lk7si"]
+resource_name = "AgilityAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "agility"
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_8pahp"]
+resource_name = "SenseAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "sense"
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_8hoel"]
+resource_name = "MindAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "mind"
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_jiskd"]
+resource_name = "PresenceAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "presence"
+current_value = 2
+maximum_value = 2
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="Resource" id="Resource_rx2vc"]
+resource_name = "ManaAttributeResource"
+script = ExtResource("10_p6f6u")
+attribute_name = "mana"
+current_value = 10
+maximum_value = 10
+metadata/_custom_type_script = "uid://7vw8btajjq0q"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xyav6"]
+albedo_color = Color(1, 0, 0.183333, 1)
+albedo_texture = ExtResource("14_tflrs")
+roughness = 0.8
+
+[sub_resource type="Curve3D" id="Curve3D_calw8"]
+bake_interval = 0.1
+_data = {
+"points": PackedVector3Array(0.6, 0.46, 0, 0.6, 0.46, 0, 0, 0, 0, -0.6, -0.46, 0, -0.6, -0.46, 0, 0, 1, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gh8or"]
+albedo_color = Color(0, 0.615686, 0.882353, 1)
+roughness = 0.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gh8or"]
+bg_color = Color(0.0264, 0.0294, 0.03, 0.945098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_size = 5
+shadow_offset = Vector2(-1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5ega"]
+bg_color = Color(0.15, 0.15, 0.15, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+shadow_size = 2
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2uyvs"]
+bg_color = Color(0.15, 0.15, 0.15, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+shadow_size = 2
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_bwm3i"]
+font_size = 21
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_8hl20"]
+color = Color(0.601223, 0.601223, 0.601223, 1)
+grow_begin = 2.0
+grow_end = 7.0
+vertical = true
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_a6kyb"]
+color = Color(0.6, 0.6, 0.6, 1)
+grow_begin = 0.0
+grow_end = 0.0
+
+[node name="Level" type="Node3D"]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.49, 0)
+navigation_mesh = SubResource("NavigationMesh_lf0eb")
+
+[node name="DebugSettings" type="Node" parent="."]
+script = ExtResource("1_uoqcs")
+
+[node name="DebugConsoleController" type="Node" parent="."]
+script = ExtResource("2_swo3b")
+
+[node name="ProjectileConsole" type="Node" parent="DebugConsoleController"]
+script = ExtResource("3_s0dbn")
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="Lighting" type="Node3D" parent="Environment"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment/Lighting"]
+environment = ExtResource("3_gh8or")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment/Lighting"]
+transform = Transform3D(0.624316, -0.517834, 0.584874, -0.358336, 0.475453, 0.803455, -0.694136, -0.711191, 0.111274, -5.04075, 2.35, -0.618277)
+light_energy = 0.634
+shadow_enabled = true
+shadow_bias = 0.4
+directional_shadow_mode = 1
+directional_shadow_split_1 = 0.505
+directional_shadow_max_distance = 27.1
+
+[node name="Floor" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
+transform = Transform3D(19.1557, 0, 0, 0, 19.1557, 0, 0, 0, 19.1557, 0, 0, 0)
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("PlaneMesh_rcno3")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_mu4i6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_avqdt")
+
+[node name="Floor2" type="MeshInstance3D" parent="Environment" groups=["navigation_mesh_source_group"]]
+transform = Transform3D(19.1557, 0, 0, 0, 19.1557, 0, 0, 0, 19.1557, 0, 0, 26.1053)
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("PlaneMesh_rcno3")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_mu4i6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Floor2"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_avqdt")
+
+[node name="Camera" parent="." instance=ExtResource("3_wbgr3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.735, 1.03, 0.84)
+
+[node name="UnitManager" type="Node" parent="."]
+script = ExtResource("11_lf0eb")
+
+[node name="Ruby" parent="UnitManager" node_paths=PackedStringArray("character_sheet") instance=ExtResource("12_k2c3k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+character_sheet = NodePath("CharacterSheet")
+ui_name = "Ruby"
+visor_color = Color(0.73, 0.2993, 0.306478, 1)
+tags = Array[String]([])
+
+[node name="CharacterSheet" parent="UnitManager/Ruby" instance=ExtResource("9_srkvl")]
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_ncdyc"), SubResource("Resource_w1smv"), SubResource("Resource_4j4u3"), SubResource("Resource_5r8ps"), SubResource("Resource_qsjt4"), SubResource("Resource_6kl6n"), SubResource("Resource_336d5"), SubResource("Resource_x4bhx"), SubResource("Resource_m1qim"), SubResource("Resource_p6f6u"), SubResource("Resource_51q8q"), SubResource("Resource_allnq"), SubResource("Resource_qdwhh"), SubResource("Resource_862d3"), SubResource("Resource_22ak0"), SubResource("Resource_cel8m")])
+
+[node name="Azure" parent="UnitManager" node_paths=PackedStringArray("character_sheet") instance=ExtResource("12_k2c3k")]
+character_sheet = NodePath("CharacterSheet2")
+starting_tactic = SubResource("Resource_q6bko")
+ui_name = "Azure"
+is_enemy = true
+visor_color = Color(0.3818, 0.62831, 0.83, 1)
+tags = Array[String]([])
+
+[node name="CharacterSheet2" parent="UnitManager/Azure" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
+unit = NodePath("..")
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_sgxdm"), SubResource("Resource_f2qps"), SubResource("Resource_iq36j"), SubResource("Resource_v8epg"), SubResource("Resource_k6sm3"), SubResource("Resource_bvt28"), SubResource("Resource_23xud"), SubResource("Resource_hymmt"), SubResource("Resource_v4iap"), SubResource("Resource_8v6vh"), SubResource("Resource_11ubm"), SubResource("Resource_w01yd"), SubResource("Resource_00nvd"), SubResource("Resource_5lfvx"), SubResource("Resource_f0670"), SubResource("Resource_ebomw")])
+
+[node name="Marigold" parent="UnitManager" node_paths=PackedStringArray("character_sheet") instance=ExtResource("12_k2c3k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.68029)
+character_sheet = NodePath("CharacterSheet4")
+ui_name = "Marigold"
+visor_color = Color(0.8832, 0.9, 0.396, 1)
+tags = Array[String](["golden"])
+
+[node name="CharacterSheet4" parent="UnitManager/Marigold" node_paths=PackedStringArray("unit") instance=ExtResource("9_srkvl")]
+unit = NodePath("..")
+attributes = Array[ExtResource("10_p6f6u")]([SubResource("Resource_04ue1"), SubResource("Resource_cb3j6"), SubResource("Resource_e15dp"), SubResource("Resource_c2k8n"), SubResource("Resource_hja2s"), SubResource("Resource_f3uqp"), SubResource("Resource_0fvkv"), SubResource("Resource_dpue3"), SubResource("Resource_mpmhl"), SubResource("Resource_yl67w"), SubResource("Resource_6odjx"), SubResource("Resource_lk7si"), SubResource("Resource_8pahp"), SubResource("Resource_8hoel"), SubResource("Resource_jiskd"), SubResource("Resource_rx2vc")])
+
+[node name="MouseController" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_avqdt")]
+camera = NodePath("../Camera/CamOrigin/SpringArm3D/fCamera")
+
+[node name="Label3D" type="Label3D" parent="MouseController/MouseVisual" index="0"]
+
+[node name="UnitActionRay" parent="MouseController" index="1"]
+collision_mask = 2
+
+[node name="UnitActionSystem" type="Node" parent="." node_paths=PackedStringArray("test_unit")]
+script = ExtResource("9_lf0eb")
+test_unit = NodePath("../UnitManager/Ruby")
+
+[node name="TurnSystem" type="Node" parent="." node_paths=PackedStringArray("unit_manager")]
+script = ExtResource("10_k2c3k")
+unit_manager = NodePath("../UnitManager")
+
+[node name="CombatSystem" type="Node" parent="."]
+script = ExtResource("11_g7q3m")
+
+[node name="PathfindingSystem" type="Node" parent="." node_paths=PackedStringArray("nav_region_3d")]
+script = ExtResource("12_fnj5h")
+nav_region_3d = NodePath("../NavigationRegion3D")
+radius_curve = ExtResource("14_calw8")
+debug_curve_material = SubResource("StandardMaterial3D_xyav6")
+
+[node name="CurveMesh3D" type="Path3D" parent="PathfindingSystem"]
+visible = false
+curve = SubResource("Curve3D_calw8")
+script = ExtResource("13_wbm0i")
+radius_profile = ExtResource("14_calw8")
+material = SubResource("StandardMaterial3D_gh8or")
+metadata/_custom_type_script = "uid://ian5eam30p0l"
+
+[node name="PathBuilder3D" type="Node" parent="PathfindingSystem"]
+script = ExtResource("16_dfmjn")
+metadata/_custom_type_script = "uid://cc6pcq4yohj7m"
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+script = ExtResource("5_jtghi")
+text_controller_scene = ExtResource("9_ccwc0")
+character_log_queue_scene = ExtResource("10_lf0eb")
+
+[node name="ActionSystemUI" type="Control" parent="UILayer" node_paths=PackedStringArray("turn_system_ui", "initiative_queue_ui", "top_hp_bar", "action_button_hbox")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("15_j7436")
+turn_system_ui = NodePath("../TurnSystemUI")
+initiative_queue_ui = NodePath("../InitiativeQueueUI")
+top_hp_bar = NodePath("TopHPBar")
+action_button_hbox = NodePath("PanelContainer/MarginContainer/ActionButtonHbox")
+action_button_prefab = ExtResource("16_tko1n")
+
+[node name="PanelContainer" type="PanelContainer" parent="UILayer/ActionSystemUI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.898
+anchor_right = 0.5
+anchor_bottom = 0.898
+offset_top = -3.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_gh8or")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/ActionSystemUI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ActionButtonHbox" type="HBoxContainer" parent="UILayer/ActionSystemUI/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ActionButtonUI" parent="UILayer/ActionSystemUI/PanelContainer/MarginContainer/ActionButtonHbox" instance=ExtResource("16_tko1n")]
+layout_mode = 2
+
+[node name="TopHPBar" parent="UILayer/ActionSystemUI" instance=ExtResource("21_xyav6")]
+layout_mode = 1
+
+[node name="TurnSystemUI" type="Control" parent="UILayer" node_paths=PackedStringArray("turn_system", "combat_system", "end_turn_container", "end_turn_button", "turn_phase_label", "round_counter_label", "cycle_counter_label", "movement_gait_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("15_ex7fh")
+turn_system = NodePath("../../TurnSystem")
+combat_system = NodePath("../../CombatSystem")
+end_turn_container = NodePath("EndTurnContainer")
+end_turn_button = NodePath("EndTurnContainer/MarginContainer/EndTurnButton")
+turn_phase_label = NodePath("TurnCountContainer/VBoxContainer/MarginContainer2/TurnPhaseLabel")
+round_counter_label = NodePath("TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/RoundCounterLabel")
+cycle_counter_label = NodePath("TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer2/CycleCounterLabel")
+movement_gait_label = NodePath("TurnCountContainer/VBoxContainer/MarginContainer3/MovementGaitLabel")
+
+[node name="EndTurnContainer" type="PanelContainer" parent="UILayer/TurnSystemUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -108.0
+offset_top = 14.0
+offset_right = -12.0
+offset_bottom = 51.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_o5ega")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/TurnSystemUI/EndTurnContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="EndTurnButton" type="Button" parent="UILayer/TurnSystemUI/EndTurnContainer/MarginContainer"]
+layout_mode = 2
+text = "END TURN"
+
+[node name="TurnCountContainer" type="PanelContainer" parent="UILayer/TurnSystemUI"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -40.0
+offset_top = 9.0
+offset_right = 49.0
+offset_bottom = 78.0
+grow_horizontal = 2
+scale = Vector2(0.730678, 0.730678)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_2uyvs")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/TurnSystemUI/TurnCountContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="RoundCounterLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "Round 1
+"
+label_settings = SubResource("LabelSettings_bwm3i")
+horizontal_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+theme_override_styles/separator = SubResource("StyleBoxLine_8hl20")
+
+[node name="MarginContainer2" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="CycleCounterLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+text = "Cycle 1
+"
+label_settings = SubResource("LabelSettings_bwm3i")
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxLine_a6kyb")
+
+[node name="MarginContainer2" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TurnPhaseLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+text = "Combat Phase
+"
+label_settings = SubResource("LabelSettings_bwm3i")
+horizontal_alignment = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MovementGaitLabel" type="Label" parent="UILayer/TurnSystemUI/TurnCountContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+text = "Movement Gait"
+label_settings = SubResource("LabelSettings_bwm3i")
+horizontal_alignment = 1
+
+[node name="InitiativeQueueUI" type="Control" parent="UILayer" node_paths=PackedStringArray("unit_manager", "unit_stats_container")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("16_2uyvs")
+unit_manager = NodePath("../../UnitManager")
+unit_stats_bar_scene = ExtResource("16_ecsph")
+unit_stats_container = NodePath("PanelContainer/MarginContainer/UnitStatsContainer")
+
+[node name="PanelContainer" type="PanelContainer" parent="UILayer/InitiativeQueueUI"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 5.0
+offset_top = -64.0
+offset_right = 201.0
+offset_bottom = 63.0
+grow_vertical = 2
+scale = Vector2(0.725, 0.725)
+theme_override_styles/panel = SubResource("StyleBoxFlat_o5ega")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/InitiativeQueueUI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="UnitStatsContainer" type="VBoxContainer" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="UnitStatsBar" parent="UILayer/InitiativeQueueUI/PanelContainer/MarginContainer/UnitStatsContainer" instance=ExtResource("16_ecsph")]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UILayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("16_ex7fh")
+
+[node name="UnitCharacterSheetUI" parent="UILayer" node_paths=PackedStringArray("mouse_controller", "pathfinding") instance=ExtResource("22_gh8or")]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 684.0
+offset_bottom = 433.0
+mouse_controller = NodePath("../../MouseController")
+pathfinding = NodePath("../../PathfindingSystem")
+
+[node name="CombatLog" parent="UILayer" instance=ExtResource("27_2gnov")]
+max_logs = 20
+
+[connection signal="pressed" from="UILayer/TurnSystemUI/EndTurnContainer/MarginContainer/EndTurnButton" to="UILayer/TurnSystemUI" method="_on_end_turn_button_pressed"]
+
+[editable path="MouseController"]

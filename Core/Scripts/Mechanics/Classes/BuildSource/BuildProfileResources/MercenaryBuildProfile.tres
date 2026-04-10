@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="BuildProfile" format=3 uid="uid://cruv3h07wplnu"]
+
+[ext_resource type="Resource" uid="uid://7yrn2ntt7uqi" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Backgrounds/FarmerBackground.tres" id="1_2t36d"]
+[ext_resource type="Script" uid="uid://ceyv1b0lbsbfv" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildProfile.gd" id="1_l63jr"]
+[ext_resource type="Resource" uid="uid://dukkccof7qwkn" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Feats/ToughFeat.tres" id="3_y0xfa"]
+[ext_resource type="Resource" uid="uid://dcmueyhnuimld" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Gear/BracersGear.tres" id="4_h1hm1"]
+[ext_resource type="Script" uid="uid://rwvfoi4t15v8" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSource.gd" id="4_ux7ek"]
+[ext_resource type="Resource" uid="uid://d2ndq1y5okkfk" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Gear/HeadbandGear.tres" id="5_ux7ek"]
+[ext_resource type="Resource" uid="uid://bq1qqcyxh3qbv" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/MagicClasses/ElementalistClass.tres" id="6_lg6ls"]
+[ext_resource type="Resource" uid="uid://k7d8t137f3gh" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/MartialClasses/MercenaryClass.tres" id="7_es3k8"]
+[ext_resource type="Resource" uid="uid://bbh5ijxuf1wuf" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Rank/Rank.tres" id="8_txj2n"]
+[ext_resource type="Resource" uid="uid://r1voosghl6ll" path="res://Deepmage/Core/Scripts/Mechanics/Classes/BuildSource/BuildSourceResources/Ancestries/HumanAncestry.tres" id="9_lqvs5"]
+
+[resource]
+script = ExtResource("1_l63jr")
+ui_name = "MercenaryFarmerTough"
+race = ExtResource("9_lqvs5")
+background = ExtResource("1_2t36d")
+martial_class = ExtResource("7_es3k8")
+magic_class = ExtResource("6_lg6ls")
+progression = ExtResource("8_txj2n")
+feats = Array[ExtResource("4_ux7ek")]([ExtResource("3_y0xfa")])
+gear_sources = Array[ExtResource("4_ux7ek")]([ExtResource("4_h1hm1"), ExtResource("5_ux7ek")])
+metadata/_custom_type_script = "uid://ceyv1b0lbsbfv"

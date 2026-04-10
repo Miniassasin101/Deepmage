@@ -38,8 +38,11 @@ func on_ui_update() -> void:
 	#update_cycle_label()
 	#update_gait_label()
 
+
+# Use this to start a new round
 func _on_end_turn_button_pressed() -> void:
-	SignalBus.end_turn.emit()
+	if Input.is_action_just_released("left_mouse"):
+		SignalBus.end_turn.emit.call_deferred()
 
 func on_round_changed() -> void:
 
@@ -47,6 +50,7 @@ func on_round_changed() -> void:
 
 func on_phase_changed() -> void:
 	update_phase_label()
+
 
 func on_cycle_changed() -> void:
 	update_cycle_label()

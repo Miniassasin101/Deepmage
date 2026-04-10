@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TeleportAction" format=3 uid="uid://br2jiaiufcylm"]
+
+[ext_resource type="Script" uid="uid://bjhah2xmsklrq" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/TeleportAction.gd" id="1_oelta"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_pe3yo"]
+
+[resource]
+script = ExtResource("1_oelta")
+unit_avoid_radius = 0.6
+action_name = "Teleport"
+metadata/_custom_type_script = "uid://bjhah2xmsklrq"

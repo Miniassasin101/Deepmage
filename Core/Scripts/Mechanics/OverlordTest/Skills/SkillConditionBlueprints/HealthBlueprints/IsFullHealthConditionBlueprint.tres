@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://1vvrbfka8foo"]
+
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="1_gbutp"]
+[ext_resource type="Script" uid="uid://xw1q3xji7lhr" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/HealthBasedSkillConditions/IsFullHealthSkillCondition.gd" id="1_w68d6"]
+
+[sub_resource type="Resource" id="Resource_0l3vy"]
+script = ExtResource("1_w68d6")
+metadata/_custom_type_script = "uid://xw1q3xji7lhr"
+
+[resource]
+script = ExtResource("1_gbutp")
+display_name = "HP >= 100%"
+category_name = "Health"
+prototype = SubResource("Resource_0l3vy")
+metadata/_custom_type_script = "uid://c7jeogqcvfh22"

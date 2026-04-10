@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="GrantStatusEffect" format=3 uid="uid://dls3dv4u57kwr"]
+
+[ext_resource type="Script" uid="uid://c8s5omyjs8xrw" path="res://Deepmage/Core/Scripts/Mechanics/Effects/GrantStatusEffect.gd" id="1_ust5l"]
+[ext_resource type="Script" uid="uid://db1xarxagsk0k" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/StatusScripts/Afflictions/GenericGainAffliction.gd" id="2_rn8kx"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="3_naqi0"]
+
+[sub_resource type="Resource" id="Resource_naqi0"]
+script = ExtResource("2_rn8kx")
+stat_name = "critical"
+ui_name = "Crit Chance Down"
+status_category = 2
+status_level = 5
+expire_timing = 2
+resistance_category = "debuff"
+metadata/_custom_type_script = "uid://db1xarxagsk0k"
+
+[resource]
+script = ExtResource("1_ust5l")
+status = SubResource("Resource_naqi0")
+ui_name = &"Crit Chance Drain"
+metadata/_custom_type_script = "uid://c8s5omyjs8xrw"

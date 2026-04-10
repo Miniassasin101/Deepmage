@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://psdfsrnutgxe"]
+[gd_scene format=3 uid="uid://psdfsrnutgxe"]
 
 [ext_resource type="Script" uid="uid://dvpjdgtyi23ow" path="res://Deepmage/Core/Scripts/UI/ActionButtonUI.gd" id="1_wdnnx"]
 [ext_resource type="StyleBox" uid="uid://dxf8kqkw1goiw" path="res://Deepmage/Core/Art/Materials/UI/StyleBoxes/UnitStatsBarShadowedStyleBox.tres" id="2_nmqxa"]
@@ -23,7 +23,7 @@ font_size = 18
 shadow_size = 3
 shadow_color = Color(0, 0, 0, 1)
 
-[node name="ActionButtonUI" type="Button" node_paths=PackedStringArray("button_text", "button", "panel")]
+[node name="ActionButtonUI" type="Button" unique_id=386361176 node_paths=PackedStringArray("button_text", "button", "panel")]
 custom_minimum_size = Vector2(35, 35)
 offset_left = -18.0
 offset_top = -17.0
@@ -39,7 +39,7 @@ panel = NodePath("Panel")
 button_up_style_box = ExtResource("2_nmqxa")
 button_down_style_box = ExtResource("3_sklea")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=781537871]
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
@@ -53,7 +53,7 @@ scale = Vector2(0.93932, 0.948154)
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_nmqxa")
 
-[node name="Text2" type="Label" parent="."]
+[node name="Text2" type="Label" parent="." unique_id=1021428871]
 custom_minimum_size = Vector2(5, 5)
 layout_mode = 1
 anchors_preset = 15

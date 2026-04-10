@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ConditionBlueprint" format=3 uid="uid://pra7x3o5wfkj"]
+
+[ext_resource type="Script" uid="uid://cxc4cefj7pevk" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/HealthBasedSkillConditions/IsSelfNotFullHealthSkillCondition.gd" id="1_701vv"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="1_qg2l6"]
+
+[sub_resource type="Resource" id="Resource_gdrec"]
+script = ExtResource("1_701vv")
+metadata/_custom_type_script = "uid://cxc4cefj7pevk"
+
+[resource]
+script = ExtResource("1_qg2l6")
+display_name = "Self HP < 100%"
+category_name = "Health"
+prototype = SubResource("Resource_gdrec")
+metadata/_custom_type_script = "uid://c7jeogqcvfh22"

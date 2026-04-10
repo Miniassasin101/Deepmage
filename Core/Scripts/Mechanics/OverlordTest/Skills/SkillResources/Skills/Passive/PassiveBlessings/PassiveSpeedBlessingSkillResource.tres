@@ -1,0 +1,65 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://bxdouerp8x6dk"]
+
+[ext_resource type="Resource" uid="uid://2cp5ciqvdei1" path="res://Deepmage/Core/Resources/ActionResources/TestStatusActionResource.tres" id="1_3ma8u"]
+[ext_resource type="Animation" uid="uid://bolvfij56gevt" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/BlockAnim.res" id="1_7glyx"]
+[ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="2_miefm"]
+[ext_resource type="Script" uid="uid://brutb7o0hj6td" path="res://Deepmage/Core/Scripts/Animation/AnimationPackage.gd" id="3_jneya"]
+[ext_resource type="Script" uid="uid://bf2hv6d83v6fv" path="res://Deepmage/Core/Resources/DataStructures/AnimationSyncProfile.gd" id="4_5luid"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="5_gtjj6"]
+[ext_resource type="Resource" uid="uid://bq8dydtnwacfd" path="res://Deepmage/Core/Scripts/Mechanics/Effects/EffectResources/BlessingEffects/GrantSpeedBlessingEffectResource.tres" id="6_7glyx"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="10_ado06"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="11_gsh2j"]
+[ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="12_b3mu5"]
+[ext_resource type="Script" uid="uid://dwcj6ji2lodbh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SkillSourceBasedSkillConditions/IsSourceSkillTagSkillCondition.gd" id="15_7glyx"]
+[ext_resource type="Script" uid="uid://cpk5t6274clio" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/SourceTargetUnitBasedSkillConditions/IsSourceUserFaction.gd" id="15_sdg4o"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="16_3e4es"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="16_7glyx"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="17_f37pv"]
+
+[sub_resource type="Resource" id="Resource_wdfje"]
+script = ExtResource("4_5luid")
+markers = Dictionary[String, float]({
+"HIT_END": 0.4,
+"HIT_START": 0.27,
+"REACT_OFF": 0.4,
+"REACT_ON": 0.27
+})
+metadata/_custom_type_script = "uid://bf2hv6d83v6fv"
+
+[sub_resource type="Resource" id="Resource_3dyvf"]
+script = ExtResource("3_jneya")
+name = "UnarmedBlock"
+animation = ExtResource("1_7glyx")
+sync_profile = SubResource("Resource_wdfje")
+metadata/_custom_type_script = "uid://brutb7o0hj6td"
+
+[sub_resource type="Resource" id="Resource_4rg85"]
+script = ExtResource("12_b3mu5")
+metadata/_custom_type_script = "uid://clbt58mwsvag8"
+
+[sub_resource type="Resource" id="Resource_vimjk"]
+script = ExtResource("15_sdg4o")
+relation = 0
+metadata/_custom_type_script = "uid://cpk5t6274clio"
+
+[sub_resource type="Resource" id="Resource_miefm"]
+script = ExtResource("15_7glyx")
+required_tag = "movement"
+metadata/_custom_type_script = "uid://dwcj6ji2lodbh"
+
+[resource]
+resource_name = "PassiveSpeedUpSkillResource"
+script = ExtResource("16_3e4es")
+skill_name = "Passive Speed Up"
+action = ExtResource("1_3ma8u")
+skill_category = 1
+skill_type = 1
+skill_trigger = 2
+internal_skill_conditions = Array[ExtResource("11_gsh2j")]([SubResource("Resource_4rg85"), SubResource("Resource_vimjk"), SubResource("Resource_miefm")])
+animation_package = SubResource("Resource_3dyvf")
+effects = Array[ExtResource("5_gtjj6")]([ExtResource("6_7glyx")])
+trait_1 = "Martial Up 1"
+trait_2 = "Is Attacked"
+trigger_description = "When targeted by a movement skill"
+description = Array[String](["Grants a Speed blessing when this unit is targeted by a movement skill"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

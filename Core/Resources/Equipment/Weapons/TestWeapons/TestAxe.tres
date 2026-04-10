@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://w3sejjaa4agb"]
+
+[ext_resource type="Script" uid="uid://da5ua2vuwghvh" path="res://Deepmage/Core/Scripts/Mechanics/Attributes/AttributeMod.gd" id="1_gjbtm"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="2_kxbnp"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="3_kdaix"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_i8ms1"]
+[ext_resource type="Script" uid="uid://dmefdgovq37tm" path="res://Deepmage/Core/Scripts/Mechanics/Equipment/Weapon.gd" id="5_g0g1b"]
+[ext_resource type="PackedScene" uid="uid://dy5gye6plrthr" path="res://Deepmage/Core/Prefabs/Equipment/Weapons/TestWeapons/AxeMesh.tscn" id="6_gjbtm"]
+
+[sub_resource type="Resource" id="Resource_gjbtm"]
+script = ExtResource("1_gjbtm")
+attribute_name = &"critical"
+flat = 30
+metadata/_custom_type_script = "uid://da5ua2vuwghvh"
+
+[resource]
+script = ExtResource("5_g0g1b")
+weapon_type = 3
+visual_scene = ExtResource("6_gjbtm")
+ui_name = "TestAxe"
+attribute_mods = Array[ExtResource("1_gjbtm")]([SubResource("Resource_gjbtm")])
+metadata/_custom_type_script = "uid://dmefdgovq37tm"

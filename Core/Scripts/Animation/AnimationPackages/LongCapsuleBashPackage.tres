@@ -1,28 +1,27 @@
-[gd_resource type="Resource" script_class="AnimationPackage" load_steps=12 format=3 uid="uid://dq74fk7miqg1w"]
+[gd_resource type="Resource" script_class="AnimationPackage" format=3 uid="uid://dq74fk7miqg1w"]
 
 [ext_resource type="Animation" uid="uid://b8iveu05n2j60" path="res://Deepmage/Core/Resources/AnimationResources/Animations/TestAnimations/LongerCapBash.res" id="1_6j8j1"]
 [ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="2_auxwo"]
-[ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="3_jdct4"]
-[ext_resource type="Script" uid="uid://dfqq4lgq8fr27" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="4_kfw0a"]
-[ext_resource type="Script" uid="uid://beaqcf4hetaxo" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitMomentAnimationEffect.gd" id="5_03cqb"]
+[ext_resource type="Script" uid="uid://bs28hrqq2o0ig" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/CameraShakeAnimationEffect.gd" id="4_cvd2b"]
+[ext_resource type="Script" uid="uid://bkgigckslvvpk" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitStopAnimationEffect.gd" id="5_7bfe8"]
 [ext_resource type="Script" uid="uid://brutb7o0hj6td" path="res://Deepmage/Core/Scripts/Animation/AnimationPackage.gd" id="7_ryvjn"]
 [ext_resource type="Script" uid="uid://bf2hv6d83v6fv" path="res://Deepmage/Core/Resources/DataStructures/AnimationSyncProfile.gd" id="8_3ogs4"]
+[ext_resource type="Script" uid="uid://beaqcf4hetaxo" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitMomentAnimationEffect.gd" id="9_hitm"]
 
-[sub_resource type="Resource" id="Resource_cvd2b"]
-script = ExtResource("5_03cqb")
-timing = 1.09
+[sub_resource type="Resource" id="Resource_hitm"]
+script = ExtResource("9_hitm")
+timing = 1.2
 metadata/_custom_type_script = "uid://beaqcf4hetaxo"
 
-[sub_resource type="Resource" id="Resource_7bfe8"]
-script = ExtResource("3_jdct4")
-timing = 1.07
+[sub_resource type="Resource" id="Resource_auxwo"]
+script = ExtResource("4_cvd2b")
+timing = 1.05
 metadata/_custom_type_script = "uid://bs28hrqq2o0ig"
 
 [sub_resource type="Resource" id="Resource_jdct4"]
-script = ExtResource("4_kfw0a")
-duration = 1.688
-timing = 1.11
-metadata/_custom_type_script = "uid://dfqq4lgq8fr27"
+script = ExtResource("5_7bfe8")
+timing = 1.1
+metadata/_custom_type_script = "uid://bkgigckslvvpk"
 
 [sub_resource type="Resource" id="Resource_u32or"]
 script = ExtResource("8_3ogs4")
@@ -36,6 +35,6 @@ metadata/_custom_type_script = "uid://bf2hv6d83v6fv"
 script = ExtResource("7_ryvjn")
 name = "LongCapsuleBash"
 animation = ExtResource("1_6j8j1")
-animation_effects = Array[ExtResource("2_auxwo")]([SubResource("Resource_cvd2b"), SubResource("Resource_7bfe8"), SubResource("Resource_jdct4")])
+animation_effects = Array[ExtResource("2_auxwo")]([SubResource("Resource_hitm"), SubResource("Resource_auxwo"), SubResource("Resource_jdct4")])
 sync_profile = SubResource("Resource_u32or")
 metadata/_custom_type_script = "uid://brutb7o0hj6td"

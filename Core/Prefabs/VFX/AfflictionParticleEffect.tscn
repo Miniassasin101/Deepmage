@@ -1,0 +1,59 @@
+[gd_scene load_steps=10 format=3 uid="uid://cnpfhek5n71f4"]
+
+[ext_resource type="Shader" uid="uid://wewt1qhv8k8x" path="res://Deepmage/Core/Art/Shaders/VFXShaders/SimpleBuffShader.tres" id="1_gbkr1"]
+[ext_resource type="Texture2D" uid="uid://cej1tknp6217i" path="res://Deepmage/Core/Art/Textures/VFXTextures/vfx_star_flare_alpha_1024.png" id="2_78iri"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pxy44"]
+render_priority = 0
+shader = ExtResource("1_gbkr1")
+shader_parameter/Texture_Multiplier = 2.175
+shader_parameter/Main_Texture = ExtResource("2_78iri")
+
+[sub_resource type="Curve" id="Curve_qcm0m"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.63569677, 1), -0.05306171, -0.05306171, 0, 0, Vector2(0.99021995, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_gog00"]
+curve = SubResource("Curve_qcm0m")
+
+[sub_resource type="Curve" id="Curve_l3wvg"]
+_data = [Vector2(0, 0.63414633), 0.0, 0.0, 0, 0, Vector2(0.31784838, 0.73170733), 2.0462794, 2.0462794, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ynrvw"]
+curve = SubResource("Curve_l3wvg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tvb6b"]
+lifetime_randomness = 0.5
+emission_shape_offset = Vector3(0, 2.25, 0)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.9
+emission_ring_cone_angle = 0.0
+direction = Vector3(0, -1, 0)
+spread = 5.861
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.59999996
+scale_max = 0.95
+scale_curve = SubResource("CurveTexture_ynrvw")
+color = Color(1.2674806, 0, 2.454227, 0.545)
+alpha_curve = SubResource("CurveTexture_gog00")
+
+[sub_resource type="QuadMesh" id="QuadMesh_hjfn1"]
+
+[node name="AfflictionParticleEffect" type="Node3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+material_override = SubResource("ShaderMaterial_pxy44")
+cast_shadow = 0
+amount = 16
+lifetime = 2.15
+explosiveness = 0.12
+randomness = 1.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_tvb6b")
+draw_pass_1 = SubResource("QuadMesh_hjfn1")

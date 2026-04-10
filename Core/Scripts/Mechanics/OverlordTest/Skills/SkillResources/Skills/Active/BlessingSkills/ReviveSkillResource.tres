@@ -1,0 +1,60 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://djreue8l2xkig"]
+
+[ext_resource type="Resource" uid="uid://djrw5nkydvyv6" path="res://Deepmage/Core/Scripts/Animation/AnimationPackages/BlockPackage.tres" id="1_anim"]
+[ext_resource type="Script" uid="uid://crlblfi0eiqt0" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/CombatActionScripts/CombatAction.gd" id="1_bwu5k"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="4_effect"]
+[ext_resource type="Script" uid="uid://c8s5omyjs8xrw" path="res://Deepmage/Core/Scripts/Mechanics/Effects/GrantStatusEffect.gd" id="5_grant"]
+[ext_resource type="Script" uid="uid://bl8f0itpdwibr" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/StatusScripts/Blessings/RestorePostureBlessing.gd" id="6_restore"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="8_nbool"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="11_skill"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="12_co3e5"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="12_cond_base"]
+[ext_resource type="Script" uid="uid://chfgmawv4njrc" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsAllySkillCondition.gd" id="13_ally"]
+[ext_resource type="Script" uid="uid://bf7dwdr4th1ft" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/StatusBasedSkillConditions/IsDownedSkillCondition.gd" id="14_downed"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="16_urujj"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="17_ieuc8"]
+
+[sub_resource type="Resource" id="Resource_xhiib"]
+script = ExtResource("1_bwu5k")
+action_name = "Status Grant Action"
+metadata/_custom_type_script = "uid://crlblfi0eiqt0"
+
+[sub_resource type="Resource" id="Resource_blessing"]
+script = ExtResource("6_restore")
+amount_per_stack_int = 3
+ui_name = "Revive"
+status_category = 1
+status_level = 1
+
+[sub_resource type="Resource" id="Resource_effect"]
+script = ExtResource("5_grant")
+status = SubResource("Resource_blessing")
+ui_name = &"Revive"
+metadata/_custom_type_script = "uid://c8s5omyjs8xrw"
+
+[sub_resource type="Resource" id="Resource_cond_ally"]
+script = ExtResource("13_ally")
+metadata/_custom_type_script = "uid://chfgmawv4njrc"
+
+[sub_resource type="Resource" id="Resource_cond_downed"]
+script = ExtResource("14_downed")
+
+[resource]
+resource_name = "ReviveSkillResource"
+script = ExtResource("11_skill")
+skill_name = "Revive"
+action = SubResource("Resource_xhiib")
+skill_type = 1
+skill_cost = 2
+internal_skill_conditions = Array[ExtResource("12_cond_base")]([SubResource("Resource_cond_ally"), SubResource("Resource_cond_downed")])
+base_power = 0
+base_accuracy = 100
+crit_mod = -3
+animation_package = ExtResource("1_anim")
+effects = Array[ExtResource("4_effect")]([SubResource("Resource_effect")])
+trait_1 = "Revival"
+trait_2 = "Ally"
+trigger_description = "Always"
+description = Array[String](["Rouses a downed ally back to consciousness, restoring 3 Posture and returning them to the fight."])
+tags = Array[String](["targets_downed"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

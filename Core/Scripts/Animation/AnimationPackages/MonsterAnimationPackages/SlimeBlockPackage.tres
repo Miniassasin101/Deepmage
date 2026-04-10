@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="AnimationPackage" format=3 uid="uid://dm4u5y1lciy68"]
+
+[ext_resource type="Animation" uid="uid://337bgtqqkbpe" path="res://Deepmage/Core/Resources/AnimationResources/Animations/MonsterTestAnims/SlimeTestAnims/BlockAnim.res" id="1_wqao7"]
+[ext_resource type="Script" uid="uid://b4svltn1m80po" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffect.gd" id="2_x5jop"]
+[ext_resource type="Script" uid="uid://beaqcf4hetaxo" path="res://Deepmage/Core/Scripts/Animation/AnimationEffects/AnimationEffectScripts/HitMomentAnimationEffect.gd" id="5_pjdnl"]
+[ext_resource type="Script" uid="uid://brutb7o0hj6td" path="res://Deepmage/Core/Scripts/Animation/AnimationPackage.gd" id="6_b57pt"]
+[ext_resource type="Script" uid="uid://bf2hv6d83v6fv" path="res://Deepmage/Core/Resources/DataStructures/AnimationSyncProfile.gd" id="7_6nvsi"]
+
+[sub_resource type="Resource" id="Resource_a5qfv"]
+script = ExtResource("5_pjdnl")
+timing = 0.25
+metadata/_custom_type_script = "uid://beaqcf4hetaxo"
+
+[sub_resource type="Resource" id="Resource_a4sj5"]
+script = ExtResource("7_6nvsi")
+markers = Dictionary[String, float]({
+"HIT_END": 0.3,
+"HIT_START": 0.2,
+"REACT_OFF": 0.3,
+"REACT_ON": 0.2
+})
+metadata/_custom_type_script = "uid://bf2hv6d83v6fv"
+
+[resource]
+script = ExtResource("6_b57pt")
+name = "SlimeBlock"
+animation = ExtResource("1_wqao7")
+animation_effects = Array[ExtResource("2_x5jop")]([SubResource("Resource_a5qfv")])
+sync_profile = SubResource("Resource_a4sj5")
+metadata/_custom_type_script = "uid://brutb7o0hj6td"

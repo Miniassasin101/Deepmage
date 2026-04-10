@@ -5,7 +5,8 @@ extends MarginContainer
 
 @export var unit_name_label: Label
 @export var initiative_score_label: Label
-@export var multiple_action_penalty_label: Label
+@export var active_points_label: Label
+@export var passive_points_label: Label
 @export var mana_points_label: Label
 @export var health_text_label: Label
 @export var health_bar: SimpleAnimatableProgressBar
@@ -20,6 +21,7 @@ extends MarginContainer
 # Drift tweakable properties:
 @export var drift_amount: float = 20.0   # Pixels to drift right.
 @export var drift_duration: float = 2.0    # Duration (in seconds) for one half of the drift.
+@export var return_drift_duration: float = 0.3
 
 # Pulse tweakable properties:
 @export var pulse_amount: float = 0.8
@@ -76,19 +78,26 @@ func update_stats(unit: Unit, with_health_anim: bool = true) -> void:
 	# Shows the initiative score of the unit. Resets at the start of the next round so the lowest unit has a 0 to keep numbers more readable.
 	initiative_score_label.text = "Initiative Score: " + str(TurnSystem.instance.initiative_scores[unit] - lowest_score)
 	
+	
+	var active_points: int = unit.get_attributes_container().get_attribute_current_value("active_points")
+	var passive_points: int = unit.get_attributes_container().get_attribute_current_value("passive_points")
+	active_points_label.set_text("AP: " + str(active_points))
+	passive_points_label.set_text("PP: " + str(passive_points))
+	
 	mana_points_label.set_text("Mana: " + str(unit.get_attributes_container().get_attribute_current_value("mana")))
 	
-	var health_attribute: Attribute = unit.get_attributes_container().get_attribute("health")
+	var health_attribute: Attribute = unit.get_attributes_container().get_attribute("posture")
 
-	var current_modified_value: int = health_attribute.get_current_modified_value()
-	health_text_label.text = "Health: %d / %d" % [
-		maxi(current_modified_value, 0), 
-		health_attribute.maximum_value
+	var current_modified_value: int = maxi(health_attribute.get_current_modified_value(), 0)
+	var current_maximum_value: int = health_attribute.get_max_value()
+	health_text_label.text = "Posture: %d / %d" % [
+		current_modified_value, 
+		current_maximum_value
 	]
 	
 	
 	# Animate the health bar value.
-	var target_health_percentage: float = (float(current_modified_value) / float(health_attribute.maximum_value) * 100)
+	var target_health_percentage: float = (float(current_modified_value) / float(current_maximum_value) * 100)
 	#print_debug("Current Value: " + str(current_modified_value))
 	#print_debug("Target Percent: " + str(target_health_percentage))
 	
@@ -138,7 +147,16 @@ func start_drift() -> void:
 # Call this function to stop the drift and reset the position.
 func stop_drift() -> void:
 	if abort_tween():
-		unit_stats_bar_content.set_position(base_position)
+		await drift_back()
+		abort_tween()
+		#unit_stats_bar_content.set_position(base_position)
+
+func drift_back() -> void:
+	drift_tween = get_tree().create_tween()
+	drift_tween.tween_property(unit_stats_bar_content, "position", base_position, return_drift_duration) \
+			   .set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	await drift_tween.finished
+
 
 func abort_tween() -> bool:
 	if drift_tween:

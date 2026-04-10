@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://c7xtiur71atui"]
+
+[ext_resource type="Script" uid="uid://doahtvq8r205k" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/SpawnTextOnUnitAction.gd" id="1_aftrhit"]
+[ext_resource type="Script" uid="uid://c7jeogqcvfh22" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/ConditionBlueprint.gd" id="2_aftrhit"]
+[ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="2_lhulj"]
+[ext_resource type="Script" uid="uid://kpyou3fdk30c" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/Skill.gd" id="3_aftrhit"]
+[ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="3_bte2j"]
+[ext_resource type="Script" uid="uid://doxhfs8l7hfuh" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/TargetPreference.gd" id="4_aftrhit"]
+[ext_resource type="Script" uid="uid://4ileie4rk3tx" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillCondition.gd" id="4_agfcc"]
+[ext_resource type="Script" uid="uid://cq6wvky7pwmm4" path="res://Deepmage/Core/Scripts/Mechanics/Statuses/Status.gd" id="5_aftrhit"]
+[ext_resource type="Script" uid="uid://clbt58mwsvag8" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillConditionScripts/IdentityBasedSkillConditions/IsSelfSkillCondition.gd" id="5_agfcc"]
+
+[sub_resource type="Resource" id="Resource_aftrhit"]
+script = ExtResource("1_aftrhit")
+text_color = Color(0.2, 1, 0.3, 1)
+action_name = "Unit Text"
+metadata/_custom_type_script = "uid://doahtvq8r205k"
+
+[sub_resource type="Resource" id="Resource_tfw8t"]
+script = ExtResource("5_agfcc")
+metadata/_custom_type_script = "uid://clbt58mwsvag8"
+
+[resource]
+resource_name = "PrintTestAfterHitSkillResource"
+script = ExtResource("3_aftrhit")
+skill_name = "Print Test After Hit"
+action = SubResource("Resource_aftrhit")
+skill_category = 1
+skill_type = 1
+skill_trigger = 6
+internal_skill_conditions = Array[ExtResource("4_agfcc")]([SubResource("Resource_tfw8t")])
+trigger_description = "Just after a hit resolves"
+description = Array[String](["Test skill: spawns floating text immediately after damage is applied"])
+metadata/_custom_type_script = "uid://kpyou3fdk30c"

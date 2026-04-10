@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://xe1i4pbdldtw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bjaet"]
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
+
+[node name="MarginContainer" type="MarginContainer"]
+custom_minimum_size = Vector2(208, 28.97)
+scale = Vector2(0.78, 0.78)
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_right = 3
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+mouse_filter = 1
+text = "Most Enemies in <1 Range"
+label_settings = SubResource("LabelSettings_bjaet")
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 1
+
+[node name="Container" type="Container" parent="."]
+custom_minimum_size = Vector2(208, 28.97)
+layout_mode = 2
