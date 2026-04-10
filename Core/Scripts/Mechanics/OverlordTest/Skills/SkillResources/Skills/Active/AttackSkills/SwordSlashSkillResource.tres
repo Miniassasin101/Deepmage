@@ -26,7 +26,6 @@ script = ExtResource("8_qd450")
 skill_name = "Sword Slash"
 action = ExtResource("1_fhsta")
 internal_skill_conditions = Array[ExtResource("5_i4dk8")]([SubResource("Resource_eu7gh"), SubResource("Resource_7kb16")])
-is_disabled = true
 animation_package = ExtResource("2_wk0si")
 trait_1 = "Melee"
 trait_2 = "Sword"

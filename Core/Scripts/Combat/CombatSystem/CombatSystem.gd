@@ -173,6 +173,31 @@ func _resolve_attack_darkest_dungeon(action: CombatAction, attacker: Unit, defen
 	# Damage calculation (base damage minus defense; no status multipliers yet)
 	_damage_calculator.calculate(cd, might_value, _get_formula())
 
+	# Extra damage components: weapon enchantments (if uses_weapon) + skill-inherent components.
+	# Calculated only on a hit, before damage_multiplier so post-roll Potency buffs scale everything.
+	# NOTE: pending_defense_value / pending_power_percent (pre-roll status hooks) affect the primary
+	#       component only. Components are intentionally isolated — Block reduces martial damage but
+	#       not a flame enchantment's channel damage.
+	if cd.is_hit:
+		var formula := _get_formula()
+		var w_min: int = cd.weapon.damage_min if cd.weapon != null else formula.weapon_damage_min
+		var w_max: int = cd.weapon.damage_max if cd.weapon != null else formula.weapon_damage_max
+
+		var components: Array = []
+		if skill.uses_weapon and cd.weapon != null:
+			components.append_array(cd.weapon.enchantment_components)
+		components.append_array(skill.extra_damage_components)
+
+		for comp in components:
+			if comp.prowess_attribute.is_empty() or comp.defense_attribute.is_empty():
+				push_error("DamageComponent on '%s' has empty prowess or defense attribute — skipped." % skill.skill_name)
+				continue
+			var comp_prowess: int = attacker_attrs.get_attribute_current_value(comp.prowess_attribute)
+			var comp_defense: int = defender_attrs.get_attribute_current_value(comp.defense_attribute)
+			cd.effective_damage += _damage_calculator.calculate_component(
+				w_min, w_max, comp_prowess, comp.power_percent,
+				comp_defense, cd.is_critical_success, formula)
+
 	# Post-roll status hooks: statuses may modify cd.damage_multiplier (100-based)
 	if attacker_statuses != null:
 		attacker_statuses.before_damage_applied(cd)

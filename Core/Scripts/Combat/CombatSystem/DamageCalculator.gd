@@ -45,6 +45,22 @@ func calculate(cd: CombatEventData, might_value: int, formula: CombatFormulaReso
 	cd.effective_damage = damage_post_defense
 
 
+## Calculates net damage for one [DamageComponent], floored at 0.
+## Uses the same weapon damage range as the primary roll so enchantments scale with weapon quality.
+## [param prowess] is the attacker's resolved attribute value for this component.
+## [param power_pct] is the component's power percentage (100 = full, 50 = half).
+## [param defense] is the defender's raw resistance attribute value for this component.
+func calculate_component(
+		weapon_min: int, weapon_max: int,
+		prowess: int, power_pct: int,
+		defense: int,
+		is_crit: bool, formula: CombatFormulaResource) -> int:
+	var modded_low: float  = (weapon_min + prowess) * (float(power_pct) / 100.0)
+	var modded_high: float = (weapon_max + prowess) * (float(power_pct) / 100.0)
+	var roll: int = _roll_damage(modded_low, modded_high, is_crit, formula.crit_damage_multiplier)
+	return maxi(roll - maxi(defense, 0), 0)
+
+
 # Rolls damage in [param low_dmg]..[param high_dmg]. On a crit, returns high * [param crit_multiplier].
 # Both low and high are floored before use so partial values from power scaling round down.
 func _roll_damage(low_dmg: float, high_dmg: float, is_crit: bool, crit_multiplier: float) -> int:

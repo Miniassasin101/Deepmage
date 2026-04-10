@@ -27,6 +27,26 @@ func apply() -> void:
 	if status == null:
 		push_error("No Status Resource in: " + self.to_string())
 
+	# Resolve effective values: effect-level overrides take priority over status defaults.
+	var effective_category: String = resistance_category_override if resistance_category_override != "" \
+		else status.resistance_category
+	var effective_chance: int = infliction_chance_override if infliction_chance_override >= 0 \
+		else status.infliction_chance
+
+	# Resistance check — only runs when the status has a category assigned.
+	# get_attribute_current_value returns 0 for unknown attributes, so units
+	# on profiles without resistance stats get 0 resistance (full chance).
+	if effective_category != "":
+		var attr_name: String = effective_category + "_resistance"
+		var resistance_value: int = int(target_unit.get_attributes_container() \
+			.get_attribute_current_value(attr_name))
+		var final_chance: int = clampi(effective_chance - resistance_value, 0, 100)
+		if randi_range(1, 100) > final_chance:
+			var status_name: String = status.ui_name
+			Utilities.spawn_text_line(target_unit, (status_name + " Resisted!"), Color.AQUA)
+			emit_signal("effect_finished")
+			return
+
 	controller.add_status(status)
 	
 	var color: Color = Color.WHITE

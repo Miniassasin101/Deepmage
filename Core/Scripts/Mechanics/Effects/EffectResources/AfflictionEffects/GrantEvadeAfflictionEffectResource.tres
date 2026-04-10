@@ -11,6 +11,7 @@ ui_name = "Evade Down"
 status_category = 2
 status_level = 5
 expire_timing = 2
+resistance_category = "debuff"
 metadata/_custom_type_script = "uid://db1xarxagsk0k"
 
 [resource]

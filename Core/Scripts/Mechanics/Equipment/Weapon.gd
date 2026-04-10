@@ -18,3 +18,8 @@ enum SocketSlot  { RIGHT_HAND, LEFT_HAND, ORBITING }
 @export_group("On-Hit Effects")
 ## Applied after every successful hit with any skill that came from this weapon.
 @export var inherent_effects: Array[Effect] = []
+
+@export_group("Enchantments")
+## Extra damage components added to every skill that uses this weapon (uses_weapon = true).
+## Each enchantment rolls independently with its own prowess, power %, and defense attribute.
+@export var enchantment_components: Array[DamageComponent] = []

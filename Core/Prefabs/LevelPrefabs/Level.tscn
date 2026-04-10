@@ -44,7 +44,6 @@
 [ext_resource type="PackedScene" uid="uid://cqqsm2gpif3dw" path="res://Deepmage/Core/Prefabs/UI/UnitCharacterSheet.tscn" id="22_gh8or"]
 [ext_resource type="Script" uid="uid://bdf34egn2kdgf" path="res://Deepmage/Core/Scripts/Mechanics/Effects/Effect.gd" id="23_04ue1"]
 [ext_resource type="Script" uid="uid://bubf25btsnnfv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Tactic.gd" id="24_5lfvx"]
-[ext_resource type="Resource" uid="uid://cvmp0l71ox0jv" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillResources/Skills/Passive/PassiveCover/AllyCoverSkillResource.tres" id="24_7g53y"]
 [ext_resource type="Script" uid="uid://285qbhvjqa08" path="res://Deepmage/Core/Scripts/ActionSystem/ActionScripts/ReactionScripts/PassAction.gd" id="25_gam6i"]
 [ext_resource type="Script" uid="uid://cihsn5lxnlupk" path="res://Deepmage/Core/Resources/DataStructures/NamedBool.gd" id="26_7g53y"]
 [ext_resource type="Script" uid="uid://c1pcudui7e5qp" path="res://Deepmage/Core/Scripts/Mechanics/OverlordTest/Skills/SkillTriggerSystem.gd" id="26_qdwhh"]
@@ -112,15 +111,16 @@ action = ExtResource("19_v4iap")
 skill_type = 1
 internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_sb21c"), SubResource("Resource_7omu2")])
 external_condition_blueprints = Array[ExtResource("14_v8epg")]([ExtResource("17_ebomw")])
-is_disabled = true
+uses_weapon = null
+extra_damage_components = null
 trait_1 = "Movement"
 tags = Array[String](["movement"])
 metadata/_custom_type_script = "uid://kpyou3fdk30c"
 
 [sub_resource type="Resource" id="Resource_tkd6a"]
 script = ExtResource("24_5lfvx")
-active_skills = Array[ExtResource("12_f2qps")]([ExtResource("39_5lfvx"), ExtResource("22_04ue1"), SubResource("Resource_idaqs")])
-passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("36_cb3j6"), ExtResource("24_7g53y")])
+active_skills = Array[ExtResource("12_f2qps")]([ExtResource("22_04ue1"), SubResource("Resource_idaqs")])
+passive_skills = Array[ExtResource("12_f2qps")]([ExtResource("36_cb3j6")])
 metadata/_custom_type_script = "uid://bubf25btsnnfv"
 
 [sub_resource type="Resource" id="Resource_02pk8"]
@@ -290,7 +290,7 @@ resource_name = "DebuffResistance"
 script = ExtResource("10_p6f6u")
 attribute_name = "debuff_resistance"
 attribute_type = 1
-current_value = 1
+current_value = 50
 maximum_value = 100
 metadata/_custom_type_script = "uid://7vw8btajjq0q"
 
@@ -381,6 +381,8 @@ skill_trigger = 2
 internal_skill_conditions = Array[ExtResource("15_k6sm3")]([SubResource("Resource_a1x7f"), SubResource("Resource_4uvkp"), SubResource("Resource_rx2vc")])
 is_disabled = true
 animation_package = ExtResource("30_ebomw")
+uses_weapon = null
+extra_damage_components = null
 effects = Array[ExtResource("23_04ue1")]([SubResource("Resource_ckhw7")])
 trait_1 = "Block"
 trigger_description = "When an ally uses an attack skill"
@@ -1224,7 +1226,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.735, 1.03, 0.84)
 script = ExtResource("11_lf0eb")
 
 [node name="Azure" parent="UnitManager" unique_id=2054325409 instance=ExtResource("12_k2c3k")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -5.4169154, 0, 0)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.2450175, 0, 1.0568509)
 starting_tactic = SubResource("Resource_tkd6a")
 reaction_pack = SubResource("Resource_oxqfr")
 ui_name = "Azure"
@@ -1237,7 +1239,7 @@ gear_preset = SubResource("Resource_gam6i")
 build_profile = ExtResource("37_cb3j6")
 
 [node name="Verdant" parent="UnitManager" unique_id=976159200 instance=ExtResource("12_k2c3k")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.7761517, 0, 0.1744852)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6.189094, 0, 2.8778234)
 starting_tactic = SubResource("Resource_k6sm3")
 reaction_pack = SubResource("Resource_h7gr6")
 ui_name = "Verdant"
@@ -1249,7 +1251,7 @@ attributes_profile = SubResource("Resource_guc2f")
 build_profile = ExtResource("38_e15dp")
 
 [node name="Slime1" parent="UnitManager" unique_id=1966507239 instance=ExtResource("41_hja2s")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1403096, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.038853, 0, 0)
 starting_tactic = SubResource("Resource_mrc0n")
 ui_name = "Slime1"
 
@@ -1259,7 +1261,7 @@ attributes_profile = SubResource("Resource_6ujme")
 build_profile = SubResource("Resource_t17d6")
 
 [node name="Slime2" parent="UnitManager" unique_id=1527460440 instance=ExtResource("41_hja2s")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.926705, 0, 1.631649)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6248264, 0, 3.4388719)
 starting_tactic = SubResource("Resource_mrc0n")
 ui_name = "Slime2"
 

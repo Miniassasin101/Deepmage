@@ -59,6 +59,15 @@ enum SkillType { ATTACK, SUPPORT, SABOTAGE, SPECIAL}
 ## Attribute key used for the defender's resistance (e.g. "parry", "resist").
 @export var defense_attribute: String = "parry"
 
+## Whether this skill's damage uses the equipped weapon's damage range and enchantment components.
+## Set false for spells and abilities that project from the caster rather than through the weapon.
+@export var uses_weapon: bool = true
+
+## Extra damage components inherent to this skill regardless of equipped weapon.
+## Each component rolls independently with its own prowess, power %, and defense attribute.
+## Use for spells or abilities that inherently deal multiple damage types.
+@export var extra_damage_components: Array[DamageComponent] = []
+
 @export_group("Skill Effects")
 @export_subgroup("Modifies Skill")
 @export var skill_modifying_statuses: Array[Status] = []
@@ -82,10 +91,6 @@ enum SkillType { ATTACK, SUPPORT, SABOTAGE, SPECIAL}
 ## "hybrid"    → per-spell override; set defense_attribute manually
 ## ""          → no affinity; defense_attribute used as-is
 @export var affinity: String = ""
-
-## Warmage: this skill channels power through the equipped weapon rather than projecting outward.
-## Damage uses the (Martial + Channel) / 2 combined prowess formula.
-@export var is_inscribed: bool = false
 
 ## Warmage exclusive: this skill buffs the Warmage's own stats rather than targeting enemies.
 ## Enforcement spells represent turning magic inward to enhance the caster's combat performance.
